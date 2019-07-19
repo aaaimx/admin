@@ -25,20 +25,28 @@
           <td class="text-xs-left">{{ props.item.adscription }}</td>
           <td class="text-xs-left">
             <v-chip
+              small
               outline
               :color="props.item.active ?'green' :'red'"
             >{{ props.item.active ? 'Si' : 'No' }}</v-chip>
           </td>
           <td class="text-xs-left">
             <v-chip
-              color="secondary"
-              v-if="props.item.roles.length"
+              v-for="role in props.item.roles"
+              small
+              label
+              :key="role"
+              :color="badges[role]"
               text-color="white"
-            >{{props.item.roles[0].name }}</v-chip>
+            >{{role}}</v-chip>
           </td>
-          <td class="justify-center">
-            <v-icon small class="" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+          <td class="justify-center ">
+            <v-btn @click="editItem(props.item)" flat icon small color="primary">
+              <v-icon small>edit</v-icon>
+            </v-btn>
+            <v-btn @click="deleteItem(props.item)" flat icon small color="red">
+              <v-icon small>delete</v-icon>
+            </v-btn>
           </td>
         </tr>
       </template>
@@ -62,7 +70,8 @@
   </div>
 </template>
 <script>
-import NewColl from "@/components/NewColl";
+import NewColl from "./NewColl";
+import swal from 'sweetalert2'
 export default {
   components: {
     NewColl
@@ -72,6 +81,12 @@ export default {
     expand: false,
     dialog: false,
     selected: [],
+    badges: {
+      Student: "success",
+      Researcher: "warning",
+      Graduated: "secondary",
+      Teacher: "primary"
+    },
     headers: [
       {
         text: "Lastname & name",
@@ -84,23 +99,7 @@ export default {
       { text: "SC Member", value: "active" },
       { text: "Roles", value: "roles" },
       { text: "Actions", sortable: false, value: "lastname" }
-    ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
-    },
-    defaultItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
-    }
+    ]
   }),
 
   computed: {
@@ -108,97 +107,24 @@ export default {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     }
   },
-
-  created() {
-    this.initialize();
-  },
-
   methods: {
-    initialize() {
-      this.desserts = [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        }
-      ];
-    },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+      
     },
 
     deleteItem(item) {
-      const index = this.desserts.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.desserts.splice(index, 1);
+      swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          swal("Deleted!", "Your file has been deleted.", "success");
+        }
+      });
     }
   }
 };

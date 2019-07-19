@@ -9,8 +9,13 @@ import router from './router'
 import store from './store'
 import 'vuetify/dist/vuetify.min.css'
 import HttpService from './services'
+import Notifications from 'vue-notification'
+import '@fortawesome/fontawesome-free/css/all.css' 
 
-Vue.use(Vuetify)
+Vue.use(Notifications)
+Vue.use(Vuetify,{
+  iconfont: 'fa'
+})
 Vue.use(HttpService)
 Vue.config.productionTip = false
 

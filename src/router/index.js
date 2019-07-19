@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '@/components/HelloWorld'
+import Dashboard from '@/components/collaborators/Dashboard'
+import Projects from '@/components/projects/Dashboard'
 import Login from '@/pages/Login'
 import Error404 from '@/pages/404'
 
@@ -19,7 +20,7 @@ const router = new VueRouter({
       path: '/',
       name: 'Dashboard',
       component: Dashboard,
-      meta: { breadcumb: true },
+      meta: { breadcrumb: true },
       beforeRouteEnter(to, from, next) {
         if (isAuthenticated()) {
           next()
@@ -27,12 +28,18 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/projects',
+      name: 'Projects',
+      component: Projects,
+      meta: { breadcrumb: true }
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login,
       meta: { public: true },
       beforeRouteEnter() {
-        sessionStorage.clear()
+        window.sessionStorage.clear()
       }
     },
     {
@@ -47,10 +54,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (!to.meta.public && !isAuthenticated()) {
     return next({ name: 'Login' })
-  }
-
-  if (to.name === 'Login' && isAuthenticated()) {
-    return next({ name: 'Dashboard' })
   }
 
   return next()

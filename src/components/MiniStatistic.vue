@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-card-text class="pa-0">
       <v-container class="pa-0">
         <div class="layout row ma-0">

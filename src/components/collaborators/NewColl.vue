@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-btn fab bottom right color="pink" dark fixed @click="dialog = !dialog">
+    <v-btn fab bottom right color="#800040" dark fixed @click="dialog = !dialog">
       <v-icon>fa fa-user-plus</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" width="800px">
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-card>
-          <v-card-title class="grey lighten-4 py-4 title">Register Collaborator</v-card-title>
+          <v-card-title class="amber py-4 title">Register Collaborator</v-card-title>
           <v-container grid-list-sm class="pa-4">
             <v-layout row wrap>
               <v-flex xs12 sm12 md6 lg6 align-center justify-space-between>
@@ -50,7 +50,7 @@
                   :rules="[v => !!v || 'This field is required']"
                   item-text="institute"
                   item-value="institute"
-                  return-object
+                  :return-object="false"
                 >
                   <template slot="selection" slot-scope="data">
                     <v-chip
@@ -59,10 +59,8 @@
                       :selected="data.selected"
                       :key="JSON.stringify(data.item)"
                     >
-                      <v-avatar
-                        class="accent"
-                      >{{ data.item.institute ? data.item.institute.slice(0, 1).toUpperCase() : data.item.slice(0, 1).toUpperCase() }}</v-avatar>
-                      {{ data.item.institute ? data.item.institute.split('/')[1] : data.item }}
+                      <v-avatar class="accent">{{ data.item.slice(0, 1).toUpperCase() }}</v-avatar>
+                      {{ data.item.split('/') ? data.item.split('/')[1] : data.item }}
                     </v-chip>
                   </template>
                 </v-combobox>
@@ -73,6 +71,7 @@
                   browser-autocomplete
                   name="email"
                   type="email"
+                  v-model="author.email"
                   placeholder="Email"
                 ></v-text-field>
               </v-flex>
@@ -115,9 +114,11 @@
 
 <script>
 import swal from "sweetalert2";
+import appMixin from "@/mixins/init";
 import Circle8 from "vue-loading-spinner/src/components/Circle";
 import { mapState } from "vuex";
 export default {
+  ixins: [appMixin],
   watch: {
     dialog(val) {
       val || this.close();
@@ -152,6 +153,7 @@ export default {
               timer: 1500
             });
             this.loading = false;
+            this.initialize()
           },
           err => {
             console.log(err);
