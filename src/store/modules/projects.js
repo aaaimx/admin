@@ -7,7 +7,7 @@ const state = {
       institute: ""
     },
     InCharge: {
-      uuid: ""
+      fullname: ""
     },
     Topics: [],
     start: null,

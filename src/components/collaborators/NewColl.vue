@@ -9,31 +9,20 @@
           <v-card-title class="amber py-4 title">Register Collaborator</v-card-title>
           <v-container grid-list-sm class="pa-4">
             <v-layout row wrap>
-              <v-flex xs12 sm12 md6 lg6 align-center justify-space-between>
+              <v-flex xs12 align-center justify-space-between>
                 <v-layout align-center>
                   <v-avatar size="40px" class="mr-3">
                     <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt />
                   </v-avatar>
                   <v-text-field
                     browser-autocomplete
-                    placeholder="Lastname"
+                    placeholder="Fullname"
                     name="lastname"
                     :rules="[v => !!v || 'This field is required']"
-                    v-model="author.lastname"
+                    v-model="author.fullname"
                     required
                   ></v-text-field>
                 </v-layout>
-              </v-flex>
-              <v-flex xs12 sm12 md6 lg6>
-                <v-text-field
-                  prepend-icon="user"
-                  browser-autocomplete
-                  v-model="author.name"
-                  required
-                  :rules="[v => !!v || 'This field is required']"
-                  name="name"
-                  placeholder="Name"
-                ></v-text-field>
               </v-flex>
               <v-flex xs12>
                 <v-combobox
@@ -118,7 +107,7 @@ import appMixin from "@/mixins/init";
 import Circle8 from "vue-loading-spinner/src/components/Circle";
 import { mapState } from "vuex";
 export default {
-  ixins: [appMixin],
+  mixins: [appMixin],
   watch: {
     dialog(val) {
       val || this.close();

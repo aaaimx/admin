@@ -3,8 +3,7 @@ const Menu = [
     { icon: "fa-users", to: "/", text: "Collaborators" },
     { icon: "fa-project-diagram", to: "/projects", text: "Projects" },
     { icon: "school", to: "researches", text: "Researches" },
-    { icon: "timeline", to: "/lines", text: "Research Lines" },
-    {
+    /*{
         icon: "keyboard_arrow_up",
         "icon-alt": "keyboard_arrow_down",
         text: "Student Chapter",
@@ -15,7 +14,7 @@ const Menu = [
             { icon: "attach_money", text: "Finances" },
             { icon: "people", text: "Members" }
         ]
-    },
+    },*/
     { icon: "settings", text: "Settings" },
     { icon: "help", text: "Help" }
 

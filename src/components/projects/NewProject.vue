@@ -48,16 +48,17 @@
         </template>
       </v-combobox>
 
-      <v-autocomplete
+      <v-combobox
         label="In charge"
         :items="collaborators"
         chips
-        v-model="project.InCharge.uuid"
+        tags
+        v-model="project.InCharge.fullname"
         browser-autocomplete
         prepend-icon="fa fa-user"
         :rules="[rules.required]"
         item-text="fullname"
-        item-value="uuid"
+        item-value="fullname"
       >
         <template slot="selection" slot-scope="data">
           <v-chip
@@ -66,8 +67,8 @@
             :selected="data.selected"
             :key="JSON.stringify(data.item)"
           >
-            <v-avatar class="accent">{{ data.item.lastname.slice(0, 1).toUpperCase() }}</v-avatar>
-            {{ data.item.lastname}}, {{ data.item.name}}
+            <v-avatar class="accent">{{ data.item.fullname ? data.item.fullname.slice(0, 1).toUpperCase() : data.item.slice(0, 1).toUpperCase() }}</v-avatar>
+            {{ data.item.fullname ? data.item.fullname : data.item }}
           </v-chip>
         </template>
         <template v-slot:item="data">
@@ -82,7 +83,7 @@
             <br />
           </template>
         </template>
-      </v-autocomplete>
+      </v-combobox>
       <v-combobox
         v-model="project.Topics"
         :items="lines"

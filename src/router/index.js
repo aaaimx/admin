@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '@/components/collaborators/Dashboard'
 import Projects from '@/components/projects/Dashboard'
+import Researches from '@/components/researches/Dashboard'
 import Login from '@/pages/Login'
 import Error404 from '@/pages/404'
 
@@ -31,6 +32,12 @@ const router = new VueRouter({
       path: '/projects',
       name: 'Projects',
       component: Projects,
+      meta: { breadcrumb: true }
+    },
+    {
+      path: '/researches',
+      name: 'Researches',
+      component: Researches,
       meta: { breadcrumb: true }
     },
     {

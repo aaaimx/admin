@@ -10,18 +10,14 @@
       v-model="selected"
       :search="search"
       :items="$store.state.colls.collaborators"
-      select-all
       :expand="expand"
-      item-key="name"
+      item-key="fullname"
     >
       <template v-slot:items="props">
         <tr>
-          <td>
-            <v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
-          </td>
           <td
             @click="props.expanded = !props.expanded"
-          >{{ props.item.lastname }}, {{ props.item.name }}</td>
+          >{{ props.item.fullname }}</td>
           <td class="text-xs-left">{{ props.item.adscription }}</td>
           <td class="text-xs-left">
             <v-chip
@@ -59,7 +55,7 @@
       </template>
       <template v-slot:expand="props">
         <v-card flat>
-          <v-card-text>{{props.item.projects}}</v-card-text>
+          <v-card-text>{{props.item}}</v-card-text>
         </v-card>
       </template>
       <template v-slot:no-data>
@@ -93,12 +89,12 @@ export default {
         align: "left",
         sortable: true,
         search: true,
-        value: "name"
+        value: "fullname"
       },
       { text: "Adscription", value: "adscription" },
       { text: "SC Member", value: "active" },
       { text: "Roles", value: "roles" },
-      { text: "Actions", sortable: false, value: "lastname" }
+      { text: "Actions", sortable: false}
     ]
   }),
 

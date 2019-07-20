@@ -3,9 +3,8 @@ const state = {
   roles: [],
   author: {
     email: "",
-    name: "",
     active: true,
-    lastname: "",
+    fullname: "",
     Adscription: {
       institute: ""
     },

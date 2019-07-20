@@ -18,16 +18,25 @@
 import NotificationList from "@/components/NotificationList";
 import PageHeader from "@/components/PageHeader";
 import Tollbar from "@/components/layout/Tollbar";
-import appMixin from '@/mixins/init'
+import appMixin from "@/mixins/init";
 export default {
   mixins: [appMixin],
+  watch: {
+    $route(to, from) {
+      if (this.$route.name !== "Login") {
+        this.initialize();
+      }
+    }
+  },
+  created() {
+    if (this.$route.name !== "Login") {
+      this.initialize();
+    }
+  },
   components: {
     PageHeader,
     Tollbar,
     NotificationList
-  },
-  created() {
-    this.initialize();
   },
   props: {
     source: String

@@ -60,7 +60,9 @@
 
 <script>
 import CircleDefault from "vue-loading-spinner/src/components/Circle";
+import appMixin from '@/mixins/init'
 export default {
+  mixins: [appMixin],
   data() {
     return {
       login: "m-login--signin",
@@ -83,6 +85,7 @@ export default {
           res => {
             window.sessionStorage.setItem("access_token", res.data);
             this.$router.push("/");
+            this.initialize();
             this.$notify({
               type: "success",
               title: "Wellcome, Admin!",

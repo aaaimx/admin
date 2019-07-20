@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>Projects</v-toolbar-title>
+      <v-toolbar-title>Researches</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-toolbar>
@@ -9,18 +9,16 @@
       :headers="headers"
       v-model="selected"
       :search="search"
-      :loading="projects.length == 0 ? 'warning' : null"
-      :items="projects"
+      :loading="researches.length == 0 ? 'warning' : null"
+      :items="researches"
       :expand="expand"
       item-key="title"
     >
       <template v-slot:items="props">
         <tr>
-          <td
-            @click="props.expanded = !props.expanded"
-          >{{ props.item.title }}</td>
-          <td class="text-xs-left">{{ props.item.institute }}</td>
-          <td class="text-xs-left">{{ props.item.responsible }}</td>
+          <td @click="props.expanded = !props.expanded">{{ props.item.title }}</td>
+          <td class="text-xs-left">{{ props.item.year }}</td>
+          <td class="text-xs-left">{{ props.item.type }}</td>
           <td class="justify-center">
             <v-icon small class @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -52,7 +50,7 @@ import swal from "sweetalert2";
 import { mapState } from "vuex";
 export default {
   components: {
-    NewColl,
+    NewColl
   },
   data: () => ({
     search: "",
@@ -61,20 +59,20 @@ export default {
     selected: [],
     headers: [
       {
-        text: "Title",
+        text: "Research title / description",
         align: "left",
         sortable: true,
         search: true,
         value: "title"
       },
-      { text: "Institute", value: "institute" },
-      { text: "In charge", value: "responsible" },
-      { text: "Actions", sortable: false, value: "title" }
+      { text: "Year", value: "year" },
+      { text: "Type", value: "type" },
+      { text: "Actions", sortable: false }
     ]
   }),
 
   computed: {
-    ...mapState("projects", ["projects"]),
+    ...mapState("research", ["researches"]),
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     }
@@ -84,17 +82,19 @@ export default {
     editItem(item) {},
 
     deleteItem(item) {
-      swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!"
-      }).then(result => {
-        if (result.value) {
-          swal.fire("Deleted!", "Project has been deleted.", "success");
-        }
-      });
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            swal.fire("Deleted!", "Project has been deleted.", "success");
+          }
+        });
     }
   }
 };
