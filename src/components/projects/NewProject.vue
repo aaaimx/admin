@@ -2,12 +2,9 @@
   <v-card flat>
     <v-system-bar color="#800040">
       <v-spacer></v-spacer>
-      <v-icon small>square</v-icon>
-      <v-icon class="ml-1" small>circle</v-icon>
-      <v-icon class="ml-1" small>triangle</v-icon>
     </v-system-bar>
-    <v-toolbar color="amber accent-4" cards dark flat>
-      <v-card-title class="title font-weight-regular">Register Project</v-card-title>
+    <v-toolbar cards flat>
+      <v-card-title class="title font-weight-bold">Register Project</v-card-title>
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-form ref="form" v-model="form" class="pa-3 pt-4">
@@ -59,6 +56,7 @@
         :rules="[rules.required]"
         item-text="fullname"
         item-value="fullname"
+        :return-object="false"
       >
         <template slot="selection" slot-scope="data">
           <v-chip

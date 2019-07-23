@@ -15,9 +15,7 @@
     >
       <template v-slot:items="props">
         <tr>
-          <td
-            @click="props.expanded = !props.expanded"
-          >{{ props.item.fullname }}</td>
+          <td @click="props.expanded = !props.expanded">{{ props.item.fullname }}</td>
           <td class="text-xs-left">{{ props.item.adscription }}</td>
           <td class="text-xs-left">
             <v-chip
@@ -36,7 +34,7 @@
               text-color="white"
             >{{role}}</v-chip>
           </td>
-          <td class="justify-center ">
+          <td class="justify-center">
             <v-btn @click="editItem(props.item)" flat icon small color="primary">
               <v-icon small>edit</v-icon>
             </v-btn>
@@ -54,9 +52,59 @@
         >Your search for "{{ search }}" found no results</v-alert>
       </template>
       <template v-slot:expand="props">
-        <v-card flat>
-          <v-card-text>{{props.item}}</v-card-text>
-        </v-card>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.theses.length}}</span>
+                  </template>
+                  <strong>Thesis</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card v-for="(key, i) in props.item.theses" :key="i">
+              <v-card-text>
+                <v-input :messages="[key.year]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.publications.length}}</span>
+                  </template>
+                  <strong>Publications</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text v-for="(key, i) in props.item.publications" :key="i">
+                <v-input :messages="[key.year]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.presentations.length}}</span>
+                  </template>
+                  <strong>Presentations</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text v-for="(key, i) in props.item.publications" :key="i">
+                <v-input :messages="[key.year]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </template>
       <template v-slot:no-data>
         <v-alert :value="true" color="error" icon="warning">Sorry, nothing to display here :(</v-alert>
@@ -67,7 +115,7 @@
 </template>
 <script>
 import NewColl from "./NewColl";
-import swal from 'sweetalert2'
+import swal from "sweetalert2";
 export default {
   components: {
     NewColl
@@ -94,7 +142,7 @@ export default {
       { text: "Adscription", value: "adscription" },
       { text: "SC Member", value: "active" },
       { text: "Roles", value: "roles" },
-      { text: "Actions", sortable: false}
+      { text: "Actions", sortable: false }
     ]
   }),
 
@@ -104,23 +152,22 @@ export default {
     }
   },
   methods: {
-
-    editItem(item) {
-      
-    },
+    editItem(item) {},
 
     deleteItem(item) {
-      swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!"
-      }).then(result => {
-        if (result.value) {
-          swal("Deleted!", "Your file has been deleted.", "success");
-        }
-      });
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            swal("Deleted!", "Your file has been deleted.", "success");
+          }
+        });
     }
   }
 };

@@ -1,5 +1,8 @@
 <template>
   <v-stepper v-model="e6">
+    <v-system-bar color="#800040">
+      <v-spacer></v-spacer>
+    </v-system-bar>
     <v-stepper-header>
       <v-stepper-step :complete="e6 > 1" step="1">
         Basic information
@@ -8,11 +11,11 @@
       <v-divider></v-divider>
       <v-stepper-step :complete="e6 > 2" step="2">Details & Collaborators</v-stepper-step>
       <v-divider></v-divider>
-      <v-stepper-step step="3">View setup instructions</v-stepper-step>
+      <v-stepper-step step="3">Quick View</v-stepper-step>
     </v-stepper-header>
     <v-stepper-items>
-      <v-stepper-content step="1">
-        <v-form ref="form">
+      <v-form ref="form" v-model="form">
+        <v-stepper-content step="1">
           <v-textarea
             v-model="research.title"
             :rules="[rules.required]"
@@ -147,12 +150,11 @@
           </v-combobox>
 
           <v-divider></v-divider>
+          <v-btn flat @click="$refs.form.reset()">Clear</v-btn>
           <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
-        </v-form>
-      </v-stepper-content>
+        </v-stepper-content>
 
-      <v-stepper-content step="2">
-        <v-form ref="form2" class="pa-3 pt-4">
+        <v-stepper-content step="2">
           <v-combobox
             v-model="research.extra.Authors"
             :items="collaborators"
@@ -239,116 +241,125 @@
                 placeholder="Grade"
               ></v-text-field>
             </v-flex>
-            <v-combobox
-              v-model="research.extra.Advisors"
-              :items="collaborators"
-              prepend-icon="fa-user"
-              chips
-              tags
-              color="blue-grey lighten-2"
-              label="Advisors"
-              item-text="fullname"
-              item-value="fullname"
-              multiple
-              :return-object="false"
-            >
-              <template v-slot:selection="data">
-                <v-chip
-                  :selected="data.selected"
-                  :key="JSON.stringify(data.item)"
-                  close
-                  :disabled="data.disabled"
-                  class="v-chip--select-multi"
-                  @click.stop="data.parent.selectedIndex = data.index"
-                  @input="data.parent.selectItem(data.item)"
-                >
-                  <v-avatar class="accent">{{ data.index + 1 }}</v-avatar>
-                  {{ data.item }}
-                </v-chip>
-              </template>
-              <template v-slot:item="data">
-                <template v-if="typeof data.item !== 'object'">
-                  <v-list-tile-content v-text="data.item"></v-list-tile-content>
-                </template>
-                <template v-else>
-                  <v-list-tile-content>
-                    <v-list-tile-title v-html="data.item.fullname"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.adscription"></v-list-tile-sub-title>
-                  </v-list-tile-content>
-                </template>
-              </template>
-            </v-combobox>
-          </v-layout>
-        </v-form>
-        <v-btn @click="e6 = 1" flat>Back</v-btn>
-        <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
-      </v-stepper-content>
-
-      <v-stepper-content step="3">
-        <v-container id="input-usage" grid-list-xl fluid>
-          <v-layout wrap>
             <v-flex xs12>
-              <v-input
-                :messages="[research.Topics]"
-                append-icon="fa-check"
-                prepend-icon="school"
-              >{{research.title}} ({{research.year}})</v-input>
+              <v-combobox
+                v-model="research.extra.Advisors"
+                :items="collaborators"
+                prepend-icon="fa-user"
+                chips
+                tags
+                color="blue-grey lighten-2"
+                label="Advisors"
+                item-text="fullname"
+                item-value="fullname"
+                multiple
+                :return-object="false"
+              >
+                <template v-slot:selection="data">
+                  <v-chip
+                    :selected="data.selected"
+                    :key="JSON.stringify(data.item)"
+                    close
+                    :disabled="data.disabled"
+                    class="v-chip--select-multi"
+                    @click.stop="data.parent.selectedIndex = data.index"
+                    @input="data.parent.selectItem(data.item)"
+                  >
+                    <v-avatar class="accent">{{ data.index + 1 }}</v-avatar>
+                    {{ data.item }}
+                  </v-chip>
+                </template>
+                <template v-slot:item="data">
+                  <template v-if="typeof data.item !== 'object'">
+                    <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                  </template>
+                  <template v-else>
+                    <v-list-tile-content>
+                      <v-list-tile-title v-html="data.item.fullname"></v-list-tile-title>
+                      <v-list-tile-sub-title v-html="data.item.adscription"></v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </template>
+                </template>
+              </v-combobox>
             </v-flex>
           </v-layout>
-          <v-divider></v-divider>
-          <v-list>
-            <v-list-tile>
-              <v-list-tile-action>
-                <v-icon color="indigo"> assignment</v-icon>
-              </v-list-tile-action>
+          <v-btn @click="e6 = 1" flat>Back</v-btn>
+          <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
+        </v-stepper-content>
 
-              <v-list-tile-content>
-                <v-list-tile-title>{{research.type}}</v-list-tile-title>
-                <v-list-tile-sub-title v-if="research.type === 'Ponencia' || research.type === 'Presentation'"> Event: {{research.event}}</v-list-tile-sub-title>
-                <v-list-tile-sub-title v-if="research.type === 'Tesis' || research.type === 'Thesis'"> Grade: {{research.grade}}</v-list-tile-sub-title>
-                <v-list-tile-sub-title v-if="research.type === 'Publication' || research.type === 'Publicación'">{{research.pub_type}}, {{research.pub_in}}</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <br>
-            <v-divider inset></v-divider>
-            <v-list-tile v-for="(author, i) in research.extra.Authors" :key="author">
-              <v-list-tile-action>{{i+1}}.</v-list-tile-action>
+        <v-stepper-content step="3">
+          <v-container id="input-usage" grid-list-xl fluid>
+            <v-layout wrap>
+              <v-flex xs12>
+                <v-input
+                  :messages="[research.Topics]"
+                  append-icon="fa-check"
+                  prepend-icon="school"
+                >{{research.title}} ({{research.year}})</v-input>
+              </v-flex>
+            </v-layout>
+            <v-divider></v-divider>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-action>
+                  <v-icon color="indigo">assignment</v-icon>
+                </v-list-tile-action>
 
-              <v-list-tile-content>
-                <v-list-tile-title>{{author}}</v-list-tile-title>
-                <v-list-tile-sub-title>Author</v-list-tile-sub-title>
-              </v-list-tile-content>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{research.type}}</v-list-tile-title>
+                  <v-list-tile-sub-title
+                    v-if="research.type === 'Ponencia' || research.type === 'Presentation'"
+                  >Event: {{research.event}}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title
+                    v-if="research.type === 'Tesis' || research.type === 'Thesis'"
+                  >Grade: {{research.grade}}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title
+                    v-if="research.type === 'Publication' || research.type === 'Publicación'"
+                  >{{research.pub_type}}, {{research.pub_in}}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <br />
+              <v-divider inset></v-divider>
+              <v-list-tile v-for="(author, i) in research.extra.Authors" :key="author">
+                <v-list-tile-action>{{i+1}}.</v-list-tile-action>
 
-              <v-list-tile-action>
-                <v-icon>person</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
-            <br />
-            <v-divider inset></v-divider>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{author}}</v-list-tile-title>
+                  <v-list-tile-sub-title>Author</v-list-tile-sub-title>
+                </v-list-tile-content>
 
-            <v-list-tile v-for="(advisor, i) in research.extra.Advisors" :key="advisor">
-              <v-list-tile-action>{{i+1}}.</v-list-tile-action>
+                <v-list-tile-action>
+                  <v-icon>person</v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+              <br />
+              <v-divider inset></v-divider>
 
-              <v-list-tile-content>
-                <v-list-tile-title>{{advisor}}</v-list-tile-title>
-                <v-list-tile-sub-title>Advisor</v-list-tile-sub-title>
-              </v-list-tile-content>
+              <v-list-tile v-for="(advisor, i) in research.extra.Advisors" :key="advisor">
+                <v-list-tile-action>{{i+1}}.</v-list-tile-action>
 
-              <v-list-tile-action>
-                <v-icon>person</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list>
-        </v-container>
-        <v-btn @click="e6 = 2" flat>Back</v-btn>
-        <v-btn color="primary" @click="e6 = 1, publish()">Publish</v-btn>
-      </v-stepper-content>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{advisor}}</v-list-tile-title>
+                  <v-list-tile-sub-title>Advisor</v-list-tile-sub-title>
+                </v-list-tile-content>
+
+                <v-list-tile-action>
+                  <v-icon>person</v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+          </v-container>
+          <v-btn v-if="!isLoading" @click="e6 = 2" flat>Back</v-btn>
+          <v-btn v-if="!isLoading" color="primary" @click="publish()">Publish</v-btn>
+          <Circle8 v-else />
+        </v-stepper-content>
+      </v-form>
     </v-stepper-items>
   </v-stepper>
 </template>
 <script>
 import swal from "sweetalert2";
-import Circle8 from "vue-loading-spinner/src/components/Circle8";
+import Circle8 from "vue-loading-spinner/src/components/Circle";
 import { mapState } from "vuex";
 import appMixin from "@/mixins/init";
 export default {
@@ -398,9 +409,11 @@ export default {
             showConfirmButton: false,
             timer: 1500
           });
+          this.e6 = 1;
           this.isLoading = false;
-          this.research.extra.Authors = []
-          this.research.extra.Advisors = []
+          this.research.extra.Authors = [];
+          this.research.extra.Advisors = [];
+          this.$refs.form.reset();
           this.initialize();
         },
         err => {
@@ -412,6 +425,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           });
+          this.e6 = 1;
           this.isLoading = false;
         }
       );

@@ -22,7 +22,7 @@
 export default {
   props: {
     icon: String,
-    title: String,
+    title: Number,
     subTitle: String,
     color: String
   }

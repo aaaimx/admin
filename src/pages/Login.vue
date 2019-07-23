@@ -69,8 +69,8 @@ export default {
       showpass: false,
       loading: false,
       user: {
-        email: "admin@aaaimx.org",
-        password: "AAAIMX2019!"
+        email: "",
+        password: ""
       }
     };
   },

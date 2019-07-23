@@ -16,9 +16,7 @@
     >
       <template v-slot:items="props">
         <tr>
-          <td
-            @click="props.expanded = !props.expanded"
-          >{{ props.item.title }}</td>
+          <td @click="props.expanded = !props.expanded">{{ props.item.title }}</td>
           <td class="text-xs-left">{{ props.item.institute }}</td>
           <td class="text-xs-left">{{ props.item.responsible }}</td>
           <td class="justify-center">
@@ -35,9 +33,83 @@
         >Your search for "{{ search }}" found no results</v-alert>
       </template>
       <template v-slot:expand="props">
-        <v-card flat>
-          <v-card-text>{{props.item}}</v-card-text>
-        </v-card>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.interest_area.length}}</span>
+                  </template>
+                  <strong>Interest Areas</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text>
+                <v-chip
+                  small
+                  label
+                  v-for="(key, i) in props.item.interest_area"
+                  :key="i"
+                  color="secondary"
+                  text-color="white"
+                >{{key}}</v-chip>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.theses.length}}</span>
+                  </template>
+                  <strong>Thesis</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card v-for="(key, i) in props.item.theses" :key="i">
+              <v-card-text>
+                <v-input :messages="[key.year]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.publications.length}}</span>
+                  </template>
+                  <strong>Publications</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text v-for="(key, i) in props.item.publications" :key="i">
+                <v-input :messages="[key.year]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.presentations.length}}</span>
+                  </template>
+                  <strong>Presentations</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text v-for="(key, i) in props.item.publications" :key="i">
+                <v-input :messages="[key.year]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </template>
       <template v-slot:no-data>
         <v-alert :value="true" color="error" icon="warning">Sorry, nothing to display here :(</v-alert>
@@ -52,7 +124,7 @@ import swal from "sweetalert2";
 import { mapState } from "vuex";
 export default {
   components: {
-    NewColl,
+    NewColl
   },
   data: () => ({
     search: "",
@@ -84,17 +156,19 @@ export default {
     editItem(item) {},
 
     deleteItem(item) {
-      swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!"
-      }).then(result => {
-        if (result.value) {
-          swal.fire("Deleted!", "Project has been deleted.", "success");
-        }
-      });
+      swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            swal.fire("Deleted!", "Project has been deleted.", "success");
+          }
+        });
     }
   }
 };

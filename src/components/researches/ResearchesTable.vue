@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>Researches</v-toolbar-title>
+      <v-toolbar-title>{{$route.name}}</v-toolbar-title>
+      <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-toolbar>
@@ -19,9 +20,10 @@
           <td @click="props.expanded = !props.expanded">{{ props.item.title }}</td>
           <td class="text-xs-left">{{ props.item.year }}</td>
           <td class="text-xs-left">{{ props.item.type }}</td>
+          <td class="text-xs-left">{{ props.item.pub_type }}</td>
           <td class="justify-center">
             <v-icon small class @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item.uuid)">delete</v-icon>
           </td>
         </tr>
       </template>
@@ -33,9 +35,69 @@
         >Your search for "{{ search }}" found no results</v-alert>
       </template>
       <template v-slot:expand="props">
-        <v-card flat>
-          <v-card-text>{{props.item}}</v-card-text>
-        </v-card>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.lines.length}}</span>
+                  </template>
+                  <strong>Interest Areas</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text>
+                <v-chip
+                  small
+                  label
+                  v-for="(key, i) in props.item.lines"
+                  :key="i"
+                  color="secondary"
+                  text-color="white"
+                >{{key.topic}}</v-chip>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.authors.length}}</span>
+                  </template>
+                  <strong>Authors</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text v-for="(key, i) in props.item.authors" :key="i">
+                <v-input
+                  :messages="[key.active ? 'SC member' : 'No SC member']"
+                >{{i+1}}. {{key.fullname}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content v-if="props.item.type == 'Tesis'">
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.advisors.length}}</span>
+                  </template>
+                  <strong>Advisors</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card>
+              <v-card-text v-for="(key, i) in props.item.advisors" :key="i">
+                <v-input :messages="[key.active]">{{key.fullname}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </template>
       <template v-slot:no-data>
         <v-alert :value="true" color="error" icon="warning">Sorry, nothing to display here :(</v-alert>
@@ -48,7 +110,9 @@
 import NewColl from "@/components/collaborators/NewColl";
 import swal from "sweetalert2";
 import { mapState } from "vuex";
+import appMixin from "@/mixins/init";
 export default {
+  mixins: [appMixin],
   components: {
     NewColl
   },
@@ -67,6 +131,7 @@ export default {
       },
       { text: "Year", value: "year" },
       { text: "Type", value: "type" },
+      { text: "Publication type", value: "pub_type" },
       { text: "Actions", sortable: false }
     ]
   }),
@@ -81,7 +146,7 @@ export default {
   methods: {
     editItem(item) {},
 
-    deleteItem(item) {
+    deleteItem(uuid) {
       swal
         .fire({
           title: "Are you sure?",
@@ -92,7 +157,23 @@ export default {
         })
         .then(result => {
           if (result.value) {
-            swal.fire("Deleted!", "Project has been deleted.", "success");
+            this.$http.delete("/researches/" + uuid, this.research).then(
+              res => {
+                swal.fire("Deleted!", "Project has been deleted.", "success");
+                this.initialize();
+              },
+              err => {
+                console.log(err);
+                swal.fire({
+                  position: "center",
+                  type: "error",
+                  title: "Something went wrong:(... Try Again!",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                this.isLoading = false;
+              }
+            );
           }
         });
     }
