@@ -60,6 +60,25 @@
               </v-card-text>
             </v-card>
           </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.projects.length}}</span>
+                  </template>
+                  <strong>Projects</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card v-for="(key, i) in props.item.projects" :key="i">
+              <v-card-text>
+                <v-input
+                  :messages="[key.start.slice(0, 10)+ ' - ' + key.end.slice(0, 10)]"
+                >{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
 
           <v-expansion-panel-content>
             <template v-slot:header>
@@ -144,7 +163,9 @@ export default {
   },
 
   methods: {
-    editItem(item) {},
+    editItem(item) {
+      this.$store.commit("research/setResearch", item);
+    },
 
     deleteItem(uuid) {
       swal

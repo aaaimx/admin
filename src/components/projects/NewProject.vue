@@ -65,7 +65,9 @@
             :selected="data.selected"
             :key="JSON.stringify(data.item)"
           >
-            <v-avatar class="accent">{{ data.item.fullname ? data.item.fullname.slice(0, 1).toUpperCase() : data.item.slice(0, 1).toUpperCase() }}</v-avatar>
+            <v-avatar
+              class="accent"
+            >{{ data.item.fullname ? data.item.fullname.slice(0, 1).toUpperCase() : data.item.slice(0, 1).toUpperCase() }}</v-avatar>
             {{ data.item.fullname ? data.item.fullname : data.item }}
           </v-chip>
         </template>
@@ -191,7 +193,7 @@
     </v-form>
     <v-divider></v-divider>
     <v-card-actions>
-      <v-btn flat @click="$refs.form.reset()">Clear</v-btn>
+      <v-btn flat @click="$refs.form.reset(), clear()">Clear</v-btn>
       <v-btn
         :disabled="!form"
         v-if="!isLoading"
@@ -199,7 +201,7 @@
         color="deep-purple accent-4"
         depressed
         @click="publish()"
-      >Publish</v-btn>
+      >{{ project.uuid ? 'Save':'Publish' }}</v-btn>
       <Circle8 v-else />
     </v-card-actions>
   </v-card>
@@ -242,7 +244,9 @@ export default {
     remove(item) {
       this.$store.commit("projects/removeProjectTopic", item);
     },
-
+    clear() {
+      this.$store.commit("projects/clearProject");
+    },
     publish() {
       this.isLoading = true;
       console.log(this.project);

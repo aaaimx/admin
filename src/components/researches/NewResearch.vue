@@ -23,6 +23,11 @@
             label="Title"
             rows="3"
           ></v-textarea>
+          <v-textarea
+            v-model="research.description"
+            label="Abstract"
+            rows="5"
+          ></v-textarea>
           <v-layout row wrap>
             <v-flex xs12 sm6 md6 lg6>
               <v-text-field
@@ -150,7 +155,7 @@
           </v-combobox>
 
           <v-divider></v-divider>
-          <v-btn flat @click="$refs.form.reset()">Clear</v-btn>
+          <v-btn flat @click="$refs.form.reset(), clear()">Clear</v-btn>
           <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
         </v-stepper-content>
 
@@ -396,7 +401,9 @@ export default {
     save(date) {
       this.$refs.menu.save(date);
     },
-
+    clear() {
+      this.$store.commit("research/clearResearch");
+    },
     publish() {
       this.isLoading = true;
       console.log(this.project);
@@ -414,6 +421,7 @@ export default {
           this.research.extra.Authors = [];
           this.research.extra.Advisors = [];
           this.$refs.form.reset();
+          this.clear();
           this.initialize();
         },
         err => {

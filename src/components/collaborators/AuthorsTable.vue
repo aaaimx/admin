@@ -35,7 +35,7 @@
             >{{role}}</v-chip>
           </td>
           <td class="justify-center">
-            <v-btn @click="editItem(props.item)" flat icon small color="primary">
+            <v-btn @click="editItem(props.item), showModal = true" flat icon small color="primary">
               <v-icon small>edit</v-icon>
             </v-btn>
             <v-btn @click="deleteItem(props.item)" flat icon small color="red">
@@ -58,13 +58,35 @@
               <div>
                 <v-badge right>
                   <template v-slot:badge>
-                    <span>{{props.item.theses.length}}</span>
+                    <span>{{props.item.projects.length}}</span>
+                  </template>
+                  <strong>Projects</strong>
+                </v-badge>
+              </div>
+            </template>
+            <v-card v-for="(key, i) in props.item.projects" :key="i">
+              <v-card-text>
+                <v-input :messages="[key.start.slice(0, 10)+ ' - ' + key.end.slice(0, 10)]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div>
+                <v-badge right>
+                  <template v-slot:badge>
+                    <span>{{props.item.theses.length + props.item.directed_theses.length}}</span>
                   </template>
                   <strong>Thesis</strong>
                 </v-badge>
               </div>
             </template>
             <v-card v-for="(key, i) in props.item.theses" :key="i">
+              <v-card-text>
+                <v-input :messages="[key.year]">{{key.title}}</v-input>
+              </v-card-text>
+            </v-card>
+            <v-card v-for="(key, i) in props.item.directed_theses" :key="i">
               <v-card-text>
                 <v-input :messages="[key.year]">{{key.title}}</v-input>
               </v-card-text>
@@ -123,7 +145,6 @@ export default {
   data: () => ({
     search: "",
     expand: false,
-    dialog: false,
     selected: [],
     badges: {
       Student: "success",
@@ -152,8 +173,9 @@ export default {
     }
   },
   methods: {
-    editItem(item) {},
-
+    editItem(item) {
+      this.$store.commit("colls/setColl", item);
+    },
     deleteItem(item) {
       swal
         .fire({

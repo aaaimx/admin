@@ -153,7 +153,9 @@ export default {
   },
 
   methods: {
-    editItem(item) {},
+    editItem(item) {
+      this.$store.commit("projects/setProject", item);
+    },
 
     deleteItem(item) {
       swal

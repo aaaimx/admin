@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-btn fab bottom right color="#800040" dark fixed @click="dialog = !dialog">
-      <v-icon>fa fa-user-plus</v-icon>
+      
+      <v-icon>{{ author.uuid ? 'cached':'fa fa-user-plus' }}</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" width="800px">
       <v-form ref="form" v-model="valid" lazy-validation>
@@ -123,6 +124,7 @@ export default {
   methods: {
     close() {
       this.dialog = false;
+      this.$store.commit("colls/clearColl")
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -142,6 +144,7 @@ export default {
               timer: 1500
             });
             this.loading = false;
+            this.$store.commit("colls/clearAuthor");
             this.initialize()
           },
           err => {
