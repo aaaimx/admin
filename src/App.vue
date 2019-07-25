@@ -21,17 +21,8 @@ import Tollbar from "@/components/layout/Tollbar";
 import appMixin from "@/mixins/init";
 export default {
   mixins: [appMixin],
-  watch: {
-    $route(to, from) {
-      if (this.$route.name !== "Login") {
-        this.initialize();
-      }
-    }
-  },
   created() {
-    if (this.$route.name !== "Login") {
-      this.initialize();
-    }
+    this.initialize();
   },
   components: {
     PageHeader,
