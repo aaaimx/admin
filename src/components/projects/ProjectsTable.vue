@@ -39,7 +39,7 @@
               <div>
                 <v-badge right>
                   <template v-slot:badge>
-                    <span>{{props.item.interest_area.length}}</span>
+                    <span>{{props.item.lines.length}}</span>
                   </template>
                   <strong>Interest Areas</strong>
                 </v-badge>
@@ -50,7 +50,7 @@
                 <v-chip
                   small
                   label
-                  v-for="(key, i) in props.item.interest_area"
+                  v-for="(key, i) in props.item.lines"
                   :key="i"
                   color="secondary"
                   text-color="white"
@@ -104,7 +104,7 @@
               </div>
             </template>
             <v-card>
-              <v-card-text v-for="(key, i) in props.item.publications" :key="i">
+              <v-card-text v-for="(key, i) in props.item.presentations" :key="i">
                 <v-input :messages="[key.year]">{{key.title}}</v-input>
               </v-card-text>
             </v-card>

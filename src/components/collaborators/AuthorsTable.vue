@@ -66,7 +66,9 @@
             </template>
             <v-card v-for="(key, i) in props.item.projects" :key="i">
               <v-card-text>
-                <v-input :messages="[key.start.slice(0, 10)+ ' - ' + key.end.slice(0, 10)]">{{key.title}}</v-input>
+                <v-input
+                  :messages="[key.start.slice(0, 10)+ ' - ' + key.end.slice(0, 10)]"
+                >{{key.title}}</v-input>
               </v-card-text>
             </v-card>
           </v-expansion-panel-content>
@@ -75,18 +77,13 @@
               <div>
                 <v-badge right>
                   <template v-slot:badge>
-                    <span>{{props.item.theses.length + props.item.directed_theses.length}}</span>
+                    <span>{{props.item.theses.length}}</span>
                   </template>
                   <strong>Thesis</strong>
                 </v-badge>
               </div>
             </template>
             <v-card v-for="(key, i) in props.item.theses" :key="i">
-              <v-card-text>
-                <v-input :messages="[key.year]">{{key.title}}</v-input>
-              </v-card-text>
-            </v-card>
-            <v-card v-for="(key, i) in props.item.directed_theses" :key="i">
               <v-card-text>
                 <v-input :messages="[key.year]">{{key.title}}</v-input>
               </v-card-text>
