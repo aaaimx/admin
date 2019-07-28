@@ -23,24 +23,23 @@ const mutations = {
     state.lines = lines
   },
   setProject(state, project) {
-    const { institute, title, in_charge, interest_area, uuid, start, end } = project
+    const { institute, title, in_charge, uuid, lines, start, end } = project
     state.project = {
       title,
       Adscription: {
         institute
       },
+      uuid,
       InCharge: {
         fullname: in_charge
       },
-      Topics: interest_area,
-      uuid,
+      Topics: lines,
       start: start.slice(0, 10),
       end: end.slice(0, 10),
-    },
-      console.log(state.project)
+    }
   },
   clearProject(state) {
-    state.project.uuid = null
+    delete state.project.uuid
   },
   removeProjectTopic(state, line) {
     const index = state.project.Topics.indexOf(line.topic);

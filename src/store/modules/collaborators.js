@@ -36,11 +36,11 @@ const mutations = {
     console.log(state.author)
   },
   clearColl(state) {
+    delete state.author.uuid
     state.author = {
       fullname: null,
       email: null,
       active: true,
-      uuid: null,
       Roles: [],
       Adscription: {
         institute: ''

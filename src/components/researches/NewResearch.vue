@@ -23,11 +23,7 @@
             label="Title"
             rows="3"
           ></v-textarea>
-          <v-textarea
-            v-model="research.description"
-            label="Abstract"
-            rows="5"
-          ></v-textarea>
+          <v-textarea v-model="research.description" label="Abstract" rows="5"></v-textarea>
           <v-layout row wrap>
             <v-flex xs12 sm6 md6 lg6>
               <v-text-field
@@ -165,6 +161,8 @@
             :items="collaborators"
             prepend-icon="fa-user"
             chips
+            hide-selected
+            :auto-select-first="true"
             tags
             color="blue-grey lighten-2"
             label="Authors"
@@ -214,37 +212,37 @@
             wrap
           >
             <v-flex xs12 sm6 md6 lg6>
-              <v-text-field
+              <v-combobox
+                :items="['Revista indizada en JCR', 'Revista indizada en otros índices']"
                 prepend-icon="school"
                 browser-autocomplete
                 name="pub_type"
                 type="text"
+                clearable
                 v-model="research.pub_type"
-                placeholder="Publication type"
-              ></v-text-field>
+                label="Publication type"
+              ></v-combobox>
             </v-flex>
             <v-flex xs12 sm6 md6 lg6>
               <v-text-field
+              :items="['Revista indizada en JCR', 'Revista indizada en otros índices']"
                 prepend-icon="school"
                 browser-autocomplete
                 name="pub_in"
                 type="text"
                 v-model="research.pub_in"
-                placeholder="Publicated in"
+                label="Publicated in"
               ></v-text-field>
             </v-flex>
           </v-layout>
 
           <v-layout v-if="research.type === 'Tesis' || research.type === 'Thesis'" row wrap>
             <v-flex xs12>
-              <v-text-field
-                prepend-icon="school"
-                browser-autocomplete
-                name="grade"
+              <v-combobox prepend-icon="school"
                 type="text"
+                name="grade"
                 v-model="research.grade"
-                placeholder="Grade"
-              ></v-text-field>
+                placeholder="Grade" label="Grade" :items="['Licenciatura', 'Doctorado', 'Postgrado']"></v-combobox>
             </v-flex>
             <v-flex xs12>
               <v-combobox

@@ -56,7 +56,7 @@
                   :key="i"
                   color="secondary"
                   text-color="white"
-                >{{key.topic}}</v-chip>
+                >{{key}}</v-chip>
               </v-card-text>
             </v-card>
           </v-expansion-panel-content>

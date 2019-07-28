@@ -45,7 +45,7 @@ const mutations = {
     console.log(research)
   },
   clearResearch(state) {
-    state.research.uuid = null
+    delete state.research.uuid
   }
 }
 
