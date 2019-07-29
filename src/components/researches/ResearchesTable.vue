@@ -4,7 +4,7 @@
       <v-toolbar-title>{{$route.name}}</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
-      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      <v-text-field v-model="search" clearable append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-toolbar>
     <v-data-table
       :headers="headers"

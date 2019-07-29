@@ -9,6 +9,7 @@
       :headers="headers"
       v-model="selected"
       :search="search"
+      :loading="$store.state.colls.collaborators.length == 0 ? 'warning' : null"
       :items="$store.state.colls.collaborators"
       :expand="expand"
       item-key="fullname"

@@ -19,11 +19,12 @@
           <v-textarea
             v-model="research.title"
             :rules="[rules.required]"
+            clearable
             auto-grow
             label="Title"
             rows="3"
           ></v-textarea>
-          <v-textarea v-model="research.description" label="Abstract" rows="5"></v-textarea>
+          <v-textarea clearable v-model="research.description" label="Abstract" rows="5"></v-textarea>
           <v-layout row wrap>
             <v-flex xs12 sm6 md6 lg6>
               <v-text-field
@@ -31,6 +32,7 @@
                 browser-autocomplete
                 name="year"
                 type="number"
+                clearable
                 :rules="[rules.required]"
                 v-model="research.year"
                 placeholder="Year"
@@ -199,7 +201,7 @@
           </v-combobox>
           <v-text-field
             v-if="research.type === 'Ponencia' || research.type === 'Event'"
-            prepend-icon="schedule"
+            prepend-icon="today"
             browser-autocomplete
             name="event"
             type="text"
@@ -225,7 +227,7 @@
             </v-flex>
             <v-flex xs12 sm6 md6 lg6>
               <v-text-field
-              :items="['Revista indizada en JCR', 'Revista indizada en otros índices']"
+                :items="['Revista indizada en JCR', 'Revista indizada en otros índices']"
                 prepend-icon="school"
                 browser-autocomplete
                 name="pub_in"
@@ -238,11 +240,15 @@
 
           <v-layout v-if="research.type === 'Tesis' || research.type === 'Thesis'" row wrap>
             <v-flex xs12>
-              <v-combobox prepend-icon="school"
+              <v-combobox
+                prepend-icon="school"
                 type="text"
                 name="grade"
                 v-model="research.grade"
-                placeholder="Grade" label="Grade" :items="['Licenciatura', 'Doctorado', 'Postgrado']"></v-combobox>
+                placeholder="Grade"
+                label="Grade"
+                :items="['Licenciatura', 'Doctorado', 'Postgrado']"
+              ></v-combobox>
             </v-flex>
             <v-flex xs12>
               <v-combobox

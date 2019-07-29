@@ -33,15 +33,10 @@ const mutations = {
       pub_in,
       event,
       Projects: [],
-      Topics: [],
+      Topics: lines,
       extra: JSON.parse(extra)
     },
-    projects.forEach(element => {
-      state.research.Projects.push(element.uuid)
-    });
-    lines.forEach(element => {
-      state.research.Topics.push(element.topic)
-    });
+    state.research.Projects = projects.map(proj => proj.uuid)
     console.log(research)
   },
   clearResearch(state) {
