@@ -3,13 +3,13 @@
     <div class="filter-container">
       <el-input
         style="max-width: 300px"
-        v-model="listQuery.nameCourse"
-        placeholder="Title"
+        v-model="listQuery.fullname"
+        placeholder="Search by name"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
-      <!--<el-select
-        v-model.number="listQuery.status"
+      <el-select
+        v-model.number="listQuery.active"
         @change="handleFilter"
         placeholder="Status"
         clearable
@@ -21,7 +21,7 @@
           :label="item.display_name"
           :value="item.key"
         />
-      </el-select>-->
+      </el-select>
       <el-button
         v-waves
         class="filter-item"
@@ -37,11 +37,11 @@
         @click="handleCreate"
       >Create</el-button>
       <el-checkbox
-        v-model="showAllDates"
+        v-model="showAllFields"
         class="filter-item"
         style="margin-left:15px;"
         @change="tableKey=tableKey+1"
-      >All dates</el-checkbox>
+      >All fields</el-checkbox>
     </div>
 
     <el-table
@@ -54,57 +54,29 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column
-        label="ID"
-        prop="uuid"
-        sortable="custom"
-        align="center"
-        width="80"
-        :class-name="getSortClass('uuid')"
-      >
-        <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.uuid }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column sortable prop="startDate" label="Start date" width="150px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.startDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="showAllDates" label="End Date" width="150px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.endDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="showAllDates" label="Date discount" width="150px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.dateDiscount | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Course Name" min-width="150px">
+      <el-table-column sortable prop="fullname" label="Fullname" min-width="150px" align="center">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.nameCourse }}</span>
+          <span class="link-type" @click="handleUpdate(row)">{{ row.fullname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Price" sortable prop="price" width="110px" align="center">
+      <el-table-column label="Adscription" sortable prop="adscription" min-width="100px" align="center">
         <template slot-scope="scope">
-          <span>${{ scope.row.price }}.00</span>
+          <span>{{ scope.row.adscription }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Discount" sortable prop="discount" width="110px" align="center">
+      <el-table-column label="Charge" sortable prop="charge" min-width="80px" align="center">
         <template slot-scope="scope">
-          <span>${{ scope.row.discount }}.00</span>
+          <span>{{ scope.row.charge }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Corum" align="center" width="95">
+      <el-table-column v-if="showAllFields" sortable prop="email"  label="Email" align="center" min-width="90">
         <template slot-scope="{row}">
-          <span v-if="row.corum" class="link-type">{{ row.corum }}</span>
-          <span v-else>0</span>
+          <span class="link-type">{{ row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Status" class-name="status-col" width="100">
+      <el-table-column label="Status" sortable prop="active" class-name="status-col" width="100">
         <template slot-scope="{row}">
-          <el-tag :type="row.active | statusFilter">{{ row.active ? 'Active' : 'Deactivate' }}</el-tag>
+          <el-tag :type="row.active | statusFilter">{{ row.active ? 'Active' : 'Inactive' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -114,19 +86,19 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{row}">
-          <!--<el-button type="primary" size="mini" @click="handleUpdate(row)">Edit</el-button>-->
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">Edit</el-button>
           <el-button
             v-if="!row.active"
-            size="small"
+            size="mini"
             type="success"
             @click="handleModifyStatus(row, true)"
-          >Publish</el-button>
+          >Active</el-button>
           <el-button
             v-else
             size="small"
             type="danger"
-            @click="handleModifyStatus(row,false)"
-          >Deactivate</el-button>
+            @click="handleModifyStatus(row, false)"
+          >Inactive</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -145,16 +117,18 @@
 import {
   fetchList,
   fetchPv,
-  createArticle,
-  updateArticle
-} from "@/api/course";
+  create,
+  update,
+  remove
+} from "@/api/member";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import { off } from 'element-ui/lib/utils/dom';
 
 const calendarTypeOptions = [
-  { key: true, display_name: "Deactivate" },
-  { key: false, display_name: "Active" }
+  { key: false, display_name: "Inactive" },
+  { key: true, display_name: "Active" }
 ];
 
 // arr to obj, such as { CN : "China", US : "USA" }
@@ -164,12 +138,12 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 }, {});
 
 export default {
-  name: "CoursesTable",
+  name: "MembersTable",
   components: { Pagination },
   directives: { waves },
   filters: {
-    statusFilter(status) {
-      return status ? "success" : "danger";
+    statusFilter(active) {
+      return active ? "success" : "danger";
     },
     typeFilter(type) {
       return calendarTypeKeyValue[type];
@@ -183,10 +157,10 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 5,
-        // nameCourse: undefined,
-        // status: undefined,
-        // sort: "+uuid"
+        limit: 10,
+        offset: 0,
+        fullname: undefined,
+        active: undefined
       },
       ratingOptions: [1, 2, 3, 4, 5],
       calendarTypeOptions,
@@ -194,7 +168,7 @@ export default {
         { label: "ID Ascending", key: "+uuid" },
         { label: "ID Descending", key: "-uuid" }
       ],
-      showAllDates: false
+      showAllFields: false
     };
   },
   created() {
@@ -203,11 +177,12 @@ export default {
   methods: {
     getList() {
       this.listLoading = true;
-      fetchList(this.listQuery).then(response => {
-        console.log(response);
-
-        this.list = response.courses;
-        this.total = response.totalCourses;
+      let { limit, page, offset } = this.listQuery
+      this.listQuery.offset = limit*(page -1)
+      fetchList(this.listQuery).then(res => {
+        console.log(res);
+        this.list = res.results
+        this.total = res.count;
         this.listLoading = false;
       });
     },
@@ -237,10 +212,10 @@ export default {
       this.handleFilter();
     },
     handleCreate() {
-      this.$router.push("/courses/create");
+      this.$router.push("/members/create");
     },
     handleUpdate(row) {
-      this.$router.push("/courses/" + row.uuid);
+      this.$router.push("/members/" + row.uuid);
     },
     handleDelete(row) {
       this.$notify({

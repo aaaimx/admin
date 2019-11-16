@@ -6,7 +6,7 @@ import request from '@/services/axios'
  */
 export function fetchList (query) {
   return request({
-    url: '/courses',
+    url: '/members/',
     method: 'GET',
     params: query
   })
@@ -14,11 +14,11 @@ export function fetchList (query) {
 
 /**
  *
- * @param {*} uuid String
+ * @param {*} id String
  */
-export function fetchCourse (uuid) {
+export function fetch (id) {
   return request({
-    url: `/courses/${uuid}`,
+    url: `/members/${id}`,
     method: 'GET'
   })
 }
@@ -27,9 +27,9 @@ export function fetchCourse (uuid) {
  *
  * @param {*} data Object
  */
-export function createCourse (data) {
+export function create (data) {
   return request({
-    url: '/courses',
+    url: '/members/',
     method: 'POST',
     data
   })
@@ -37,12 +37,12 @@ export function createCourse (data) {
 
 /**
  *
- * @param {*} uuid String
+ * @param {*} id String
  * @param {*} data Object
  */
-export function updateCourse (uuid, data) {
+export function update (id, data) {
   return request({
-    url: `/courses/${uuid}`,
+    url: `/members//${id}`,
     method: 'PUT',
     data
   })
@@ -50,11 +50,11 @@ export function updateCourse (uuid, data) {
 
 /**
  *
- * @param {*} uuid String
+ * @param {*} id String
  */
-export function deleteCourse (uuid, data) {
+export function remove (id, data) {
   return request({
-    url: `/courses/${uuid}`,
+    url: `/members/${id}`,
     method: 'DELETE',
     data
   })

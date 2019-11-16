@@ -196,7 +196,7 @@
 <script>
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
-import { fetchCourse, createCourse, updateCourse } from "@/api/course";
+import { fetchCourse, createCourse, updateCourse } from "@/api/member";
 import axios from "axios";
 import qs from "qs";
 
@@ -235,6 +235,10 @@ export default {
     Sticky: () => import("@/components/Sticky")
   },
   props: {
+    namespace: {
+      type: String,
+      default: ""
+    },
     isEdit: {
       type: Boolean,
       default: false

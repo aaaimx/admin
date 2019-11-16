@@ -84,37 +84,37 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  // {
-  //   path: '/courses',
-  //   component: Layout,
-  //   redirect: '/courses/list',
-  //   name: 'Courses',
-  //   meta: {
-  //     title: 'Courses',
-  //     icon: 'education'
-  //   },
-  //   children: [
-  //     {
-  //       path: '/courses/list',
-  //       component: () => import('@/views/courses/list'),
-  //       name: 'CoursesList',
-  //       meta: { title: 'Courses List', icon: 'list' }
-  //     },
-  //     {
-  //       path: '/courses/create',
-  //       component: () => import('@/views/courses/create'),
-  //       name: 'CreateArticle',
-  //       meta: { title: 'Create course', icon: 'edit' }
-  //     },
-  //     {
-  //       path: '/courses/:id',
-  //       component: () => import('@/views/courses/edit'),
-  //       name: 'EditArticle',
-  //       meta: { title: 'Edit Course', activeMenu: '/courses/:id' },
-  //       hidden: true
-  //     }
-  //   ]
-  // },
+  {
+    path: '/members',
+    component: Layout,
+    redirect: '/members/list',
+    name: 'Members',
+    meta: {
+      title: 'Members',
+      icon: 'people'
+    },
+    children: [
+      {
+        path: '/members/list',
+        component: () => import('@/views/members/list'),
+        name: 'MembersList',
+        meta: { title: 'List', icon: 'list' }
+      },
+      {
+        path: '/members/create',
+        component: () => import('@/views/members/create'),
+        name: 'CreateMember',
+        meta: { title: 'Create', icon: 'edit' }
+      },
+      {
+        path: '/members/:id',
+        component: () => import('@/views/members/edit'),
+        name: 'EditMember',
+        meta: { title: 'Edit member', activeMenu: '/members/:id' },
+        hidden: true
+      }
+    ]
+  },
   {
     path: '/contact',
     component: Layout,
@@ -134,7 +134,7 @@ export const asyncRoutes = [
       // {
       //   path: '/contact/:id',
       //   component: () => import('@/views/contact/edit'),
-      //   name: 'EditArticle',
+      //   name: 'EditMember',
       //   meta: { title: 'Edit Course', activeMenu: '/contact/:id' },
       //   hidden: true
       // }
@@ -151,7 +151,7 @@ export const asyncRoutes = [
   //   ]
   // },
   {
-    path: 'external-link',
+    path: 'admin-link',
     component: Layout,
     children: [
       {
@@ -161,7 +161,7 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: 'external-link',
+    path: 'website-link',
     component: Layout,
     children: [
       {
