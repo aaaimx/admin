@@ -9,9 +9,9 @@
       </el-input>
     </header>
     <!-- main section -->
-    <section v-show="postForm.subject.length" class="main">
+    <section v-show="postForm.learn.length" class="main">
       <ul class="todo-list">
-        <li v-for="(todo, index) in postForm.subject" :key="index" class="todo">
+        <li v-for="(todo, index) in postForm.learn" :key="index" class="todo">
           <div class="view">
             <label v-text="todo" />
             <button class="destroy" @click="deleteTodo( todo )" />
@@ -22,8 +22,8 @@
     <!-- footer -->
     <footer class="footer">
       <span class="todo-count">
-        <strong>{{ postForm.subject.length }}</strong>
-        {{ postForm.subject.length | pluralize('item') }} left
+        <strong>{{ postForm.learn.length }}</strong>
+        {{ postForm.learn.length | pluralize('point') }}
       </span>
     </footer>
   </section>
@@ -43,18 +43,18 @@ export default {
     };
   },
   computed: {
-    ...mapState("members", ["postForm"])
+    ...mapState("courses", ["postForm"])
   },
   methods: {
     addTodo() {
       const text = this.newTodo;
       if (text.trim()) {
-        this.$store.commit("members/ADD_SUBJECT", text);
+        this.$store.commit("courses/ADD_LEARN", text);
       }
       this.newTodo = "";
     },
     deleteTodo(todo) {
-      this.$store.commit("members/DELETE_SUBJECT", todo);
+      this.$store.commit("courses/DELETE_LEARN", todo);
     }
   }
 };

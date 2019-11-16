@@ -43,18 +43,18 @@ export default {
     };
   },
   computed: {
-    ...mapState("members", ["postForm"])
+    ...mapState("courses", ["postForm"])
   },
   methods: {
     addTodo() {
       const text = this.newTodo;
       if (text.trim()) {
-        this.$store.commit("members/ADD_SUBJECT", text);
+        this.$store.commit("courses/ADD_SUBJECT", text);
       }
       this.newTodo = "";
     },
     deleteTodo(todo) {
-      this.$store.commit("members/DELETE_SUBJECT", todo);
+      this.$store.commit("courses/DELETE_SUBJECT", todo);
     }
   }
 };

@@ -8,31 +8,12 @@
 import trae from "@/services/trae";
 export default {
   name: "App",
-  created() {
-    const postForm = {
-      status: 0,
-      learn: ["string"],
-      corum: 0,
-      content: [
-        {
-          tema: "string",
-          points: ["string"]
-        }
-      ],
-      requirements: ["string"],
-      material: ["string"],
-      imgBanner: "https://imagesadc.s3.amazonaws.com/logos/logohor_bco2.png",
-      nameCourse: "string",
-      summary: "string",
-      description: "string",
-      startDate: "2019-10-31",
-      endDate: "2019-10-31",
-      price: 200,
-      discount: 100,
-      dateDiscount: "2019-10-31",
-      created_at: "2019-10-31"
-    };
-
+  mounted() {
+   this.$store.dispatch('members/fetchPartners')
+   this.$store.dispatch('members/fetchDivisions')
+   this.$store.dispatch('members/fetchRoles')
+   this.$store.dispatch('members/fetchCollaborators')
+   this.$store.dispatch('projects/fetchLines')
   }
 };
 </script>

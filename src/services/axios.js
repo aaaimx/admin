@@ -19,6 +19,8 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
     config.headers.post['Content-Type'] = 'application/json'
+    config.headers.put['Content-Type'] = 'application/json'
+    config.headers.patch['Content-Type'] = 'application/json'
     if (store.getters.token) {
       config.headers['Authorization'] = 'Bearer ' + getToken()
     }

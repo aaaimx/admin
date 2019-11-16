@@ -98,19 +98,50 @@ export const asyncRoutes = [
         path: '/members/list',
         component: () => import('@/views/members/list'),
         name: 'MembersList',
-        meta: { title: 'List', icon: 'list' }
+        meta: { title: 'Member list', icon: 'list' }
       },
       {
         path: '/members/create',
         component: () => import('@/views/members/create'),
         name: 'CreateMember',
-        meta: { title: 'Create', icon: 'edit' }
+        meta: { title: 'Create member', icon: 'edit' }
       },
       {
         path: '/members/:id',
         component: () => import('@/views/members/edit'),
         name: 'EditMember',
         meta: { title: 'Edit member', activeMenu: '/members/:id' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/projects',
+    component: Layout,
+    redirect: '/projects/list',
+    name: 'Projects',
+    meta: {
+      title: 'Projects',
+      icon: 'tree'
+    },
+    children: [
+      {
+        path: '/projects/list',
+        component: () => import('@/views/projects/list'),
+        name: 'ProjectsList',
+        meta: { title: 'Project list', icon: 'list' }
+      },
+      {
+        path: '/projects/create',
+        component: () => import('@/views/projects/create'),
+        name: 'CreateProject',
+        meta: { title: 'Create project', icon: 'edit' }
+      },
+      {
+        path: '/projects/:id',
+        component: () => import('@/views/projects/edit'),
+        name: 'EditProject',
+        meta: { title: 'Edit project', activeMenu: '/projects/:id' },
         hidden: true
       }
     ]

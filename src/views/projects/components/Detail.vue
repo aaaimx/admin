@@ -8,8 +8,6 @@
       class="form-container"
     >
       <sticky :z-index="10" :class-name="'sub-navbar '+postForm.active">
-        <StatusDropdown v-model="postForm.active" />
-        <!-- <BannerUrlDropdown v-model="postForm.imgBanner" /> -->
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -21,8 +19,8 @@
           v-loading="loading"
           v-show="isEdit"
           type="danger"
-          @click="deleteMember"
-        >Delete member</el-button>
+          @click="deleteProject"
+        >Delete project</el-button>
       </sticky>
 
       <div class="createPost-main-container">
@@ -43,37 +41,42 @@
           <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
-                <el-col :span="12" :xs="24">
-                  <el-form-item label="Fullname:" prop="fullname" class="postInfo-container-item">
+                <el-col :span="24" :xs="24">
+                  <el-form-item label="Title:" prop="title" class="postInfo-container-item">
                     <el-input
-                      v-model="postForm.fullname"
-                      placeholder="apellidoP-apellidoM, Nombre(s)"
-                      type="text"
+                      v-model="postForm.title"
+                      placeholder="i.e: Segmentación de regiones basado en atributos de textura de datos bidimensionales..."
+                      type="textarea"
+                      rows="3"
                     />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12" :xs="24">
                   <el-form-item
-                    label="Email (Optional):"
-                    prop="email"
-                    class="postInfo-container-item"
-                  >
-                    <el-input
-                      v-model="postForm.email"
-                      type="email"
-                      placeholder="Enter valid email"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12" :xs="24">
-                  <el-form-item
-                    label="Adscription:"
-                    prop="adscription"
+                    label="Start date:"
+                    prop="start"
                     class="postInfo-container-item"
                   >
                     <br />
+                    <el-date-picker v-model="postForm.start" type="date" placeholder="Pick a day"></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="End date:"
+                    prop="end"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-date-picker v-model="postForm.end" type="date" placeholder="Pick a day"></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item label="Institute:" prop="institute" class="postInfo-container-item">
+                    <br />
                     <el-select
-                      v-model="postForm.adscription"
+                      v-model="postForm.institute"
+                      filterable
                       clearable
                       placeholder="Select institute"
                     >
@@ -90,83 +93,92 @@
                 </el-col>
 
                 <el-col :span="12" :xs="24">
-                  <el-form-item label="Roles:" prop="roles" class="postInfo-container-item">
+                  <el-form-item
+                    label="Responsable:"
+                    prop="responsible"
+                    class="postInfo-container-item"
+                  >
                     <br />
-                    <el-select v-model="postForm.roles" multiple placeholder="Select roles">
+                    <el-select
+                      v-model="postForm.responsible"
+                      remote
+                      allow-create
+                      clearable
+                      filterable
+                      reserve-keyword
+                      placeholder="Select responsible person"
+                    >
                       <el-option
-                        v-for="item in roles"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id"
+                        v-for="item in collaborators"
+                        :key="item.fullname"
+                        :label="item.fullname"
+                        :value="item.fullname"
                       ></el-option>
                     </el-select>
+                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Áreas de interés:"
+                    prop="lines"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-select
+                      v-model="postForm.lines"
+                      multiple
+                      placeholder="Select interest areas"
+                    >
+                      <el-option
+                        v-for="item in lines"
+                        :key="item.id"
+                        :label="item.topic.slice(0, 30).concat('...')"
+                        :value="item.id"
+                      >{{item.topic}}</el-option>
+                    </el-select>
+                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12" :xs="24">
-                  <el-form-item label="Cargo:" prop="charge" class="postInfo-container-item">
-                    <el-input
-                      v-model="postForm.charge"
-                      placeholder="Member/President/Division Leader/Board Chair"
-                      type="text"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12" :xs="24">
-                  <el-form-item label="Divisions:" prop="divisions" class="postInfo-container-item">
+                  <el-form-item
+                    label="Collaborators:"
+                    prop="collaborators"
+                    class="postInfo-container-item"
+                  >
                     <br />
-                    <el-select v-model="postForm.divisions" multiple placeholder="Select roles">
+                    <el-select
+                      v-model="postForm.collaborators"
+                      remote
+                      multiple
+                      filterable
+                      placeholder="Select collaborators"
+                    >
                       <el-option
-                        v-for="item in divisions"
+                        v-for="item in collaborators"
                         :key="item.id"
-                        :label="item.name"
+                        :label="item.fullname"
                         :value="item.id"
                       ></el-option>
                     </el-select>
+                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
                   </el-form-item>
                 </el-col>
               </el-row>
             </div>
           </el-col>
         </el-row>
-        <!--  <el-row>
-          <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-            <h4>Learn</h4>
-            <Learn />
-          </el-col>
-          <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-            <h4>Requirements</h4>
-            <Requirements />
-          </el-col>
-          <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-            <h4>Material</h4>
-            <Material />
-          </el-col>
-        </el-row>-->
       </div>
     </el-form>
-    <el-dialog title="Add Module" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="Tema: ">
-          <el-input v-model="form.module" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button
-          type="primary"
-          @keyup.enter="dialogFormVisible = false, newModule()"
-          @click="dialogFormVisible = false, newModule()"
-        >Confirm</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/member";
+import { fetch, create, update } from "@/api/project";
+import { fetchList } from "@/api/member";
 import axios from "axios";
 import qs from "qs";
 import rules from "./validators";
@@ -185,14 +197,6 @@ export default {
   name: "MemberDetail",
   mixins: [loadingMixin],
   components: {
-    Warning: () => import("./Warning"),
-    Requirements: () => import("./Todos/Requirements"),
-    Material: () => import("./Todos/Material"),
-    Learn: () => import("./Todos/Learn"),
-    StatusDropdown: () => import("./Dropdown/Status"),
-    PlatformDropdown: () => import("./Dropdown/Platform"),
-    BannerUrlDropdown: () => import("./Dropdown/BannerUrl"),
-    JsonEditor: () => import("@/components/JsonEditor"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
   },
@@ -217,28 +221,45 @@ export default {
       },
       id: null,
       value: [],
+      options: [],
+      value1: "",
       formLabelWidth: "120px"
     };
   },
   computed: {
-    ...mapState("members", ["postForm", "partners", "divisions", "roles"]),
+    ...mapState("members", [
+      "partners",
+      "collaborators",
+      "divisions",
+      "roles"
+    ]),
+    ...mapState("projects", ["postForm", "lines"])
   },
   created() {
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
     } else {
-      this.$store.commit("members/SET_MEMBER", defaultForm);
+      this.$store.commit("projects/SET_PROJECT", defaultForm);
     }
     this.tempRoute = Object.assign({}, this.$route);
   },
   methods: {
+    fetchList(query) {
+      fetchList({
+        fullname: query
+      }).then(res => {
+        console.log(res);
+        this.options = res.results;
+      });
+    },
     fetchData(id) {
       let loading = this.loadingFullPage();
       fetch(id)
         .then(data => {
+          console.log(data)
           loading.close();
-          this.$store.commit("members/SET_MEMBER", data);
+          this.$store.commit("projects/SET_PROJECT", data);
         })
         .catch(err => {
           loading.close();
@@ -250,8 +271,7 @@ export default {
         if (valid) {
           this.loading = true;
           let request;
-          if (this.isEdit)
-            request = update(this.postForm);
+          if (this.isEdit) request = update(this.postForm);
           else request = create(this.postForm);
 
           request
@@ -259,13 +279,13 @@ export default {
               this.$notify({
                 title: ` ${this.isEdit ? "Updated" : "Created"}`,
                 dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.fullname}</b> was sucessfully saved`,
+                message: `${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`,
                 type: "success",
                 duration: 2000
               });
               console.log(response);
               this.loading = false;
-              this.$router.push("/members/" + response.id);
+              this.$router.push("/projects/" + response.uuid);
             })
             .catch(error => {
               this.loading = false;
@@ -282,7 +302,7 @@ export default {
         }
       });
     },
-    deleteMember() {
+    deleteProject() {
       this.$message({
         dangerouslyUseHTMLString: true,
         message: `${this.namespace} was sucessfully deleted`,

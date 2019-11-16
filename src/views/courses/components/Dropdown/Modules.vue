@@ -57,19 +57,19 @@ export default {
     }
   },
   computed: {
-    ...mapState("members", ["postForm"]),
+    ...mapState("courses", ["postForm"]),
     content() {
       return this.postForm.content
     }
   },
   methods: {
     updateContent() {
-      this.$store.commit("members/UPDATE_CONTENT", JSON.parse(this.value));
+      this.$store.commit("courses/UPDATE_CONTENT", JSON.parse(this.value));
     },
     newModule() {
       if (this.form.module.trim()) {
-        this.$store.commit("members/UPDATE_CONTENT", JSON.parse(this.value));
-        this.$store.commit("members/ADD_MODULE", {
+        this.$store.commit("courses/UPDATE_CONTENT", JSON.parse(this.value));
+        this.$store.commit("courses/ADD_MODULE", {
           tema: this.form.module,
           points: []
         });

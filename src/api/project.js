@@ -6,7 +6,7 @@ import request from '@/services/axios'
  */
 export function fetchList (query) {
   return request({
-    url: '/members/',
+    url: '/projects/',
     method: 'GET',
     params: query
   })
@@ -16,9 +16,9 @@ export function fetchList (query) {
  *
  * @param {*} query Object
  */
-export function fetchRoles (query) {
+export function fetchLines (query) {
   return request({
-    url: '/roles/',
+    url: '/lines/',
     method: 'GET',
     params: query
   })
@@ -26,11 +26,11 @@ export function fetchRoles (query) {
 
 /**
  *
- * @param {*} id String
+ * @param {*} uuid String
  */
-export function fetch (id) {
+export function fetch (uuid) {
   return request({
-    url: `/members/${id}/`,
+    url: `/projects/${uuid}/`,
     method: 'GET'
   })
 }
@@ -41,7 +41,7 @@ export function fetch (id) {
  */
 export function create (data) {
   return request({
-    url: '/members/',
+    url: '/projects/',
     method: 'POST',
     data
   })
@@ -49,12 +49,12 @@ export function create (data) {
 
 /**
  *
- * @param {*} id String
+ * @param {*} uuid String
  * @param {*} data Object
  */
 export function update (data) {
   return request({
-    url: `/members/${data.id}/`,
+    url: `/projects/${data.uuid}/`,
     method: 'PUT',
     data
   })
@@ -66,7 +66,7 @@ export function update (data) {
  */
 export function updateStatus (data) {
   return request({
-    url: `/members/${data.id}/`,
+    url: `/projects/${data.id}/`,
     method: 'PATCH',
     data
   })
@@ -78,7 +78,7 @@ export function updateStatus (data) {
  */
 export function remove (id, data) {
   return request({
-    url: `/members/${id}`,
+    url: `/projects/${id}`,
     method: 'DELETE',
     data
   })

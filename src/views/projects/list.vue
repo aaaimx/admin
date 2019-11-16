@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input
         style="max-width: 300px"
-        v-model="listQuery.fullname"
+        v-model="listQuery.title"
         placeholder="Search by name"
         clearable
         class="filter-item"
@@ -35,7 +35,7 @@
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
-        @click="handleCreateOrUpdate('/members/create')"
+        @click="handleCreateOrUpdate('/projects/create')"
       >Create</el-button>
       <el-checkbox
         v-model="showAllFields"
@@ -58,80 +58,60 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column sortable prop="fullname" label="Fullname" min-width="150px" align="center">
+      <el-table-column sortable prop="title" label="Title" min-width="150px" align="center">
         <template slot-scope="{row}">
           <span
             class="link-type"
-            @click="handleCreateOrUpdate('/members/' + row.id)"
-          >{{ row.fullname }}</span>
+            @click="handleCreateOrUpdate('/projects/' + row.uuid)"
+          >{{ row.title }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Institute" sortable prop="institute" min-width="150px" align="center">
+        <template slot-scope="scope">
+          <span>{{ getInstitute(scope.row.institute) }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="Adscription"
+        label="Responsable"
         sortable
-        prop="adscription"
-        min-width="100px"
+        prop="responsible"
+        min-width="120px"
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ getInstitute(scope.row.adscription) }}</span>
+          <span>{{ scope.row.responsible }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Charge" sortable prop="charge" min-width="80px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.charge }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        v-if="showAllFields"
-        sortable
-        prop="email"
-        label="Email"
-        align="center"
-        min-width="90"
-      >
+      <el-table-column v-if="showAllFields" sortable label="Vigency" align="center" min-width="200">
         <template slot-scope="{row}">
-          <span class="link-type">{{ row.email }}</span>
+          <span
+            class="link-type"
+          >{{ row.start.replace(/-/g, '/') }} - {{ row.end.replace(/-/g, '/') }}</span>
         </template>
       </el-table-column>
       <el-table-column
         v-if="showAllFields"
-        label="Roles"
+        label="Áreas de interés"
         sortable
-        prop="roles"
+        prop="lines"
         class-name="status-col"
-        width="200"
+        width="300"
       >
         <template slot-scope="{row}">
-          <el-tag v-for="role in row.roles" size="mini" :key="role" type="info">{{ getRole(role) }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="Status" sortable prop="active" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-tag :type="row.active | statusFilter">{{ row.active ? 'Active' : 'Inactive' }}</el-tag>
+          <el-tag v-for="line in row.lines" size="mini" :key="line" type="info">{{ getLine(line) }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
-        label="Actions"
+        label="Collaborators"
         align="center"
         fixed="right"
-        min-width="100"
+        min-width="200px"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{row}">
-          <!-- <el-button type="primary" size="mini" @click="handleUpdate(row)">Edit</el-button> -->
-          <el-button
-            v-if="!row.active"
-            size="mini"
-            type="success"
-            @click="handleModifyStatus(row, true)"
-          >Active</el-button>
-          <el-button
-            v-else
-            size="small"
-            type="danger"
-            @click="handleModifyStatus(row, false)"
-          >Inactive</el-button>
+          <ul>
+            <li v-for="col in row.collaborators" :key="col">{{getColName(col)}}</li>
+          </ul>
         </template>
       </el-table-column>
     </el-table>
@@ -153,7 +133,7 @@
 </template>
 
 <script>
-import { fetchList, remove, updateStatus } from "@/api/member";
+import { fetchList, remove, updateStatus } from "@/api/project";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
@@ -180,7 +160,8 @@ export default {
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("members", ["partners", "divisions", "roles"])
+    ...mapState("projects", ["lines"]),
+    ...mapState("members", ["partners", "divisions", 'collaborators', "roles"])
   },
   data() {
     return {
@@ -192,7 +173,7 @@ export default {
         page: 1,
         limit: 10,
         offset: 0,
-        fullname: undefined,
+        title: undefined,
         active: undefined
       },
       statusOptions,
@@ -211,11 +192,15 @@ export default {
     // mixins
     getInstitute(uuid) {
       let i = this.partners.filter(el => el.uuid === uuid);
-      return i[0] ? i[0].alias : "-----";
+      return i[0] ? i[0].name : "-----";
     },
 
-    getRole(role) {
-      return this.roles.filter(el => el.id === role)[0].name;
+    getLine(line) {
+      return this.lines.filter(el => el.id === line)[0].topic;
+    },
+
+    getColName(colId) {
+      return this.collaborators.filter(el => el.id === colId)[0].fullname;
     },
 
     // methods
