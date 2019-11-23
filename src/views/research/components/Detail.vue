@@ -7,20 +7,23 @@
       :rules="rules"
       class="form-container"
     >
-      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.active">
+      <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.type">
+        <TypeDropdown v-model="postForm.type" />
+        <BannerUrlDropdown v-model="postForm.link" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
           type="success"
           @click="submitForm"
-          v-text="isEdit ? 'Save changes': 'Save'"
+          v-text="isEdit ? 'Save changes' : 'Save'"
         ></el-button>
         <el-button
           v-loading="loading"
           v-show="isEdit"
           type="danger"
-          @click="deleteProject"
-        >Delete project</el-button>
+          @click="deleteResearch"
+          >Delete</el-button
+        >
       </sticky>
 
       <div class="createPost-main-container">
@@ -42,57 +45,171 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="24" :xs="24">
-                  <el-form-item label="Title:" prop="title" class="postInfo-container-item">
+                  <el-form-item
+                    label="Title:"
+                    prop="title"
+                    class="postInfo-container-item"
+                  >
                     <el-input
                       v-model="postForm.title"
-                      placeholder="i.e: Segmentación de regiones basado en atributos de textura de datos bidimensionales..."
+                      placeholder="i.e: Segmentación de tumores cerebrales utilizando optimización..."
                       type="textarea"
                       rows="3"
                     />
                   </el-form-item>
                 </el-col>
-                <el-col :span="12" :xs="24">
+                <el-col :span="24" :xs="24">
                   <el-form-item
-                    label="Start date:"
-                    prop="start"
+                    label="Resume/Abstract:"
+                    prop="resume"
+                    class="postInfo-container-item"
+                  >
+                    <el-input
+                      v-model="postForm.resume"
+                      placeholder=""
+                      type="textarea"
+                      rows="5"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Year:"
+                    prop="year"
                     class="postInfo-container-item"
                   >
                     <br />
-                    <el-date-picker v-model="postForm.start" format="dd/MM/yyyy" type="date" placeholder="Pick a day"></el-date-picker>
+                    <el-input
+                      v-model="postForm.year"
+                      type="number"
+                      min="2018"
+                      placeholder="Year"
+                      clearable
+                      class="filter-item"
+                    />
                   </el-form-item>
                 </el-col>
-                <el-col :span="12" :xs="24">
+                <el-col :span="8" :xs="24">
                   <el-form-item
-                    label="End date:"
-                    prop="end"
+                    label="Related projects:"
+                    prop="projects"
                     class="postInfo-container-item"
                   >
-                    <br />
-                    <el-date-picker v-model="postForm.end" format="dd/MM/yyyy" type="date" placeholder="Pick a day"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12" :xs="24">
-                  <el-form-item label="Institute:" prop="institute" class="postInfo-container-item">
                     <br />
                     <el-select
-                      v-model="postForm.institute"
+                      v-model="postForm.projects"
+                      multiple
                       filterable
+                      remote
+                      reserve-keyword
+                      :remote-method="fetchProjects"
+                      :loading="loading"
                       clearable
-                      placeholder="Select institute"
+                      placeholder="Search and select projects"
                     >
                       <el-option
-                        v-for="item in partners"
+                        v-for="item in projects"
                         :key="item.uuid"
-                        :label="item.alias"
+                        :label="item.title.slice(0, 30).concat('...')"
                         :value="item.uuid"
                       >
-                        <small style="color: #8492a6; font-size: 13px">{{ item.name }}</small>
+                        <small style="color: #8492a6; font-size: 13px">{{
+                          item.title.slice(0, 100).concat('...')
+                        }}</small>
                       </el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
 
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Áreas de interés:"
+                    prop="lines"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-select
+                      v-model="postForm.lines"
+                      multiple
+                      placeholder="Select interest areas"
+                    >
+                      <el-option
+                        v-for="item in lines"
+                        :key="item.id"
+                        :label="item.topic.slice(0, 30).concat('...')"
+                        :value="item.id"
+                        >{{ item.topic }}</el-option
+                      >
+                    </el-select>
+                    <el-button
+                      icon="el-icon-plus"
+                      size="mini"
+                      circle
+                    ></el-button>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Grade:"
+                    prop="grade"
+                    v-if="postForm.type == 'Thesis'"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-input
+                      v-model="postForm.grade"
+                      placeholder="Licenciatura"
+                      clearable
+                      class="filter-item"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col v-if="postForm.type == 'Presentation'" :span="8" :xs="24">
+                  <el-form-item
+                    label="Event:"
+                    prop="event"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-input
+                      v-model="postForm.event"
+                      clearable
+                      class="filter-item"
+                    />
+                  </el-form-item>
+                </el-col>
+
+
                 <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Article type:"
+                    prop="pub_type"
+                    v-if="postForm.type == 'Article'"
+                    class="postInfo-container-item"
+                  >
+                    <el-input
+                      v-model="postForm.pub_type"
+                      clearable
+                      class="filter-item"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col v-if="postForm.type == 'Article'" :span="12" :xs="24">
+                  <el-form-item
+                    label="Published in:"
+                    prop="púb_in"
+                    class="postInfo-container-item"
+                  >
+                    <el-input
+                      v-model="postForm.púb_in"
+                      clearable
+                      class="filter-item"
+                    />
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="24" :xs="24">
                   <el-form-item
                     label="Responsable:"
                     prop="responsible"
@@ -115,54 +232,11 @@
                         :value="item.fullname"
                       ></el-option>
                     </el-select>
-                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12" :xs="24">
-                  <el-form-item
-                    label="Áreas de interés:"
-                    prop="lines"
-                    class="postInfo-container-item"
-                  >
-                    <br />
-                    <el-select
-                      v-model="postForm.lines"
-                      multiple
-                      placeholder="Select interest areas"
-                    >
-                      <el-option
-                        v-for="item in lines"
-                        :key="item.id"
-                        :label="item.topic.slice(0, 30).concat('...')"
-                        :value="item.id"
-                      >{{item.topic}}</el-option>
-                    </el-select>
-                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12" :xs="24">
-                  <el-form-item
-                    label="Collaborators:"
-                    prop="collaborators"
-                    class="postInfo-container-item"
-                  >
-                    <br />
-                    <el-select
-                      v-model="postForm.collaborators"
-                      remote
-                      multiple
-                      filterable
-                      placeholder="Select collaborators"
-                    >
-                      <el-option
-                        v-for="item in collaborators"
-                        :key="item.id"
-                        :label="item.fullname"
-                        :value="item.id"
-                      ></el-option>
-                    </el-select>
-                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                    <el-button
+                      icon="el-icon-plus"
+                      size="mini"
+                      circle
+                    ></el-button>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -177,28 +251,34 @@
 <script>
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/project";
-import { fetchList } from "@/api/member";
+import { fetch, create, update } from "@/api/research";
+import { fetchList } from "@/api/project";
 import axios from "axios";
 import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
 
 const defaultForm = {
-    title: '',
-    start: '',
-    end: '',
-    in_charge: '',
-    institute: '',
-    collaborators: [],
-    lines: []
+  title: "",
+  resume: "",
+  year: null,
+  grade: "",
+  event: "",
+  pub_in: "",
+  pub_type: "",
+  type: "",
+  link: "",
+  lines: [],
+  projects: []
 };
 export default {
-  name: "ProjectDetail",
+  name: "ResearchDetail",
   mixins: [loadingMixin],
   components: {
     MDinput: () => import("@/components/MDinput"),
-    Sticky: () => import("@/components/Sticky")
+    Sticky: () => import("@/components/Sticky"),
+    TypeDropdown: () => import("./Status"),
+    BannerUrlDropdown: () => import("./BannerUrl")
   },
   props: {
     namespace: {
@@ -216,50 +296,46 @@ export default {
       rules,
       tempRoute: {},
       dialogFormVisible: false,
-      form: {
-        module: ""
-      },
       id: null,
       value: [],
-      options: [],
+      projects: [],
       value1: "",
       formLabelWidth: "120px"
     };
   },
   computed: {
-    ...mapState("members", [
-      "partners",
-      "collaborators",
-      "divisions",
-      "roles"
-    ]),
-    ...mapState("projects", ["postForm", "lines"])
+    ...mapState("members", ["partners", "collaborators", "divisions", "roles"]),
+    ...mapState("research", ["postForm"]),
+    ...mapState("projects", ["lines"])
   },
   created() {
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
     } else {
-      this.$store.commit("projects/SET_PROJECT", defaultForm);
+      this.$store.commit("research/SET_RESEARCH_FORM", defaultForm);
     }
     this.tempRoute = Object.assign({}, this.$route);
   },
   methods: {
-    fetchList(query) {
+    fetchProjects(title) {
+      this.loading = true;
       fetchList({
-        fullname: query
-      }).then(res => {
-        console.log(res);
-        this.options = res.results;
-      });
+          title
+        })
+        .then(res => {
+          console.log(res);
+          this.projects = res.results;
+          this.loading = false;
+        });
     },
     fetchData(id) {
       let loading = this.loadingFullPage();
       fetch(id)
         .then(data => {
-          console.log(data)
+          console.log(data);
           loading.close();
-          this.$store.commit("projects/SET_PROJECT", data);
+          this.$store.commit("research/SET_RESEARCH_FORM", data);
         })
         .catch(err => {
           loading.close();
@@ -273,10 +349,10 @@ export default {
           let request;
           if (this.isEdit) request = update(this.postForm);
           else request = create(this.postForm);
-          let start = new Date(this.postForm.start)
-          let end = new Date(this.postForm.end)
-          this.postForm.start = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`
-          this.postForm.end = `${end.getFullYear()}-${end.getMonth()}-${end.getDate()}`
+          let start = new Date(this.postForm.start);
+          let end = new Date(this.postForm.end);
+          this.postForm.start = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`;
+          this.postForm.end = `${end.getFullYear()}-${end.getMonth()}-${end.getDate()}`;
           request
             .then(response => {
               this.$notify({
@@ -288,7 +364,7 @@ export default {
               });
               console.log(response);
               this.loading = false;
-              this.$router.push("/projects/" + response.uuid);
+              this.$router.push("/research/" + response.uuid);
             })
             .catch(error => {
               this.loading = false;
@@ -305,7 +381,7 @@ export default {
         }
       });
     },
-    deleteProject() {
+    deleteResearch() {
       this.$message({
         dangerouslyUseHTMLString: true,
         message: `${this.namespace} was sucessfully deleted`,

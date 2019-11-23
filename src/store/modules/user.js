@@ -1,8 +1,15 @@
-import { login, refreshToken, getInfo } from '@/api/user'
+import { login, refreshToken, getInfo, verifyToken } from '@/api/user'
 import { reLogin } from '@/utils/messages'
-import { getToken, setToken, removeToken, decodeToken } from '@/utils/auth'
+import {
+  getToken,
+  getRefresh,
+  setToken,
+  setRefreshToken,
+  removeToken,
+  decodeToken
+} from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-
+import moment from 'moment'
 const USER = {
   roles: ['admin'],
   introduction: 'I am a super administrator',
@@ -11,6 +18,7 @@ const USER = {
 }
 const state = {
   token: getToken(),
+  refresh: getToken(),
   name: '',
   avatar: '',
   introduction: '',
@@ -20,6 +28,9 @@ const state = {
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
+  },
+  SET_REFRESH: (state, token) => {
+    state.refresh = token
   },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
@@ -42,11 +53,12 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password })
         .then(data => {
-          const token = data.access
-          var decoded = decodeToken(token)
+          const { access, refresh } = data
+          var decoded = decodeToken(access)
           console.log(decoded)
-          commit('SET_TOKEN', token)
-          setToken(token)
+          commit('SET_TOKEN', access)
+          setToken(access)
+          setRefreshToken(refresh)
           resolve()
         })
         .catch(error => {
@@ -61,7 +73,6 @@ const actions = {
       getInfo(state.token)
         .then(data => {
           const { roles, name, avatar, introduction } = USER
-          console.log(data)
           commit('SET_ROLES', roles)
           commit('SET_NAME', name)
           commit('SET_AVATAR', avatar)
@@ -86,7 +97,7 @@ const actions = {
   },
 
   // remove token
-  resetToken ({ commit, state }) {
+  resetToken ({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
@@ -95,14 +106,15 @@ const actions = {
     })
   },
 
-  refreshToken ({ commit, state }) {
+  refreshToken ({ commit }) {
     return new Promise((resolve, reject) => {
-      refreshToken(state.token)
+      const refresh = getRefresh()
+      refreshToken(refresh)
         .then(data => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()
-          setToken(data.token)
+          setToken(data.access)
           resolve()
         })
         .catch(err => {
@@ -111,29 +123,42 @@ const actions = {
     })
   },
 
-  inspectToken ({ state }) {
-    return new Promise(resolve => {
-      const token = state.token
-      if (token) {
-        const decoded = decodeToken(token)
-        const { exp } = decoded
-        if (Date.now() >= exp * 1000) reLogin()
-        // if (
-        //   exp - Date.now() * 1000 < 1800 &&
-        //   Date.now() * 1000 - orig_iat < 628200
-        // ) {
-        //   console.log('here')
-        //   dispatch('refreshToken').then(() => {
-        //   })
-        // } else if (exp - Date.now() * 1000 < 1800) {
-        //   // DO NOTHING, DO NOT REFRESH
-        // } else {
-        //   // PROMPT USER TO RE-LOGIN, THIS ELSE CLAUSE COVERS THE CONDITION WHERE A TOKEN IS EXPIRED AS WELL
-        //   reLogin()
-        // }
-      }
-      resolve()
-    })
+  inspectToken ({ dispatch, state }) {
+    // verifyToken(state.token).then(
+    //   res => {
+    //     dispatch('refreshToken')
+    //   },
+    //   err => {
+    //     // reLogin()
+    //   }
+    // )
+    // return new Promise((resolve, reject) => {
+    //   const token = state.token
+    //   if (token) {
+    //     const decoded = decodeToken(token)
+    //     const { exp } = decoded
+    //     var current = new Date()
+    //     var now = current.now() / 1000
+    //     console.log(exp - now)
+    //     if (now > exp) {
+    //       reLogin()
+    //       resolve()
+    //     }
+    //     // if (
+    //     //   exp - Date.now() * 1000 < 1800 &&
+    //     //   Date.now() * 1000 - orig_iat < 628200
+    //     // ) {
+    //     //   console.log('here')
+    //     //   dispatch('refreshToken').then(() => {
+    //     //   })
+    //     // } else if (exp - Date.now() * 1000 < 1800) {
+    //     //   // DO NOTHING, DO NOT REFRESH
+    //     // } else {
+    //     //   // PROMPT USER TO RE-LOGIN, THIS ELSE CLAUSE COVERS THE CONDITION WHERE A TOKEN IS EXPIRED AS WELL
+    //     //   reLogin()
+    //     // }
+    //   }
+    // })
   },
 
   // dynamically modify permissions

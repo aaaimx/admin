@@ -32,7 +32,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       fetchLines()
         .then(data => {
-          console.log(data)
           commit('SET_LINES', data.results)
           resolve()
         })

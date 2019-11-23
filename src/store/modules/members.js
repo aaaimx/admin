@@ -83,7 +83,6 @@ const actions = {
       fetchList()
         .then(res => {
           fetchList({ limit: res.count }).then(data => {
-            console.log(data.results)
             commit('SET_COLLS', data.results)
             resolve()
           })

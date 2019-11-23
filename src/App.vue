@@ -14,6 +14,7 @@ export default {
    this.$store.dispatch('members/fetchRoles')
    this.$store.dispatch('members/fetchCollaborators')
    this.$store.dispatch('projects/fetchLines')
+   // validate if not existing important data
   }
 };
 </script>

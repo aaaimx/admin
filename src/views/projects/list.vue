@@ -10,17 +10,17 @@
         @input="handleFilter"
       />
       <el-select
-        v-model.number="listQuery.active"
+        v-model.number="listQuery.institute"
         @change="handleFilter"
-        placeholder="Status"
+        placeholder="Institute"
         clearable
         class="filter-item"
       >
         <el-option
-          v-for="item in statusOptions"
-          :key="item.key"
-          :label="item.display_name"
-          :value="item.key"
+          v-for="item in partners"
+          :key="item.alias"
+          :label="item.alias"
+          :value="item.alias"
         />
       </el-select>
       <!-- <el-button
@@ -82,7 +82,7 @@
           <span>{{ scope.row.responsible }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="showAllFields" sortable label="Vigency" align="center" min-width="200">
+      <el-table-column sortable label="Vigency" align="center" min-width="200">
         <template slot-scope="{row}">
           <span
             class="link-type"
@@ -104,13 +104,18 @@
       <el-table-column
         label="Collaborators"
         align="center"
-        fixed="right"
+        v-if="showAllFields"
         min-width="200px"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{row}">
           <ul>
-            <li v-for="col in row.collaborators" :key="col">{{getColName(col)}}</li>
+            <li
+              class="link-type"
+              @click="handleCreateOrUpdate('/members/' + getColName(col).id)"
+              v-for="col in row.collaborators"
+              :key="col"
+            >{{getColName(col).fullname}}</li>
           </ul>
         </template>
       </el-table-column>
@@ -141,11 +146,6 @@ import { off } from "element-ui/lib/utils/dom";
 import { mapState } from "vuex";
 import tableMixin from "@/mixins/table-handlers";
 
-const statusOptions = [
-  { key: false, display_name: "Inactive" },
-  { key: true, display_name: "Active" }
-];
-
 export default {
   name: "MembersTable",
   components: { Pagination },
@@ -161,7 +161,7 @@ export default {
   mixins: [tableMixin],
   computed: {
     ...mapState("projects", ["lines"]),
-    ...mapState("members", ["partners", "divisions", 'collaborators', "roles"])
+    ...mapState("members", ["partners", "divisions", "collaborators", "roles"])
   },
   data() {
     return {
@@ -174,9 +174,8 @@ export default {
         limit: 10,
         offset: 0,
         title: undefined,
-        active: undefined
+        institute: undefined
       },
-      statusOptions,
       sortOptions: [
         { label: "ID Ascending", key: "+id" },
         { label: "ID Descending", key: "-id" }
@@ -200,7 +199,7 @@ export default {
     },
 
     getColName(colId) {
-      return this.collaborators.filter(el => el.id === colId)[0].fullname;
+      return this.collaborators.filter(el => el.id === colId)[0];
     },
 
     // methods

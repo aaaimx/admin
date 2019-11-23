@@ -3,24 +3,34 @@
     <div class="filter-container">
       <el-input
         style="max-width: 300px"
-        v-model="listQuery.fullname"
+        v-model="listQuery.title"
         placeholder="Search by name"
         clearable
         class="filter-item"
         @input="handleFilter"
       />
+      <el-input
+        style="max-width: 150px"
+        v-model="listQuery.year"
+        type="number"
+        min="2018"
+        placeholder="By year"
+        clearable
+        class="filter-item"
+        @input="handleFilter"
+      />
       <el-select
-        v-model.number="listQuery.active"
+        v-model.number="listQuery.type"
         @change="handleFilter"
-        placeholder="Status"
+        placeholder="By type"
         clearable
         class="filter-item"
       >
         <el-option
-          v-for="item in statusOptions"
-          :key="item.key"
-          :label="item.display_name"
-          :value="item.key"
+          v-for="item in types"
+          :key="item"
+          :label="item"
+          :value="item"
         />
       </el-select>
       <!-- <el-button
@@ -35,14 +45,16 @@
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
-        @click="handleCreateOrUpdate('/members/create')"
-      >Create</el-button>
+        @click="handleCreateOrUpdate('/research/create')"
+        >Create</el-button
+      >
       <el-checkbox
         v-model="showAllFields"
         class="filter-item"
         style="margin-left:15px;"
-        @change="tableKey=tableKey+1"
-      >All fields</el-checkbox>
+        @change="tableKey = tableKey + 1"
+        >All fields</el-checkbox
+      >
     </div>
 
     <el-table
@@ -57,81 +69,115 @@
       @sort-change="sortChange"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column sortable prop="fullname" label="Fullname" min-width="150px" align="center">
-        <template slot-scope="{row}">
+      <el-table-column
+        type="selection"
+        width="55"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        prop="title"
+        label="Title"
+        min-width="200px"
+        align="center"
+      >
+        <template slot-scope="{ row }">
           <span
             class="link-type"
-            @click="handleCreateOrUpdate('/members/' + row.id)"
-          >{{ row.fullname }}</span>
+            @click="handleCreateOrUpdate('/research/' + row.uuid)"
+            >{{ row.title }}</span
+          >
         </template>
       </el-table-column>
       <el-table-column
-        label="Adscription"
+        label="Year"
         sortable
-        prop="adscription"
+        prop="year"
+        min-width="80px"
+        align="center"
+      >
+        <template slot-scope="{ row }">
+          <span>{{ row.year }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="Type"
+        sortable
+        prop="type"
         min-width="100px"
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ getInstitute(scope.row.adscription) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Charge" sortable prop="charge" min-width="80px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.charge }}</span>
+          <span>{{ scope.row.type }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        label="Info"
         v-if="showAllFields"
-        sortable
-        prop="email"
-        label="Email"
-        align="center"
-        min-width="90"
+        min-width="250px"
+        align="left"
       >
         <template slot-scope="{row}">
-          <span class="link-type">{{ row.email }}</span>
+          
+          <ul>
+            <li><strong>Grade:</strong> {{ row.grade }}</li>
+          </ul>
+          <ul>
+            <li><strong>Type: </strong>{{ row.pub_type }}</li>
+            <li><strong>Pub. in: </strong>{{ row.pub_in }}</li>
+          </ul>
+          <ul>
+            <li><strong>Event: </strong>{{ row.event }}</li>
+          </ul>
         </template>
       </el-table-column>
       <el-table-column
-        v-if="showAllFields"
-        label="Roles"
+        label="Research lines"
         sortable
-        prop="roles"
+        prop="lines"
         class-name="status-col"
         width="200"
       >
-        <template slot-scope="{row}">
-          <el-tag v-for="role in row.roles" size="mini" :key="role" type="info">{{ getRole(role) }}</el-tag>
+        <template slot-scope="{ row }">
+          <el-tag
+            v-for="line in row.lines"
+            size="mini"
+            :key="line"
+            type="info"
+            >{{ getLine(line) }}</el-tag
+          >
         </template>
       </el-table-column>
-      <el-table-column label="Status" sortable prop="active" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-tag :type="row.active | statusFilter">{{ row.active ? 'Active' : 'Inactive' }}</el-tag>
+
+      <el-table-column
+        v-if="showAllFields"
+        sortable
+        label="Resume"
+        align="center"
+        min-width="200"
+      >
+        <template slot-scope="{ row }">
+          <span class="link-type">{{ row.resume.slice(0, 30) }}...</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="Actions"
+        label="Authors"
         align="center"
-        fixed="right"
-        min-width="100"
+        v-if="showAllFields"
+        min-width="200px"
         class-name="small-padding fixed-width"
       >
-        <template slot-scope="{row}">
-          <!-- <el-button type="primary" size="mini" @click="handleUpdate(row)">Edit</el-button> -->
-          <el-button
-            v-if="!row.active"
-            size="mini"
-            type="success"
-            @click="handleModifyStatus(row, true)"
-          >Active</el-button>
-          <el-button
-            v-else
-            size="small"
-            type="danger"
-            @click="handleModifyStatus(row, false)"
-          >Inactive</el-button>
+        <template slot-scope="{ row }">
+          <ul>
+            <li
+              class="link-type"
+              @click="handleCreateOrUpdate('/members/' + getColName(col).id)"
+              v-for="col in row.authors"
+              :key="col"
+            >
+              {{ getColName(col).fullname }}
+            </li>
+          </ul>
         </template>
       </el-table-column>
     </el-table>
@@ -143,7 +189,7 @@
       <el-button size="mini" @click="toggleSelection()">Go</el-button>
     </div>
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
@@ -153,7 +199,7 @@
 </template>
 
 <script>
-import { fetchList, remove, updateStatus } from "@/api/member";
+import { fetchList, remove } from "@/api/research";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
@@ -161,26 +207,19 @@ import { off } from "element-ui/lib/utils/dom";
 import { mapState } from "vuex";
 import tableMixin from "@/mixins/table-handlers";
 
-const statusOptions = [
-  { key: false, display_name: "Inactive" },
-  { key: true, display_name: "Active" }
-];
-
 export default {
-  name: "MembersTable",
+  name: "ResearchTable",
   components: { Pagination },
   directives: { waves },
   filters: {
     statusFilter(active) {
       return active ? "success" : "danger";
-    },
-    statusRole(active) {
-      return active ? "success" : "danger";
     }
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("members", ["partners", "divisions", "roles"])
+    ...mapState("projects", ["lines"]),
+    ...mapState("members", ["partners", "divisions", "collaborators", "roles"])
   },
   data() {
     return {
@@ -192,10 +231,10 @@ export default {
         page: 1,
         limit: 10,
         offset: 0,
-        fullname: undefined,
-        active: undefined
+        title: undefined,
+        type: undefined
       },
-      statusOptions,
+      types: ["Thesis", "Article", "Presentation"],
       sortOptions: [
         { label: "ID Ascending", key: "+id" },
         { label: "ID Descending", key: "-id" }
@@ -211,11 +250,15 @@ export default {
     // mixins
     getInstitute(uuid) {
       let i = this.partners.filter(el => el.uuid === uuid);
-      return i[0] ? i[0].alias : "-----";
+      return i[0] ? i[0].name : "-----";
     },
 
-    getRole(role) {
-      return this.roles.filter(el => el.id === role)[0].name;
+    getLine(line) {
+      return this.lines.filter(el => el.id === line)[0].topic;
+    },
+
+    getColName(colId) {
+      return this.collaborators.filter(el => el.id === colId)[0];
     },
 
     // methods
@@ -231,13 +274,13 @@ export default {
       });
     },
     handleModifyStatus(row, active) {
-      updateStatus({
+      ({
         id: row.id,
         active
-      }).then(
+      }.then(
         res => {
           this.$message({
-            message: "Member status changed",
+            message: "Course status changed",
             type: "success"
           });
           row.active = active;
@@ -248,7 +291,7 @@ export default {
             type: "error"
           });
         }
-      );
+      ));
     },
 
     handleDelete(row) {

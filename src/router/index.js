@@ -147,6 +147,37 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/research',
+    component: Layout,
+    redirect: '/research/list',
+    name: 'Research',
+    meta: {
+      title: 'Research',
+      icon: 'education'
+    },
+    children: [
+      {
+        path: '/research/list',
+        component: () => import('@/views/research/list'),
+        name: 'ResearchList',
+        meta: { title: 'Research list', icon: 'list' }
+      },
+      {
+        path: '/research/create',
+        component: () => import('@/views/research/create'),
+        name: 'CreateResearch',
+        meta: { title: 'Create research', icon: 'edit' }
+      },
+      {
+        path: '/research/:id',
+        component: () => import('@/views/research/edit'),
+        name: 'EditResearch',
+        meta: { title: 'Edit research', activeMenu: '/research/:id' },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/contact',
     component: Layout,
     redirect: '/contact/list',

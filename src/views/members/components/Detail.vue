@@ -185,7 +185,6 @@ export default {
   name: "MemberDetail",
   mixins: [loadingMixin],
   components: {
-    Warning: () => import("./Warning"),
     Requirements: () => import("./Todos/Requirements"),
     Material: () => import("./Todos/Material"),
     Learn: () => import("./Todos/Learn"),

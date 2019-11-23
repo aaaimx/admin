@@ -16,9 +16,17 @@ export function getInfo (token) {
   })
 }
 
-export function refreshToken (token) {
+export function refreshToken (refresh) {
   return request({
     url: '/refresh/',
+    method: 'post',
+    data: { refresh }
+  })
+}
+
+export function verifyToken (token) {
+  return request({
+    url: '/token/verify/',
     method: 'post',
     data: { token }
   })
