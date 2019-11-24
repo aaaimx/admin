@@ -16,7 +16,7 @@ export function fetchList (query) {
  *
  * @param {*} query Object
  */
-export function fetchLines (query) {
+export function fetchAuthors (query) {
   return request({
     url: '/authors/',
     method: 'GET',

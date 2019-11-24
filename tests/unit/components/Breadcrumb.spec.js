@@ -50,6 +50,7 @@ const router = new VueRouter({
   routes
 })
 
+/* eslint-disable */
 describe('Breadcrumb.vue', () => {
   const wrapper = mount(Breadcrumb, {
     localVue,

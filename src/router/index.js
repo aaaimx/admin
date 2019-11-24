@@ -178,12 +178,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/contact',
+    path: '/user',
     component: Layout,
-    redirect: '/contact/list',
-    name: 'Contact',
+    redirect: '/user/list',
+    name: 'User',
     meta: {
-      title: 'Contact',
+      title: 'User',
+      roles: ['admin'],
       icon: 'peoples'
     },
     children: [
@@ -191,7 +192,10 @@ export const asyncRoutes = [
         path: '/user/list',
         component: () => import('@/views/contacts/list'),
         name: 'ContactList',
-        meta: { title: 'User List', icon: 'peoples' }
+        meta: {
+          title: 'User List',
+          icon: 'peoples'
+        }
       }
       // {
       //   path: '/contact/:id',
@@ -217,7 +221,7 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://aaaimx-admin.herokuapp.com/',
+        path: 'https://aaaimx-admin.herokuapp.com/admin/',
         meta: { title: 'AAAIMX Admin', icon: 'link' }
       }
     ]
@@ -237,11 +241,12 @@ export const asyncRoutes = [
   { path: '*', redirect: '/404', hidden: true, meta: { public: true } }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 

@@ -47,7 +47,7 @@ module.exports = {
         },
         '^/': {
           target: 'http://0.0.0.0:3000',
-          changeOrigin: true,
+          changeOrigin: true
         }
       }
     },

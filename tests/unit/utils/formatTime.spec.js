@@ -1,4 +1,6 @@
 import { formatTime } from '@/utils/index.js'
+
+/* eslint-disable */
 describe('Utils:formatTime', () => {
   const d = new Date('2018-07-13 17:54:01') // "2018-07-13 17:54:01"
   const retrofit = 5 * 1000

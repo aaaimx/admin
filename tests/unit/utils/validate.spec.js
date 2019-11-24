@@ -1,4 +1,6 @@
 import { validUsername, validURL, validLowerCase, validUpperCase, validAlphabets } from '@/utils/validate.js'
+
+/* eslint-disable */
 describe('Utils:validate', () => {
   it('validUsername', () => {
     expect(validUsername('admin')).toBe(true)

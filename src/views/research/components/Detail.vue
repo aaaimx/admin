@@ -114,7 +114,7 @@
                         :value="item.uuid"
                       >
                         <small style="color: #8492a6; font-size: 13px">{{
-                          item.title.slice(0, 100).concat('...')
+                          item.title.slice(0, 100).concat("...")
                         }}</small>
                       </el-option>
                     </el-select>
@@ -165,7 +165,11 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col v-if="postForm.type == 'Presentation'" :span="8" :xs="24">
+                <el-col
+                  v-if="postForm.type == 'Presentation'"
+                  :span="8"
+                  :xs="24"
+                >
                   <el-form-item
                     label="Event:"
                     prop="event"
@@ -179,7 +183,6 @@
                     />
                   </el-form-item>
                 </el-col>
-
 
                 <el-col :span="12" :xs="24">
                   <el-form-item
@@ -209,7 +212,7 @@
                   </el-form-item>
                 </el-col>
 
-                <el-col :span="24" :xs="24">
+                <!-- <el-col :span="24" :xs="24">
                   <el-form-item
                     label="Responsable:"
                     prop="responsible"
@@ -238,13 +241,21 @@
                       circle
                     ></el-button>
                   </el-form-item>
-                </el-col>
+                </el-col> -->
               </el-row>
             </div>
           </el-col>
         </el-row>
       </div>
     </el-form>
+    <el-row>
+      <el-col :span="12" :lg="12" :xs="24">
+        <AuthorList :authors="postForm.authors" title="Authors" />
+      </el-col>
+      <el-col :span="12" :lg="12" :xs="24">
+        <AuthorList :authors="postForm.authors" title="Authors" />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -257,7 +268,7 @@ import axios from "axios";
 import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
-
+import authorsMixin from "@/mixins/authors";
 const defaultForm = {
   title: "",
   resume: "",
@@ -273,12 +284,13 @@ const defaultForm = {
 };
 export default {
   name: "ResearchDetail",
-  mixins: [loadingMixin],
+  mixins: [loadingMixin, authorsMixin],
   components: {
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky"),
     TypeDropdown: () => import("./Status"),
-    BannerUrlDropdown: () => import("./BannerUrl")
+    BannerUrlDropdown: () => import("./BannerUrl"),
+    AuthorList: () => import("./Authors")
   },
   props: {
     namespace: {
@@ -321,19 +333,22 @@ export default {
     fetchProjects(title) {
       this.loading = true;
       fetchList({
-          title
-        })
-        .then(res => {
-          console.log(res);
-          this.projects = res.results;
-          this.loading = false;
-        });
+        title
+      }).then(res => {
+        console.log(res);
+        this.projects = res.results;
+        this.loading = false;
+      });
+    },
+    sortAuthors(arr) {
+      arr.sort(this.compare);
+      return arr;
     },
     fetchData(id) {
       let loading = this.loadingFullPage();
       fetch(id)
         .then(data => {
-          console.log(data);
+          data.authors.sort(this.compare);
           loading.close();
           this.$store.commit("research/SET_RESEARCH_FORM", data);
         })

@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: '',
+      title: 'Productivity',
       logo: 'http://aaaimx.org/img/sprites/aaai-transpeps.png'
     }
   }
@@ -55,7 +55,7 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      max-width: 50px;
+      max-width: 40px;
       vertical-align: middle;
       margin-right: 12px;
     }

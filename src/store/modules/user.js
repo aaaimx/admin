@@ -9,7 +9,7 @@ import {
   decodeToken
 } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-import moment from 'moment'
+
 const USER = {
   roles: ['admin'],
   introduction: 'I am a super administrator',
@@ -70,11 +70,16 @@ const actions = {
   // get user info
   getInfo ({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token)
+      const token = state.token
+      var { user_id } = decodeToken(token)
+      getInfo(user_id)
         .then(data => {
-          const { roles, name, avatar, introduction } = USER
-          commit('SET_ROLES', roles)
+          let { roles, name, avatar, introduction } = USER
+          if (data.is_superuser) roles = ['admin']
+          else roles = data.groups
+          console.log(roles)
           commit('SET_NAME', name)
+          commit('SET_ROLES', roles)
           commit('SET_AVATAR', avatar)
           commit('SET_INTRODUCTION', introduction)
           resolve(USER)

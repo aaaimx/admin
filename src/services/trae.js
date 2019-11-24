@@ -16,9 +16,9 @@ api.defaults({
   }
 })
 api.before(config => {
-  config.headers['Autorization'] = getToken()
+  config.headers.Autorization = getToken()
   config.headers['Content-Type'] = 'application/json'
-  config.headers['Accept'] = 'application/json; version=1'
+  config.headers.Accept = 'application/json; version=1'
   return config
 })
 api.after(

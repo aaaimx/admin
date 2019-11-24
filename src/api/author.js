@@ -6,7 +6,7 @@ import request from '@/services/axios'
  */
 export function fetchList (query) {
   return request({
-    url: '/members/',
+    url: '/authors/',
     method: 'GET',
     params: query
   })
@@ -30,7 +30,7 @@ export function fetchRoles (query) {
  */
 export function fetch (id) {
   return request({
-    url: `/members/${id}/`,
+    url: `/authors/${id}/`,
     method: 'GET'
   })
 }
@@ -41,7 +41,7 @@ export function fetch (id) {
  */
 export function create (data) {
   return request({
-    url: '/members/',
+    url: '/authors/',
     method: 'POST',
     data
   })
@@ -54,7 +54,7 @@ export function create (data) {
  */
 export function update (data) {
   return request({
-    url: `/members/${data.id}/`,
+    url: `/authors/${data.id}/`,
     method: 'PUT',
     data
   })
@@ -64,9 +64,9 @@ export function update (data) {
  *
  * @param {*} data String
  */
-export function updateStatus (data) {
+export function updatePosition (data) {
   return request({
-    url: `/members/${data.id}/`,
+    url: `/authors/${data.id}/`,
     method: 'PATCH',
     data
   })
@@ -76,9 +76,9 @@ export function updateStatus (data) {
  *
  * @param {*} id String
  */
-export function remove (data) {
+export function remove (id, data) {
   return request({
-    url: `/members/${id}/`,
+    url: `/authors/${id}/`,
     method: 'DELETE',
     data
   })

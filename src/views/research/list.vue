@@ -26,12 +26,7 @@
         clearable
         class="filter-item"
       >
-        <el-option
-          v-for="item in types"
-          :key="item"
-          :label="item"
-          :value="item"
-        />
+        <el-option v-for="item in types" :key="item" :label="item" :value="item" />
       </el-select>
       <!-- <el-button
         v-waves
@@ -46,15 +41,13 @@
         type="primary"
         icon="el-icon-edit"
         @click="handleCreateOrUpdate('/research/create')"
-        >Create</el-button
-      >
+      >Create</el-button>
       <el-checkbox
         v-model="showAllFields"
         class="filter-item"
         style="margin-left:15px;"
         @change="tableKey = tableKey + 1"
-        >All fields</el-checkbox
-      >
+      >All fields</el-checkbox>
     </div>
 
     <el-table
@@ -69,65 +62,48 @@
       @sort-change="sortChange"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column
-        type="selection"
-        width="55"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        prop="title"
-        label="Title"
-        min-width="200px"
-        align="center"
-      >
+      <el-table-column type="selection" width="55" align="center"></el-table-column>
+      <el-table-column sortable prop="title" label="Title" min-width="200px" align="center">
         <template slot-scope="{ row }">
           <span
             class="link-type"
             @click="handleCreateOrUpdate('/research/' + row.uuid)"
-            >{{ row.title }}</span
-          >
+          >{{ row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="Year"
-        sortable
-        prop="year"
-        min-width="80px"
-        align="center"
-      >
+      <el-table-column label="Year" sortable prop="year" min-width="80px" align="center">
         <template slot-scope="{ row }">
           <span>{{ row.year }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="Type"
-        sortable
-        prop="type"
-        min-width="100px"
-        align="center"
-      >
+      <el-table-column label="Type" sortable prop="type" min-width="100px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.type }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="Info"
-        v-if="showAllFields"
-        min-width="250px"
-        align="left"
-      >
-        <template slot-scope="{row}">
-          
+      <el-table-column label="Info" v-if="showAllFields" min-width="250px" align="left">
+        <template slot-scope="{ row }">
           <ul>
-            <li><strong>Grade:</strong> {{ row.grade }}</li>
+            <li>
+              <strong>Grade:</strong>
+              {{ row.grade }}
+            </li>
           </ul>
           <ul>
-            <li><strong>Type: </strong>{{ row.pub_type }}</li>
-            <li><strong>Pub. in: </strong>{{ row.pub_in }}</li>
+            <li>
+              <strong>Type:</strong>
+              {{ row.pub_type }}
+            </li>
+            <li>
+              <strong>Pub. in:</strong>
+              {{ row.pub_in }}
+            </li>
           </ul>
           <ul>
-            <li><strong>Event: </strong>{{ row.event }}</li>
+            <li>
+              <strong>Event:</strong>
+              {{ row.event }}
+            </li>
           </ul>
         </template>
       </el-table-column>
@@ -135,35 +111,23 @@
         label="Research lines"
         sortable
         prop="lines"
+        v-if="showAllFields"
         class-name="status-col"
         width="200"
       >
         <template slot-scope="{ row }">
-          <el-tag
-            v-for="line in row.lines"
-            size="mini"
-            :key="line"
-            type="info"
-            >{{ getLine(line) }}</el-tag
-          >
+          <el-tag v-for="line in row.lines" size="mini" :key="line" type="info">{{ getLine(line) }}</el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column
-        v-if="showAllFields"
-        sortable
-        label="Resume"
-        align="center"
-        min-width="200"
-      >
+      <el-table-column v-if="showAllFields" sortable label="Resume" align="center" min-width="200">
         <template slot-scope="{ row }">
           <span class="link-type">{{ row.resume.slice(0, 30) }}...</span>
         </template>
       </el-table-column>
       <el-table-column
         label="Authors"
-        align="center"
-        v-if="showAllFields"
+        align="left"
         min-width="200px"
         class-name="small-padding fixed-width"
       >
@@ -171,12 +135,10 @@
           <ul>
             <li
               class="link-type"
-              @click="handleCreateOrUpdate('/members/' + getColName(col).id)"
+              @click="handleCreateOrUpdate('/members/' + col.member)"
               v-for="col in row.authors"
-              :key="col"
-            >
-              {{ getColName(col).fullname }}
-            </li>
+              :key="col.id"
+            >{{ col.fullname }}</li>
           </ul>
         </template>
       </el-table-column>
@@ -184,7 +146,7 @@
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
         <el-option label="------------" value></el-option>
-        <el-option label="delete selected members" value="delete"></el-option>
+        <el-option label="delete selected research" value="delete"></el-option>
       </el-select>
       <el-button size="mini" @click="toggleSelection()">Go</el-button>
     </div>
@@ -206,7 +168,7 @@ import Pagination from "@/components/Pagination"; // secondary package based on 
 import { off } from "element-ui/lib/utils/dom";
 import { mapState } from "vuex";
 import tableMixin from "@/mixins/table-handlers";
-
+import authorsMixin from "@/mixins/authors";
 export default {
   name: "ResearchTable",
   components: { Pagination },
@@ -216,7 +178,7 @@ export default {
       return active ? "success" : "danger";
     }
   },
-  mixins: [tableMixin],
+  mixins: [tableMixin, authorsMixin],
   computed: {
     ...mapState("projects", ["lines"]),
     ...mapState("members", ["partners", "divisions", "collaborators", "roles"])

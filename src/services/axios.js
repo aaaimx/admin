@@ -22,7 +22,7 @@ service.interceptors.request.use(
     config.headers.put['Content-Type'] = 'application/json'
     config.headers.patch['Content-Type'] = 'application/json'
     if (store.getters.token) {
-      config.headers['Authorization'] = 'Bearer ' + getToken()
+      config.headers.Authorization = 'Bearer ' + getToken()
     }
     return config
   },
