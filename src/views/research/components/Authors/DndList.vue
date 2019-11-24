@@ -32,6 +32,7 @@
         icon="el-icon-circle-check-outline"
         @click="saveAuthors()"
         size="small"
+        v-loading="loading"
         type="success"
         >Save authors</el-button
       >
@@ -86,10 +87,11 @@ export default {
     width1: {
       type: String,
       default: "100%"
-    },
-    width2: {
-      type: String,
-      default: "48%"
+    }
+  },
+  data() {
+    return {
+      loading: false
     }
   },
   mounted() {
@@ -111,14 +113,17 @@ export default {
     },
     async saveAuthors() {
       let updates = [];
+      this.loading = true;
       this.list1.forEach((item, index, arr) => {
         if (item.id) {
           console.log(item.id);
           updates.push(updatePosition({ id: item.id, position: ++index }));
         }
       });
-      const result = await Promise.all(updates);
-      console.log(result);
+      Promise.all(updates).then(values => {
+        console.log(values);
+        this.loading = false;
+      });
     },
     async deleteEle(ele) {
       for (const item of this.list1) {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-
+import { HOST } from '@/settings'
 /* Layout */
 import Layout from '@/layout'
 
@@ -221,7 +221,7 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://aaaimx-admin.herokuapp.com/admin/',
+        path: `${HOST}/admin/`,
         meta: { title: 'AAAIMX Admin', icon: 'link' }
       }
     ]

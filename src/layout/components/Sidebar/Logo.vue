@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { title, logo } from '@/settings'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -24,8 +25,8 @@ export default {
   },
   data() {
     return {
-      title: 'Productivity',
-      logo: 'http://aaaimx.org/img/sprites/aaai-transpeps.png'
+      title,
+      logo
     }
   }
 }

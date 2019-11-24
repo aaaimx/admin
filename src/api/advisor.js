@@ -6,7 +6,7 @@ import request from '@/services/axios'
  */
 export function fetchList (query) {
   return request({
-    url: '/research/',
+    url: '/advisors/',
     method: 'GET',
     params: query
   })
@@ -16,9 +16,9 @@ export function fetchList (query) {
  *
  * @param {*} query Object
  */
-export function fetchAuthors (query) {
+export function fetchRoles (query) {
   return request({
-    url: '/authors/',
+    url: '/roles/',
     method: 'GET',
     params: query
   })
@@ -26,11 +26,11 @@ export function fetchAuthors (query) {
 
 /**
  *
- * @param {*} uuid String
+ * @param {*} id String
  */
-export function fetch (uuid) {
+export function fetch (id) {
   return request({
-    url: `/research/${uuid}/`,
+    url: `/advisors/${id}/`,
     method: 'GET'
   })
 }
@@ -41,7 +41,7 @@ export function fetch (uuid) {
  */
 export function create (data) {
   return request({
-    url: '/research/',
+    url: '/advisors/',
     method: 'POST',
     data
   })
@@ -49,12 +49,12 @@ export function create (data) {
 
 /**
  *
- * @param {*} uuid String
+ * @param {*} id String
  * @param {*} data Object
  */
 export function update (data) {
   return request({
-    url: `/research/${data.uuid}/`,
+    url: `/advisors/${data.id}/`,
     method: 'PUT',
     data
   })
@@ -64,9 +64,9 @@ export function update (data) {
  *
  * @param {*} data String
  */
-export function updateStatus (data) {
+export function updatePosition (data) {
   return request({
-    url: `/research/${data.id}/`,
+    url: `/advisors/${data.id}/`,
     method: 'PATCH',
     data
   })
@@ -78,7 +78,7 @@ export function updateStatus (data) {
  */
 export function remove (id, data) {
   return request({
-    url: `/research/${id}/`,
+    url: `/advisors/${id}/`,
     method: 'DELETE',
     data
   })

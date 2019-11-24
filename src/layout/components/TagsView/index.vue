@@ -28,7 +28,7 @@
 <script>
 import ScrollPane from './ScrollPane'
 import path from 'path'
-
+import { mapState } from 'vuex'
 export default {
   components: { ScrollPane },
   data() {
@@ -41,6 +41,7 @@ export default {
     }
   },
   computed: {
+    ...mapState("tagsView", ["visitedViews", 'cachedViews']),
     visitedViews() {
       return this.$store.state.tagsView.visitedViews
     },

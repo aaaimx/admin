@@ -103,7 +103,7 @@
                       remote
                       reserve-keyword
                       :remote-method="fetchProjects"
-                      :loading="loading"
+                      :loading="searching"
                       clearable
                       placeholder="Search and select projects"
                     >
@@ -249,11 +249,16 @@
       </div>
     </el-form>
     <el-row>
-      <el-col :span="12" :lg="12" :xs="24">
-        <AuthorList :authors="postForm.authors" title="Authors" />
+      <el-col v-show="isEdit" :span="12" :lg="12" :xs="24">
+        <Authors :authors="postForm.authors" title="Authors" />
       </el-col>
-      <el-col :span="12" :lg="12" :xs="24">
-        <AuthorList :authors="postForm.authors" title="Authors" />
+      <el-col
+        v-show="postForm.type === 'Thesis' && isEdit"
+        :span="12"
+        :lg="12"
+        :xs="24"
+      >
+        <Advisors :advisors="postForm.advisors" title="Advisors" />
       </el-col>
     </el-row>
   </div>
@@ -262,7 +267,7 @@
 <script>
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/research";
+import { fetch, create, update, remove } from "@/api/research";
 import { fetchList } from "@/api/project";
 import axios from "axios";
 import qs from "qs";
@@ -272,7 +277,7 @@ import authorsMixin from "@/mixins/authors";
 const defaultForm = {
   title: "",
   resume: "",
-  year: null,
+  year: 2018,
   grade: "",
   event: "",
   pub_in: "",
@@ -288,9 +293,10 @@ export default {
   components: {
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky"),
-    TypeDropdown: () => import("./Status"),
+    TypeDropdown: () => import("./Type"),
     BannerUrlDropdown: () => import("./BannerUrl"),
-    AuthorList: () => import("./Authors")
+    Authors: () => import("./Authors"),
+    Advisors: () => import("./Advisors")
   },
   props: {
     namespace: {
@@ -304,7 +310,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       rules,
       tempRoute: {},
       dialogFormVisible: false,
@@ -331,13 +336,13 @@ export default {
   },
   methods: {
     fetchProjects(title) {
-      this.loading = true;
+      this.searching = true;
       fetchList({
         title
       }).then(res => {
         console.log(res);
         this.projects = res.results;
-        this.loading = false;
+        this.searching = false;
       });
     },
     sortAuthors(arr) {
@@ -349,6 +354,7 @@ export default {
       fetch(id)
         .then(data => {
           data.authors.sort(this.compare);
+          data.advisors.sort(this.compare);
           loading.close();
           this.$store.commit("research/SET_RESEARCH_FORM", data);
         })
@@ -360,7 +366,7 @@ export default {
     submitForm() {
       this.$refs.postForm.validate(valid => {
         if (valid) {
-          this.loading = true;
+          let loading = this.loadingFullPage();
           let request;
           if (this.isEdit) request = update(this.postForm);
           else request = create(this.postForm);
@@ -377,14 +383,12 @@ export default {
                 type: "success",
                 duration: 2000
               });
-              console.log(response);
-              this.loading = false;
+              loading.close()
+              if (!this.isEdit) this.$store.dispatch('tagsView/delAllVisitedViews')
               this.$router.push("/research/" + response.uuid);
             })
             .catch(error => {
-              this.loading = false;
-              console.log(error);
-
+              loading.close()
               this.$message({
                 message: "Something went wrong:( Try again",
                 type: "error"
@@ -397,14 +401,19 @@ export default {
       });
     },
     deleteResearch() {
-      this.$message({
-        dangerouslyUseHTMLString: true,
-        message: `${this.namespace} was sucessfully deleted`,
-        type: "success",
-        showClose: true,
-        duration: 2000
+      remove(this.$route.params.id).then(res => {
+        this.$message({
+          dangerouslyUseHTMLString: true,
+          message: `${this.namespace} was sucessfully deleted`,
+          type: "success",
+          showClose: true,
+          duration: 2000
+        });
+        this.$store.dispatch('tagsView/delAllVisitedViews')
+        this.$router.push({ name: 'ResearchList' })
+      }, err => {
+        console.log(err)
       });
-      this.postForm.active = false;
     }
   }
 };

@@ -1,10 +1,10 @@
 import trae from 'trae'
 import { getToken } from '@/utils/auth'
-import { API_URL } from '@/services/api.config'
+import { HOST } from '@/settings'
 
 // create a trae instance
 const api = trae.create({
-  baseUrl: API_URL
+  baseUrl: HOST + '/api'
 })
 api.defaults({
   mode: 'cors',

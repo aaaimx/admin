@@ -1,4 +1,10 @@
 const loadingMixin = {
+  data () {
+    return {
+      loading: false,
+      searching: false
+    }
+  },
   methods: {
     loadingFullPage () {
       return this.$loading({

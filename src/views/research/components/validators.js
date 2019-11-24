@@ -9,5 +9,8 @@ export default {
   ],
   year: [
     validatorRequired
+  ],
+  type: [
+    validatorRequired
   ]
 }

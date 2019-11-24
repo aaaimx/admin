@@ -19,7 +19,7 @@
         ></el-option>
       </el-select>
       <el-button icon="el-icon-plus" @click="addAuthor()" size="small"
-        >Agregar author</el-button
+        >Add author</el-button
       >
     <div class="editor-container">
       <dnd-list
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import DndList from "@/components/DndList";
+import DndList from "./DndList";
 import { fetchList, fetch } from "@/api/member";
 import { create, update } from "@/api/author";
 import { mapState } from "vuex";

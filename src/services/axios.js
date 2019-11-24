@@ -2,11 +2,11 @@ import axios from 'axios'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { errMessage, reLogin } from '@/utils/messages'
-import { API_URL } from '@/services/api.config'
+import { HOST } from '@/settings'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: API_URL, // url = base url + request url
+  baseURL: HOST + '/api', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
   credentials: 'same-origin',
@@ -42,7 +42,7 @@ service.interceptors.response.use(
 
   res => {
     // if the custom code is not 20000, it is judged as an error.
-    if (res.status !== 200 && res.status !== 201) {
+    if (res.status !== 200 && res.status !== 201 && res.status !== 204) {
       errMessage(res.err)
 
       // 401/403: Unauthorized / Token expired
