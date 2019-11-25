@@ -1,0 +1,357 @@
+<template>
+  <div class="createPost-container">
+    <el-form
+      ref="postForm"
+      :model="postForm"
+      @submit.prevent="false"
+      :rules="rules"
+      class="form-container"
+    >
+      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.active">
+        <el-button
+          v-loading="loading"
+          style="margin-left: 10px;"
+          type="success"
+          @click="submitForm"
+          v-text="isEdit ? 'Save changes': 'Save'"
+        ></el-button>
+        <el-button
+          v-loading="loading"
+          v-show="isEdit"
+          type="danger"
+          @click="deleteProject"
+        >Delete project</el-button>
+      </sticky>
+
+      <div class="createPost-main-container">
+        <el-row>
+          <el-col :span="24">
+            <div class="grid-content bg-purple-dark" />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <div class="grid-content bg-purple" />
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple-light" />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <div class="postInfo-container">
+              <el-row>
+                <el-col :span="24" :xs="24">
+                  <el-form-item label="Title:" prop="title" class="postInfo-container-item">
+                    <el-input
+                      v-model="postForm.title"
+                      placeholder="i.e: Segmentación de regiones basado en atributos de textura de datos bidimensionales..."
+                      type="textarea"
+                      rows="3"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Start date:"
+                    prop="start"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-date-picker v-model="postForm.start" format="dd/MM/yyyy" type="date" placeholder="Pick a day"></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="End date:"
+                    prop="end"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-date-picker v-model="postForm.end" format="dd/MM/yyyy" type="date" placeholder="Pick a day"></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item label="Institute:" prop="institute" class="postInfo-container-item">
+                    <br />
+                    <el-select
+                      v-model="postForm.institute"
+                      filterable
+                      clearable
+                      placeholder="Select institute"
+                    >
+                      <el-option
+                        v-for="item in partners"
+                        :key="item.uuid"
+                        :label="item.alias"
+                        :value="item.uuid"
+                      >
+                        <small style="color: #8492a6; font-size: 13px">{{ item.name }}</small>
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Responsable:"
+                    prop="responsible"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-select
+                      v-model="postForm.responsible"
+                      remote
+                      allow-create
+                      clearable
+                      filterable
+                      reserve-keyword
+                      placeholder="Select responsible person"
+                    >
+                      <el-option
+                        v-for="item in collaborators"
+                        :key="item.fullname"
+                        :label="item.fullname"
+                        :value="item.fullname"
+                      ></el-option>
+                    </el-select>
+                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Áreas de interés:"
+                    prop="lines"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-select
+                      v-model="postForm.lines"
+                      multiple
+                      placeholder="Select interest areas"
+                    >
+                      <el-option
+                        v-for="item in lines"
+                        :key="item.id"
+                        :label="item.topic.slice(0, 30).concat('...')"
+                        :value="item.id"
+                      >{{item.topic}}</el-option>
+                    </el-select>
+                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Collaborators:"
+                    prop="collaborators"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-select
+                      v-model="postForm.collaborators"
+                      remote
+                      multiple
+                      filterable
+                      placeholder="Select collaborators"
+                    >
+                      <el-option
+                        v-for="item in collaborators"
+                        :key="item.id"
+                        :label="item.fullname"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
+                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </el-form>
+  </div>
+</template>
+
+<script>
+import { validURL } from "@/utils/validate";
+import { mapState } from "vuex";
+import { fetch, create, update } from "@/api/project";
+import { fetchList } from "@/api/member";
+import axios from "axios";
+import qs from "qs";
+import rules from "./validators";
+import loadingMixin from "@/mixins/loading";
+
+const defaultForm = {
+    title: '',
+    start: '',
+    end: '',
+    in_charge: '',
+    institute: '',
+    collaborators: [],
+    lines: []
+};
+export default {
+  name: "ProjectDetail",
+  mixins: [loadingMixin],
+  components: {
+    MDinput: () => import("@/components/MDinput"),
+    Sticky: () => import("@/components/Sticky")
+  },
+  props: {
+    namespace: {
+      type: String,
+      default: ""
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      rules,
+      tempRoute: {},
+      dialogFormVisible: false,
+      form: {
+        module: ""
+      },
+      id: null,
+      value: [],
+      options: [],
+      value1: "",
+      formLabelWidth: "120px"
+    };
+  },
+  computed: {
+    ...mapState("members", [
+      "partners",
+      "collaborators",
+      "divisions",
+      "roles"
+    ]),
+    ...mapState("projects", ["postForm", "lines"])
+  },
+  created() {
+    if (this.isEdit) {
+      this.id = this.$route.params && this.$route.params.id;
+      this.fetchData(this.id);
+    } else {
+      this.$store.commit("projects/SET_PROJECT", defaultForm);
+    }
+    this.tempRoute = Object.assign({}, this.$route);
+  },
+  methods: {
+    fetchList(query) {
+      fetchList({
+        fullname: query
+      }).then(res => {
+        console.log(res);
+        this.options = res.results;
+      });
+    },
+    fetchData(id) {
+      let loading = this.loadingFullPage();
+      fetch(id)
+        .then(data => {
+          console.log(data)
+          loading.close();
+          this.$store.commit("projects/SET_PROJECT", data);
+        })
+        .catch(err => {
+          loading.close();
+          console.log(err);
+        });
+    },
+    submitForm() {
+      this.$refs.postForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          let request;
+          if (this.isEdit) request = update(this.postForm);
+          else request = create(this.postForm);
+          let start = new Date(this.postForm.start)
+          let end = new Date(this.postForm.end)
+          this.postForm.start = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`
+          this.postForm.end = `${end.getFullYear()}-${end.getMonth()}-${end.getDate()}`
+          request
+            .then(response => {
+              this.$notify({
+                title: ` ${this.isEdit ? "Updated" : "Created"}`,
+                dangerouslyUseHTMLString: true,
+                message: `${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`,
+                type: "success",
+                duration: 2000
+              });
+              console.log(response);
+              this.loading = false;
+              this.$router.push("/projects/" + response.uuid);
+            })
+            .catch(error => {
+              this.loading = false;
+              console.log(error);
+
+              this.$message({
+                message: "Something went wrong:( Try again",
+                type: "error"
+              });
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    deleteProject() {
+      this.$message({
+        dangerouslyUseHTMLString: true,
+        message: `${this.namespace} was sucessfully deleted`,
+        type: "success",
+        showClose: true,
+        duration: 2000
+      });
+      this.postForm.active = false;
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+@import "~@/styles/mixin.scss";
+
+.createPost-container {
+  position: relative;
+
+  .createPost-main-container {
+    padding: 40px 45px 20px 50px;
+
+    .postInfo-container {
+      position: relative;
+      @include clearfix;
+      .postInfo-container-item {
+        padding-right: 5%;
+      }
+    }
+  }
+
+  .word-counter {
+    width: 40px;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+  }
+}
+
+.article-textarea /deep/ {
+  textarea {
+    padding-right: 40px;
+    resize: none;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #bfcbd9;
+  }
+}
+</style>

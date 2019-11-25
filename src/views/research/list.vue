@@ -1,0 +1,271 @@
+<template>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-input
+        style="max-width: 300px"
+        v-model="listQuery.title"
+        placeholder="Search by name"
+        clearable
+        class="filter-item"
+        @input="handleFilter"
+      />
+      <el-input
+        style="max-width: 150px"
+        v-model="listQuery.year"
+        type="number"
+        min="2018"
+        placeholder="By year"
+        clearable
+        class="filter-item"
+        @input="handleFilter"
+      />
+      <el-select
+        v-model.number="listQuery.type"
+        @change="handleFilter"
+        placeholder="By type"
+        clearable
+        class="filter-item"
+      >
+        <el-option v-for="item in types" :key="item" :label="item" :value="item" />
+      </el-select>
+      <!-- <el-button
+        v-waves
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+        @click="handleFilter"
+      >Search</el-button>-->
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px;"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreateOrUpdate('/research/create')"
+      >Create</el-button>
+      <el-checkbox
+        v-model="showAllFields"
+        class="filter-item"
+        style="margin-left:15px;"
+        @change="tableKey = tableKey + 1"
+      >All fields</el-checkbox>
+    </div>
+
+    <el-table
+      :key="tableKey"
+      ref="multipleTable"
+      v-loading="listLoading"
+      :data="list"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%;"
+      @sort-change="sortChange"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" width="55" align="center"></el-table-column>
+      <el-table-column sortable prop="title" label="Title" min-width="200px" align="center">
+        <template slot-scope="{ row }">
+          <span
+            class="link-type"
+            @click="handleCreateOrUpdate('/research/' + row.uuid)"
+          >{{ row.title }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Year" sortable prop="year" min-width="80px" align="center">
+        <template slot-scope="{ row }">
+          <span>{{ row.year }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Type" sortable prop="type" min-width="100px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.type }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Info" v-if="showAllFields" min-width="250px" align="left">
+        <template slot-scope="{ row }">
+          <ul>
+            <li>
+              <strong>Grade:</strong>
+              {{ row.grade }}
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <strong>Type:</strong>
+              {{ row.pub_type }}
+            </li>
+            <li>
+              <strong>Pub. in:</strong>
+              {{ row.pub_in }}
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <strong>Event:</strong>
+              {{ row.event }}
+            </li>
+          </ul>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="Research lines"
+        sortable
+        prop="lines"
+        v-if="showAllFields"
+        class-name="status-col"
+        width="200"
+      >
+        <template slot-scope="{ row }">
+          <el-tag v-for="line in row.lines" size="mini" :key="line" type="info">{{ getLine(line) }}</el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column v-if="showAllFields" sortable label="Resume" align="center" min-width="200">
+        <template slot-scope="{ row }">
+          <span class="link-type">{{ row.resume.slice(0, 30) }}...</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="Authors"
+        align="left"
+        min-width="200px"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="{ row }">
+          <ul>
+            <li
+              class="link-type"
+              @click="handleCreateOrUpdate('/members/' + col.member)"
+              v-for="col in row.authors"
+              :key="col.id"
+            >{{ col.fullname }}</li>
+          </ul>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div style="margin-top: 20px">
+      <el-select size="mini" v-model="performAction" placeholder="------------">
+        <el-option label="------------" value></el-option>
+        <el-option label="delete selected research" value="delete"></el-option>
+      </el-select>
+      <el-button size="mini" @click="toggleSelection()">Go</el-button>
+    </div>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getList"
+    />
+  </div>
+</template>
+
+<script>
+import { fetchList, remove } from "@/api/research";
+import waves from "@/directive/waves"; // waves directive
+import { parseTime } from "@/utils";
+import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import { off } from "element-ui/lib/utils/dom";
+import { mapState } from "vuex";
+import tableMixin from "@/mixins/table-handlers";
+import authorsMixin from "@/mixins/authors";
+export default {
+  name: "ResearchTable",
+  components: { Pagination },
+  directives: { waves },
+  filters: {
+    statusFilter(active) {
+      return active ? "success" : "danger";
+    }
+  },
+  mixins: [tableMixin, authorsMixin],
+  computed: {
+    ...mapState("projects", ["lines"]),
+    ...mapState("members", ["partners", "divisions", "collaborators", "roles"])
+  },
+  data() {
+    return {
+      tableKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 10,
+        offset: 0,
+        title: undefined,
+        type: undefined
+      },
+      types: ["Thesis", "Article", "Presentation"],
+      sortOptions: [
+        { label: "ID Ascending", key: "+id" },
+        { label: "ID Descending", key: "-id" }
+      ],
+      performAction: "",
+      showAllFields: false
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    // mixins
+    getInstitute(uuid) {
+      let i = this.partners.filter(el => el.uuid === uuid);
+      return i[0] ? i[0].name : "-----";
+    },
+
+    getLine(line) {
+      return this.lines.filter(el => el.id === line)[0].topic;
+    },
+
+    getColName(colId) {
+      return this.collaborators.filter(el => el.id === colId)[0];
+    },
+
+    // methods
+    getList() {
+      this.listLoading = true;
+      let { limit, page, offset } = this.listQuery;
+      this.listQuery.offset = limit * (page - 1);
+      fetchList(this.listQuery).then(res => {
+        console.log(res);
+        this.list = res.results;
+        this.total = res.count;
+        this.listLoading = false;
+      });
+    },
+    handleModifyStatus(row, active) {
+      ({
+        id: row.id,
+        active
+      }.then(
+        res => {
+          this.$message({
+            message: "Course status changed",
+            type: "success"
+          });
+          row.active = active;
+        },
+        err => {
+          this.$message({
+            message: "Something went wrong:( Try Again!",
+            type: "error"
+          });
+        }
+      ));
+    },
+
+    handleDelete(row) {
+      this.$notify({
+        title: "Success",
+        message: "Delete Successfully",
+        type: "success",
+        duration: 2000
+      });
+      const index = this.list.indexOf(row);
+      this.list.splice(index, 1);
+    }
+  }
+};
+</script>
