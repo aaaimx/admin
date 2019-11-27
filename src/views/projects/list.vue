@@ -7,11 +7,9 @@
         placeholder="Search by name"
         clearable
         class="filter-item"
-        @input="handleFilter"
       />
       <el-select
         v-model.number="listQuery.institute"
-        @change="handleFilter"
         placeholder="Institute"
         clearable
         class="filter-item"
@@ -23,13 +21,13 @@
           :value="item.alias"
         />
       </el-select>
-      <!-- <el-button
+      <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
-      >Search</el-button>-->
+      >Search</el-button>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -101,7 +99,7 @@
           <el-tag v-for="line in row.lines" size="mini" :key="line" type="info">{{ getLine(line) }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="Collaborators"
         align="center"
         v-if="showAllFields"
@@ -118,7 +116,7 @@
             >{{getColName(col).fullname}}</li>
           </ul>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
@@ -221,7 +219,7 @@ export default {
       }).then(
         res => {
           this.$message({
-            message: "Course status changed",
+            message: "Project status changed",
             type: "success"
           });
           row.active = active;

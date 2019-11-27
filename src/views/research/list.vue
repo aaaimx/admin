@@ -7,7 +7,6 @@
         placeholder="Search by name"
         clearable
         class="filter-item"
-        @input="handleFilter"
       />
       <el-input
         style="max-width: 150px"
@@ -17,37 +16,43 @@
         placeholder="By year"
         clearable
         class="filter-item"
-        @input="handleFilter"
       />
       <el-select
         v-model.number="listQuery.type"
-        @change="handleFilter"
         placeholder="By type"
         clearable
         class="filter-item"
       >
-        <el-option v-for="item in types" :key="item" :label="item" :value="item" />
+        <el-option
+          v-for="item in types"
+          :key="item"
+          :label="item"
+          :value="item"
+        />
       </el-select>
-      <!-- <el-button
+      <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
-      >Search</el-button>-->
+        >Search</el-button
+      >
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
         @click="handleCreateOrUpdate('/research/create')"
-      >Create</el-button>
+        >Create</el-button
+      >
       <el-checkbox
         v-model="showAllFields"
         class="filter-item"
         style="margin-left:15px;"
         @change="tableKey = tableKey + 1"
-      >All fields</el-checkbox>
+        >All fields</el-checkbox
+      >
     </div>
 
     <el-table
@@ -62,49 +67,66 @@
       @sort-change="sortChange"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column sortable prop="title" label="Title" min-width="200px" align="center">
+      <el-table-column
+        type="selection"
+        width="55"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        prop="title"
+        label="Title"
+        min-width="200px"
+        align="center"
+      >
         <template slot-scope="{ row }">
-          <span
+          <router-link
             class="link-type"
-            @click="handleCreateOrUpdate('/research/' + row.uuid)"
-          >{{ row.title }}</span>
+            :to="'/research/' + row.uuid"
+            tag="a"
+            >{{ row.title }}</router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Year" sortable prop="year" min-width="80px" align="center">
+      <el-table-column
+        label="Year"
+        sortable
+        prop="year"
+        min-width="80px"
+        align="center"
+      >
         <template slot-scope="{ row }">
           <span>{{ row.year }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Type" sortable prop="type" min-width="100px" align="center">
+      <el-table-column
+        label="Type"
+        sortable
+        prop="type"
+        min-width="100px"
+        align="center"
+      >
         <template slot-scope="scope">
           <span>{{ scope.row.type }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Info" v-if="showAllFields" min-width="250px" align="left">
+      <el-table-column
+        label="Info"
+        v-if="showAllFields"
+        min-width="250px"
+        align="left"
+      >
         <template slot-scope="{ row }">
-          <ul>
-            <li>
-              <strong>Grade:</strong>
-              {{ row.grade }}
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <strong>Type:</strong>
-              {{ row.pub_type }}
-            </li>
-            <li>
-              <strong>Pub. in:</strong>
-              {{ row.pub_in }}
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <strong>Event:</strong>
-              {{ row.event }}
-            </li>
-          </ul>
+          <p v-if="row.grade"><strong>Grade:</strong> {{ row.grade }} <br /></p>
+          <p v-if="row.pub_type">
+            <strong>Type:</strong> {{ row.pub_type }} <br />
+          </p>
+          <p v-if="row.event"><strong>Event:</strong> {{ row.event }} <br /></p>
+          <p v-if="row.pub_in">
+            <strong>Pub. in:</strong> {{ row.pub_in }} <br />
+          </p>
+          <a :href="row.link" v-if="row.link" class="link-type" target="_blank"
+            >Link</a
+          >
         </template>
       </el-table-column>
       <el-table-column
@@ -116,30 +138,42 @@
         width="200"
       >
         <template slot-scope="{ row }">
-          <el-tag v-for="line in row.lines" size="mini" :key="line" type="info">{{ getLine(line) }}</el-tag>
+          <el-tag
+            v-for="line in row.lines"
+            size="mini"
+            :key="line"
+            type="info"
+            >{{ getLine(line) }}</el-tag
+          >
         </template>
       </el-table-column>
 
-      <el-table-column v-if="showAllFields" sortable label="Resume" align="center" min-width="200">
+      <el-table-column
+        v-if="showAllFields"
+        sortable
+        label="Resume"
+        align="center"
+        min-width="200"
+      >
         <template slot-scope="{ row }">
-          <span class="link-type">{{ row.resume.slice(0, 30) }}...</span>
+          <span>{{ row.resume.slice(0, 150) }}...</span>
         </template>
       </el-table-column>
       <el-table-column
         label="Authors"
-        align="left"
+        align="center"
         min-width="200px"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row }">
-          <ul>
-            <li
-              class="link-type"
-              @click="handleCreateOrUpdate('/members/' + col.member)"
-              v-for="col in row.authors"
-              :key="col.id"
-            >{{ col.fullname }}</li>
-          </ul>
+          <router-link
+            class="link-type"
+            v-for="col in row.authors"
+            :key="col.id"
+            :to="'/members/' + col.member"
+            tag="a"
+            >- {{ col.fullname }}<br
+          /></router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -191,7 +225,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10,
+        limit: 5,
         offset: 0,
         title: undefined,
         type: undefined

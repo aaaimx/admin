@@ -1,26 +1,26 @@
 <template>
   <div class="components-container">
     <h3>{{ title }}</h3>
-      <el-select
-        v-model="advisor"
-        filterable
-        remote
-        reserve-keyword
-        :remote-method="getData"
-        :loading="loading"
-        clearable
-        placeholder="Selector advisor"
-      >
-        <el-option
-          v-for="item in options"
-          :key="item.fullname"
-          :label="item.fullname"
-          :value="item.id"
-        ></el-option>
-      </el-select>
-      <el-button icon="el-icon-plus" @click="addAdvisor()" size="small"
-        >Add advisor</el-button
-      >
+    <el-select
+      v-model="advisor"
+      filterable
+      remote
+      reserve-keyword
+      :remote-method="getData"
+      :loading="loading"
+      clearable
+      placeholder="Selector advisor"
+    >
+      <el-option
+        v-for="item in options"
+        :key="item.fullname"
+        :label="item.fullname"
+        :value="item.id"
+      ></el-option>
+    </el-select>
+    <el-button icon="el-icon-plus" @click="addAdvisor()" size="small"
+      >Add advisor</el-button
+    >
     <div class="editor-container">
       <dnd-list
         :list1="advisors"
@@ -90,10 +90,16 @@ export default {
           position: this.advisors.length + 1
         };
         let res = await create(advisor);
-        let insertedAdvisor = Object.assign({}, advisor, res)
+        let insertedAdvisor = Object.assign({}, advisor, res);
         this.advisors.push(insertedAdvisor);
-        console.log(insertedAdvisor);
-        console.log(this.advisors);
+        this.$message({
+          dangerouslyUseHTMLString: true,
+          message: `Advisor created`,
+          some: insertedAdvisor,
+          type: "success",
+          showClose: true,
+          duration: 2000
+        });
       }
     }
   }

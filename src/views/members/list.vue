@@ -7,11 +7,9 @@
         placeholder="Search by name"
         clearable
         class="filter-item"
-        @input="handleFilter"
       />
       <el-select
         v-model.number="listQuery.active"
-        @change="handleFilter"
         placeholder="Status"
         clearable
         class="filter-item"
@@ -23,13 +21,13 @@
           :value="item.key"
         />
       </el-select>
-      <!-- <el-button
+      <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
-      >Search</el-button>-->
+      >Search</el-button>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"

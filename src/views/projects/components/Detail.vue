@@ -213,7 +213,7 @@
 <script>
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
-import { fetchProj, create, update } from "@/api/project";
+import { fetchProj, create, update, remove } from "@/api/project";
 import { fetchList, fetch } from "@/api/member";
 import axios from "axios";
 import qs from "qs";
@@ -332,6 +332,7 @@ export default {
       });
     },
     deleteProject() {
+      // remove(this.$route.params.id)
       this.$message({
         dangerouslyUseHTMLString: true,
         message: `${this.namespace} was sucessfully deleted`,

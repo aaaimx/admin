@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       loading: false
-    }
+    };
   },
   props: {
     list1: {
@@ -115,22 +115,36 @@ export default {
       let updates = [];
       this.loading = true;
       this.list1.forEach((item, index, arr) => {
-        if (item.id) {
-          console.log(item.id);
+        if (item.id)
           updates.push(updatePosition({ id: item.id, position: ++index }));
-        }
       });
       Promise.all(updates).then(values => {
-        console.log(values);
+        this.$notify({
+          title: "Updated",
+          dangerouslyUseHTMLString: true,
+          message: "<b>Research Advisors</b> was sucessfully saved",
+          type: "success",
+          duration: 2000
+        });
         this.loading = false;
       });
     },
-    async deleteEle(ele) {
+    deleteEle(ele) {
       for (const item of this.list1) {
         if (item.id === ele.id) {
           const index = this.list1.indexOf(item);
           this.list1.splice(index, 1);
-          if (item.id) await remove(item.id);
+          if (item.id) {
+            remove(item.id).then(res => {
+              this.$message({
+                dangerouslyUseHTMLString: true,
+                message: `Advisor removed`,
+                type: "warning",
+                showClose: true,
+                duration: 2000
+              });
+            });
+          }
           break;
         }
       }

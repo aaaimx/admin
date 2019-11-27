@@ -81,7 +81,6 @@ export default {
       let res = await fetch(this.author);
       const { fullname, id } = res;
       const researchId = this.$route.params.id;
-
       let exist = this.authors.filter(el => el.fullname == fullname);
       if (!exist.length) {
         const author = {
@@ -93,8 +92,14 @@ export default {
         let res = await create(author);
         let insertedAuthor = Object.assign({}, author, res)
         this.authors.push(insertedAuthor);
-        console.log(insertedAuthor);
-        console.log(this.authors);
+        this.$message({
+          dangerouslyUseHTMLString: true,
+          message: `Author created`,
+          some: insertedAuthor,
+          type: "success",
+          showClose: true,
+          duration: 2000
+        });
       }
     }
   }

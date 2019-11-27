@@ -92,7 +92,7 @@ export default {
   data() {
     return {
       loading: false
-    }
+    };
   },
   mounted() {
     this.sort();
@@ -115,13 +115,17 @@ export default {
       let updates = [];
       this.loading = true;
       this.list1.forEach((item, index, arr) => {
-        if (item.id) {
-          console.log(item.id);
+        if (item.id)
           updates.push(updatePosition({ id: item.id, position: ++index }));
-        }
       });
       Promise.all(updates).then(values => {
-        console.log(values);
+        this.$notify({
+          title: "Updated",
+          dangerouslyUseHTMLString: true,
+          message: '<b>Research Authors</b> was sucessfully saved',
+          type: "success",
+          duration: 2000
+        });
         this.loading = false;
       });
     },
@@ -130,7 +134,17 @@ export default {
         if (item.id === ele.id) {
           const index = this.list1.indexOf(item);
           this.list1.splice(index, 1);
-          if (item.id) await remove(item.id);
+          if (item.id) {
+            remove(item.id).then(res => {
+              this.$message({
+                dangerouslyUseHTMLString: true,
+                message: `Author removed`,
+                type: "warning",
+                showClose: true,
+                duration: 2000
+              });
+            });
+          }
           break;
         }
       }

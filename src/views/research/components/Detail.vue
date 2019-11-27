@@ -68,7 +68,7 @@
                       v-model="postForm.resume"
                       placeholder=""
                       type="textarea"
-                      rows="5"
+                      rows="7"
                     />
                   </el-form-item>
                 </el-col>

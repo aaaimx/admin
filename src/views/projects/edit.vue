@@ -1,5 +1,5 @@
 <template>
-  <Detail :is-edit="true" namespace="Member" />
+  <Detail :is-edit="true" namespace="Project" />
 </template>
 
 <script>
