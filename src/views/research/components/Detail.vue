@@ -275,7 +275,7 @@ import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
 import authorsMixin from "@/mixins/authors";
 const defaultForm = {
-  title: "",
+  title: "test",
   resume: "",
   year: 2018,
   grade: "",
@@ -283,7 +283,7 @@ const defaultForm = {
   pub_in: "",
   pub_type: "",
   type: "",
-  link: "",
+  link: "https://www.researchgate.net/publication/336771770_Pattern_Recognition_Through_Empirical_Mode_Decomposition_for_Temperature_Time_Series_Between_1986_and_2019_in_Mexico_City_Downtown_for_Global_Warming_Assessment",
   lines: [],
   projects: []
 };
@@ -389,10 +389,6 @@ export default {
             })
             .catch(error => {
               loading.close()
-              this.$message({
-                message: "Something went wrong:( Try again",
-                type: "error"
-              });
             });
         } else {
           console.log("error submit!!");

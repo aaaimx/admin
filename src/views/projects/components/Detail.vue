@@ -7,20 +7,21 @@
       :rules="rules"
       class="form-container"
     >
-      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.active">
+      <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
           type="success"
           @click="submitForm"
-          v-text="isEdit ? 'Save changes': 'Save'"
+          v-text="isEdit ? 'Save changes' : 'Save'"
         ></el-button>
         <el-button
           v-loading="loading"
           v-show="isEdit"
           type="danger"
           @click="deleteProject"
-        >Delete project</el-button>
+          >Delete project</el-button
+        >
       </sticky>
 
       <div class="createPost-main-container">
@@ -42,7 +43,11 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="24" :xs="24">
-                  <el-form-item label="Title:" prop="title" class="postInfo-container-item">
+                  <el-form-item
+                    label="Title:"
+                    prop="title"
+                    class="postInfo-container-item"
+                  >
                     <el-input
                       v-model="postForm.title"
                       placeholder="i.e: Segmentación de regiones basado en atributos de textura de datos bidimensionales..."
@@ -58,7 +63,13 @@
                     class="postInfo-container-item"
                   >
                     <br />
-                    <el-date-picker v-model="postForm.start" format="dd/MM/yyyy" type="date" placeholder="Pick a day"></el-date-picker>
+                    <el-date-picker
+                      v-model="postForm.start"
+                      format="MMM dd, yyyy"
+                      value-format="yyyy-MM-dd"
+                      type="date"
+                      placeholder="Pick a day"
+                    ></el-date-picker>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12" :xs="24">
@@ -68,11 +79,21 @@
                     class="postInfo-container-item"
                   >
                     <br />
-                    <el-date-picker v-model="postForm.end" format="dd/MM/yyyy" type="date" placeholder="Pick a day"></el-date-picker>
+                    <el-date-picker
+                      v-model="postForm.end"
+                      format="MMM dd, yyyy"
+                      value-format="yyyy-MM-dd"
+                      type="date"
+                      placeholder="Pick a day"
+                    ></el-date-picker>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12" :xs="24">
-                  <el-form-item label="Institute:" prop="institute" class="postInfo-container-item">
+                  <el-form-item
+                    label="Institute:"
+                    prop="institute"
+                    class="postInfo-container-item"
+                  >
                     <br />
                     <el-select
                       v-model="postForm.institute"
@@ -86,7 +107,9 @@
                         :label="item.alias"
                         :value="item.uuid"
                       >
-                        <small style="color: #8492a6; font-size: 13px">{{ item.name }}</small>
+                        <small style="color: #8492a6; font-size: 13px">{{
+                          item.name
+                        }}</small>
                       </el-option>
                     </el-select>
                   </el-form-item>
@@ -102,10 +125,9 @@
                     <el-select
                       v-model="postForm.responsible"
                       remote
-                      allow-create
                       clearable
                       filterable
-                      reserve-keyword
+                      :remote-method="fetchMember"
                       placeholder="Select responsible person"
                     >
                       <el-option
@@ -115,7 +137,11 @@
                         :value="item.fullname"
                       ></el-option>
                     </el-select>
-                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                    <el-button
+                      icon="el-icon-plus"
+                      size="mini"
+                      circle
+                    ></el-button>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12" :xs="24">
@@ -135,9 +161,14 @@
                         :key="item.id"
                         :label="item.topic.slice(0, 30).concat('...')"
                         :value="item.id"
-                      >{{item.topic}}</el-option>
+                        >{{ item.topic }}</el-option
+                      >
                     </el-select>
-                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                    <el-button
+                      icon="el-icon-plus"
+                      size="mini"
+                      circle
+                    ></el-button>
                   </el-form-item>
                 </el-col>
 
@@ -153,6 +184,7 @@
                       remote
                       multiple
                       filterable
+                      :remote-method="fetchMember"
                       placeholder="Select collaborators"
                     >
                       <el-option
@@ -162,7 +194,11 @@
                         :value="item.id"
                       ></el-option>
                     </el-select>
-                    <el-button icon="el-icon-plus" size="mini" circle></el-button>
+                    <el-button
+                      icon="el-icon-plus"
+                      size="mini"
+                      circle
+                    ></el-button>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -177,21 +213,22 @@
 <script>
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/project";
-import { fetchList } from "@/api/member";
+import { fetchProj, create, update } from "@/api/project";
+import { fetchList, fetch } from "@/api/member";
 import axios from "axios";
 import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
-
+import moment from "moment";
+import { Promise } from 'q';
 const defaultForm = {
-    title: '',
-    start: '',
-    end: '',
-    in_charge: '',
-    institute: '',
-    collaborators: [],
-    lines: []
+  title: "",
+  start: "",
+  end: "",
+  in_charge: "",
+  institute: "",
+  collaborators: [],
+  lines: []
 };
 export default {
   name: "ProjectDetail",
@@ -221,18 +258,13 @@ export default {
       },
       id: null,
       value: [],
-      options: [],
+      collaborators: [],
       value1: "",
       formLabelWidth: "120px"
     };
   },
   computed: {
-    ...mapState("members", [
-      "partners",
-      "collaborators",
-      "divisions",
-      "roles"
-    ]),
+    ...mapState("members", ["partners"]),
     ...mapState("projects", ["postForm", "lines"])
   },
   created() {
@@ -245,19 +277,17 @@ export default {
     this.tempRoute = Object.assign({}, this.$route);
   },
   methods: {
-    fetchList(query) {
+    fetchMember(fullname) {
       fetchList({
-        fullname: query
+        fullname
       }).then(res => {
-        console.log(res);
-        this.options = res.results;
+        this.collaborators = res.results;
       });
     },
     fetchData(id) {
       let loading = this.loadingFullPage();
-      fetch(id)
+      fetchProj(id)
         .then(data => {
-          console.log(data)
           loading.close();
           this.$store.commit("projects/SET_PROJECT", data);
         })
@@ -273,10 +303,6 @@ export default {
           let request;
           if (this.isEdit) request = update(this.postForm);
           else request = create(this.postForm);
-          let start = new Date(this.postForm.start)
-          let end = new Date(this.postForm.end)
-          this.postForm.start = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`
-          this.postForm.end = `${end.getFullYear()}-${end.getMonth()}-${end.getDate()}`
           request
             .then(response => {
               this.$notify({

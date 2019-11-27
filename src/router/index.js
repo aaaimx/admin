@@ -177,35 +177,35 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/user',
-    component: Layout,
-    redirect: '/user/list',
-    name: 'User',
-    meta: {
-      title: 'User',
-      roles: ['admin'],
-      icon: 'peoples'
-    },
-    children: [
-      {
-        path: '/user/list',
-        component: () => import('@/views/contacts/list'),
-        name: 'ContactList',
-        meta: {
-          title: 'User List',
-          icon: 'peoples'
-        }
-      }
-      // {
-      //   path: '/contact/:id',
-      //   component: () => import('@/views/contact/edit'),
-      //   name: 'EditMember',
-      //   meta: { title: 'Edit Course', activeMenu: '/contact/:id' },
-      //   hidden: true
-      // }
-    ]
-  },
+  // {
+  //   path: '/user',
+  //   component: Layout,
+  //   redirect: '/user/list',
+  //   name: 'User',
+  //   meta: {
+  //     title: 'User',
+  //     roles: ['admin'],
+  //     icon: 'peoples'
+  //   },
+  //   children: [
+  //     {
+  //       path: '/user/list',
+  //       component: () => import('@/views/contacts/list'),
+  //       name: 'ContactList',
+  //       meta: {
+  //         title: 'User List',
+  //         icon: 'peoples'
+  //       }
+  //     }
+  //     // {
+  //     //   path: '/contact/:id',
+  //     //   component: () => import('@/views/contact/edit'),
+  //     //   name: 'EditMember',
+  //     //   meta: { title: 'Edit Course', activeMenu: '/contact/:id' },
+  //     //   hidden: true
+  //     // }
+  //   ]
+  // },
   // {
   //   path: 'documentation',
   //   component: Layout,

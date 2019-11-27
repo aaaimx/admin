@@ -22,10 +22,10 @@ import * as filters from './filters' // global filters
 import DatePicker from 'element-ui/lib/date-picker'
 import VueI18n from 'vue-i18n'
 import request from './services/axios'
-
-import enLocale from 'element-ui/lib/locale/lang/en'
-import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 import ElementLocale from 'element-ui/lib/locale'
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -47,27 +47,7 @@ Service.install = function (Vue, options) {
 Vue.use(VueI18n)
 Vue.use(DatePicker)
 Vue.use(Service)
-
-const messages = {
-  en: {
-    message: 'hello',
-    ...enLocale
-  },
-  zh: {
-    message: '你好',
-    ...zhLocale
-  }
-}
-// Create VueI18n instance with options
-const i18n = new VueI18n({
-  locale: 'en', // set locale
-  messages // set locale messages
-})
-
-ElementLocale.i18n((key, value) => i18n.t(key, value))
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
+Vue.use(ElementUI, { locale })
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size

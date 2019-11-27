@@ -43,7 +43,7 @@ service.interceptors.response.use(
   res => {
     // if the custom code is not 20000, it is judged as an error.
     if (res.status !== 200 && res.status !== 201 && res.status !== 204) {
-      errMessage(res.err)
+      // errMessage(res.err)
 
       // 401/403: Unauthorized / Token expired
       if (res.status === 401 || res.status === 403) {
@@ -56,8 +56,16 @@ service.interceptors.response.use(
     }
   },
   error => {
-    errMessage(error)
-    return Promise.reject(error)
+    const { response, message } = error
+    console.log(response)
+    errMessage(message)
+
+    // 401/403: Unauthorized / Token expired
+    if (response.status === 401 || response.status === 403) {
+      // to re-login
+      reLogin()
+    }
+    return Promise.reject(response)
   }
 )
 

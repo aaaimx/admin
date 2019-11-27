@@ -139,6 +139,7 @@
 
 <script>
 import { fetchList, remove, updateStatus } from "@/api/project";
+import { fetch } from "@/api/member";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
@@ -208,7 +209,6 @@ export default {
       let { limit, page, offset } = this.listQuery;
       this.listQuery.offset = limit * (page - 1);
       fetchList(this.listQuery).then(res => {
-        console.log(res);
         this.list = res.results;
         this.total = res.count;
         this.listLoading = false;

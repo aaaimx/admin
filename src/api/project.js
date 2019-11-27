@@ -28,7 +28,7 @@ export function fetchLines (query) {
  *
  * @param {*} uuid String
  */
-export function fetch (uuid) {
+export function fetchProj (uuid) {
   return request({
     url: `/projects/${uuid}/`,
     method: 'GET'

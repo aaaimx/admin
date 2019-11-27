@@ -24,9 +24,9 @@ export function reLogin () {
  * @param {*} error Error payload
  * @description show a error message in screen
  */
-export function errMessage (error) {
+export function errMessage (message) {
   Message({
-    message: error.message,
+    message,
     type: 'error',
     duration: 5 * 1000
   })
