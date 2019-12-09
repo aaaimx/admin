@@ -4,14 +4,89 @@ import { fetchRoles, fetchList } from '@/api/member'
 
 const state = {
   partners: [],
-  roles: [],
+  divisions: [
+    {
+      id: 1,
+      name: 'Software',
+      story: '',
+      logo: null
+    },
+    {
+      id: 2,
+      name: 'Machine Learning',
+      story: '',
+      logo: null
+    },
+    {
+      id: 3,
+      name: 'Operations',
+      story: '',
+      logo: null
+    },
+    {
+      id: 4,
+      name: 'Robotics',
+      story: '',
+      logo: null
+    },
+    {
+      id: 5,
+      name: 'Applied Maths',
+      story: '',
+      logo: null
+    },
+    {
+      id: 6,
+      name: 'Social Impact',
+      story: '',
+      logo: null
+    },
+    {
+      id: 8,
+      name: 'Board',
+      story: '',
+      logo: null
+    },
+    {
+      id: 9,
+      name: 'Biomedics',
+      story: '',
+      logo: null
+    }
+  ],
+  roles: [
+    {
+      id: 4,
+      name: 'Graduated'
+    },
+    {
+      id: 5,
+      name: 'Member'
+    },
+    {
+      id: 3,
+      name: 'Researcher'
+    },
+    {
+      id: 1,
+      name: 'Student'
+    },
+    {
+      id: 2,
+      name: 'Teacher'
+    }
+  ],
   collaborators: [],
   postForm: {
-    adscription: '',
     fullname: '',
     email: '',
     active: false,
+    board: false,
+    thumbnailUrl: '',
+    thumbnailFile: null,
     charge: '',
+    adscription: null,
+    membership: null,
     divisions: [],
     roles: []
   }

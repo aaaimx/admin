@@ -1,4 +1,4 @@
-const dev = false
+const dev = true
 
 module.exports = {
   title: 'Productivity',

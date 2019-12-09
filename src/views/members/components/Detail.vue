@@ -7,22 +7,23 @@
       :rules="rules"
       class="form-container"
     >
-      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.active">
+      <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
         <StatusDropdown v-model="postForm.active" />
-        <!-- <BannerUrlDropdown v-model="postForm.imgBanner" /> -->
+        <ThumbnailUrl v-model="postForm.thumbnailUrl" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
           type="success"
           @click="submitForm"
-          v-text="isEdit ? 'Save changes': 'Save'"
+          v-text="isEdit ? 'Save changes' : 'Save'"
         ></el-button>
         <el-button
           v-loading="loading"
           v-show="isEdit"
           type="danger"
           @click="deleteMember"
-        >Delete member</el-button>
+          >Delete member</el-button
+        >
       </sticky>
 
       <div class="createPost-main-container">
@@ -32,10 +33,10 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <div class="grid-content bg-purple" />
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <div class="grid-content bg-purple-light" />
           </el-col>
         </el-row>
@@ -43,8 +44,16 @@
           <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
-                <el-col :span="12" :xs="24">
-                  <el-form-item label="Fullname:" prop="fullname" class="postInfo-container-item">
+                <el-col :span="8" :lg="7" :xs="24">
+                  <Upload v-model="postForm.thumbnailUrl" />
+                </el-col>
+
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Fullname:"
+                    prop="fullname"
+                    class="postInfo-container-item"
+                  >
                     <el-input
                       v-model="postForm.fullname"
                       placeholder="apellidoP-apellidoM, Nombre(s)"
@@ -52,7 +61,20 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col :span="12" :xs="24">
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Surname:"
+                    prop="surname"
+                    class="postInfo-container-item"
+                  >
+                    <el-input
+                      v-model="postForm.surname"
+                      placeholder=""
+                      type="text"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" :xs="24">
                   <el-form-item
                     label="Email (Optional):"
                     prop="email"
@@ -65,7 +87,7 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col :span="12" :xs="24">
+                <el-col :span="8" :xs="24">
                   <el-form-item
                     label="Adscription:"
                     prop="adscription"
@@ -83,16 +105,26 @@
                         :label="item.alias"
                         :value="item.uuid"
                       >
-                        <small style="color: #8492a6; font-size: 13px">{{ item.name }}</small>
+                        <small style="color: #8492a6; font-size: 13px">{{
+                          item.name
+                        }}</small>
                       </el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
 
-                <el-col :span="12" :xs="24">
-                  <el-form-item label="Roles:" prop="roles" class="postInfo-container-item">
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Roles:"
+                    prop="roles"
+                    class="postInfo-container-item"
+                  >
                     <br />
-                    <el-select v-model="postForm.roles" multiple placeholder="Select roles">
+                    <el-select
+                      v-model="postForm.roles"
+                      multiple
+                      placeholder="Select roles"
+                    >
                       <el-option
                         v-for="item in roles"
                         :key="item.id"
@@ -103,19 +135,18 @@
                   </el-form-item>
                 </el-col>
 
-                <el-col :span="12" :xs="24">
-                  <el-form-item label="Cargo:" prop="charge" class="postInfo-container-item">
-                    <el-input
-                      v-model="postForm.charge"
-                      placeholder="Member/President/Division Leader/Board Chair"
-                      type="text"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12" :xs="24">
-                  <el-form-item label="Divisions:" prop="divisions" class="postInfo-container-item">
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Divisions:"
+                    prop="divisions"
+                    class="postInfo-container-item"
+                  >
                     <br />
-                    <el-select v-model="postForm.divisions" multiple placeholder="Select roles">
+                    <el-select
+                      v-model="postForm.divisions"
+                      multiple
+                      placeholder="Select roles"
+                    >
                       <el-option
                         v-for="item in divisions"
                         :key="item.id"
@@ -125,41 +156,31 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
+                <el-col :span="8" :xs="24">
+                  <el-form-item
+                    label="Charge:"
+                    prop="charge"
+                    class="postInfo-container-item"
+                  >
+                    <el-checkbox
+                      v-model="postForm.board"
+                      class="filter-item"
+                      style="margin-left:15px;"
+                      >Board</el-checkbox
+                    >
+                    <el-input
+                      v-model="postForm.charge"
+                      placeholder="Co-Chair / ITM Researcher"
+                      type="text"
+                    />
+                  </el-form-item>
+                </el-col>
               </el-row>
             </div>
           </el-col>
         </el-row>
-        <!--  <el-row>
-          <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-            <h4>Learn</h4>
-            <Learn />
-          </el-col>
-          <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-            <h4>Requirements</h4>
-            <Requirements />
-          </el-col>
-          <el-col :span="24" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-            <h4>Material</h4>
-            <Material />
-          </el-col>
-        </el-row>-->
       </div>
     </el-form>
-    <el-dialog title="Add Module" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="Tema: ">
-          <el-input v-model="form.module" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button
-          type="primary"
-          @keyup.enter="dialogFormVisible = false, newModule()"
-          @click="dialogFormVisible = false, newModule()"
-        >Confirm</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -171,13 +192,16 @@ import axios from "axios";
 import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
-
 const defaultForm = {
   fullname: "",
   email: "",
-  charge: "",
   active: false,
-  adscription: "",
+  board: false,
+  thumbnailUrl: "",
+  thumbnailFile: null,
+  charge: "",
+  adscription: null,
+  membership: null,
   divisions: [],
   roles: []
 };
@@ -190,8 +214,9 @@ export default {
     Learn: () => import("./Todos/Learn"),
     StatusDropdown: () => import("./Dropdown/Status"),
     PlatformDropdown: () => import("./Dropdown/Platform"),
-    BannerUrlDropdown: () => import("./Dropdown/BannerUrl"),
+    ThumbnailUrl: () => import("./Dropdown/BannerUrl"),
     JsonEditor: () => import("@/components/JsonEditor"),
+    Upload: () => import("@/components/Upload/SingleImage3"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
   },
@@ -211,18 +236,17 @@ export default {
       rules,
       tempRoute: {},
       dialogFormVisible: false,
-      form: {
-        module: ""
-      },
+      photo: "",
       id: null,
       value: [],
       formLabelWidth: "120px"
     };
   },
   computed: {
-    ...mapState("members", ["postForm", "partners", "divisions", "roles"]),
+    ...mapState("members", ["postForm", "partners", "divisions", "roles"])
   },
   created() {
+    this.$store.dispatch("members/fetchPartners");
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
@@ -249,8 +273,8 @@ export default {
         if (valid) {
           this.loading = true;
           let request;
-          if (this.isEdit)
-            request = update(this.postForm);
+          delete this.postForm.thumbnailFile
+          if (this.isEdit) request = update(this.postForm);
           else request = create(this.postForm);
 
           request

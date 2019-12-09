@@ -10,6 +10,7 @@
       />
       <el-select
         v-model.number="listQuery.active"
+        @change="handleFilter"
         placeholder="Status"
         clearable
         class="filter-item"
@@ -34,13 +35,25 @@
         type="primary"
         icon="el-icon-edit"
         @click="handleCreateOrUpdate('/members/create')"
-      >Create</el-button>
+        >Create</el-button
+      >
+      <el-button
+        v-waves
+        :loading="downloadLoading"
+        class="filter-item"
+        type="primary"
+        icon="el-icon-download"
+        @click="handleDownload"
+      >
+        Export
+      </el-button>
       <el-checkbox
-        v-model="showAllFields"
+        v-model="listQuery.panel"
         class="filter-item"
         style="margin-left:15px;"
-        @change="tableKey=tableKey+1"
-      >All fields</el-checkbox>
+        @change="handleFilter"
+        >Board & Committee</el-checkbox
+      >
     </div>
 
     <el-table
@@ -55,16 +68,27 @@
       @sort-change="sortChange"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column sortable prop="fullname" label="Fullname" min-width="150px" align="center">
-        <template slot-scope="{row}">
+      <el-table-column
+        type="selection"
+        width="55"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        prop="fullname"
+        label="Fullname"
+        min-width="150px"
+        align="center"
+      >
+        <template slot-scope="{ row }">
           <span
             class="link-type"
             @click="handleCreateOrUpdate('/members/' + row.id)"
-          >{{ row.fullname }}</span>
+            >{{ row.fullname }}</span
+          >
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="Adscription"
         sortable
         prop="adscription"
@@ -74,8 +98,14 @@
         <template slot-scope="scope">
           <span>{{ getInstitute(scope.row.adscription) }}</span>
         </template>
-      </el-table-column>
-      <el-table-column label="Charge" sortable prop="charge" min-width="80px" align="center">
+      </el-table-column> -->
+      <el-table-column
+        label="Charge"
+        sortable
+        prop="charge"
+        min-width="80px"
+        align="center"
+      >
         <template slot-scope="scope">
           <span>{{ scope.row.charge }}</span>
         </template>
@@ -88,25 +118,38 @@
         align="center"
         min-width="90"
       >
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <span class="link-type">{{ row.email }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        v-if="showAllFields"
         label="Roles"
         sortable
         prop="roles"
         class-name="status-col"
         width="200"
       >
-        <template slot-scope="{row}">
-          <el-tag v-for="role in row.roles" size="mini" :key="role" type="info">{{ getRole(role) }}</el-tag>
+        <template slot-scope="{ row }">
+          <el-tag
+            v-for="role in row.roles"
+            size="mini"
+            :key="role"
+            type="info"
+            >{{ getRole(role) }}</el-tag
+          >
         </template>
       </el-table-column>
-      <el-table-column label="Status" sortable prop="active" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-tag :type="row.active | statusFilter">{{ row.active ? 'Active' : 'Inactive' }}</el-tag>
+      <el-table-column
+        label="Status"
+        sortable
+        prop="active"
+        class-name="status-col"
+        width="100"
+      >
+        <template slot-scope="{ row }">
+          <el-tag :type="row.active | statusFilter">{{
+            row.active ? "Active" : "Inactive"
+          }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -116,20 +159,22 @@
         min-width="100"
         class-name="small-padding fixed-width"
       >
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <!-- <el-button type="primary" size="mini" @click="handleUpdate(row)">Edit</el-button> -->
           <el-button
             v-if="!row.active"
             size="mini"
             type="success"
             @click="handleModifyStatus(row, true)"
-          >Active</el-button>
+            >Active</el-button
+          >
           <el-button
             v-else
             size="small"
             type="danger"
             @click="handleModifyStatus(row, false)"
-          >Inactive</el-button>
+            >Inactive</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -141,12 +186,13 @@
       <el-button size="mini" @click="toggleSelection()">Go</el-button>
     </div>
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
       @pagination="getList"
     />
+    <JsonEditor v-if="json" :value="json"/>
   </div>
 </template>
 
@@ -155,6 +201,7 @@ import { fetchList, remove, updateStatus } from "@/api/member";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import JsonEditor from "@/components/JsonEditor";
 import { off } from "element-ui/lib/utils/dom";
 import { mapState } from "vuex";
 import tableMixin from "@/mixins/table-handlers";
@@ -166,7 +213,7 @@ const statusOptions = [
 
 export default {
   name: "MembersTable",
-  components: { Pagination },
+  components: { Pagination, JsonEditor },
   directives: { waves },
   filters: {
     statusFilter(active) {
@@ -186,11 +233,14 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
+      downloadLoading: false,
+      json:  null,
       listQuery: {
         page: 1,
         limit: 10,
         offset: 0,
         fullname: undefined,
+        panel: undefined,
         active: undefined
       },
       statusOptions,
@@ -202,8 +252,8 @@ export default {
       showAllFields: false
     };
   },
-  created() {
-    this.getList();
+  beforeMount() {
+    this.getList()
   },
   methods: {
     // mixins
@@ -222,11 +272,15 @@ export default {
       let { limit, page, offset } = this.listQuery;
       this.listQuery.offset = limit * (page - 1);
       fetchList(this.listQuery).then(res => {
-        console.log(res);
         this.list = res.results;
         this.total = res.count;
         this.listLoading = false;
       });
+    },
+    handleDownload() {
+      this.downloadLoading = true;
+      this.json = this.list
+      this.downloadLoading = false;
     },
     handleModifyStatus(row, active) {
       updateStatus({

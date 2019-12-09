@@ -6,13 +6,6 @@ export default {
       trigger: 'blur'
     }
   ],
-  charge: [
-    {
-      required: true,
-      message: 'Please input Member charge',
-      trigger: 'blur'
-    }
-  ],
   adscription: [
     {
       required: true,

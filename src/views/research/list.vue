@@ -4,6 +4,7 @@
       <el-input
         style="max-width: 300px"
         v-model="listQuery.title"
+        @input="handleFilter"
         placeholder="Search by name"
         clearable
         class="filter-item"
@@ -11,6 +12,7 @@
       <el-input
         style="max-width: 150px"
         v-model="listQuery.year"
+        @change="handleFilter"
         type="number"
         min="2018"
         placeholder="By year"
@@ -19,6 +21,7 @@
       />
       <el-select
         v-model.number="listQuery.type"
+        @change="handleFilter"
         placeholder="By type"
         clearable
         class="filter-item"
@@ -30,14 +33,14 @@
           :value="item"
         />
       </el-select>
-      <el-button
+      <!-- <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
         >Search</el-button
-      >
+      > -->
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
