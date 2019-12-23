@@ -171,11 +171,11 @@
         <template slot-scope="{ row }">
           <router-link
             class="link-type"
-            v-for="col in row.authors"
+            v-for="(col, index) in row.authors"
             :key="col.id"
             :to="'/members/' + col.member"
             tag="a"
-            >- {{ col.fullname }}<br
+            >{{ col.name }} {{ col.surname }} <sup class="link-type">{{ ++index }}</sup><br
           /></router-link>
         </template>
       </el-table-column>

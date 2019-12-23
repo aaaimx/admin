@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input
         style="max-width: 300px"
-        v-model="listQuery.fullname"
+        v-model="listQuery.name"
         placeholder="Search by name"
         clearable
         class="filter-item"
@@ -75,8 +75,8 @@
       ></el-table-column>
       <el-table-column
         sortable
-        prop="fullname"
-        label="Fullname"
+        prop="name"
+        label="name"
         min-width="150px"
         align="center"
       >
@@ -84,7 +84,7 @@
           <span
             class="link-type"
             @click="handleCreateOrUpdate('/members/' + row.id)"
-            >{{ row.fullname }}</span
+            >{{ row.name }} {{ row.surname }}</span
           >
         </template>
       </el-table-column>
@@ -239,7 +239,7 @@ export default {
         page: 1,
         limit: 10,
         offset: 0,
-        fullname: undefined,
+        name: undefined,
         panel: undefined,
         active: undefined
       },

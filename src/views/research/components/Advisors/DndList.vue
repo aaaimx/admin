@@ -13,7 +13,7 @@
           class="list-complete-item"
         >
           <div class="list-complete-item-handle">
-            {{ ++index }}.- {{ element.fullname }}
+            {{ element.name }} {{ element.surname }} <sup class="link-type">{{ ++index }}</sup>
           </div>
           <div style="position:absolute;right:0px;">
             <span

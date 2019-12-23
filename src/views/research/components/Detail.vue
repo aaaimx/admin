@@ -167,7 +167,7 @@
                 </el-col>
                 <el-col
                   v-if="postForm.type == 'Presentation'"
-                  :span="8"
+                  :span="24"
                   :xs="24"
                 >
                   <el-form-item
@@ -205,7 +205,7 @@
                     class="postInfo-container-item"
                   >
                     <el-input
-                      v-model="postForm.púb_in"
+                      v-model="postForm.pub_in"
                       clearable
                       class="filter-item"
                     />
@@ -326,6 +326,7 @@ export default {
     ...mapState("projects", ["lines"])
   },
   created() {
+    this.$store.dispatch('projects/fetchLines')
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);

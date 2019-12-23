@@ -78,10 +78,12 @@ const state = {
   ],
   collaborators: [],
   postForm: {
-    fullname: '',
+    name: '',
+    surname: '',
     email: '',
     active: false,
     board: false,
+    committee: false,
     thumbnailUrl: '',
     thumbnailFile: null,
     charge: '',

@@ -1,22 +1,15 @@
 export default {
-  fullname: [
+  name: [
     {
       required: true,
-      message: 'Please input Member Fullname',
+      message: 'Please enter name',
       trigger: 'blur'
     }
   ],
-  adscription: [
+  surname: [
     {
       required: true,
-      message: 'Please select an institute',
-      trigger: 'blur'
-    }
-  ],
-  roles: [
-    {
-      required: true,
-      message: 'Please select role(s)',
+      message: 'Please enter surname',
       trigger: 'blur'
     }
   ],

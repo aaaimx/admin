@@ -132,9 +132,9 @@
                     >
                       <el-option
                         v-for="item in collaborators"
-                        :key="item.fullname"
-                        :label="item.fullname"
-                        :value="item.fullname"
+                        :key="item.name"
+                        :label="item.name + ' ' + item.surname"
+                        :value="item.name"
                       ></el-option>
                     </el-select>
                     <el-button
@@ -190,7 +190,7 @@
                       <el-option
                         v-for="item in collaborators"
                         :key="item.id"
-                        :label="item.fullname"
+                        :label="item.name + ' ' + item.surname"
                         :value="item.id"
                       ></el-option>
                     </el-select>
@@ -268,6 +268,8 @@ export default {
     ...mapState("projects", ["postForm", "lines"])
   },
   created() {
+    this.$store.dispatch('projects/fetchLines')
+    this.$store.dispatch('members/fetchPartners')
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
@@ -277,9 +279,9 @@ export default {
     this.tempRoute = Object.assign({}, this.$route);
   },
   methods: {
-    fetchMember(fullname) {
+    fetchMember(name) {
       fetchList({
-        fullname
+        name
       }).then(res => {
         this.collaborators = res.results;
       });

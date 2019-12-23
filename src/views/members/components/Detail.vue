@@ -9,7 +9,7 @@
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
         <StatusDropdown v-model="postForm.active" />
-        <ThumbnailUrl v-model="postForm.thumbnailUrl" />
+        <!-- <ThumbnailUrl v-model="postForm.thumbnailUrl" /> -->
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -50,13 +50,13 @@
 
                 <el-col :span="8" :xs="24">
                   <el-form-item
-                    label="Fullname:"
-                    prop="fullname"
+                    label="name:"
+                    prop="name"
                     class="postInfo-container-item"
                   >
                     <el-input
-                      v-model="postForm.fullname"
-                      placeholder="apellidoP-apellidoM, Nombre(s)"
+                      v-model="postForm.name"
+                      placeholder="Nombre(s)"
                       type="text"
                     />
                   </el-form-item>
@@ -69,7 +69,7 @@
                   >
                     <el-input
                       v-model="postForm.surname"
-                      placeholder=""
+                      placeholder="apellidoP-apellidoM"
                       type="text"
                     />
                   </el-form-item>
@@ -113,7 +113,7 @@
                   </el-form-item>
                 </el-col>
 
-                <el-col :span="8" :xs="24">
+                <!-- <el-col :span="8" :xs="24">
                   <el-form-item
                     label="Roles:"
                     prop="roles"
@@ -133,6 +133,30 @@
                       ></el-option>
                     </el-select>
                   </el-form-item>
+                </el-col> -->
+
+                <el-col :span="24" :xs="24">
+                  <el-form-item
+                    label="Role / Charge:"
+                    prop="charge"
+                    class="postInfo-container-item"
+                  >
+                    <el-checkbox
+                      v-model="postForm.board"
+                      class="filter-item"
+                      >Board</el-checkbox
+                    >
+                    <el-checkbox
+                      v-model="postForm.committee"
+                      class="filter-item"
+                      >Committee</el-checkbox
+                    >
+                    <el-input
+                      v-model="postForm.charge"
+                      placeholder="Co-Chair / ITM Researcher"
+                      type="text"
+                    />
+                  </el-form-item>
                 </el-col>
 
                 <el-col :span="8" :xs="24">
@@ -145,7 +169,7 @@
                     <el-select
                       v-model="postForm.divisions"
                       multiple
-                      placeholder="Select roles"
+                      placeholder="Select divisions"
                     >
                       <el-option
                         v-for="item in divisions"
@@ -154,25 +178,6 @@
                         :value="item.id"
                       ></el-option>
                     </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8" :xs="24">
-                  <el-form-item
-                    label="Charge:"
-                    prop="charge"
-                    class="postInfo-container-item"
-                  >
-                    <el-checkbox
-                      v-model="postForm.board"
-                      class="filter-item"
-                      style="margin-left:15px;"
-                      >Board</el-checkbox
-                    >
-                    <el-input
-                      v-model="postForm.charge"
-                      placeholder="Co-Chair / ITM Researcher"
-                      type="text"
-                    />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -193,10 +198,12 @@ import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
 const defaultForm = {
-  fullname: "",
+  name: "",
+  surname: "",
   email: "",
   active: false,
   board: false,
+  committee: false,
   thumbnailUrl: "",
   thumbnailFile: null,
   charge: "",
@@ -282,7 +289,7 @@ export default {
               this.$notify({
                 title: ` ${this.isEdit ? "Updated" : "Created"}`,
                 dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.fullname}</b> was sucessfully saved`,
+                message: `${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`,
                 type: "success",
                 duration: 2000
               });

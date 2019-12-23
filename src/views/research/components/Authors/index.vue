@@ -13,8 +13,8 @@
       >
         <el-option
           v-for="item in options"
-          :key="item.fullname"
-          :label="item.fullname"
+          :key="item.id"
+          :label="`${item.surname} ${item.name}`"
           :value="item.id"
         ></el-option>
       </el-select>
@@ -69,9 +69,9 @@ export default {
     ...mapState("members", ["collaborators"])
   },
   methods: {
-    getData(fullname) {
+    getData(name) {
       this.loading = true;
-      fetchList({ fullname }).then(response => {
+      fetchList({ name }).then(response => {
         this.options = response.results;
         this.loading = false;
       });
@@ -79,12 +79,13 @@ export default {
     async addAuthor() {
       if (!this.author.toString().trim()) return;
       let res = await fetch(this.author);
-      const { fullname, id } = res;
+      const { name, surname, id } = res;
       const researchId = this.$route.params.id;
-      let exist = this.authors.filter(el => el.fullname == fullname);
+      let exist = this.authors.filter(el => el.name == name && el.surname == surname);
       if (!exist.length) {
         const author = {
-          fullname,
+          name,
+          surname,
           member: id,
           research: researchId,
           position: this.authors.length + 1
