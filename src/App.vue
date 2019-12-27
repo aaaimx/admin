@@ -9,8 +9,6 @@ import trae from "@/services/trae";
 export default {
   name: "App",
   mounted() {
-
-  //  this.$store.dispatch('members/fetchPartners')
   //  this.$store.dispatch('members/fetchDivisions')
   //  this.$store.dispatch('members/fetchRoles')
   //  this.$store.dispatch('members/fetchCollaborators')

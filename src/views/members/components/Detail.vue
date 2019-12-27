@@ -45,7 +45,7 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="8" :lg="7" :xs="24">
-                  <Upload v-model="postForm.thumbnailUrl" />
+                  <Upload v-model="postForm.thumbnailFile" />
                 </el-col>
 
                 <el-col :span="8" :xs="24">
@@ -263,11 +263,22 @@ export default {
     this.tempRoute = Object.assign({}, this.$route);
   },
   methods: {
+    getPhoto(photo) {
+      try {
+        var res = photo.split("https://drive.google.com/file/d/");
+        res = res[1];
+        res = res.split("/view?usp=drivesdk");
+        return "https://drive.google.com/uc?id=" + res[0];
+      } catch (error) {
+        return ""
+      }
+    },
     fetchData(id) {
       let loading = this.loadingFullPage();
       fetch(id)
         .then(data => {
           loading.close();
+          data.thumbnailFile = this.getPhoto(data.thumbnailFile)
           this.$store.commit("members/SET_MEMBER", data);
         })
         .catch(err => {

@@ -1,4 +1,4 @@
-const dev = false
+const dev = true
 
 module.exports = {
   title: 'Productivity',
@@ -8,7 +8,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the settings right-panel
    */
-  showSettings: true,
+  showSettings: false,
 
   /**
    * @type {boolean} true | false

@@ -15,8 +15,8 @@
       </div>
     </el-upload> -->
     <div class="image-preview">
-      <div v-show="imageUrl.length>1" class="image-preview-wrapper">
-        <img :src="imageUrl">
+      <div v-show="imageUrl.length > 1" class="image-preview-wrapper">
+        <img :src="imageUrl" />
         <!-- <div class="image-preview-action">
           <i class="el-icon-delete" @click="rmImage" />
         </div> -->
@@ -26,38 +26,37 @@
 </template>
 
 <script>
-
 export default {
-  name: 'SingleImageUpload3',
+  name: "SingleImageUpload3",
   props: {
     value: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   data() {
     return {
-      tempUrl: '',
-      dataObj: { token: '', key: '' }
-    }
+      tempUrl: "",
+      dataObj: { token: "", key: "" }
+    };
   },
   computed: {
     imageUrl() {
-      return this.value
+      return this.value;
     }
   },
   methods: {
     rmImage() {
-      this.emitInput('')
+      this.emitInput("");
     },
     emitInput(val) {
-      this.$emit('input', val)
+      this.$emit("input", val);
     },
     handleImageSuccess(file) {
-      this.emitInput(file.files.file)
+      this.emitInput(file.files.file);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -97,8 +96,8 @@ export default {
       color: #fff;
       opacity: 0;
       font-size: 20px;
-      background-color: rgba(0, 0, 0, .5);
-      transition: opacity .3s;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: opacity 0.3s;
       cursor: pointer;
       text-align: center;
       line-height: 200px;
