@@ -1,4 +1,10 @@
-import { login, refreshToken, getInfo, verifyToken } from '@/api/user'
+import {
+  login,
+  refreshToken,
+  getInfo,
+  getGroups,
+  verifyToken
+} from '@/api/user'
 import { reLogin } from '@/utils/messages'
 import {
   getToken,
@@ -11,7 +17,7 @@ import {
 import router, { resetRouter } from '@/router'
 
 const USER = {
-  roles: ['admin'],
+  roles: [],
   introduction: 'I am a super administrator',
   avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
   name: 'Super Admin'
@@ -74,10 +80,10 @@ const actions = {
       var { user_id } = decodeToken(token)
       getInfo(user_id)
         .then(data => {
-          let { roles, name, avatar, introduction } = USER
-          if (data.is_superuser) roles = ['admin']
-          else roles = data.groups
-          console.log(roles)
+          USER.name = data.username.toUpperCase()
+          if (data.is_superuser) USER.roles = ['Admin']
+          else USER.roles = data.groups
+          const { roles, name, avatar, introduction } = USER
           commit('SET_NAME', name)
           commit('SET_ROLES', roles)
           commit('SET_AVATAR', avatar)

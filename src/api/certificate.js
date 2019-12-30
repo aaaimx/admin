@@ -1,8 +1,8 @@
 import request from '@/services/axios'
 
-export function fetchListP () {
+export function fetchListC () {
   return request({
-    url: '/partners/',
+    url: '/certificates/',
     method: 'GET'
   })
 }
@@ -13,7 +13,7 @@ export function fetchListP () {
  */
 export function fetchList (query) {
   return request({
-    url: '/partners/',
+    url: '/certificates/',
     method: 'GET',
     params: query
   })
@@ -25,7 +25,7 @@ export function fetchList (query) {
  */
 export function fetch (id) {
   return request({
-    url: `/partners/${id}/`,
+    url: `/certificates/${id}/`,
     method: 'GET'
   })
 }
@@ -36,7 +36,7 @@ export function fetch (id) {
  */
 export function create (data) {
   return request({
-    url: '/partners/',
+    url: '/certificates/',
     method: 'POST',
     data
   })
@@ -49,7 +49,7 @@ export function create (data) {
  */
 export function update (data) {
   return request({
-    url: `/partners/${data.id}/`,
+    url: `/certificates/${data.id}/`,
     method: 'PUT',
     data
   })
@@ -61,7 +61,7 @@ export function update (data) {
  */
 export function remove (data) {
   return request({
-    url: `/partners/${id}/`,
+    url: `/certificates/${id}/`,
     method: 'DELETE',
     data
   })

@@ -1,12 +1,12 @@
 <template>
-  <Detail :is-edit="true" namespace="Member" />
+  <Detail :is-edit="false" namespace="Partner" />
 </template>
 
 <script>
 import Detail from './components/Detail'
 
 export default {
-  name: 'EditForm',
+  name: 'CreateForm',
   components: { Detail }
 }
 </script>

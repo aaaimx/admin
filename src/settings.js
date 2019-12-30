@@ -1,5 +1,5 @@
-const dev = true
 
+const dev = false
 module.exports = {
   title: 'Productivity',
   logo: 'http://aaaimx.org/img/sprites/aaai-transpeps.png',
@@ -35,7 +35,5 @@ module.exports = {
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
   errorLog: 'production',
-  HOST: dev
-    ? 'http://127.0.0.1:8000'
-    : 'https://aaaimx-admin.herokuapp.com'
+  HOST: dev ? 'http://127.0.0.1:8000' : 'https://aaaimx-admin.herokuapp.com'
 }

@@ -8,6 +8,13 @@ export function login (data) {
   })
 }
 
+export function getGroups () {
+  return request({
+    url: '/groups/',
+    method: 'get'
+  })
+}
+
 export function getInfo (id) {
   return request({
     url: `/users/${id}/`,

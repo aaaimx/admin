@@ -91,6 +91,7 @@ export const asyncRoutes = [
     name: 'Members',
     meta: {
       title: 'Members',
+      roles: ['Admin', 'Research'],
       icon: 'people'
     },
     children: [
@@ -116,12 +117,77 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/certificates',
+    component: Layout,
+    redirect: '/certificates/list',
+    name: 'Certificates',
+    meta: {
+      title: 'Certificates',
+      roles: ['Admin', 'Logistic'],
+      icon: 'skill'
+    },
+    children: [
+      {
+        path: '/certificates/list',
+        component: () => import('@/views/certificates/list'),
+        name: 'CertificatesList',
+        meta: { title: 'Certificate list', icon: 'list' }
+      },
+      {
+        path: '/certificates/create',
+        component: () => import('@/views/certificates/create'),
+        name: 'CreateCertificate',
+        meta: { title: 'Create certificate', icon: 'edit' }
+      },
+      {
+        path: '/certificates/:id',
+        component: () => import('@/views/certificates/edit'),
+        name: 'EditCertificate',
+        meta: { title: 'Edit certificate', activeMenu: '/certificates/:id' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/partners',
+    component: Layout,
+    redirect: '/partners/list',
+    name: 'Partners',
+    meta: {
+      title: 'Partners',
+      roles: ['Admin', 'Research'],
+      icon: 'international'
+    },
+    children: [
+      {
+        path: '/partners/list',
+        component: () => import('@/views/partners/list'),
+        name: 'PartnersList',
+        meta: { title: 'Partner list', icon: 'list' }
+      },
+      {
+        path: '/partners/create',
+        component: () => import('@/views/partners/create'),
+        name: 'CreatePartner',
+        meta: { title: 'Create Partner', icon: 'edit' }
+      },
+      {
+        path: '/partners/:id',
+        component: () => import('@/views/partners/edit'),
+        name: 'EditPartner',
+        meta: { title: 'Edit Partner', activeMenu: '/partners/:id' },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/projects',
     component: Layout,
     redirect: '/projects/list',
     name: 'Projects',
     meta: {
       title: 'Projects',
+      roles: ['Admin', 'Research'],
       icon: 'tree'
     },
     children: [
@@ -153,6 +219,7 @@ export const asyncRoutes = [
     name: 'Research',
     meta: {
       title: 'Research',
+      roles: ['Admin', 'Research'],
       icon: 'education'
     },
     children: [
@@ -184,7 +251,7 @@ export const asyncRoutes = [
   //   name: 'User',
   //   meta: {
   //     title: 'User',
-  //     roles: ['admin'],
+  //     roles: ['Admin', 'Research'],
   //     icon: 'peoples'
   //   },
   //   children: [
