@@ -1,5 +1,5 @@
 
-const dev = false
+const dev = true
 module.exports = {
   title: 'Productivity',
   logo: 'http://aaaimx.org/img/sprites/aaai-transpeps.png',

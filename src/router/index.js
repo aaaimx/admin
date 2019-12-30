@@ -91,7 +91,7 @@ export const asyncRoutes = [
     name: 'Members',
     meta: {
       title: 'Members',
-      roles: ['Admin', 'Research'],
+      roles: ['Admin', 'Research', 'Members'],
       icon: 'people'
     },
     children: [
@@ -123,7 +123,7 @@ export const asyncRoutes = [
     name: 'Certificates',
     meta: {
       title: 'Certificates',
-      roles: ['Admin', 'Logistic'],
+      roles: ['Admin', 'Certificates'],
       icon: 'skill'
     },
     children: [

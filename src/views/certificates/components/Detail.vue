@@ -8,7 +8,7 @@
       class="form-container"
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
-        <WebSite v-model="postForm.site" />
+        <QR v-show="isEdit" v-model="postForm.QR" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -20,7 +20,7 @@
           v-loading="loading"
           v-show="isEdit"
           type="danger"
-          @click="deletePartner"
+          @click="deleteCert"
           >Delete {{ namespace }}</el-button
         >
       </sticky>
@@ -43,37 +43,24 @@
           <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
-                <el-col :span="8" :lg="7" :xs="24">
-                  <Upload v-model="postForm.logoFile" />
-                </el-col>
 
-                <el-col :span="16" :xs="24">
+                <el-col :span="12" :xs="24">
+                  <Upload v-show="this.isEdit" v-model="photo" />
+                </el-col>
+                <el-col :span="12" :xs="24">
                   <el-form-item
-                    label="Name:"
-                    prop="name"
+                    label="Facilitator:"
+                    prop="to"
                     class="postInfo-container-item"
                   >
                     <el-input
-                      v-model="postForm.name"
-                      placeholder="Partner complete name"
+                      v-model="postForm.to"
+                      placeholder="NOMBRE(S) APPELLIDO(S)"
                       type="text"
                     />
                   </el-form-item>
                 </el-col>
-                <el-col :span="8" :xs="24">
-                  <el-form-item
-                    label="Alias:"
-                    prop="alias"
-                    class="postInfo-container-item"
-                  >
-                    <el-input
-                      v-model="postForm.alias"
-                      placeholder="Partner short name"
-                      type="text"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8" :xs="24">
+                <el-col :span="12" :xs="24">
                   <el-form-item
                     label="Type:"
                     prop="type"
@@ -95,6 +82,44 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
+                <el-col v-show="isEdit" :span="12" :xs="24">
+                  <el-form-item
+                  v-show="postForm.file"
+                    label="Currently:"
+                    class="postInfo-container-item"
+                  >
+                  <a target="_blank" class="link-type" :href="postForm.file"><svg-icon icon-class="link" /></a>
+                  </el-form-item>
+                  <el-form-item
+                    label="Change:"
+                    prop="file"
+                    class="postInfo-container-item"
+                  >
+                    <input type="file" id="file" ref="file"/>
+                  </el-form-item>
+                    <!-- <el-upload
+                      class="upload-demo"
+                      ref="file"
+                      :multiple="false"
+                      action="https://aaaimx-admin.herokuapp.com"
+                      :auto-upload="false"
+                    >
+                      <el-button slot="trigger" size="small" type="primary"
+                        >Selecciona un archivo</el-button
+                      >
+                      <el-button
+                        style="margin-left: 10px;"
+                        size="small"
+                        type="success"
+                        @click="submitUpload"
+                        >Cargar al servidor</el-button
+                      >
+                      <div slot="tip" class="el-upload__tip">
+                        Solo archivos jpg/png con un tamaño menor de 500kb
+                      </div>
+                    </el-upload> -->
+                </el-col>
+                <qrcode v-show="isEdit" :value="postForm.QR" :options="{ width: 200 }"></qrcode>
               </el-row>
             </div>
           </el-col>
@@ -107,25 +132,25 @@
 <script>
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/partner";
+import { fetch, create, update } from "@/api/certificate";
 import axios from "axios";
 import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
+
 const defaultForm = {
-    name: '',
-    alias: '',
-    site: '',
-    logoFile: '',
-    type: ''
-  };
+  type: "RECOGNITION",
+  to: "",
+  QR: "",
+  file: ""
+};
 export default {
-  name: "PartnerDetail",
+  name: "CertificateDetail",
   mixins: [loadingMixin],
   components: {
-    WebSite: () => import("./Dropdown/BannerUrl"),
+    QR: () => import("./Dropdown/BannerUrl"),
     JsonEditor: () => import("@/components/JsonEditor"),
-    Upload: () => import("@/components/Upload/SingleImage3"),
+    Upload: () => import("@/components/Upload/CertPreview"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
   },
@@ -152,18 +177,21 @@ export default {
     };
   },
   computed: {
-    ...mapState("partners", ["postForm", "types"])
+    ...mapState("certificates", ["postForm", "types"])
   },
   created() {
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
     } else {
-      this.$store.commit("partners/SET_PARTNER", defaultForm);
+      this.$store.commit("certificates/SET_CERT", defaultForm);
     }
     this.tempRoute = Object.assign({}, this.$route);
   },
   methods: {
+    submitUpload(file) {
+      this.$refs.upload.submit();
+    },
     getPhoto(photo) {
       try {
         var res = photo.split("https://drive.google.com/file/d/");
@@ -171,7 +199,7 @@ export default {
         res = res.split("/view?usp=drivesdk");
         return "https://drive.google.com/uc?id=" + res[0];
       } catch (error) {
-        return ""
+        return "";
       }
     },
     fetchData(id) {
@@ -179,8 +207,8 @@ export default {
       fetch(id)
         .then(data => {
           loading.close();
-          data.logoFile = this.getPhoto(data.logoFile)
-          this.$store.commit("partners/SET_PARTNER", data);
+          this.photo = this.getPhoto(data.file);
+          this.$store.commit("certificates/SET_CERT", data);
         })
         .catch(err => {
           loading.close();
@@ -192,22 +220,29 @@ export default {
         if (valid) {
           this.loading = true;
           let request;
-          delete this.postForm.logoFile
-          if (this.isEdit) request = update(this.postForm);
-          else request = create(this.postForm);
+          var form_data = new FormData();
+          if (this.$refs.file.files.length) form_data.append('file', this.$refs.file.files[0]);
+          else delete this.postForm.file
+          for (var key in this.postForm) {
+            form_data.append(key, this.postForm[key]);
+          }
+          if (this.isEdit) request = update(this.id, form_data);
+          else request = create(form_data);
 
           request
             .then(response => {
               this.$notify({
                 title: ` ${this.isEdit ? "Updated" : "Created"}`,
                 dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.alias}</b> was sucessfully saved`,
+                message: `${this.namespace} <b>${this.postForm.type}: ${this.postForm.to}</b> was sucessfully saved`,
                 type: "success",
                 duration: 2000
               });
               console.log(response);
               this.loading = false;
-              this.$router.push("/partners/" + response.id);
+              this.photo = this.getPhoto(response.file);
+              this.$refs.file.value = ""
+              this.$router.push("/certificates/" + response.uuid);
             })
             .catch(error => {
               this.loading = false;
@@ -224,7 +259,7 @@ export default {
         }
       });
     },
-    deletePartner() {
+    deleteCert() {
       this.$message({
         dangerouslyUseHTMLString: true,
         message: `${this.namespace} was sucessfully deleted`,

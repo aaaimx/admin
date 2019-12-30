@@ -1,7 +1,7 @@
 <template>
   <el-dropdown :show-timeout="100" trigger="click">
     <el-button plain>
-      Website URL
+      QR
       <i class="el-icon-caret-bottom el-icon--right" />
     </el-button>
     <el-dropdown-menu slot="dropdown" class="no-padding no-border" style="width:400px">

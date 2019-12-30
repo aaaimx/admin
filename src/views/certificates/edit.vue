@@ -1,5 +1,5 @@
 <template>
-  <Detail :is-edit="true" namespace="Partner" />
+  <Detail :is-edit="true" namespace="Certificate" />
 </template>
 
 <script>

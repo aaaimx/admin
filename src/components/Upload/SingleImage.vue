@@ -11,12 +11,12 @@
     >
       <i class="el-icon-upload" />
       <div class="el-upload__text">
-        将文件拖到此处，或<em>点击上传</em>
+        Drag or select <em>File</em>
       </div>
     </el-upload>
     <div class="image-preview">
       <div v-show="imageUrl.length>1" class="image-preview-wrapper">
-        <img :src="imageUrl+'?imageView2/1/w/200/h/200'">
+        <img :src="imageUrl">
         <div class="image-preview-action">
           <i class="el-icon-delete" @click="rmImage" />
         </div>
@@ -67,11 +67,11 @@ export default {
         position: relative;
         @include clearfix;
         .image-uploader {
-            width: 60%;
+            width: 30%;
             float: left;
         }
         .image-preview {
-            width: 200px;
+            width: 300px;
             height: 200px;
             position: relative;
             border: 1px dashed #d9d9d9;

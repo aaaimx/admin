@@ -47,10 +47,11 @@ export function create (data) {
  * @param {*} id String
  * @param {*} data Object
  */
-export function update (data) {
+export function update (id, data) {
   return request({
-    url: `/certificates/${data.id}/`,
+    url: `/certificates/${id}/`,
     method: 'PUT',
+    headers: { 'Content-Type': 'multipart/form-data' },
     data
   })
 }

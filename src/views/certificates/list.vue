@@ -3,8 +3,8 @@
     <div class="filter-container">
       <el-input
         style="max-width: 300px"
-        v-model="listQuery.name"
-        placeholder="Search by name"
+        v-model="listQuery.to"
+        placeholder="Search by member"
         @change="handleFilter"
         clearable
         class="filter-item"
@@ -17,10 +17,10 @@
         class="filter-item"
       >
         <el-option
-          v-for="item in typeOptions"
-          :key="item.key"
-          :label="item.key"
-          :value="item.key"
+          v-for="item in types"
+          :key="item"
+          :label="item"
+          :value="item"
         />
       </el-select>
       <el-button
@@ -28,7 +28,7 @@
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
-        @click="handleCreateOrUpdate('/partners/create')"
+        @click="handleCreateOrUpdate('/certificates/create')"
         >Create</el-button
       >
     </div>
@@ -53,32 +53,43 @@
       <el-table-column
         sortable
         prop="name"
-        label="name"
-        min-width="150px"
+        label="ID"
+        min-width="100px"
         align="center"
       >
         <template slot-scope="{ row }">
           <span
             class="link-type"
-            @click="handleCreateOrUpdate('/partners/' + row.uuid)"
-            >{{ row.name }}</span
+            @click="handleCreateOrUpdate('/certificates/' + row.uuid)"
+            >{{ row.uuid }}</span
           >
         </template>
       </el-table-column>
       <el-table-column
-        label="Alias"
+        label="Member"
         sortable
-        prop="alias"
-        min-width="80px"
+        prop="to"
+        min-width="100px"
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.alias }}</span>
+          <span>{{ scope.row.to }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="QR"
+        sortable
+        prop="QR"
+        min-width="50"
+        align="center"
+      >
+        <template v-if="scope.row.QR" slot-scope="scope">
+          <a target="_blank" class="link-type" :href=" 'http://' + scope.row.QR"><svg-icon icon-class="link" /></a>
         </template>
       </el-table-column>
 
       <el-table-column
-        label="Status"
+        label="Type"
         sortable
         prop="active"
         class-name="status-col"
@@ -90,26 +101,15 @@
           }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        label="Website"
-        sortable
-        prop="site"
-        min-width="80px"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <a target="_blank" class="link-type" :href="scope.row.site">{{ scope.row.site }}</a>
-        </template>
-      </el-table-column>
        <el-table-column
-        label="Logo"
+        label="Cert"
         sortable
-        prop="logoFile"
+        prop="file"
         min-width="50"
         align="center"
       >
-        <template v-if="scope.row.logoFile" slot-scope="scope">
-          <a target="_blank" class="link-type" :href="scope.row.logoFile"><svg-icon icon-class="link" /></a>
+        <template v-if="scope.row.file" slot-scope="scope">
+          <a target="_blank" class="link-type" :href="scope.row.file"><svg-icon icon-class="link" /></a>
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -140,7 +140,7 @@
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
         <el-option label="------------" value></el-option>
-        <el-option label="delete selected partners" value="delete"></el-option>
+        <el-option label="delete selected certificates" value="delete"></el-option>
       </el-select>
       <el-button size="mini" @click="toggleSelection()">Go</el-button>
     </div>
@@ -159,21 +159,13 @@ import { fetchList, remove, updateStatus } from "@/api/certificate";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
-import JsonEditor from "@/components/JsonEditor";
 import { off } from "element-ui/lib/utils/dom";
 import { mapState } from "vuex";
 import tableMixin from "@/mixins/table-handlers";
 
-const typeOptions = [
-  { key: "Research Center" },
-  { key: "Partner" },
-  { key: "Division" },
-  { key: "Other" }
-];
-
 export default {
-  name: "PartnersTable",
-  components: { Pagination, JsonEditor },
+  name: "CertificatesTable",
+  components: { Pagination },
   directives: { waves },
   filters: {
     statusFilter(active) {
@@ -185,7 +177,7 @@ export default {
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("partners", ["partners"])
+    ...mapState("certificates", ["types"])
   },
   data() {
     return {
@@ -200,7 +192,6 @@ export default {
         offset: 0,
         type: undefined
       },
-      typeOptions,
       performAction: "",
       showAllFields: false
     };

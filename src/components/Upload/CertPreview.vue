@@ -16,7 +16,7 @@
     </el-upload> -->
     <div class="image-preview">
       <div v-show="imageUrl.length > 1" class="image-preview-wrapper">
-        <img style="max-width: 100% !important;" :src="imageUrl" />
+        <img :src="imageUrl" />
         <!-- <div class="image-preview-action">
           <i class="el-icon-delete" @click="rmImage" />
         </div> -->
@@ -67,15 +67,12 @@ export default {
   @include clearfix;
   .image-uploader {
     width: 35%;
-    float: left;
   }
   .image-preview {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
     position: relative;
-    border: 1px dashed #d9d9d9;
-    float: left;
-    margin-left: 50px;
     .image-preview-wrapper {
       position: relative;
       width: 100%;

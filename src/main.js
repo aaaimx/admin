@@ -38,6 +38,9 @@ import { mockXHR } from '../mock'
 // import vuePopper from 'element-ui/lib/utils/vue-popper'
 import VueCompositionApi from '@vue/composition-api'
 
+import VueQrcode from '@chenfengyuan/vue-qrcode'
+Vue.component(VueQrcode.name, VueQrcode)
+
 Vue.use(VueCompositionApi)
 const Service = {}
 Service.install = function (Vue, options) {
