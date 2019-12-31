@@ -1,5 +1,4 @@
 
-const dev = true
 module.exports = {
   title: 'Productivity',
   logo: 'http://aaaimx.org/img/sprites/aaai-transpeps.png',
@@ -34,6 +33,6 @@ module.exports = {
    * The default is only used in the production env
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
-  errorLog: 'production',
-  HOST: dev ? 'http://127.0.0.1:8000' : 'https://aaaimx-admin.herokuapp.com'
+  errorLog: ['production', 'development'],
+  HOST: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:8000' : 'https://aaaimx-admin.herokuapp.com'
 }

@@ -10,7 +10,7 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
   credentials: 'same-origin',
-  timeout: 20000, // request timeout
+  timeout: 40000, // request timeout
   headers: { Accept: 'application/json; version=1' }
 })
 

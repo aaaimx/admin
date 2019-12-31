@@ -42,14 +42,8 @@ const state = {
       logo: null
     },
     {
-      id: 8,
-      name: 'Board',
-      story: '',
-      logo: null
-    },
-    {
       id: 9,
-      name: 'Biomedics',
+      name: 'Bioengineering',
       story: '',
       logo: null
     }

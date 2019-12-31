@@ -4,6 +4,8 @@
       <el-input
         style="max-width: 300px"
         v-model="listQuery.name"
+        @change="handleFilter"
+        @keyup.enter="handleFilter"
         placeholder="Search by name"
         clearable
         class="filter-item"
@@ -22,13 +24,13 @@
           :value="item.key"
         />
       </el-select>
-      <el-button
+      <!-- <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
-      >Search</el-button>
+      >Search</el-button> -->
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -37,7 +39,7 @@
         @click="handleCreateOrUpdate('/members/create')"
         >Create</el-button
       >
-      <el-button
+      <!-- <el-button
         v-waves
         :loading="downloadLoading"
         class="filter-item"
@@ -46,7 +48,7 @@
         @click="handleDownload"
       >
         Export
-      </el-button>
+      </el-button> -->
       <el-checkbox
         v-model="listQuery.panel"
         class="filter-item"
