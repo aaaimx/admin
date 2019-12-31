@@ -24,15 +24,18 @@ const mutations = {
   },
   SET_LINES: (state, lines) => {
     state.lines = lines
+  },
+  ADD_LINE: (state, line) => {
+    state.lines.push(line)
   }
 }
 
 const actions = {
   fetchLines ({ commit }) {
     return new Promise((resolve, reject) => {
-      fetchLines()
+      fetchLines({ all: '' })
         .then(data => {
-          commit('SET_LINES', data.results)
+          commit('SET_LINES', data)
           resolve()
         })
         .catch(err => {

@@ -4,12 +4,15 @@
       <el-input
         style="max-width: 300px"
         v-model="listQuery.title"
-        placeholder="Search by name"
+        @change="handleFilter"
+        @keyup.enter="handleFilter"
+        placeholder="Search by title"
         clearable
         class="filter-item"
       />
       <el-select
         v-model.number="listQuery.institute"
+        @change="handleFilter"
         placeholder="Institute"
         clearable
         class="filter-item"
@@ -21,13 +24,13 @@
           :value="item.alias"
         />
       </el-select>
-      <el-button
+      <!-- <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
-      >Search</el-button>
+      >Search</el-button> -->
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -121,7 +124,7 @@
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
         <el-option label="------------" value></el-option>
-        <el-option label="delete selected members" value="delete"></el-option>
+        <el-option label="delete selected projects" value="delete"></el-option>
       </el-select>
       <el-button size="mini" @click="toggleSelection()">Go</el-button>
     </div>
@@ -184,6 +187,10 @@ export default {
     };
   },
   created() {
+    if (!this.partners.length)
+      this.$store.dispatch('projects/fetchLines')
+    if (!this.lines.length)
+      this.$store.dispatch('members/fetchPartners')
     this.getList();
   },
   methods: {

@@ -124,7 +124,7 @@
           <span class="link-type">{{ row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="Roles"
         sortable
         prop="roles"
@@ -140,7 +140,7 @@
             >{{ getRole(role) }}</el-tag
           >
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         label="Status"
         sortable

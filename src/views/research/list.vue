@@ -4,7 +4,8 @@
       <el-input
         style="max-width: 300px"
         v-model="listQuery.title"
-        @input="handleFilter"
+        @change="handleFilter"
+        @keyup.enter="handleFilter"
         placeholder="Search by name"
         clearable
         class="filter-item"

@@ -26,6 +26,18 @@ export function fetchLines (query) {
 
 /**
  *
+ * @param {*} query Object
+ */
+export function createLine (data) {
+  return request({
+    url: '/lines/',
+    method: 'POST',
+    data
+  })
+}
+
+/**
+ *
  * @param {*} uuid String
  */
 export function fetchProj (uuid) {

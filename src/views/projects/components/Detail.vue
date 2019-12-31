@@ -137,11 +137,7 @@
                         :value="item.name"
                       ></el-option>
                     </el-select>
-                    <el-button
-                      icon="el-icon-plus"
-                      size="mini"
-                      circle
-                    ></el-button>
+                    <MemberModal />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12" :xs="24">
@@ -164,11 +160,7 @@
                         >{{ item.topic }}</el-option
                       >
                     </el-select>
-                    <el-button
-                      icon="el-icon-plus"
-                      size="mini"
-                      circle
-                    ></el-button>
+                    <LineModal />
                   </el-form-item>
                 </el-col>
 
@@ -194,11 +186,7 @@
                         :value="item.id"
                       ></el-option>
                     </el-select>
-                    <el-button
-                      icon="el-icon-plus"
-                      size="mini"
-                      circle
-                    ></el-button>
+                    <MemberModal />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -211,16 +199,14 @@
 </template>
 
 <script>
-import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
 import { fetchProj, create, update, remove } from "@/api/project";
 import { fetchList, fetch } from "@/api/member";
 import axios from "axios";
-import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
 import moment from "moment";
-import { Promise } from 'q';
+
 const defaultForm = {
   title: "",
   start: "",
@@ -235,6 +221,8 @@ export default {
   mixins: [loadingMixin],
   components: {
     MDinput: () => import("@/components/MDinput"),
+    LineModal: () => import("@/components/Modals/Line"),
+    MemberModal: () => import("@/components/Modals/Member"),
     Sticky: () => import("@/components/Sticky")
   },
   props: {
@@ -268,8 +256,8 @@ export default {
     ...mapState("projects", ["postForm", "lines"])
   },
   created() {
-    this.$store.dispatch('projects/fetchLines')
-    this.$store.dispatch('members/fetchPartners')
+    if (!this.partners.length) this.$store.dispatch("projects/fetchLines");
+    if (!this.lines.length) this.$store.dispatch("members/fetchPartners");
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
@@ -290,7 +278,14 @@ export default {
       let loading = this.loadingFullPage();
       fetchProj(id)
         .then(data => {
-          loading.close();
+          let colls = [];
+          data.collaborators.forEach(el => {
+            colls.push(fetch(el));
+          });
+          Promise.all(colls).then(values => {
+            this.collaborators = values;
+            loading.close();
+          });
           this.$store.commit("projects/SET_PROJECT", data);
         })
         .catch(err => {
