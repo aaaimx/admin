@@ -256,8 +256,8 @@ export default {
     ...mapState("projects", ["postForm", "lines"])
   },
   created() {
-    if (!this.partners.length) this.$store.dispatch("projects/fetchLines");
-    if (!this.lines.length) this.$store.dispatch("members/fetchPartners");
+    if (!this.lines.length) this.$store.dispatch("projects/fetchLines");
+    if (!this.partners.length) this.$store.dispatch("members/fetchPartners");
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
@@ -344,38 +344,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-
-.createPost-container {
-  position: relative;
-
-  .createPost-main-container {
-    padding: 40px 45px 20px 50px;
-
-    .postInfo-container {
-      position: relative;
-      @include clearfix;
-      .postInfo-container-item {
-        padding-right: 5%;
-      }
-    }
-  }
-
-  .word-counter {
-    width: 40px;
-    position: absolute;
-    right: 10px;
-    top: 0px;
-  }
-}
-
-.article-textarea /deep/ {
-  textarea {
-    padding-right: 40px;
-    resize: none;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #bfcbd9;
-  }
-}
+@import "~@/styles/create-form.scss";
 </style>

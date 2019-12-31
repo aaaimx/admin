@@ -5,7 +5,7 @@ export function fetchListD () {
     url: '/divisions/',
     method: 'get',
     params: {
-      limit: 50
+      all: ''
     }
   })
 }

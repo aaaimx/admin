@@ -4,50 +4,7 @@ import { fetchRoles, fetchList } from '@/api/member'
 
 const state = {
   partners: [],
-  divisions: [
-    {
-      id: 1,
-      name: 'Software',
-      story: '',
-      logo: null
-    },
-    {
-      id: 2,
-      name: 'Machine Learning',
-      story: '',
-      logo: null
-    },
-    {
-      id: 3,
-      name: 'Operations',
-      story: '',
-      logo: null
-    },
-    {
-      id: 4,
-      name: 'Robotics',
-      story: '',
-      logo: null
-    },
-    {
-      id: 5,
-      name: 'Applied Maths',
-      story: '',
-      logo: null
-    },
-    {
-      id: 6,
-      name: 'Social Impact',
-      story: '',
-      logo: null
-    },
-    {
-      id: 9,
-      name: 'Bioengineering',
-      story: '',
-      logo: null
-    }
-  ],
+  divisions: [],
   roles: [
     {
       id: 4,
@@ -117,7 +74,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       fetchListP()
         .then(data => {
-          commit('SET_PARTNERS', data.results)
+          commit('SET_PARTNERS', data)
           resolve()
         })
         .catch(err => {
@@ -129,7 +86,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       fetchListD()
         .then(data => {
-          commit('SET_DIVISIONS', data.results)
+          commit('SET_DIVISIONS', data)
           resolve()
         })
         .catch(err => {

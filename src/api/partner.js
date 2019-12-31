@@ -3,7 +3,10 @@ import request from '@/services/axios'
 export function fetchListP () {
   return request({
     url: '/partners/',
-    method: 'GET'
+    method: 'GET',
+    params: {
+      all: ''
+    }
   })
 }
 

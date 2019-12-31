@@ -37,13 +37,15 @@
         type="primary"
         icon="el-icon-edit"
         @click="handleCreateOrUpdate('/projects/create')"
-      >Create</el-button>
+        >Create</el-button
+      >
       <el-checkbox
         v-model="showAllFields"
         class="filter-item"
         style="margin-left:15px;"
-        @change="tableKey=tableKey+1"
-      >All fields</el-checkbox>
+        @change="tableKey = tableKey + 1"
+        >All fields</el-checkbox
+      >
     </div>
 
     <el-table
@@ -58,16 +60,33 @@
       @sort-change="sortChange"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column sortable prop="title" label="Title" min-width="150px" align="center">
-        <template slot-scope="{row}">
+      <el-table-column
+        type="selection"
+        width="55"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        prop="title"
+        label="Title"
+        min-width="150px"
+        align="center"
+      >
+        <template slot-scope="{ row }">
           <span
             class="link-type"
             @click="handleCreateOrUpdate('/projects/' + row.uuid)"
-          >{{ row.title }}</span>
+            >{{ row.title }}</span
+          >
         </template>
       </el-table-column>
-      <el-table-column label="Institute" sortable prop="institute" min-width="150px" align="center">
+      <el-table-column
+        label="Institute"
+        sortable
+        prop="institute"
+        min-width="150px"
+        align="center"
+      >
         <template slot-scope="scope">
           <span>{{ getInstitute(scope.row.institute) }}</span>
         </template>
@@ -84,10 +103,11 @@
         </template>
       </el-table-column>
       <el-table-column sortable label="Vigency" align="center" min-width="200">
-        <template slot-scope="{row}">
-          <span
-            class="link-type"
-          >{{ row.start.replace(/-/g, '/') }} - {{ row.end.replace(/-/g, '/') }}</span>
+        <template slot-scope="{ row }">
+          <span class="link-type"
+            >{{ row.start.replace(/-/g, "/") }} -
+            {{ row.end.replace(/-/g, "/") }}</span
+          >
         </template>
       </el-table-column>
       <el-table-column
@@ -98,8 +118,14 @@
         class-name="status-col"
         width="300"
       >
-        <template slot-scope="{row}">
-          <el-tag v-for="line in row.lines" size="mini" :key="line" type="info">{{ getLine(line) }}</el-tag>
+        <template slot-scope="{ row }">
+          <el-tag
+            v-for="line in row.lines"
+            size="mini"
+            :key="line"
+            type="info"
+            >{{ getLine(line) }}</el-tag
+          >
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -129,7 +155,7 @@
       <el-button size="mini" @click="toggleSelection()">Go</el-button>
     </div>
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
@@ -187,10 +213,8 @@ export default {
     };
   },
   created() {
-    if (!this.partners.length)
-      this.$store.dispatch('projects/fetchLines')
-    if (!this.lines.length)
-      this.$store.dispatch('members/fetchPartners')
+    if (!this.lines.length) this.$store.dispatch("projects/fetchLines");
+    if (!this.partners.length) this.$store.dispatch("members/fetchPartners");
     this.getList();
   },
   methods: {

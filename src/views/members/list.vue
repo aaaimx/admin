@@ -78,7 +78,7 @@
       <el-table-column
         sortable
         prop="name"
-        label="name"
+        label="Name"
         min-width="150px"
         align="center"
       >
@@ -124,23 +124,23 @@
           <span class="link-type">{{ row.email }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column
-        label="Roles"
+      <el-table-column
+        label="Divisions"
         sortable
-        prop="roles"
+        prop="divisions"
         class-name="status-col"
         width="200"
       >
         <template slot-scope="{ row }">
           <el-tag
-            v-for="role in row.roles"
+            v-for="div in row.divisions"
             size="mini"
-            :key="role"
+            :key="div"
             type="info"
-            >{{ getRole(role) }}</el-tag
+            >{{ getDiv(div) }}</el-tag
           >
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column
         label="Status"
         sortable
@@ -254,7 +254,9 @@ export default {
       showAllFields: false
     };
   },
-  beforeMount() {
+  created() {
+    if (!this.divisions.length) this.$store.dispatch("members/fetchDivisions");
+    if (!this.partners.length) this.$store.dispatch("members/fetchPartners");
     this.getList()
   },
   methods: {
@@ -264,8 +266,8 @@ export default {
       return i[0] ? i[0].alias : "-----";
     },
 
-    getRole(role) {
-      return this.roles.filter(el => el.id === role)[0].name;
+    getDiv(div) {
+      return this.divisions.filter(el => el.id === div)[0].name;
     },
 
     // methods

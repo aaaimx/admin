@@ -9,7 +9,6 @@
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
         <StatusDropdown v-model="postForm.active" />
-        <!-- <ThumbnailUrl v-model="postForm.thumbnailUrl" /> -->
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -29,19 +28,6 @@
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="24">
-            <div class="grid-content bg-purple-dark" />
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <div class="grid-content bg-purple" />
-          </el-col>
-          <el-col :span="8">
-            <div class="grid-content bg-purple-light" />
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="8" :lg="7" :xs="24">
@@ -50,7 +36,7 @@
 
                 <el-col :span="8" :xs="24">
                   <el-form-item
-                    label="name:"
+                    label="Name:"
                     prop="name"
                     class="postInfo-container-item"
                   >
@@ -141,9 +127,7 @@
                     prop="charge"
                     class="postInfo-container-item"
                   >
-                    <el-checkbox
-                      v-model="postForm.board"
-                      class="filter-item"
+                    <el-checkbox v-model="postForm.board" class="filter-item"
                       >Board</el-checkbox
                     >
                     <el-checkbox
@@ -190,11 +174,8 @@
 </template>
 
 <script>
-import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
 import { fetch, create, update } from "@/api/member";
-import axios from "axios";
-import qs from "qs";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
 const defaultForm = {
@@ -216,13 +197,7 @@ export default {
   name: "MemberDetail",
   mixins: [loadingMixin],
   components: {
-    Requirements: () => import("./Todos/Requirements"),
-    Material: () => import("./Todos/Material"),
-    Learn: () => import("./Todos/Learn"),
     StatusDropdown: () => import("./Dropdown/Status"),
-    PlatformDropdown: () => import("./Dropdown/Platform"),
-    ThumbnailUrl: () => import("./Dropdown/BannerUrl"),
-    JsonEditor: () => import("@/components/JsonEditor"),
     Upload: () => import("@/components/Upload/SingleImage3"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
@@ -242,18 +217,16 @@ export default {
       loading: false,
       rules,
       tempRoute: {},
-      dialogFormVisible: false,
-      photo: "",
       id: null,
-      value: [],
-      formLabelWidth: "120px"
+      photo: "",
     };
   },
   computed: {
     ...mapState("members", ["postForm", "partners", "divisions", "roles"])
   },
   created() {
-    this.$store.dispatch("members/fetchPartners");
+    if (!this.divisions.length) this.$store.dispatch("members/fetchDivisions");
+    if (!this.partners.length) this.$store.dispatch("members/fetchPartners");
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
@@ -270,7 +243,7 @@ export default {
         res = res.split("/view?usp=drivesdk");
         return "https://drive.google.com/uc?id=" + res[0];
       } catch (error) {
-        return ""
+        return "";
       }
     },
     fetchData(id) {
@@ -278,7 +251,7 @@ export default {
       fetch(id)
         .then(data => {
           loading.close();
-          data.thumbnailFile = this.getPhoto(data.thumbnailFile)
+          data.thumbnailFile = this.getPhoto(data.thumbnailFile);
           this.$store.commit("members/SET_MEMBER", data);
         })
         .catch(err => {
@@ -291,7 +264,7 @@ export default {
         if (valid) {
           this.loading = true;
           let request;
-          delete this.postForm.thumbnailFile
+          delete this.postForm.thumbnailFile;
           if (this.isEdit) request = update(this.postForm);
           else request = create(this.postForm);
 
@@ -338,38 +311,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-
-.createPost-container {
-  position: relative;
-
-  .createPost-main-container {
-    padding: 40px 45px 20px 50px;
-
-    .postInfo-container {
-      position: relative;
-      @include clearfix;
-      .postInfo-container-item {
-        padding-right: 5%;
-      }
-    }
-  }
-
-  .word-counter {
-    width: 40px;
-    position: absolute;
-    right: 10px;
-    top: 0px;
-  }
-}
-
-.article-textarea /deep/ {
-  textarea {
-    padding-right: 40px;
-    resize: none;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #bfcbd9;
-  }
-}
+@import "~@/styles/create-form.scss";
 </style>

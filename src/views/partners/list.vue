@@ -6,6 +6,7 @@
         v-model="listQuery.name"
         placeholder="Search by name"
         @change="handleFilter"
+        @keyup.enter="handleFilter"
         clearable
         class="filter-item"
       />
@@ -17,10 +18,10 @@
         class="filter-item"
       >
         <el-option
-          v-for="item in typeOptions"
-          :key="item.key"
-          :label="item.key"
-          :value="item.key"
+          v-for="item in types"
+          :key="item"
+          :label="item"
+          :value="item"
         />
       </el-select>
       <el-button
@@ -53,7 +54,7 @@
       <el-table-column
         sortable
         prop="name"
-        label="name"
+        label="Name"
         min-width="150px"
         align="center"
       >
@@ -164,13 +165,6 @@ import { off } from "element-ui/lib/utils/dom";
 import { mapState } from "vuex";
 import tableMixin from "@/mixins/table-handlers";
 
-const typeOptions = [
-  { key: "Research Center" },
-  { key: "Partner" },
-  { key: "Division" },
-  { key: "Other" }
-];
-
 export default {
   name: "PartnersTable",
   components: { Pagination, JsonEditor },
@@ -185,7 +179,7 @@ export default {
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("partners", ["partners"])
+    ...mapState("partners", ["partners", "types"])
   },
   data() {
     return {
@@ -200,7 +194,6 @@ export default {
         offset: 0,
         type: undefined
       },
-      typeOptions,
       performAction: "",
       showAllFields: false
     };

@@ -141,11 +141,7 @@
                         >{{ item.topic }}</el-option
                       >
                     </el-select>
-                    <el-button
-                      icon="el-icon-plus"
-                      size="mini"
-                      circle
-                    ></el-button>
+                     <LineModal />
                   </el-form-item>
                 </el-col>
 
@@ -211,37 +207,6 @@
                     />
                   </el-form-item>
                 </el-col>
-
-                <!-- <el-col :span="24" :xs="24">
-                  <el-form-item
-                    label="Responsable:"
-                    prop="responsible"
-                    class="postInfo-container-item"
-                  >
-                    <br />
-                    <el-select
-                      v-model="postForm.responsible"
-                      remote
-                      allow-create
-                      clearable
-                      filterable
-                      reserve-keyword
-                      placeholder="Select responsible person"
-                    >
-                      <el-option
-                        v-for="item in collaborators"
-                        :key="item.fullname"
-                        :label="item.fullname"
-                        :value="item.fullname"
-                      ></el-option>
-                    </el-select>
-                    <el-button
-                      icon="el-icon-plus"
-                      size="mini"
-                      circle
-                    ></el-button>
-                  </el-form-item>
-                </el-col> -->
               </el-row>
             </div>
           </el-col>
@@ -268,9 +233,7 @@
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
 import { fetch, create, update, remove } from "@/api/research";
-import { fetchList } from "@/api/project";
-import axios from "axios";
-import qs from "qs";
+import { fetchProj, fetchList } from "@/api/project";
 import rules from "./validators";
 import loadingMixin from "@/mixins/loading";
 import authorsMixin from "@/mixins/authors";
@@ -295,6 +258,7 @@ export default {
     Sticky: () => import("@/components/Sticky"),
     TypeDropdown: () => import("./Type"),
     BannerUrlDropdown: () => import("./BannerUrl"),
+    LineModal: () => import("@/components/Modals/Line"),
     Authors: () => import("./Authors"),
     Advisors: () => import("./Advisors")
   },
@@ -326,7 +290,7 @@ export default {
     ...mapState("projects", ["lines"])
   },
   created() {
-    this.$store.dispatch('projects/fetchLines')
+    if (!this.lines.length) this.$store.dispatch("projects/fetchLines");
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
@@ -356,7 +320,14 @@ export default {
         .then(data => {
           data.authors.sort(this.compare);
           data.advisors.sort(this.compare);
-          loading.close();
+          let projects = [];
+          data.projects.forEach(el => {
+            projects.push(fetchProj(el));
+          });
+          Promise.all(projects).then(values => {
+            this.projects = values;
+            loading.close();
+          });
           this.$store.commit("research/SET_RESEARCH_FORM", data);
         })
         .catch(err => {
@@ -417,38 +388,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-
-.createPost-container {
-  position: relative;
-
-  .createPost-main-container {
-    padding: 40px 45px 20px 50px;
-
-    .postInfo-container {
-      position: relative;
-      @include clearfix;
-      .postInfo-container-item {
-        padding-right: 5%;
-      }
-    }
-  }
-
-  .word-counter {
-    width: 40px;
-    position: absolute;
-    right: 10px;
-    top: 0px;
-  }
-}
-
-.article-textarea /deep/ {
-  textarea {
-    padding-right: 40px;
-    resize: none;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #bfcbd9;
-  }
-}
+@import "~@/styles/create-form.scss";
 </style>

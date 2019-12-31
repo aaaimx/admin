@@ -244,6 +244,7 @@ export default {
     };
   },
   created() {
+    if (!this.lines.length) this.$store.dispatch("projects/fetchLines");
     this.getList();
   },
   methods: {
