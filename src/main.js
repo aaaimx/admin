@@ -10,6 +10,7 @@ import './styles/element-variables.scss'
 import '@/styles/index.scss' // global css
 
 import '@/styles/detail-form.scss' // create/update form css
+import 'driver.js/dist/driver.min.css' // import driver.js css
 
 import App from './App'
 import store from './store'

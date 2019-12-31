@@ -6,6 +6,7 @@ const state = {
     // opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
+  steps: [],
   device: 'desktop',
   size: Cookies.get('size') || 'medium'
 }
@@ -31,6 +32,9 @@ const mutations = {
   SET_SIZE: (state, size) => {
     state.size = size
     Cookies.set('size', size)
+  },
+  SET_STEPS: (state, steps) => {
+    state.steps = steps
   }
 }
 

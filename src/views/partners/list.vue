@@ -35,6 +35,7 @@
     </div>
 
     <el-table
+      id="el-table"
       :key="tableKey"
       ref="multipleTable"
       v-loading="listLoading"
@@ -86,9 +87,7 @@
         width="200"
       >
         <template slot-scope="{ row }">
-          <el-tag type="secondary">{{
-            row.type
-          }}</el-tag>
+          <el-tag type="secondary">{{ row.type }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -99,10 +98,12 @@
         align="center"
       >
         <template slot-scope="scope">
-          <a target="_blank" class="link-type" :href="scope.row.site">{{ scope.row.site }}</a>
+          <a target="_blank" class="link-type" :href="scope.row.site">{{
+            scope.row.site
+          }}</a>
         </template>
       </el-table-column>
-       <el-table-column
+      <el-table-column
         label="Logo"
         sortable
         prop="logoFile"
@@ -110,7 +111,9 @@
         align="center"
       >
         <template v-if="scope.row.logoFile" slot-scope="scope">
-          <a target="_blank" class="link-type" :href="scope.row.logoFile"><svg-icon icon-class="link" /></a>
+          <a target="_blank" class="link-type" :href="scope.row.logoFile"
+            ><svg-icon icon-class="link"
+          /></a>
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -199,10 +202,9 @@ export default {
     };
   },
   beforeMount() {
-    this.getList()
+    this.getList();
   },
   methods: {
-
     // methods
     getList() {
       this.listLoading = true;
@@ -216,7 +218,7 @@ export default {
     },
     handleDownload() {
       this.downloadLoading = true;
-      this.json = this.list
+      this.json = this.list;
       this.downloadLoading = false;
     },
     handleModifyStatus(row, active) {

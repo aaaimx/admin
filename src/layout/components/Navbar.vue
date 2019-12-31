@@ -15,6 +15,7 @@
         <error-log class="errLog-container right-menu-item hover-effect" />
       </template>
       <el-dropdown
+      id="avatar"
         class="avatar-container right-menu-item hover-effect"
         trigger="click"
       >
