@@ -8,7 +8,7 @@
       class="form-container"
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
-        <WebSite v-model="postForm.site" />
+        <WebSite v-model="postForm.site" label="Website" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -95,7 +95,7 @@
 import { mapState } from "vuex";
 import { fetch, create, update } from "@/api/partner";
 import rules from "./validators";
-import loadingMixin from "@/mixins/loading";
+import formsMixin from "@/mixins/forms";
 const defaultForm = {
     name: '',
     alias: '',
@@ -105,33 +105,20 @@ const defaultForm = {
   };
 export default {
   name: "PartnerDetail",
-  mixins: [loadingMixin],
+  mixins: [formsMixin],
   components: {
-    WebSite: () => import("./Dropdown/BannerUrl"),
+    WebSite: () => import("@/components/Dropdown/BannerUrl"),
     Upload: () => import("@/components/Upload/SingleImage3"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
-  },
-  props: {
-    namespace: {
-      type: String,
-      default: ""
-    },
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
       loading: false,
       rules,
       tempRoute: {},
-      dialogFormVisible: false,
       photo: "",
-      id: null,
-      value: [],
-      formLabelWidth: "120px"
+      id: null
     };
   },
   computed: {
@@ -181,13 +168,7 @@ export default {
 
           request
             .then(response => {
-              this.$notify({
-                title: ` ${this.isEdit ? "Updated" : "Created"}`,
-                dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.alias}</b> was sucessfully saved`,
-                type: "success",
-                duration: 2000
-              });
+              this.handleSave(`${this.namespace} <b>${this.postForm.alias}</b> was sucessfully saved`)
               console.log(response);
               this.loading = false;
               this.$router.push("/partners/" + response.id);
@@ -196,10 +177,7 @@ export default {
               this.loading = false;
               console.log(error);
 
-              this.$message({
-                message: "Something went wrong:( Try again",
-                type: "error"
-              });
+              this.handleError()
             });
         } else {
           console.log("error submit!!");
@@ -208,19 +186,9 @@ export default {
       });
     },
     deletePartner() {
-      this.$message({
-        dangerouslyUseHTMLString: true,
-        message: `${this.namespace} was sucessfully deleted`,
-        type: "success",
-        showClose: true,
-        duration: 2000
-      });
+      this.handleDelete()
       this.postForm.active = false;
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "~@/styles/create-form.scss";
-</style>

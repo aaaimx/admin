@@ -30,7 +30,6 @@
           <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
-
                 <el-col :span="12" :xs="24">
                   <Upload v-show="this.isEdit" v-model="photo" />
                 </el-col>
@@ -71,20 +70,22 @@
                 </el-col>
                 <el-col v-show="isEdit" :span="12" :xs="24">
                   <el-form-item
-                  v-show="postForm.file"
+                    v-show="postForm.file"
                     label="Currently:"
                     class="postInfo-container-item"
                   >
-                  <a target="_blank" class="link-type" :href="postForm.file"><svg-icon icon-class="link" /></a>
+                    <a target="_blank" class="link-type" :href="postForm.file"
+                      ><svg-icon icon-class="link"
+                    /></a>
                   </el-form-item>
                   <el-form-item
                     label="Change:"
                     prop="file"
                     class="postInfo-container-item"
                   >
-                    <input type="file" id="file" ref="file"/>
+                    <input type="file" id="file" ref="file" />
                   </el-form-item>
-                    <!-- <el-upload
+                  <!-- <el-upload
                       class="upload-demo"
                       ref="file"
                       :multiple="false"
@@ -106,7 +107,11 @@
                       </div>
                     </el-upload> -->
                 </el-col>
-                <qrcode v-show="isEdit" :value="postForm.QR" :options="{ width: 200 }"></qrcode>
+                <qrcode
+                  v-show="isEdit"
+                  :value="postForm.QR"
+                  :options="{ width: 200 }"
+                ></qrcode>
               </el-row>
             </div>
           </el-col>
@@ -120,7 +125,7 @@
 import { mapState } from "vuex";
 import { fetch, create, update } from "@/api/certificate";
 import rules from "./validators";
-import loadingMixin from "@/mixins/loading";
+import formsMixin from "@/mixins/forms";
 
 const defaultForm = {
   type: "RECOGNITION",
@@ -130,22 +135,12 @@ const defaultForm = {
 };
 export default {
   name: "CertificateDetail",
-  mixins: [loadingMixin],
+  mixins: [formsMixin],
   components: {
-    QR: () => import("./Dropdown/BannerUrl"),
+    QR: () => import("@/components/Dropdown/BannerUrl"),
     Upload: () => import("@/components/Upload/CertPreview"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
-  },
-  props: {
-    namespace: {
-      type: String,
-      default: ""
-    },
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
@@ -201,8 +196,9 @@ export default {
           this.loading = true;
           let request;
           var form_data = new FormData();
-          if (this.$refs.file.files.length) form_data.append('file', this.$refs.file.files[0]);
-          else delete this.postForm.file
+          if (this.$refs.file.files.length)
+            form_data.append("file", this.$refs.file.files[0]);
+          else delete this.postForm.file;
           for (var key in this.postForm) {
             form_data.append(key, this.postForm[key]);
           }
@@ -211,27 +207,18 @@ export default {
 
           request
             .then(response => {
-              this.$notify({
-                title: ` ${this.isEdit ? "Updated" : "Created"}`,
-                dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.type}: ${this.postForm.to}</b> was sucessfully saved`,
-                type: "success",
-                duration: 2000
-              });
-              console.log(response);
+              this.handleSave(
+                `${this.namespace} <b>${this.postForm.type}: ${this.postForm.to}</b> was sucessfully saved`
+              );
               this.loading = false;
               this.photo = this.getPhoto(response.file);
-              this.$refs.file.value = ""
+              this.$refs.file.value = "";
               this.$router.push("/certificates/" + response.uuid);
             })
             .catch(error => {
               this.loading = false;
               console.log(error);
-
-              this.$message({
-                message: "Something went wrong:( Try again",
-                type: "error"
-              });
+              this.handleError();
             });
         } else {
           console.log("error submit!!");
@@ -240,19 +227,9 @@ export default {
       });
     },
     deleteCert() {
-      this.$message({
-        dangerouslyUseHTMLString: true,
-        message: `${this.namespace} was sucessfully deleted`,
-        type: "success",
-        showClose: true,
-        duration: 2000
-      });
+      this.handleDelete();
       this.postForm.active = false;
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "~@/styles/create-form.scss";
-</style>

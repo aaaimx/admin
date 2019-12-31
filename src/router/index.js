@@ -244,45 +244,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/user',
-  //   component: Layout,
-  //   redirect: '/user/list',
-  //   name: 'User',
-  //   meta: {
-  //     title: 'User',
-  //     roles: ['Admin', 'Research'],
-  //     icon: 'peoples'
-  //   },
-  //   children: [
-  //     {
-  //       path: '/user/list',
-  //       component: () => import('@/views/contacts/list'),
-  //       name: 'ContactList',
-  //       meta: {
-  //         title: 'User List',
-  //         icon: 'peoples'
-  //       }
-  //     }
-  //     // {
-  //     //   path: '/contact/:id',
-  //     //   component: () => import('@/views/contact/edit'),
-  //     //   name: 'EditMember',
-  //     //   meta: { title: 'Edit Course', activeMenu: '/contact/:id' },
-  //     //   hidden: true
-  //     // }
-  //   ]
-  // },
-  // {
-  //   path: 'documentation',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'http://0.0.0.0:3000/documentation',
-  //       meta: { title: 'Documentation', icon: 'documentation' }
-  //     }
-  //   ]
-  // },
   {
     path: 'admin-link',
     component: Layout,
@@ -290,6 +251,19 @@ export const asyncRoutes = [
       {
         path: `${HOST}/admin/`,
         meta: { title: 'AAAIMX Admin', icon: 'link' }
+      }
+    ]
+  },
+  {
+    path: 'documentation',
+    component: Layout,
+    meta: {
+      roles: ['Admin']
+    },
+    children: [
+      {
+        path: `${HOST}/api/`,
+        meta: { title: 'API Docs', icon: 'documentation' }
       }
     ]
   },

@@ -1,4 +1,3 @@
-
 module.exports = {
   title: 'Productivity',
   logo: 'http://aaaimx.org/img/sprites/aaai-transpeps.png',
@@ -34,5 +33,8 @@ module.exports = {
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
   errorLog: ['production', 'development'],
-  HOST: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:8000' : 'https://aaaimx-admin.herokuapp.com'
+  HOST:
+    process.env.NODE_ENV === 'development'
+      ? 'http://127.0.0.1:8000'
+      : 'https://aaaimx-admin.herokuapp.com'
 }

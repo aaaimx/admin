@@ -1,5 +1,16 @@
-
+import loadingMixin from '@/mixins/loading'
 const validateMixin = {
+  props: {
+    namespace: {
+      type: String,
+      default: ''
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mixins: [loadingMixin],
   methods: {
     validateRequire: (rule, value, callback) => {
       if (value === '') {
@@ -11,6 +22,30 @@ const validateMixin = {
       } else {
         callback()
       }
+    },
+    handleSave (message) {
+      this.$notify({
+        title: ` ${this.isEdit ? 'Updated' : 'Created'}`,
+        dangerouslyUseHTMLString: true,
+        message,
+        type: 'success',
+        duration: 2000
+      })
+    },
+    handleError () {
+      this.$message({
+        message: 'Something went wrong:( Try again',
+        type: 'error'
+      })
+    },
+    handleDelete () {
+      this.$message({
+        dangerouslyUseHTMLString: true,
+        message: `${this.namespace} was sucessfully deleted`,
+        type: 'success',
+        showClose: true,
+        duration: 2000
+      })
     },
     validateUrl: (rule, value, callback) => {
       if (value) {

@@ -141,7 +141,7 @@
                         >{{ item.topic }}</el-option
                       >
                     </el-select>
-                     <LineModal />
+                    <LineModal />
                   </el-form-item>
                 </el-col>
 
@@ -235,7 +235,7 @@ import { mapState } from "vuex";
 import { fetch, create, update, remove } from "@/api/research";
 import { fetchProj, fetchList } from "@/api/project";
 import rules from "./validators";
-import loadingMixin from "@/mixins/loading";
+import formsMixin from "@/mixins/forms";
 import authorsMixin from "@/mixins/authors";
 const defaultForm = {
   title: "",
@@ -252,36 +252,22 @@ const defaultForm = {
 };
 export default {
   name: "ResearchDetail",
-  mixins: [loadingMixin, authorsMixin],
+  mixins: [authorsMixin, formsMixin],
   components: {
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky"),
     TypeDropdown: () => import("./Type"),
-    BannerUrlDropdown: () => import("./BannerUrl"),
+    BannerUrlDropdown: () => import("@/components/Dropdown/BannerUrl"),
     LineModal: () => import("@/components/Modals/Line"),
     Authors: () => import("./Authors"),
     Advisors: () => import("./Advisors")
-  },
-  props: {
-    namespace: {
-      type: String,
-      default: ""
-    },
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
       rules,
       tempRoute: {},
-      dialogFormVisible: false,
       id: null,
-      value: [],
-      projects: [],
-      value1: "",
-      formLabelWidth: "120px"
+      projects: []
     };
   },
   computed: {
@@ -348,19 +334,17 @@ export default {
           this.postForm.end = `${end.getFullYear()}-${end.getMonth()}-${end.getDate()}`;
           request
             .then(response => {
-              this.$notify({
-                title: ` ${this.isEdit ? "Updated" : "Created"}`,
-                dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`,
-                type: "success",
-                duration: 2000
-              });
-              loading.close()
-              if (!this.isEdit) this.$store.dispatch('tagsView/delAllVisitedViews')
+              this.handleSave(
+                `${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`
+              );
+
+              loading.close();
+              if (!this.isEdit)
+                this.$store.dispatch("tagsView/delAllVisitedViews");
               this.$router.push("/research/" + response.uuid);
             })
             .catch(error => {
-              loading.close()
+              loading.close();
             });
         } else {
           console.log("error submit!!");
@@ -369,24 +353,17 @@ export default {
       });
     },
     deleteResearch() {
-      remove(this.$route.params.id).then(res => {
-        this.$message({
-          dangerouslyUseHTMLString: true,
-          message: `${this.namespace} was sucessfully deleted`,
-          type: "success",
-          showClose: true,
-          duration: 2000
-        });
-        this.$store.dispatch('tagsView/delAllVisitedViews')
-        this.$router.push({ name: 'ResearchList' })
-      }, err => {
-        console.log(err)
-      });
+      remove(this.$route.params.id).then(
+        res => {
+          this.handleError()
+          this.$store.dispatch("tagsView/delAllVisitedViews");
+          this.$router.push({ name: "ResearchList" });
+        },
+        err => {
+          console.log(err);
+        }
+      );
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "~@/styles/create-form.scss";
-</style>

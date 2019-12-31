@@ -177,7 +177,7 @@
 import { mapState } from "vuex";
 import { fetch, create, update } from "@/api/member";
 import rules from "./validators";
-import loadingMixin from "@/mixins/loading";
+import formsMixin from "@/mixins/forms";
 const defaultForm = {
   name: "",
   surname: "",
@@ -195,22 +195,12 @@ const defaultForm = {
 };
 export default {
   name: "MemberDetail",
-  mixins: [loadingMixin],
+  mixins: [formsMixin],
   components: {
     StatusDropdown: () => import("./Dropdown/Status"),
     Upload: () => import("@/components/Upload/SingleImage3"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
-  },
-  props: {
-    namespace: {
-      type: String,
-      default: ""
-    },
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
@@ -270,25 +260,14 @@ export default {
 
           request
             .then(response => {
-              this.$notify({
-                title: ` ${this.isEdit ? "Updated" : "Created"}`,
-                dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`,
-                type: "success",
-                duration: 2000
-              });
+              this.handleSave(`${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`)
               console.log(response);
               this.loading = false;
               this.$router.push("/members/" + response.id);
             })
             .catch(error => {
               this.loading = false;
-              console.log(error);
-
-              this.$message({
-                message: "Something went wrong:( Try again",
-                type: "error"
-              });
+              this.handleError()
             });
         } else {
           console.log("error submit!!");
@@ -297,19 +276,9 @@ export default {
       });
     },
     deleteMember() {
-      this.$message({
-        dangerouslyUseHTMLString: true,
-        message: `${this.namespace} was sucessfully deleted`,
-        type: "success",
-        showClose: true,
-        duration: 2000
-      });
+      this.handleDelete()
       this.postForm.active = false;
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "~@/styles/create-form.scss";
-</style>

@@ -202,10 +202,7 @@
 import { mapState } from "vuex";
 import { fetchProj, create, update, remove } from "@/api/project";
 import { fetchList, fetch } from "@/api/member";
-import axios from "axios";
-import rules from "./validators";
-import loadingMixin from "@/mixins/loading";
-import moment from "moment";
+import formsMixin from "@/mixins/forms";
 
 const defaultForm = {
   title: "",
@@ -218,37 +215,20 @@ const defaultForm = {
 };
 export default {
   name: "ProjectDetail",
-  mixins: [loadingMixin],
+  mixins: [formsMixin],
   components: {
     MDinput: () => import("@/components/MDinput"),
     LineModal: () => import("@/components/Modals/Line"),
     MemberModal: () => import("@/components/Modals/Member"),
     Sticky: () => import("@/components/Sticky")
   },
-  props: {
-    namespace: {
-      type: String,
-      default: ""
-    },
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       loading: false,
       rules,
       tempRoute: {},
-      dialogFormVisible: false,
-      form: {
-        module: ""
-      },
       id: null,
-      value: [],
-      collaborators: [],
-      value1: "",
-      formLabelWidth: "120px"
+      collaborators: []
     };
   },
   computed: {
@@ -302,13 +282,7 @@ export default {
           else request = create(this.postForm);
           request
             .then(response => {
-              this.$notify({
-                title: ` ${this.isEdit ? "Updated" : "Created"}`,
-                dangerouslyUseHTMLString: true,
-                message: `${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`,
-                type: "success",
-                duration: 2000
-              });
+              this.handleSave(`${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`)
               console.log(response);
               this.loading = false;
               this.$router.push("/projects/" + response.uuid);
@@ -317,10 +291,7 @@ export default {
               this.loading = false;
               console.log(error);
 
-              this.$message({
-                message: "Something went wrong:( Try again",
-                type: "error"
-              });
+              this.handleError()
             });
         } else {
           console.log("error submit!!");
@@ -329,20 +300,9 @@ export default {
       });
     },
     deleteProject() {
-      // remove(this.$route.params.id)
-      this.$message({
-        dangerouslyUseHTMLString: true,
-        message: `${this.namespace} was sucessfully deleted`,
-        type: "success",
-        showClose: true,
-        duration: 2000
-      });
+      this.handleError()
       this.postForm.active = false;
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "~@/styles/create-form.scss";
-</style>
