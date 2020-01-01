@@ -1,17 +1,17 @@
-import request from '@/services/auth'
+import request from '@/services/axios'
 
-export function searchUser (name) {
+export function searchProject (title) {
   return request({
-    url: '/search/user',
-    method: 'get',
-    params: { name }
+    url: '/projects/',
+    method: 'GET',
+    params: { title }
   })
 }
 
-export function transactionList (query) {
+export function searchMember (name) {
   return request({
-    url: '/transaction/list',
-    method: 'get',
-    params: query
+    url: '/members/',
+    method: 'GET',
+    params: { name }
   })
 }

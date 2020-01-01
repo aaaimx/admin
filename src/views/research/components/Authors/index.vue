@@ -6,7 +6,7 @@
         filterable
         remote
         reserve-keyword
-        :remote-method="getData"
+        :remote-method="getMember"
         :loading="loading"
         clearable
         placeholder="Selector author"
@@ -34,7 +34,8 @@
 
 <script>
 import DndList from "./DndList";
-import { fetchList, fetch } from "@/api/member";
+import { fetch } from "@/api/member";
+import { searchMember } from "@/api/remote-search";
 import { create, update } from "@/api/author";
 import { mapState } from "vuex";
 
@@ -62,16 +63,13 @@ export default {
       author: ""
     };
   },
-  created() {
-    this.getData();
-  },
   computed: {
     ...mapState("members", ["collaborators"])
   },
   methods: {
-    getData(name) {
+    getMember(name) {
       this.loading = true;
-      fetchList({ name }).then(response => {
+      searchMember(name).then(response => {
         this.options = response.results;
         this.loading = false;
       });

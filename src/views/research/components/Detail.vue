@@ -153,12 +153,23 @@
                     class="postInfo-container-item"
                   >
                     <br />
-                    <el-input
+                    <el-select
                       v-model="postForm.grade"
                       placeholder="Licenciatura"
                       clearable
+                      allow-create
+                      filterable
                       class="filter-item"
-                    />
+                    >
+                      <el-option
+                  
+                        v-for="item in ['Licenciatura', 'Maestría', 'Doctorado', 'Postdoctorado']"
+                        :key="item"
+                        :label="item"
+                        :value="item"
+                        ></el-option
+                      >
+                    </el-select>
                   </el-form-item>
                 </el-col>
                 <el-col
@@ -233,7 +244,8 @@
 import { validURL } from "@/utils/validate";
 import { mapState } from "vuex";
 import { fetch, create, update, remove } from "@/api/research";
-import { fetchProj, fetchList } from "@/api/project";
+import { fetchProj } from "@/api/project";
+import { searchProject } from "@/api/remote-search";
 import rules from "./validators";
 import formsMixin from "@/mixins/forms";
 import authorsMixin from "@/mixins/authors";
@@ -275,8 +287,8 @@ export default {
     ...mapState("research", ["postForm"]),
     ...mapState("projects", ["lines"])
   },
-  created() {
-    if (!this.lines.length) this.$store.dispatch("projects/fetchLines");
+  async created() {
+    if (!this.lines.length) await this.$store.dispatch("projects/fetchLines");
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id;
       this.fetchData(this.id);
@@ -288,10 +300,7 @@ export default {
   methods: {
     fetchProjects(title) {
       this.searching = true;
-      fetchList({
-        title
-      }).then(res => {
-        console.log(res);
+      searchProject(title).then(res => {
         this.projects = res.results;
         this.searching = false;
       });
