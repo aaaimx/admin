@@ -8,11 +8,11 @@ const clipMixin = {
   methods: {
     handleCopy (text, event, field) {
       clip(text, event)
-      this.clipboardSuccess(field)
+      if (text.length) this.clipboardSuccess(field)
     },
     clipboardSuccess (value) {
       this.$message({
-        message: `Copy <b>${value}</b> successfully`,
+        message: `<b>${value}</b> copied to clipboard!`,
         type: 'success',
         dangerouslyUseHTMLString: true,
         duration: 1500

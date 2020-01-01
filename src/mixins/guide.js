@@ -13,7 +13,7 @@ const guideMixin = {
   methods: {
     guide () {
       this.driver = new Driver({
-        allowClose: false,
+        allowClose: true,
         opacity: 0
       })
       this.driver.defineSteps(this.steps)

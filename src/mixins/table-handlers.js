@@ -1,4 +1,9 @@
+import { tableSteps } from './steps'
+
 export default {
+  created () {
+    this.$store.commit('app/SET_STEPS', tableSteps)
+  },
   methods: {
     // selected items
     handleSelectionChange (val) {
@@ -45,8 +50,8 @@ export default {
       return sort === `+${key}`
         ? 'ascending'
         : sort === `-${key}`
-          ? 'descending'
-          : ''
+        ? 'descending'
+        : ''
     }
   }
 }

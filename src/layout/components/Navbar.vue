@@ -11,11 +11,10 @@
 
     <div class="right-menu">
       <template>
-
         <error-log class="errLog-container right-menu-item hover-effect" />
       </template>
       <el-dropdown
-      id="avatar"
+        id="avatar"
         class="avatar-container right-menu-item hover-effect"
         trigger="click"
       >
@@ -33,6 +32,11 @@
           <router-link to="/">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link>
+          <el-dropdown-item 
+            ><span @click="guide"
+              >Help Guide</span
+            ></el-dropdown-item
+          >
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
@@ -50,8 +54,10 @@ import ErrorLog from "@/components/ErrorLog";
 import Screenfull from "@/components/Screenfull";
 import SizeSelect from "@/components/SizeSelect";
 import Search from "@/components/HeaderSearch";
+import guideMixin from "@/mixins/guide";
 
 export default {
+  mixins: [guideMixin],
   components: {
     Breadcrumb,
     Hamburger,

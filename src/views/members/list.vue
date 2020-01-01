@@ -254,9 +254,9 @@ export default {
       showAllFields: false
     };
   },
-  created() {
-    if (!this.divisions.length) this.$store.dispatch("members/fetchDivisions");
-    if (!this.partners.length) this.$store.dispatch("members/fetchPartners");
+  async created() {
+    if (!this.divisions.length) await this.$store.dispatch("members/fetchDivisions");
+    if (!this.partners.length) await this.$store.dispatch("members/fetchPartners");
     this.getList()
   },
   methods: {

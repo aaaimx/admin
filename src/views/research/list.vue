@@ -243,8 +243,8 @@ export default {
       showAllFields: false
     };
   },
-  created() {
-    if (!this.lines.length) this.$store.dispatch("projects/fetchLines");
+  async created() {
+    if (!this.lines.length) await this.$store.dispatch("projects/fetchLines");
     this.getList();
   },
   methods: {

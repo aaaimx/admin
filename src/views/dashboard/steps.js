@@ -15,6 +15,19 @@ const steps = [
       position: 'bottom'
     }
   },
+  {
+    element: '#avatar',
+    popover: {
+      title: 'User options',
+      description: `Quick options available in all views: <br>
+      - <b>Help Guide</b>: If you need help in any view, form or table select this option to launch 
+      the step by step explained guide. <br>
+      - <b>Log Out</b>: Close current session and re-login.
+      `,
+      position: 'left'
+    },
+    padding: 0
+  },
   // {
   //   element: '#header-search',
   //   popover: {
@@ -45,15 +58,6 @@ const steps = [
       title: 'Tags view',
       description: 'The history of the page you visited',
       position: 'bottom'
-    },
-    padding: 0
-  },
-  {
-    element: '#avatar',
-    popover: {
-      title: 'Avatar',
-      description: 'User options',
-      position: 'left'
     },
     padding: 0
   }

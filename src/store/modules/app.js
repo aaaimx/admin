@@ -35,6 +35,9 @@ const mutations = {
   },
   SET_STEPS: (state, steps) => {
     state.steps = steps
+  },
+  ADD_STEP: (state, step) => {
+    state.steps.push(step)
   }
 }
 

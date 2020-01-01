@@ -1,4 +1,5 @@
 import loadingMixin from '@/mixins/loading'
+import { formSteps } from './steps'
 const validateMixin = {
   props: {
     namespace: {
@@ -11,6 +12,9 @@ const validateMixin = {
     }
   },
   mixins: [loadingMixin],
+  created () {
+    this.$store.commit('app/SET_STEPS', formSteps)
+  },
   methods: {
     validateRequire: (rule, value, callback) => {
       if (value === '') {

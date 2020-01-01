@@ -8,7 +8,7 @@
       class="form-container"
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
-        <QR v-show="isEdit" v-model="postForm.QR" />
+        <QR v-if="isEdit" v-model="postForm.QR" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -26,6 +26,11 @@
       </sticky>
 
       <div class="createPost-main-container">
+
+        <aside>
+          <b>Link</b> and <b>QR</b> will be autogenered after first save. Then you can update
+          fields and upload Certificate's JPG file. QR is generated in each page reload. Be carefull.
+        </aside>
         <el-row>
           <el-col :span="24">
             <div class="postInfo-container">
@@ -107,15 +112,22 @@
                       </div>
                     </el-upload> -->
                 </el-col>
-                <qrcode
+                <el-form-item
+                  label="QR:"
                   v-show="isEdit"
-                  :value="postForm.QR"
-                  :options="{ width: 200 }"
-                ></qrcode>
+                  prop="QR"
+                  class="postInfo-container-item"
+                  ><br />
+                  <qrcode
+                    :value="postForm.QR"
+                    :options="{ width: 200 }"
+                  ></qrcode>
+                </el-form-item>
               </el-row>
             </div>
           </el-col>
         </el-row>
+
       </div>
     </el-form>
   </div>

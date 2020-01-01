@@ -50,9 +50,9 @@ export function create (data) {
  * @param {*} id String
  * @param {*} data Object
  */
-export function update (data) {
+export function update (id, data) {
   return request({
-    url: `/partners/${data.id}/`,
+    url: `/partners/${id}/`,
     method: 'PUT',
     data
   })

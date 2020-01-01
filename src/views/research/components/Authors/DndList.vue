@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <aside v-if="!list1.length">No data</aside>
+        <aside v-if="!list1.length">No authors</aside>
       </draggable>
 
       <el-button
