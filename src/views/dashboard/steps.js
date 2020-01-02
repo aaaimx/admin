@@ -1,5 +1,13 @@
 const steps = [
   {
+    element: '.sidebar-container',
+    popover: {
+      title: 'Sidebar',
+      description: 'Modules & Quick external links',
+      position: 'right'
+    }
+  },
+  {
     element: '#hamburger-container',
     popover: {
       title: 'Hamburger',

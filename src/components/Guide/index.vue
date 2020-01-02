@@ -4,7 +4,7 @@
     <aside>
       The guide is useful for some people who entered the project for the first time. You can briefly introduce the
       features of the project. <br> Atte.:
-      <a href="https://github.com/kamranahmedse/driver.js" target="_blank">AAAIMX Team</a>
+      <span class="link-type">AAAIMX Team</span>
     </aside>
     <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">
       Show Guide

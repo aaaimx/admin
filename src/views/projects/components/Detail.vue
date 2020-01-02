@@ -203,6 +203,7 @@ import { mapState } from "vuex";
 import { fetchProj, create, update, remove } from "@/api/project";
 import { fetchList, fetch } from "@/api/member";
 import formsMixin from "@/mixins/forms";
+import rules from './validators'
 
 const defaultForm = {
   title: "",
