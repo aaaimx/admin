@@ -26,10 +26,10 @@
       </sticky>
 
       <div class="createPost-main-container">
-
         <aside>
-          <b>Link</b> and <b>QR</b> will be autogenered after first save. Then you can update
-          fields and upload Certificate's JPG file. QR is generated in each page reload. Be carefull.
+          <b>Link</b> and <b>QR</b> will be autogenered after first save. Then
+          you can update fields and upload Certificate's JPG file. QR is
+          generated in each page reload. Be carefull.
         </aside>
         <el-row>
           <el-col :span="24">
@@ -112,22 +112,12 @@
                       </div>
                     </el-upload> -->
                 </el-col>
-                <el-form-item
-                  label="QR:"
-                  v-show="isEdit"
-                  prop="QR"
-                  class="postInfo-container-item"
-                  ><br />
-                  <qrcode
-                    :value="postForm.QR"
-                    :options="{ width: 200 }"
-                  ></qrcode>
-                </el-form-item>
+                <!-- https://github.com/RaulNovelo/aaaimx-admin/issues/4 -->
+                <qrcode :value="postForm.QR" :options="{ width: 200 }"></qrcode>
               </el-row>
             </div>
           </el-col>
         </el-row>
-
       </div>
     </el-form>
   </div>
