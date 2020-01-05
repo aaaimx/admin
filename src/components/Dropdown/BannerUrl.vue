@@ -9,7 +9,7 @@
       class="no-padding no-border"
       style="max-width: 600px"
     >
-      <el-form-item label-width="0px" style="margin-bottom: 0px" prop="url">
+      <el-form-item label-width="0px" style="margin-bottom: 0px" :prop="prop">
         <el-input
           v-model="url"
           type="url"
@@ -38,6 +38,10 @@ export default {
     value: {
       type: String,
       default: ""
+    },
+    prop: {
+      type: String,
+      default: "link"
     },
     label: {
       type: String,

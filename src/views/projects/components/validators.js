@@ -1,22 +1,5 @@
-const validatorRequired = {
-  required: true,
-  message: 'This field is required',
-  trigger: 'blur'
-}
+import { validateRequired } from '@/utils/rules'
 export default {
-  title: [
-    validatorRequired
-  ],
-  start: [
-    validatorRequired
-  ],
-  end: [
-    validatorRequired
-  ],
-  roles: [
-    validatorRequired
-  ],
-  email: [
-    validatorRequired
-  ]
+  title: [validateRequired],
+  start: [validateRequired]
 }
