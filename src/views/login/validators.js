@@ -1,6 +1,6 @@
 import { validatePassword, validateRequired } from '@/utils/rules'
 
-module.exports = {
+export default {
   username: [validateRequired],
   password: [validateRequired, validatePassword]
 }
