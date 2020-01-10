@@ -17,7 +17,12 @@
     <div class="image-preview">
       <div v-show="imageUrl.length > 1" class="image-preview-wrapper">
         <img :src="imageUrl" />
-        <!-- <div class="image-preview-action">
+        <!-- <a target="_blank" class="link-type" :href="imageUrl"
+          >Currently <svg-icon icon-class="link" /></a>
+          &nbsp;
+        <a download class="link-type" :href="imageUrl"
+          >Download <i class="el-icon-download" /></a>
+        <div class="image-preview-action">
           <i class="el-icon-delete" @click="rmImage" />
         </div> -->
       </div>

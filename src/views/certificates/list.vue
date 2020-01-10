@@ -9,6 +9,14 @@
         clearable
         class="filter-item"
       />
+      <el-input
+        style="max-width: 300px"
+        v-model="listQuery.query"
+        placeholder="Search by query"
+        @change="handleFilter"
+        clearable
+        class="filter-item"
+      />
       <el-select
         v-model.number="listQuery.type"
         @change="handleFilter"
@@ -54,7 +62,7 @@
         sortable
         prop="name"
         label="ID"
-        min-width="100px"
+        min-width="50px"
         align="center"
       >
         <template slot-scope="{ row }">
@@ -69,22 +77,11 @@
         label="Member"
         sortable
         prop="to"
-        min-width="100px"
+        min-width="90px"
         align="center"
       >
         <template slot-scope="scope">
           <span>{{ scope.row.to }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="QR"
-        sortable
-        prop="QR"
-        min-width="50"
-        align="center"
-      >
-        <template v-if="scope.row.QR" slot-scope="scope">
-          <a target="_blank" class="link-type" :href=" 'http://' + scope.row.QR"><svg-icon icon-class="link" /></a>
         </template>
       </el-table-column>
 
@@ -93,23 +90,49 @@
         sortable
         prop="active"
         class-name="status-col"
-        width="200"
+        width="150"
       >
         <template slot-scope="{ row }">
-          <el-tag type="secondary">{{
-            row.type
-          }}</el-tag>
+          <el-tag type="secondary">{{ row.type }}</el-tag>
         </template>
       </el-table-column>
-       <el-table-column
+
+      <el-table-column
+        label="Description"
+        sortable
+        prop="active"
+        class-name="status-col"
+        width="300"
+      >
+        <template slot-scope="{ row }">
+          <span>{{ row.description }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="QR"
+        sortable
+        prop="QR"
+        min-width="25"
+        align="center"
+      >
+        <template v-if="scope.row.QR" slot-scope="scope">
+          <a target="_blank" class="link-type" :href="'http://' + scope.row.QR"
+            ><svg-icon icon-class="link"
+          /></a>
+        </template>
+      </el-table-column>
+
+      <el-table-column
         label="Cert"
         sortable
         prop="file"
-        min-width="50"
+        min-width="25"
         align="center"
       >
         <template v-if="scope.row.file" slot-scope="scope">
-          <a target="_blank" class="link-type" :href="scope.row.file"><svg-icon icon-class="link" /></a>
+          <a target="_blank" class="link-type" :href="scope.row.file"
+            ><svg-icon icon-class="link"
+          /></a>
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -140,7 +163,10 @@
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
         <el-option label="------------" value></el-option>
-        <el-option label="delete selected certificates" value="delete"></el-option>
+        <el-option
+          label="delete selected certificates"
+          value="delete"
+        ></el-option>
       </el-select>
       <el-button size="mini" @click="toggleSelection()">Go</el-button>
     </div>
@@ -197,10 +223,9 @@ export default {
     };
   },
   beforeMount() {
-    this.getList()
+    this.getList();
   },
   methods: {
-
     // methods
     getList() {
       this.listLoading = true;
@@ -214,7 +239,7 @@ export default {
     },
     handleDownload() {
       this.downloadLoading = true;
-      this.json = this.list
+      this.json = this.list;
       this.downloadLoading = false;
     },
     handleModifyStatus(row, active) {

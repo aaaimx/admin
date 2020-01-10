@@ -88,7 +88,8 @@
             class="link-type"
             :to="'/research/' + row.uuid"
             tag="a"
-            >{{ row.title }}</router-link>
+            >{{ row.title }}</router-link
+          >
         </template>
       </el-table-column>
       <el-table-column
@@ -109,28 +110,31 @@
         min-width="100px"
         align="center"
       >
-        <template slot-scope="scope">
-          <span>{{ scope.row.type }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="Info"
-        v-if="showAllFields"
-        min-width="250px"
-        align="left"
-      >
         <template slot-scope="{ row }">
-          <p v-if="row.grade"><strong>Grade:</strong> {{ row.grade }} <br /></p>
-          <p v-if="row.pub_type">
-            <strong>Type:</strong> {{ row.pub_type }} <br />
-          </p>
-          <p v-if="row.event"><strong>Event:</strong> {{ row.event }} <br /></p>
-          <p v-if="row.pub_in">
-            <strong>Pub. in:</strong> {{ row.pub_in }} <br />
-          </p>
-          <a :href="row.link" v-if="row.link" class="link-type" target="_blank"
-            >Link</a
-          >
+          <el-popover trigger="hover" placement="top">
+            <p v-if="row.grade">
+              <strong>Grade:</strong> {{ row.grade }} <br />
+            </p>
+            <p v-if="row.pub_type">
+              <strong>Type:</strong> {{ row.pub_type }} <br />
+            </p>
+            <p v-if="row.event">
+              <strong>Event:</strong> {{ row.event }} <br />
+            </p>
+            <p v-if="row.pub_in">
+              <strong>Pub. in:</strong> {{ row.pub_in }} <br />
+            </p>
+            <a
+              :href="row.link"
+              v-if="row.link"
+              class="link-type"
+              target="_blank"
+              >Link</a
+            >
+            <div slot="reference" class="name-wrapper">
+              <el-tag size="medium">{{ row.type }}</el-tag>
+            </div>
+          </el-popover>
         </template>
       </el-table-column>
       <el-table-column
@@ -176,7 +180,9 @@
             :key="col.id"
             :to="'/members/' + col.member"
             tag="a"
-            >{{ col.name }} {{ col.surname }} <sup class="link-type">{{ ++index }}</sup><br
+            >{{ col.name }} {{ col.surname }}
+            <sup class="link-type">{{ ++index }}</sup
+            ><br
           /></router-link>
         </template>
       </el-table-column>

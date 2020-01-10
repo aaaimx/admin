@@ -26,17 +26,12 @@
       </sticky>
 
       <div class="createPost-main-container">
-        <aside>
-          <b>Link</b> and <b>QR</b> will be autogenered after first save. Then
-          you can update fields and upload Certificate's JPG file. QR is
-          generated in each page reload. Be carefull.
-        </aside>
         <el-row>
           <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="12" :xs="24">
-                  <Upload v-show="this.isEdit" v-model="photo" />
+                  <Upload v-show="isEdit" v-model="photo" />
                 </el-col>
                 <el-col :span="12" :xs="24">
                   <el-form-item
@@ -48,6 +43,14 @@
                       v-model="postForm.to"
                       placeholder="NOMBRE(S) APPELLIDO(S)"
                       type="text"
+                    />
+                  </el-form-item>
+                  <el-form-item prop="description">
+                    <el-input
+                      v-model="postForm.description"
+                      type="textarea"
+                      :rows="5"
+                      placeholder="Description"
                     />
                   </el-form-item>
                 </el-col>
@@ -113,7 +116,7 @@
                     </el-upload> -->
                 </el-col>
                 <!-- https://github.com/RaulNovelo/aaaimx-admin/issues/4 -->
-                <qrcode :value="postForm.QR" :options="{ width: 200 }"></qrcode>
+                <!-- <qrcode :value="postForm.QR" :options="{ width: 200 }"></qrcode> -->
               </el-row>
             </div>
           </el-col>
@@ -131,6 +134,7 @@ import formsMixin from "@/mixins/forms";
 
 const defaultForm = {
   type: "RECOGNITION",
+  description: "",
   to: "",
   QR: "",
   file: ""
