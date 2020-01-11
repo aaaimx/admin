@@ -8,7 +8,7 @@
       class="form-container"
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
-        <StatusDropdown v-model="postForm.active" />
+        <Status v-model="postForm.active" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -197,7 +197,7 @@ export default {
   name: "MemberDetail",
   mixins: [formsMixin],
   components: {
-    StatusDropdown: () => import("./Dropdown/Status"),
+    Status: () => import("@/components/Dropdown/Status"),
     Upload: () => import("@/components/Upload/SingleImage3"),
     MDinput: () => import("@/components/MDinput"),
     Sticky: () => import("@/components/Sticky")
@@ -208,7 +208,7 @@ export default {
       rules,
       tempRoute: {},
       id: null,
-      photo: "",
+      photo: ""
     };
   },
   computed: {
@@ -260,14 +260,16 @@ export default {
 
           request
             .then(response => {
-              this.handleSave(`${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`)
+              this.handleSave(
+                `${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`
+              );
               console.log(response);
               this.loading = false;
               this.$router.push("/members/" + response.id);
             })
             .catch(error => {
               this.loading = false;
-              this.handleError()
+              this.handleError();
             });
         } else {
           console.log("error submit!!");
@@ -276,7 +278,7 @@ export default {
       });
     },
     deleteMember() {
-      this.handleDelete()
+      this.handleDelete();
       this.postForm.active = false;
     }
   }

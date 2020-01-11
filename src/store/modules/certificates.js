@@ -6,6 +6,7 @@ const state = {
   postForm: {
     type: '',
     to: '',
+    published: false,
     description: '',
     QR: '',
     file: ''

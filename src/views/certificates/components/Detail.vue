@@ -8,6 +8,8 @@
       class="form-container"
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
+
+        <Status v-if="isEdit" :labels="['Published', 'Draft']" v-model="postForm.published" />
         <QR v-if="isEdit" v-model="postForm.QR" />
         <el-button
           v-loading="loading"
@@ -135,6 +137,7 @@ import formsMixin from "@/mixins/forms";
 const defaultForm = {
   type: "RECOGNITION",
   description: "",
+  published: false,
   to: "",
   QR: "",
   file: ""
@@ -143,6 +146,7 @@ export default {
   name: "CertificateDetail",
   mixins: [formsMixin],
   components: {
+    Status: () => import("@/components/Dropdown/Status"),
     QR: () => import("@/components/Dropdown/BannerUrl"),
     Upload: () => import("@/components/Upload/CertPreview"),
     MDinput: () => import("@/components/MDinput"),
@@ -217,7 +221,10 @@ export default {
                 `${this.namespace} <b>${this.postForm.type}: ${this.postForm.to}</b> was sucessfully saved`
               );
               this.loading = false;
-              this.photo = this.getPhoto(response.file);
+              if (this.isEdit)
+                this.fetchData(this.id);
+              else
+                this.photo = this.getPhoto(response.file);
               this.$refs.file.value = "";
               this.$router.push("/certificates/" + response.uuid);
             })
