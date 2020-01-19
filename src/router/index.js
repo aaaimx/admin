@@ -124,7 +124,7 @@ export const asyncRoutes = [
     meta: {
       title: 'Certificates',
       roles: ['Admin', 'Certificates'],
-      icon: 'skill'
+      icon: 'medal'
     },
     children: [
       {
@@ -144,6 +144,38 @@ export const asyncRoutes = [
         component: () => import('@/views/certificates/edit'),
         name: 'EditCertificate',
         meta: { title: 'Edit certificate', activeMenu: '/certificates/:id' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/memberships',
+    component: Layout,
+    redirect: '/memberships/list',
+    name: 'Memberships',
+    meta: {
+      title: 'Memberships',
+      roles: ['Admin', 'Memberships'],
+      icon: 'membership'
+    },
+    children: [
+      {
+        path: '/memberships/list',
+        component: () => import('@/views/memberships/list'),
+        name: 'MembershipsList',
+        meta: { title: 'Membership list', icon: 'list' }
+      },
+      {
+        path: '/memberships/create',
+        component: () => import('@/views/memberships/create'),
+        name: 'CreateMembership',
+        meta: { title: 'Create Membership', icon: 'edit' }
+      },
+      {
+        path: '/memberships/:id',
+        component: () => import('@/views/memberships/edit'),
+        name: 'EditMembership',
+        meta: { title: 'Edit Membership', activeMenu: '/memberships/:id' },
         hidden: true
       }
     ]

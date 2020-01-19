@@ -46,7 +46,7 @@
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
-        @click="handleCreateOrUpdate('/certificates/create')"
+        @click="handleCreateOrUpdate('/memberships/create')"
         >Create</el-button
       >
     </div>
@@ -78,7 +78,7 @@
         <template slot-scope="{ row }">
           <span
             class="link-type"
-            @click="handleCreateOrUpdate('/certificates/' + row.uuid)"
+            @click="handleCreateOrUpdate('/memberships/' + row.uuid)"
             >{{ row.uuid }}</span
           >
         </template>
@@ -174,7 +174,7 @@
       <el-select size="mini" v-model="performAction" placeholder="------------">
         <el-option label="------------" value></el-option>
         <el-option
-          label="delete selected certificates"
+          label="delete selected memberships"
           value="delete"
         ></el-option>
       </el-select>
@@ -191,7 +191,7 @@
 </template>
 
 <script>
-import { fetchList, remove, updateStatus } from "@/api/certificate";
+import { fetchList, remove, updateStatus } from "@/api/membership";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
@@ -213,7 +213,7 @@ export default {
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("certificates", ["types"])
+    ...mapState("memberships", ["types"])
   },
   data() {
     return {

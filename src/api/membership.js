@@ -2,7 +2,7 @@ import request from '@/services/axios'
 
 export function fetchListC () {
   return request({
-    url: '/certificates/',
+    url: '/memberships/',
     method: 'GET'
   })
 }
@@ -13,7 +13,7 @@ export function fetchListC () {
  */
 export function fetchList (query) {
   return request({
-    url: '/certificates/',
+    url: '/memberships/',
     method: 'GET',
     params: query
   })
@@ -25,7 +25,7 @@ export function fetchList (query) {
  */
 export function fetch (id) {
   return request({
-    url: `/certificates/${id}/`,
+    url: `/memberships/${id}/`,
     method: 'GET'
   })
 }
@@ -36,7 +36,7 @@ export function fetch (id) {
  */
 export function create (data) {
   return request({
-    url: '/certificates/',
+    url: '/memberships/',
     method: 'POST',
     data
   })
@@ -49,7 +49,7 @@ export function create (data) {
  */
 export function update (id, data) {
   return request({
-    url: `/certificates/${id}/`,
+    url: `/memberships/${id}/`,
     method: 'PUT',
     headers: { 'Content-Type': 'multipart/form-data' },
     data
@@ -63,7 +63,7 @@ export function update (id, data) {
  */
 export function publishCert (id, status) {
   return request({
-    url: `/certificates/${id}/`,
+    url: `/memberships/${id}/`,
     method: 'PATCH',
     data: {
       status
@@ -77,7 +77,7 @@ export function publishCert (id, status) {
  */
 export function remove (data) {
   return request({
-    url: `/certificates/${id}/`,
+    url: `/memberships/${id}/`,
     method: 'DELETE',
     data
   })

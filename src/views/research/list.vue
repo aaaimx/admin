@@ -28,10 +28,10 @@
         class="filter-item"
       >
         <el-option
-          v-for="item in types"
-          :key="item"
-          :label="item"
-          :value="item"
+          v-for="(key, val) in typeOptions"
+          :key="val"
+          :label="val"
+          :value="val"
         />
       </el-select>
       <!-- <el-button
@@ -132,7 +132,7 @@
               >Link</a
             >
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ row.type }}</el-tag>
+              <el-tag :type="typeOptions[row.type]">{{ row.type }}</el-tag>
             </div>
           </el-popover>
         </template>
@@ -240,7 +240,11 @@ export default {
         title: undefined,
         type: undefined
       },
-      types: ["Thesis", "Article", "Presentation"],
+      typeOptions: {
+        Thesis: "success",
+        Article: "info",
+        Presentation: "secondary"
+      },
       sortOptions: [
         { label: "ID Ascending", key: "+id" },
         { label: "ID Descending", key: "-id" }
