@@ -61,13 +61,12 @@
       highlight-current-row
       style="width: 100%;"
       @sort-change="sortChange"
-      @selection-change="handleSelectionChange"
     >
-      <el-table-column
+      <!-- <el-table-column
         type="selection"
         width="55"
         align="center"
-      ></el-table-column>
+      ></el-table-column> -->
       <el-table-column
         sortable
         prop="name"
@@ -112,7 +111,7 @@
         sortable
         prop="active"
         class-name="status-col"
-        width="300"
+        width="250"
       >
         <template slot-scope="{ row }">
           <span>{{ row.description }}</span>
@@ -122,7 +121,7 @@
         label="QR"
         sortable
         prop="QR"
-        min-width="25"
+        min-width="40"
         align="center"
       >
         <template v-if="scope.row.QR" slot-scope="scope">
@@ -136,7 +135,7 @@
         label="Cert"
         sortable
         prop="file"
-        min-width="25"
+        min-width="40"
         align="center"
       >
         <template v-if="scope.row.file" slot-scope="scope">
@@ -145,30 +144,52 @@
           /></a>
         </template>
       </el-table-column>
-      <!-- <el-table-column
+      <el-table-column
+        label="Status"
+        sortable
+        prop="published"
+        class-name="status-col"
+        width="100"
+      >
+        <template slot-scope="{ row }">
+          <el-tag :type="row.published | statusFilter">{{
+            row.published ? "Published" : "Draft"
+          }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
         label="Actions"
         align="center"
         fixed="right"
-        min-width="80"
+        min-width="100"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row }">
           <el-button
             v-if="!row.published"
+            :loading="row.loading"
             size="small"
             type="success"
-            @click="handleModifyStatus(row, true)"
-            >Published</el-button
+            @click="(row.loading = true), handleModifyStatus(row, true)"
+            >Publish</el-button
           >
           <el-button
             v-else
             size="small"
+            :loading="row.loading"
             type="danger"
-            @click="handleModifyStatus(row, false)"
+            @click="(row.loading = true), handleModifyStatus(row, false)"
             >Draft</el-button
           >
+          <el-button
+            type="secondary"
+            icon="people"
+            size="mini"
+            @click="sendEmail(row)"
+            ><svg-icon icon-class="guide"
+          /></el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
@@ -191,7 +212,7 @@
 </template>
 
 <script>
-import { fetchList, remove, updateStatus } from "@/api/certificate";
+import { fetchList, remove, publishCert } from "@/api/certificate";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
@@ -220,6 +241,7 @@ export default {
       tableKey: 0,
       list: null,
       total: 0,
+      loading: false,
       listLoading: true,
       downloadLoading: false,
       listQuery: {
@@ -256,19 +278,18 @@ export default {
       this.json = this.list;
       this.downloadLoading = false;
     },
-    handleModifyStatus(row, active) {
-      updateStatus({
-        id: row.id,
-        active
-      }).then(
+    handleModifyStatus(row, published) {
+      publishCert(row.uuid, published).then(
         res => {
           this.$message({
-            message: "Member status changed",
+            message: "Certificate status changed",
             type: "success"
           });
-          row.active = active;
+          row.published = published;
+          row.loading = false;
         },
         err => {
+          row.loading = false;
           this.$message({
             message: "Something went wrong:( Try Again!",
             type: "error"
@@ -277,7 +298,7 @@ export default {
       );
     },
 
-    handleDelete(row) {
+    sendEmail(row) {
       this.$notify({
         title: "Success",
         message: "Delete Successfully",

@@ -61,12 +61,12 @@ export function update (id, data) {
  * @param {*} id String
  * @param {*} data Object
  */
-export function publishCert (id, status) {
+export function publishCert (id, published) {
   return request({
     url: `/certificates/${id}/`,
     method: 'PATCH',
     data: {
-      status
+      published
     }
   })
 }
