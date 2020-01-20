@@ -170,7 +170,7 @@
             :loading="row.loading"
             size="small"
             type="success"
-            @click="(row.loading = true), handleModifyStatus(row, true)"
+            @click="handleModifyStatus(row, true)"
             >Publish</el-button
           >
           <el-button
@@ -178,7 +178,7 @@
             size="small"
             :loading="row.loading"
             type="danger"
-            @click="(row.loading = true), handleModifyStatus(row, false)"
+            @click="handleModifyStatus(row, false)"
             >Draft</el-button
           >
           <el-button
@@ -213,12 +213,14 @@
 
 <script>
 import { fetchList, remove, publishCert } from "@/api/certificate";
+import { sendEmail } from "@/api/email";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import { off } from "element-ui/lib/utils/dom";
 import { mapState } from "vuex";
 import tableMixin from "@/mixins/table-handlers";
+import { getDrivePhoto } from "@/utils/certificates";
 
 export default {
   name: "CertificatesTable",
@@ -279,6 +281,7 @@ export default {
       this.downloadLoading = false;
     },
     handleModifyStatus(row, published) {
+      row.loading = true;
       publishCert(row.uuid, published).then(
         res => {
           this.$message({
@@ -299,14 +302,45 @@ export default {
     },
 
     sendEmail(row) {
-      this.$notify({
-        title: "Success",
-        message: "Delete Successfully",
-        type: "success",
-        duration: 2000
-      });
-      const index = this.list.indexOf(row);
-      this.list.splice(index, 1);
+      this.$prompt("Please input an e-mail", "Send by email", {
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
+        inputValue: 'rnovelo.cruz98@gmail.com',
+        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        inputErrorMessage: "Invalid Email"
+      })
+        .then(({ value }) => {
+          sendEmail({
+            subject: "CERTIFICATE OF " + row.type,
+            message: `CERTIFICATE OF ${row.type}: ${row.to}`,
+            sent: 1,
+            context: {
+              ...row,
+              email: value,
+              thumbnail: getDrivePhoto(row.file)
+            },
+            recipients: ["rnovelo.cruz98@gmail.com"],
+            template: 'CERTIFICATE'
+          }).then(res => {
+            console.log(res);
+            this.$notify(
+              {
+                title: "Success",
+                message: "Certificate send",
+                type: "success",
+                duration: 2000
+              }
+            );
+          }, err => {
+            console.log(err);
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Input canceled"
+          });
+        });
     }
   }
 };

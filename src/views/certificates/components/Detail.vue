@@ -131,6 +131,7 @@
 <script>
 import { mapState } from "vuex";
 import { fetch, create, update } from "@/api/certificate";
+import { getDrivePhoto } from "@/utils/certificates";
 import rules from "./validators";
 import formsMixin from "@/mixins/forms";
 
@@ -178,14 +179,7 @@ export default {
       this.$refs.upload.submit();
     },
     getPhoto(photo) {
-      try {
-        var res = photo.split("https://drive.google.com/file/d/");
-        res = res[1];
-        res = res.split("/view?usp=drivesdk");
-        return "https://drive.google.com/uc?id=" + res[0];
-      } catch (error) {
-        return "";
-      }
+      getDrivePhoto(photo)
     },
     fetchData(id) {
       let loading = this.loadingFullPage();
