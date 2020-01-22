@@ -8,7 +8,7 @@ export const validateRequired = {
 
 export const validateEmail = {
   validator: (rule, value, callback) => {
-    if (!validEmail(value)) {
+    if (!validEmail(value) && value.trim()) {
       callback(new Error('Please enter the correct email'))
     } else {
       callback()

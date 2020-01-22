@@ -52,6 +52,20 @@
         width="55"
         align="center"
       ></el-table-column>
+
+      <el-table-column
+        label="Logo"
+        sortable
+        prop="logoFile"
+        min-width="50"
+        align="center"
+      >
+        <template slot-scope="scope">
+          <a target="_blank" class="link-type" :href="scope.row.logoFile"
+            ><img width="100px" :src="getPhoto(scope.row.logoFile)" alt="" srcset=""
+          /></a>
+        </template>
+      </el-table-column>
       <el-table-column
         sortable
         prop="name"
@@ -103,19 +117,6 @@
           }}</a>
         </template>
       </el-table-column>
-      <el-table-column
-        label="Logo"
-        sortable
-        prop="logoFile"
-        min-width="50"
-        align="center"
-      >
-        <template v-if="scope.row.logoFile" slot-scope="scope">
-          <a target="_blank" class="link-type" :href="scope.row.logoFile"
-            ><svg-icon icon-class="link"
-          /></a>
-        </template>
-      </el-table-column>
       <!-- <el-table-column
         label="Actions"
         align="center"
@@ -162,6 +163,7 @@
 import { fetchList, remove, updateStatus } from "@/api/partner";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
+import { getDrivePhoto } from "@/utils/google-drive";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import JsonEditor from "@/components/JsonEditor";
 import { off } from "element-ui/lib/utils/dom";
@@ -206,6 +208,9 @@ export default {
   },
   methods: {
     // methods
+    getPhoto(photo) {
+      return getDrivePhoto(photo);
+    },
     getList() {
       this.listLoading = true;
       let { limit, page, offset } = this.listQuery;

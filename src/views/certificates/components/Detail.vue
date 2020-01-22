@@ -8,8 +8,11 @@
       class="form-container"
     >
       <sticky :z-index="10" :class-name="'sub-navbar ' + postForm.active">
-
-        <Status v-if="isEdit" :labels="['Published', 'Draft']" v-model="postForm.published" />
+        <Status
+          v-if="isEdit"
+          :labels="['Published', 'Draft']"
+          v-model="postForm.published"
+        />
         <QR v-if="isEdit" v-model="postForm.QR" />
         <el-button
           v-loading="loading"
@@ -18,13 +21,20 @@
           @click="submitForm"
           v-text="isEdit ? 'Save changes' : 'Save'"
         ></el-button>
-        <el-button
-          v-loading="loading"
-          v-show="isEdit"
-          type="danger"
-          @click="deleteCert"
-          >Delete {{ namespace }}</el-button
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="Send certificate by email"
+          placement="top"
         >
+          <el-button
+            type="secondary"
+            icon="people"
+            v-if="isEdit"
+            @click="sendEmail(postForm)"
+            ><svg-icon icon-class="guide"
+          /></el-button>
+        </el-tooltip>
       </sticky>
 
       <div class="createPost-main-container">
@@ -36,6 +46,22 @@
                   <Upload v-show="isEdit" v-model="photo" />
                 </el-col>
                 <el-col :span="12" :xs="24">
+                  <el-form-item
+                    v-if="isEdit"
+                    label="ID:"
+                    prop="uuid"
+                    class="postInfo-container-item"
+                  >
+                    <el-input :value="postForm.uuid" disabled type="text">
+                      <el-button
+                        slot="append"
+                        type="success"
+                        icon="el-icon-document"
+                        @click="handleCopy(postForm.uuid, $event, 'ID')"
+                        >Copy</el-button
+                      ></el-input
+                    >
+                  </el-form-item>
                   <el-form-item
                     label="Facilitator:"
                     prop="to"
@@ -131,9 +157,11 @@
 <script>
 import { mapState } from "vuex";
 import { fetch, create, update } from "@/api/certificate";
-import { getDrivePhoto } from "@/utils/certificates";
+import { getDrivePhoto } from "@/utils/google-drive";
 import rules from "./validators";
 import formsMixin from "@/mixins/forms";
+import clipMixin from "@/mixins/clipboard";
+import certsMixin from "@/mixins/certificates";
 
 const defaultForm = {
   type: "RECOGNITION",
@@ -145,7 +173,7 @@ const defaultForm = {
 };
 export default {
   name: "CertificateDetail",
-  mixins: [formsMixin],
+  mixins: [formsMixin, certsMixin, clipMixin],
   components: {
     Status: () => import("@/components/Dropdown/Status"),
     QR: () => import("@/components/Dropdown/BannerUrl"),
@@ -179,7 +207,7 @@ export default {
       this.$refs.upload.submit();
     },
     getPhoto(photo) {
-      getDrivePhoto(photo)
+      return getDrivePhoto(photo);
     },
     fetchData(id) {
       let loading = this.loadingFullPage();
@@ -215,10 +243,8 @@ export default {
                 `${this.namespace} <b>${this.postForm.type}: ${this.postForm.to}</b> was sucessfully saved`
               );
               this.loading = false;
-              if (this.isEdit)
-                this.fetchData(this.id);
-              else
-                this.photo = this.getPhoto(response.file);
+              if (this.isEdit) this.fetchData(this.id);
+              else this.photo = this.getPhoto(response.file);
               this.$refs.file.value = "";
               this.$router.push("/certificates/" + response.uuid);
             })

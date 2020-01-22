@@ -163,7 +163,7 @@ export default {
           this.loading = true;
           let request;
           delete this.postForm.logoFile
-          if (this.isEdit) request = update(this.id, this.postForm);
+          if (this.isEdit) request = update(this.postForm.uuid, this.postForm);
           else request = create(this.postForm);
 
           request
@@ -171,7 +171,7 @@ export default {
               this.handleSave(`${this.namespace} <b>${this.postForm.alias}</b> was sucessfully saved`)
               console.log(response);
               this.loading = false;
-              this.$router.push("/partners/" + this.id);
+              this.$router.push("/partners/" + response.uuid);
             })
             .catch(error => {
               this.loading = false;

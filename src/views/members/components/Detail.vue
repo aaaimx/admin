@@ -254,18 +254,19 @@ export default {
         if (valid) {
           this.loading = true;
           let request;
-          delete this.postForm.thumbnailFile;
-          if (this.isEdit) request = update(this.postForm);
-          else request = create(this.postForm);
+          let data = this.postForm
+          delete data.thumbnailFile;
+          if (this.isEdit) request = update(data);
+          else request = create(data);
 
           request
             .then(response => {
-              this.handleSave(
-                `${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`
-              );
               console.log(response);
               this.loading = false;
               this.$router.push("/members/" + response.id);
+              this.handleSave(
+                `${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`
+              );
             })
             .catch(error => {
               this.loading = false;
