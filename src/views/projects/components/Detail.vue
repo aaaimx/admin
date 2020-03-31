@@ -134,7 +134,7 @@
                         v-for="item in collaborators"
                         :key="item.name"
                         :label="item.name + ' ' + item.surname"
-                        :value="item.name"
+                        :value="item.name + ' ' + item.surname"
                       ></el-option>
                     </el-select>
                     <MemberModal />
@@ -203,7 +203,7 @@ import { mapState } from "vuex";
 import { fetchProj, create, update, remove } from "@/api/project";
 import { fetchList, fetch } from "@/api/member";
 import formsMixin from "@/mixins/forms";
-import rules from './validators'
+import rules from "./validators";
 
 const defaultForm = {
   title: "",
@@ -283,7 +283,9 @@ export default {
           else request = create(this.postForm);
           request
             .then(response => {
-              this.handleSave(`${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`)
+              this.handleSave(
+                `${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`
+              );
               console.log(response);
               this.loading = false;
               this.$router.push("/projects/" + response.uuid);
@@ -292,7 +294,7 @@ export default {
               this.loading = false;
               console.log(error);
 
-              this.handleError()
+              this.handleError();
             });
         } else {
           console.log("error submit!!");
@@ -301,7 +303,7 @@ export default {
       });
     },
     deleteProject() {
-      this.handleError()
+      this.handleError();
       this.postForm.active = false;
     }
   }

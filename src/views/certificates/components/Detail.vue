@@ -119,7 +119,7 @@
                     prop="file"
                     class="postInfo-container-item"
                   >
-                    <input type="file" id="file" ref="file" />
+                    <input type="file" accept="image/png, image/jpeg" id="file" ref="file" />
                   </el-form-item>
                   <!-- <el-upload
                       class="upload-demo"
@@ -234,6 +234,7 @@ export default {
           for (var key in this.postForm) {
             form_data.append(key, this.postForm[key]);
           }
+          console.log(form_data)
           if (this.isEdit) request = update(this.id, form_data);
           else request = create(form_data);
 

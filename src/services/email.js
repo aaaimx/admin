@@ -8,7 +8,7 @@ const service = axios.create({
   baseURL:
     process.env.NODE_ENV === 'development'
       ? 'http://127.0.0.1:8000'
-      : 'https://aaaaimx-email.herokuapp.com/api',
+      : 'https://aaaimx-email.herokuapp.com/api',
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
   credentials: 'same-origin',

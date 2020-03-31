@@ -281,7 +281,7 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: `${HOST}/admin/`,
+        path: `${HOST}`,
         meta: { title: 'AAAIMX Admin', icon: 'link' }
       }
     ]

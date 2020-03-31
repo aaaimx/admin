@@ -16,6 +16,17 @@ export function fetchList (query) {
  *
  * @param {*} query Object
  */
+export function statistics () {
+  return request({
+    url: '/research/statistics/',
+    method: 'GET'
+  })
+}
+
+/**
+ *
+ * @param {*} query Object
+ */
 export function fetchAuthors (query) {
   return request({
     url: '/authors/',

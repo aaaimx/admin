@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-container">
     <component :is="currentRole" />
-    <Guide />
   </div>
 </template>
 
