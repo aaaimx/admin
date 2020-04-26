@@ -294,7 +294,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: `${HOST}/api/`,
+        path: `${HOST}/docs`,
         meta: { title: 'API Docs', icon: 'documentation' }
       }
     ]

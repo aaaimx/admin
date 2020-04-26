@@ -24,6 +24,20 @@
           :value="item.key"
         />
       </el-select>
+      <el-select
+        v-model.number="listQuery.division"
+        @change="handleFilter"
+        placeholder="Division"
+        clearable
+        class="filter-item"
+      >
+        <el-option
+          v-for="item in divisions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.name"
+        />
+      </el-select>
       <!-- <el-button
         v-waves
         class="filter-item"
