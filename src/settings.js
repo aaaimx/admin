@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Productivity',
-  logo: 'http://aaaimx.org/img/sprites/aaai-transpeps.png',
+  logo: 'https://www.aaaimx.org/img/sprites/aaai-transpeps.png',
 
   /**
    * @type {boolean} true | false

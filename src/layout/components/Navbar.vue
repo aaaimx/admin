@@ -20,7 +20,7 @@
       >
         <div class="avatar-wrapper">
           <img
-            src="https://carlisletheacarlisletheatre.org/images/admin-icon-login-7.jpg"
+            src="https://publicdomainvectors.org/photos/Linux-Avatar.png"
             class="user-avatar"
           />
           <i class="el-icon-caret-bottom" />
@@ -32,7 +32,7 @@
           <router-link to="/">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link>
-          <el-dropdown-item 
+          <el-dropdown-item
             ><span @click="guide"
               >Help Guide</span
             ></el-dropdown-item

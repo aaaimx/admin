@@ -55,7 +55,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Contributors ✒
 
-- **Raul Novelo** - _Maintenance_ - [@RaulNovelo](https://github.com/RaulNovelo)
+- **Raul Novelo** - _Maintenance_ - [@rnovec](https://github.com/rnovec)
 
 ## Credits
 

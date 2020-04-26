@@ -19,7 +19,7 @@ import router, { resetRouter } from '@/router'
 const USER = {
   roles: [],
   introduction: 'I am a super administrator',
-  avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+  avatar: 'https://publicdomainvectors.org/photos/Linux-Avatar.png',
   name: 'Super Admin'
 }
 const state = {
