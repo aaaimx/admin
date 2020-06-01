@@ -20,7 +20,7 @@
       >
         <div class="avatar-wrapper">
           <img
-            src="https://publicdomainvectors.org/photos/Linux-Avatar.png"
+            src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"
             class="user-avatar"
           />
           <i class="el-icon-caret-bottom" />

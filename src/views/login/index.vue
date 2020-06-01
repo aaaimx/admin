@@ -178,8 +178,8 @@ export default {
 </script>
 
 <style>
-.login-container { 
-  background: url('http://aaaimx.org/img/sections-background/hero.jpg') no-repeat center center fixed; 
+.login-container {
+  background: url('http://www.aaaimx.org/img/sections-background/hero.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

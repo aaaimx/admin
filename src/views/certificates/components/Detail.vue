@@ -214,7 +214,7 @@ export default {
       fetch(id)
         .then(data => {
           loading.close();
-          this.photo = this.getPhoto(data.file);
+          this.photo = data.file.replace('download', 'preview')//this.getPhoto(data.file);
           this.$store.commit("certificates/SET_CERT", data);
         })
         .catch(err => {

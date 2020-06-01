@@ -164,7 +164,7 @@
       >
         <template slot-scope="{ row }">
           <el-tag :type="row.active | statusFilter">{{
-            row.active ? "Active" : "Inactive"
+            row.active ? 'Active' : 'Inactive'
           }}</el-tag>
         </template>
       </el-table-column>
@@ -208,129 +208,132 @@
       :limit.sync="listQuery.limit"
       @pagination="getList"
     />
-    <JsonEditor v-if="json" :value="json"/>
+    <JsonEditor v-if="json" :value="json" />
   </div>
 </template>
 
 <script>
-import { fetchList, remove, updateStatus } from "@/api/member";
-import waves from "@/directive/waves"; // waves directive
-import { parseTime } from "@/utils";
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
-import JsonEditor from "@/components/JsonEditor";
-import { off } from "element-ui/lib/utils/dom";
-import { mapState } from "vuex";
-import tableMixin from "@/mixins/table-handlers";
+import { fetchList, remove, updateStatus } from '@/api/member'
+import waves from '@/directive/waves' // waves directive
+import { parseTime } from '@/utils'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import JsonEditor from '@/components/JsonEditor'
+import { off } from 'element-ui/lib/utils/dom'
+import { mapState } from 'vuex'
+import tableMixin from '@/mixins/table-handlers'
 
 const statusOptions = [
-  { key: false, display_name: "Inactive" },
-  { key: true, display_name: "Active" }
-];
+  { key: false, display_name: 'Inactive' },
+  { key: true, display_name: 'Active' }
+]
 
 export default {
-  name: "MembersTable",
+  name: 'MembersTable',
   components: { Pagination, JsonEditor },
   directives: { waves },
   filters: {
-    statusFilter(active) {
-      return active ? "success" : "danger";
+    statusFilter (active) {
+      return active ? 'success' : 'danger'
     },
-    statusRole(active) {
-      return active ? "success" : "danger";
+    statusRole (active) {
+      return active ? 'success' : 'danger'
     }
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("members", ["partners", "divisions", "roles"])
+    ...mapState('members', ['partners', 'divisions', 'roles'])
   },
-  data() {
+  data () {
     return {
       tableKey: 0,
       list: null,
       total: 0,
       listLoading: true,
       downloadLoading: false,
-      json:  null,
+      json: null,
       listQuery: {
         page: 1,
         limit: 10,
         offset: 0,
         name: undefined,
         panel: undefined,
-        active: undefined
+        active: undefined,
+        division: 'Software'
       },
       statusOptions,
       sortOptions: [
-        { label: "ID Ascending", key: "+id" },
-        { label: "ID Descending", key: "-id" }
+        { label: 'ID Ascending', key: '+id' },
+        { label: 'ID Descending', key: '-id' }
       ],
-      performAction: "",
+      performAction: '',
       showAllFields: false
-    };
+    }
   },
-  async created() {
-    if (!this.divisions.length) await this.$store.dispatch("members/fetchDivisions");
-    if (!this.partners.length) await this.$store.dispatch("members/fetchPartners");
+  async created () {
+    if (!this.divisions.length)
+      await this.$store.dispatch('members/fetchDivisions')
+    if (!this.partners.length)
+      await this.$store.dispatch('members/fetchPartners')
     this.getList()
   },
   methods: {
     // mixins
-    getInstitute(uuid) {
-      let i = this.partners.filter(el => el.uuid === uuid);
-      return i[0] ? i[0].alias : "-----";
+    getInstitute (uuid) {
+      let i = this.partners.filter(el => el.uuid === uuid)
+      return i[0] ? i[0].alias : '-----'
     },
 
-    getDiv(div) {
-      return this.divisions.filter(el => el.id === div)[0].name;
+    getDiv (div) {
+      return this.divisions.filter(el => el.id === div)[0].name
     },
 
     // methods
-    getList() {
-      this.listLoading = true;
-      let { limit, page, offset } = this.listQuery;
-      this.listQuery.offset = limit * (page - 1);
+    getList () {
+      this.listLoading = true
+      let { limit, page, offset } = this.listQuery
+      this.listQuery.offset = limit * (page - 1)
       fetchList(this.listQuery).then(res => {
-        this.list = res.results;
-        this.total = res.count;
-        this.listLoading = false;
-      });
+        this.list = res.results
+        this.total = res.count
+        this.listLoading = false
+      })
     },
-    handleDownload() {
-      this.downloadLoading = true;
+    handleDownload () {
+      this.downloadLoading = true
       this.json = this.list
-      this.downloadLoading = false;
+      this.downloadLoading = false
     },
-    handleModifyStatus(row, active) {
+    handleModifyStatus (row, active) {
       updateStatus({
         id: row.id,
         active
       }).then(
         res => {
           this.$message({
-            message: "Member status changed",
-            type: "success"
-          });
-          row.active = active;
+            message: 'Member status changed',
+            type: 'success'
+          })
+          row.active = active
         },
         err => {
           this.$message({
-            message: "Something went wrong:( Try Again!",
-            type: "error"
-          });
+            message: 'Something went wrong:( Try Again!',
+            type: 'error'
+          })
         }
-      );
+      )
     },
 
-    handleDelete(row) {
+    handleDelete (row) {
       this.$notify({
-        title: "Success",
-        message: "Delete Successfully",
-        type: "success",
+        title: 'Success',
+        message: 'Delete Successfully',
+        type: 'success',
         duration: 2000
-      });
-      const index = this.list.indexOf(row);
-      this.list.splice(index, 1);
+      })
+      const index = this.list.indexOf(row)
+      this.list.splice(index, 1)
     }
   }
-};
+}
 </script>
