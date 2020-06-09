@@ -81,7 +81,7 @@
             sortable
             prop="name"
             label="Name"
-            min-width="50px"
+            width="150"
             align="center"
           >
             <template slot-scope="{ row }">
@@ -128,13 +128,19 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="Links"
-            sortable
+            label="Preview"
             prop="QR"
-            min-width="40"
+            width="130"
             align="center"
           >
             <template v-if="scope.row.QR" slot-scope="scope">
+              <el-image
+                style="width: 100px; height: 100px"
+                :src="scope.row.file.replace('download', 'preview')"
+                :preview-src-list="[scope.row.file.replace('download', 'preview')]"
+              >
+              </el-image>
+
               <a
                 target="_blank"
                 class="link-type"
@@ -164,9 +170,8 @@
           <el-table-column
             label="Actions"
             align="center"
-            fixed="right"
-            min-width="100"
-            class-name="small-padding fixed-width"
+            min-width="100px"
+            class-name="small-padding"
           >
             <template slot-scope="{ row }">
               <el-button
@@ -218,10 +223,7 @@
           @pagination="getList"
         />
       </el-collapse-item>
-      <el-collapse-item
-        title="No event"
-        name=""
-      >
+      <el-collapse-item title="No event" name="no-event">
         <div class="filter-container">
           <el-input
             style="max-width: 300px"
@@ -293,7 +295,7 @@
             sortable
             prop="name"
             label="Name"
-            min-width="50px"
+            width="150"
             align="center"
           >
             <template slot-scope="{ row }">
@@ -343,7 +345,7 @@
             label="Links"
             sortable
             prop="QR"
-            min-width="40"
+            min-width="80"
             align="center"
           >
             <template v-if="scope.row.QR" slot-scope="scope">
@@ -376,9 +378,8 @@
           <el-table-column
             label="Actions"
             align="center"
-            fixed="right"
             min-width="100"
-            class-name="small-padding fixed-width"
+            class-name="small-padding"
           >
             <template slot-scope="{ row }">
               <el-button
@@ -485,7 +486,9 @@ export default {
   },
   methods: {
     handleChange (val) {
-      this.listQuery.event = val
+      val === 'no-event'
+        ? (this.listQuery.event = '')
+        : (this.listQuery.event = val)
       this.list = []
       this.handleFilter()
     },
