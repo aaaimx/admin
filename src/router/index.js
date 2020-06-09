@@ -188,7 +188,7 @@ export const asyncRoutes = [
     meta: {
       title: 'Partners',
       roles: ['Admin', 'Research'],
-      icon: 'international'
+      icon: 'partner'
     },
     children: [
       {
@@ -276,6 +276,17 @@ export const asyncRoutes = [
       }
     ]
   },
+
+  {
+    path: 'website-link',
+    component: Layout,
+    children: [
+      {
+        path: 'http://www.aaaimx.org',
+        meta: { title: 'www.aaaimx.org', icon: 'international' }
+      }
+    ]
+  },
   {
     path: 'admin-link',
     component: Layout,
@@ -287,6 +298,20 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: 'emails-link',
+    component: Layout,
+    meta: {
+      roles: ['Admin']
+    },
+    children: [
+      {
+        path: 'https://aaaimx-emails.herokuapp.com',
+        meta: { title: 'AAAIMX Emails', icon: 'email' }
+      }
+    ]
+  },
+
+  {
     path: 'documentation',
     component: Layout,
     meta: {
@@ -294,18 +319,9 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: `${HOST}/docs`,
+        path:
+          'https://aaaimx.postman.co/collections/4606205-b4e23490-7bf2-4b9e-870c-968df479aaad',
         meta: { title: 'API Docs', icon: 'documentation' }
-      }
-    ]
-  },
-  {
-    path: 'website-link',
-    component: Layout,
-    children: [
-      {
-        path: 'http://www.aaaimx.org',
-        meta: { title: 'www.aaaimx.org', icon: 'link' }
       }
     ]
   },

@@ -7,6 +7,13 @@ export function fetchListC () {
   })
 }
 
+export function fetchEvents () {
+  return request({
+    url: '/events/',
+    method: 'GET'
+  })
+}
+
 /**
  *
  * @param {*} query Object

@@ -73,16 +73,6 @@
                       type="text"
                     />
                   </el-form-item>
-                  <el-form-item prop="description">
-                    <el-input
-                      v-model="postForm.description"
-                      type="textarea"
-                      :rows="5"
-                      placeholder="Description"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12" :xs="24">
                   <el-form-item
                     label="Type:"
                     prop="type"
@@ -104,6 +94,35 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
+                <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Event:"
+                    prop="event"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-select
+                      v-model="postForm.event"
+                      filterable
+                      placeholder="Select event"
+                    >
+                      <el-option
+                        v-for="item in $store.getters.events"
+                        :key="item.title"
+                        :label="item.title"
+                        :value="item.title"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="description">
+                    <el-input
+                      v-model="postForm.description"
+                      type="textarea"
+                      :rows="5"
+                      placeholder="Description"
+                    />
+                  </el-form-item>
+                </el-col>
                 <el-col v-show="isEdit" :span="12" :xs="24">
                   <el-form-item
                     v-show="postForm.file"
@@ -119,8 +138,14 @@
                     prop="file"
                     class="postInfo-container-item"
                   >
-                    <input type="file" accept="image/png, image/jpeg" id="file" ref="file" />
+                    <input
+                      type="file"
+                      accept="image/png, image/jpeg"
+                      id="file"
+                      ref="file"
+                    />
                   </el-form-item>
+
                   <!-- <el-upload
                       class="upload-demo"
                       ref="file"
@@ -155,115 +180,115 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/certificate";
-import { getDrivePhoto } from "@/utils/google-drive";
-import rules from "./validators";
-import formsMixin from "@/mixins/forms";
-import clipMixin from "@/mixins/clipboard";
-import certsMixin from "@/mixins/certificates";
+import { mapState } from 'vuex'
+import { fetch, create, update } from '@/api/certificate'
+import { getDrivePhoto } from '@/utils/google-drive'
+import rules from './validators'
+import formsMixin from '@/mixins/forms'
+import clipMixin from '@/mixins/clipboard'
+import certsMixin from '@/mixins/certificates'
 
 const defaultForm = {
-  type: "RECOGNITION",
-  description: "",
+  type: 'RECOGNITION',
+  description: '',
   published: false,
-  to: "",
-  QR: "",
-  file: ""
-};
+  to: '',
+  QR: '',
+  file: ''
+}
 export default {
-  name: "CertificateDetail",
+  name: 'CertificateDetail',
   mixins: [formsMixin, certsMixin, clipMixin],
   components: {
-    Status: () => import("@/components/Dropdown/Status"),
-    QR: () => import("@/components/Dropdown/BannerUrl"),
-    Upload: () => import("@/components/Upload/CertPreview"),
-    MDinput: () => import("@/components/MDinput"),
-    Sticky: () => import("@/components/Sticky")
+    Status: () => import('@/components/Dropdown/Status'),
+    QR: () => import('@/components/Dropdown/BannerUrl'),
+    Upload: () => import('@/components/Upload/CertPreview'),
+    MDinput: () => import('@/components/MDinput'),
+    Sticky: () => import('@/components/Sticky')
   },
-  data() {
+  data () {
     return {
       loading: false,
       rules,
       tempRoute: {},
-      photo: "",
+      photo: '',
       id: null
-    };
+    }
   },
   computed: {
-    ...mapState("certificates", ["postForm", "types"])
+    ...mapState('certificates', ['postForm', 'types'])
   },
-  created() {
+  created () {
     if (this.isEdit) {
-      this.id = this.$route.params && this.$route.params.id;
-      this.fetchData(this.id);
+      this.id = this.$route.params && this.$route.params.id
+      this.fetchData(this.id)
     } else {
-      this.$store.commit("certificates/SET_CERT", defaultForm);
+      this.$store.commit('certificates/SET_CERT', defaultForm)
     }
-    this.tempRoute = Object.assign({}, this.$route);
+    this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
-    submitUpload(file) {
-      this.$refs.upload.submit();
+    submitUpload (file) {
+      this.$refs.upload.submit()
     },
-    getPhoto(photo) {
-      return getDrivePhoto(photo);
+    getPhoto (photo) {
+      return getDrivePhoto(photo)
     },
-    fetchData(id) {
-      let loading = this.loadingFullPage();
+    fetchData (id) {
+      let loading = this.loadingFullPage()
       fetch(id)
         .then(data => {
-          loading.close();
-          this.photo = data.file.replace('download', 'preview')//this.getPhoto(data.file);
-          this.$store.commit("certificates/SET_CERT", data);
+          loading.close()
+          this.photo = data.file.replace('download', 'preview') //this.getPhoto(data.file);
+          this.$store.commit('certificates/SET_CERT', data)
         })
         .catch(err => {
-          loading.close();
-          console.log(err);
-        });
+          loading.close()
+          console.log(err)
+        })
     },
-    submitForm() {
+    submitForm () {
       this.$refs.postForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          let request;
-          var form_data = new FormData();
+          this.loading = true
+          let request
+          var form_data = new FormData()
           if (this.$refs.file.files.length)
-            form_data.append("file", this.$refs.file.files[0]);
-          else delete this.postForm.file;
+            form_data.append('file', this.$refs.file.files[0])
+          else delete this.postForm.file
           for (var key in this.postForm) {
-            form_data.append(key, this.postForm[key]);
+            form_data.append(key, this.postForm[key])
           }
           console.log(form_data)
-          if (this.isEdit) request = update(this.id, form_data);
-          else request = create(form_data);
+          if (this.isEdit) request = update(this.id, form_data)
+          else request = create(form_data)
 
           request
             .then(response => {
               this.handleSave(
                 `${this.namespace} <b>${this.postForm.type}: ${this.postForm.to}</b> was sucessfully saved`
-              );
-              this.loading = false;
-              if (this.isEdit) this.fetchData(this.id);
-              else this.photo = this.getPhoto(response.file);
-              this.$refs.file.value = "";
-              this.$router.push("/certificates/" + response.uuid);
+              )
+              this.loading = false
+              if (this.isEdit) this.fetchData(this.id)
+              else this.photo = this.getPhoto(response.file)
+              this.$refs.file.value = ''
+              this.$router.push('/certificates/' + response.uuid)
             })
             .catch(error => {
-              this.loading = false;
-              console.log(error);
-              this.handleError();
-            });
+              this.loading = false
+              console.log(error)
+              this.handleError()
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
-    deleteCert() {
-      this.handleDelete();
-      this.postForm.active = false;
+    deleteCert () {
+      this.handleDelete()
+      this.postForm.active = false
     }
   }
-};
+}
 </script>

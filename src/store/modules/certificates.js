@@ -1,7 +1,8 @@
-import { fetchListC } from '@/api/certificate'
+import { fetchEvents } from '@/api/certificate'
 
 const state = {
   certs: [],
+  events: [],
   types: ['RECOGNITION', 'APPRECIATION', 'PARTICIPATION'],
   postForm: {
     type: '',
@@ -17,17 +18,17 @@ const mutations = {
   SET_CERT: (state, cert) => {
     state.postForm = Object.assign({}, cert)
   },
-  SET_CERTS: (state, certs) => {
-    state.certs = certs
+  SET_EVENTS: (state, events) => {
+    state.events = events
   }
 }
 
 const actions = {
-  fetchCerts ({ commit }) {
+  fetchEvents ({ commit }) {
     return new Promise((resolve, reject) => {
-      fetchListC()
+      fetchEvents()
         .then(data => {
-          commit('SET_CERTS', data.results)
+          commit('SET_EVENTS', data.results)
           resolve()
         })
         .catch(err => {

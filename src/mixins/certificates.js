@@ -1,4 +1,3 @@
-import { getDrivePhoto } from '@/utils/google-drive'
 import { sendEmail } from '@/api/email'
 
 const certsMixin = {
@@ -12,6 +11,7 @@ const certsMixin = {
         inputErrorMessage: 'Invalid Email'
       })
         .then(({ value }) => {
+          row.sending = true
           sendEmail({
             subject: 'CERTIFICATE OF ' + row.type,
             message: `CERTIFICATE OF ${row.type}: ${row.to}`,
@@ -19,13 +19,14 @@ const certsMixin = {
             context: {
               ...row,
               email: value,
-              thumbnail: getDrivePhoto(row.file)
+              thumbnail: row.file.replace('download', 'preview')
             },
             recipients: [value],
             template: 'CERTIFICATE'
           }).then(
             res => {
               console.log(res)
+              row.sending = false
               this.$notify({
                 title: 'Success',
                 message: 'Certificate send',
@@ -39,6 +40,7 @@ const certsMixin = {
           )
         })
         .catch(() => {
+          row.sending = false
           this.$message({
             type: 'info',
             message: 'Email canceled'
