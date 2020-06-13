@@ -257,7 +257,8 @@ export default {
         offset: 0,
         name: undefined,
         panel: undefined,
-        active: undefined
+        active: undefined,
+        order: null
       },
       statusOptions,
       sortOptions: [

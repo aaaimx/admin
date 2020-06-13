@@ -54,13 +54,13 @@
         @click="handleCreateOrUpdate('/projects/create')"
         >Create</el-button
       >
-      <el-checkbox
+      <!-- <el-checkbox
         v-model="showAllFields"
         class="filter-item"
         style="margin-left:15px;"
         @change="tableKey = tableKey + 1"
         >All fields</el-checkbox
-      >
+      > -->
     </div>
 
     <el-table
@@ -119,14 +119,11 @@
       </el-table-column>
       <el-table-column sortable label="Vigency" align="center" min-width="200">
         <template slot-scope="{ row }">
-          <span class="link-type"
-            >{{ row.start.replace(/-/g, '/') }} -
-            {{ row.end.replace(/-/g, '/') }}</span
-          >
+          <span class="link-type">{{ row.start | longDate }}</span> al
+          <span class="link-type">{{ row.end | longDate }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        v-if="showAllFields"
         label="Áreas de interés"
         sortable
         prop="lines"

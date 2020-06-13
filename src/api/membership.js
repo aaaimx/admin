@@ -61,7 +61,7 @@ export function update (id, data) {
  * @param {*} id String
  * @param {*} data Object
  */
-export function publishCert (id, status) {
+export function updateStatus (id, status) {
   return request({
     url: `/memberships/${id}/`,
     method: 'PATCH',
@@ -75,10 +75,9 @@ export function publishCert (id, status) {
  *
  * @param {*} id String
  */
-export function remove (data) {
+export function remove (id) {
   return request({
     url: `/memberships/${id}/`,
-    method: 'DELETE',
-    data
+    method: 'DELETE'
   })
 }

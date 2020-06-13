@@ -1,11 +1,14 @@
+import { validateRequired } from '@/utils/rules'
+
 export default {
   display_name: [
     {
       required: true,
-      message: 'Please enter facilitator',
+      message: 'Please enter full name',
       trigger: 'blur'
     }
   ],
+  type: [validateRequired],
   exp: [
     {
       required: true,

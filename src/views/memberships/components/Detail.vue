@@ -13,7 +13,7 @@
           :labels="['Published', 'Draft']"
           v-model="postForm.published"
         /> -->
-        <QR v-model="postForm.QR" label="QR" />
+        <QR v-model="postForm.QR" v-show="isEdit" label="QR" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -21,11 +21,7 @@
           @click="submitForm"
           v-text="isEdit ? 'Save changes' : 'Save'"
         ></el-button>
-        <el-button
-          v-loading="loading"
-          v-show="isEdit"
-          type="danger"
-          @click="deleteCert"
+        <el-button v-loading="loading" type="danger" @click="deleteMembership"
           >Delete {{ namespace }}</el-button
         >
       </sticky>
@@ -35,7 +31,6 @@
           <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
-                
                 <el-col :span="12" :xs="24">
                   <el-form-item
                     label="Name:"
@@ -64,25 +59,46 @@
                   </el-form-item>
 
                   <el-form-item
-                    v-show="postForm.file"
+                    v-show="postForm.avatar"
                     label="Currently:"
                     class="postInfo-container-item"
                   >
-                    <a target="_blank" class="link-type" :href="postForm.file"
+                    <a target="_blank" class="link-type" :href="postForm.avatar"
                       ><svg-icon icon-class="link"
                     /></a>
                   </el-form-item>
                   <el-form-item
-                    label="Change File:"
-                    prop="file"
+                    label="Upload photo:"
+                    prop="avatar"
                     class="postInfo-container-item"
                   >
-                    <input type="file" id="file" ref="file" />
+                    <input type="file" id="avatar" ref="avatar" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12" :xs="24">
+                  <el-form-item
+                    label="Type:"
+                    prop="type"
+                    class="postInfo-container-item"
+                  >
+                    <br />
+                    <el-select
+                      v-model="postForm.type"
+                      filterable
+                      allow-create
+                      @change="updateExp"
+                      placeholder="Select type"
+                    >
+                      <el-option
+                        v-for="item in ['Anual', 'Semestral']"
+                        :key="item"
+                        :label="item"
+                        :value="item"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
                 </el-col>
-                <el-col :span="12" :xs="24">
+                <el-col v-show="isEdit" :span="12" :xs="24">
                   <Upload v-model="photo" />
                 </el-col>
               </el-row>
@@ -95,119 +111,115 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/membership";
-import rules from "./validators";
-import moment from "moment";
-import formsMixin from "@/mixins/forms";
+import { mapState } from 'vuex'
+import { fetch, create, update } from '@/api/membership'
+import rules from './validators'
+import moment from 'moment'
+import formsMixin from '@/mixins/forms'
 
 const defaultForm = {
-  display_name: "",
-  QR: "",
-  exp: moment().add(6, 'M').format(),
-  file: null,
+  display_name: '',
+  QR: '',
+  exp: moment().format(),
+  type: '',
+  avatar: null,
   member: null
-};
+}
 export default {
-  name: "MembershipDetail",
+  name: 'MembershipDetail',
   mixins: [formsMixin],
   components: {
-    Status: () => import("@/components/Dropdown/Status"),
-    QR: () => import("@/components/Dropdown/BannerUrl"),
-    Upload: () => import("@/components/Upload/CertPreview"),
-    MDinput: () => import("@/components/MDinput"),
-    Sticky: () => import("@/components/Sticky")
+    Status: () => import('@/components/Dropdown/Status'),
+    QR: () => import('@/components/Dropdown/BannerUrl'),
+    Upload: () => import('@/components/Upload/CertPreview'),
+    MDinput: () => import('@/components/MDinput'),
+    Sticky: () => import('@/components/Sticky')
   },
-  data() {
+  data () {
     return {
       loading: false,
       rules,
       tempRoute: {},
-      photo: "membership.jpg",
+      photo: 'membership.jpg',
       id: null
-    };
+    }
   },
   computed: {
-    ...mapState("memberships", ["postForm"])
+    ...mapState('memberships', ['postForm'])
   },
-  created() {
+  created () {
     if (this.isEdit) {
-      this.id = this.$route.params && this.$route.params.id;
-      this.fetchData(this.id);
+      this.id = this.$route.params && this.$route.params.id
+      this.fetchData(this.id)
     } else {
-      this.$store.commit("memberships/SET_MEMBERSHIP", defaultForm);
+      this.$store.commit('memberships/SET_MEMBERSHIP', defaultForm)
     }
-    this.tempRoute = Object.assign({}, this.$route);
+    this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
-    submitUpload(file) {
-      this.$refs.upload.submit();
+    submitUpload (avatar) {
+      this.$refs.upload.submit()
     },
-    getPhoto(photo) {
-      try {
-        var res = photo.split("https://drive.google.com/file/d/");
-        res = res[1];
-        res = res.split("/view?usp=drivesdk");
-        return "https://drive.google.com/uc?id=" + res[0];
-      } catch (error) {
-        return "";
-      }
+    updateExp () {
+      this.postForm.type === 'Anual'
+        ? (this.postForm.exp = moment().add(12, 'M').format())
+        : (this.postForm.exp = moment().add(6, 'M').format())
     },
-    fetchData(id) {
-      let loading = this.loadingFullPage();
+    fetchData (id) {
+      let loading = this.loadingFullPage()
       fetch(id)
         .then(data => {
-          loading.close();
-          this.photo = this.getPhoto(data.file);
-          this.$store.commit("memberships/SET_MEMBERSHIP", data);
+          loading.close()
+          // this.photo = this.getPhoto(data.avatar);
+          this.$store.commit('memberships/SET_MEMBERSHIP', data)
         })
         .catch(err => {
-          loading.close();
-          console.log(err);
-        });
+          loading.close()
+          console.log(err)
+        })
     },
-    submitForm() {
+    submitForm () {
       this.$refs.postForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          let request;
-          var form_data = new FormData();
-          if (this.$refs.file.files.length)
-            form_data.append("file", this.$refs.file.files[0]);
-          else delete this.postForm.file;
-          delete this.postForm.member;
+          this.loading = true
+          let request
+          var form_data = new FormData()
+          if (this.$refs.avatar.files.length)
+            form_data.append('avatar', this.$refs.avatar.files[0])
+          else delete this.postForm.avatar
+          delete this.postForm.member
           for (var key in this.postForm) {
-            form_data.append(key, this.postForm[key]);
+            form_data.append(key, this.postForm[key])
           }
-          if (this.isEdit) request = update(this.id, form_data);
-          else request = create(form_data);
+          if (this.isEdit) request = update(this.id, form_data)
+          else request = create(form_data)
 
           request
             .then(response => {
               this.handleSave(
                 `${this.namespace} <b>${this.postForm.display_name}</b> was sucessfully saved`
-              );
-              this.loading = false;
-              if (this.isEdit) this.fetchData(this.id);
-              else this.photo = this.getPhoto(response.file);
-              this.$refs.file.value = "";
-              this.$router.push("/memberships/" + response.uuid);
+              )
+              this.loading = false
+              if (this.isEdit) this.fetchData(this.id)
+              else this.photo = this.getPhoto(response.avatar)
+              this.$refs.avatar.value = ''
+              this.$router.push('/memberships/' + response.uuid)
             })
             .catch(error => {
-              this.loading = false;
-              console.log(error);
-              this.handleError();
-            });
+              this.loading = false
+              console.log(error)
+              this.handleError()
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
-    deleteCert() {
-      this.handleDelete();
-      this.postForm.active = false;
+    deleteMembership () {
+      this.handleDelete()
+      this.postForm.active = false
     }
   }
-};
+}
 </script>
