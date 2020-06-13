@@ -85,27 +85,29 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/members',
+    path: '/research',
     component: Layout,
-    redirect: '/members/list',
-    name: 'Members',
+    redirect: '/research/list',
+    name: 'Research',
     meta: {
-      title: 'Members',
-      roles: ['Admin', 'Research', 'Members'],
-      icon: 'people'
+      title: 'Research',
+      roles: ['Admin', 'Research'],
+      icon: 'education'
     },
     children: [
+      // Members Routes
       {
         path: '/members/list',
         component: () => import('@/views/members/list'),
         name: 'MembersList',
-        meta: { title: 'Member list', icon: 'list' }
+        meta: { title: 'Members', icon: 'people' }
       },
       {
         path: '/members/create',
         component: () => import('@/views/members/create'),
         name: 'CreateMember',
-        meta: { title: 'Create member', icon: 'edit' }
+        meta: { title: 'Create member', icon: 'edit' },
+        hidden: true
       },
       {
         path: '/members/:id',
@@ -113,25 +115,91 @@ export const asyncRoutes = [
         name: 'EditMember',
         meta: { title: 'Edit member', activeMenu: '/members/:id' },
         hidden: true
+      },
+
+      // Partner routes
+      {
+        path: '/partners/list',
+        component: () => import('@/views/partners/list'),
+        name: 'PartnersList',
+        meta: { title: 'Partners', icon: 'international' }
+      },
+      {
+        path: '/partners/create',
+        component: () => import('@/views/partners/create'),
+        name: 'CreatePartner',
+        meta: { title: 'Create Partner', icon: 'edit' },
+        hidden: true
+      },
+      {
+        path: '/partners/:id',
+        component: () => import('@/views/partners/edit'),
+        name: 'EditPartner',
+        meta: { title: 'Edit Partner', activeMenu: '/partners/:id' },
+        hidden: true
+      },
+
+      // Research Routes
+      {
+        path: '/research/list',
+        component: () => import('@/views/research/list'),
+        name: 'ResearchList',
+        meta: { title: 'Research', icon: 'tree-table' }
+      },
+      {
+        path: '/research/create',
+        component: () => import('@/views/research/create'),
+        name: 'CreateResearch',
+        meta: { title: 'Create research', icon: 'edit' },
+        hidden: true
+      },
+      {
+        path: '/research/:id',
+        component: () => import('@/views/research/edit'),
+        name: 'EditResearch',
+        meta: { title: 'Edit research', activeMenu: '/research/:id' },
+        hidden: true
+      },
+
+      // Project routes
+      {
+        path: '/projects/list',
+        component: () => import('@/views/projects/list'),
+        name: 'ProjectsList',
+        meta: { title: 'Projects', icon: 'tree' }
+      },
+      {
+        path: '/projects/create',
+        component: () => import('@/views/projects/create'),
+        name: 'CreateProject',
+        meta: { title: 'Create project', icon: 'edit' },
+        hidden: true
+      },
+      {
+        path: '/projects/:id',
+        component: () => import('@/views/projects/edit'),
+        name: 'EditProject',
+        meta: { title: 'Edit project', activeMenu: '/projects/:id' },
+        hidden: true
       }
     ]
   },
   {
-    path: '/certificates',
+    path: '/logistic',
     component: Layout,
     redirect: '/certificates/list',
-    name: 'Certificates',
+    name: 'Logistic',
     meta: {
-      title: 'Certificates',
-      roles: ['Admin', 'Certificates'],
-      icon: 'medal'
+      title: 'Logistic',
+      roles: ['Admin', 'Logistic'],
+      icon: 'component'
     },
     children: [
       {
         path: '/certificates/list',
         component: () => import('@/views/certificates/list'),
         name: 'CertificatesList',
-        meta: { title: 'Certificate list', icon: 'list' }
+        meta: { title: 'Certificates', icon: 'medal' }
       },
       {
         path: '/certificates/create',
@@ -149,21 +217,21 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/memberships',
+    path: '/finances',
     component: Layout,
     redirect: '/memberships/list',
-    name: 'Memberships',
+    name: 'Finances',
     meta: {
-      title: 'Memberships',
-      roles: ['Admin', 'Memberships'],
-      icon: 'membership'
+      title: 'Finances',
+      roles: ['Admin', 'Finances'],
+      icon: 'chart'
     },
     children: [
       {
         path: '/memberships/list',
         component: () => import('@/views/memberships/list'),
         name: 'MembershipsList',
-        meta: { title: 'Membership list', icon: 'list' }
+        meta: { title: 'Memberships', icon: 'membership' }
       },
       {
         path: '/memberships/create',
@@ -176,102 +244,6 @@ export const asyncRoutes = [
         component: () => import('@/views/memberships/edit'),
         name: 'EditMembership',
         meta: { title: 'Edit Membership', activeMenu: '/memberships/:id' },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/partners',
-    component: Layout,
-    redirect: '/partners/list',
-    name: 'Partners',
-    meta: {
-      title: 'Partners',
-      roles: ['Admin', 'Research'],
-      icon: 'partner'
-    },
-    children: [
-      {
-        path: '/partners/list',
-        component: () => import('@/views/partners/list'),
-        name: 'PartnersList',
-        meta: { title: 'Partner list', icon: 'list' }
-      },
-      {
-        path: '/partners/create',
-        component: () => import('@/views/partners/create'),
-        name: 'CreatePartner',
-        meta: { title: 'Create Partner', icon: 'edit' }
-      },
-      {
-        path: '/partners/:id',
-        component: () => import('@/views/partners/edit'),
-        name: 'EditPartner',
-        meta: { title: 'Edit Partner', activeMenu: '/partners/:id' },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/projects',
-    component: Layout,
-    redirect: '/projects/list',
-    name: 'Projects',
-    meta: {
-      title: 'Projects',
-      roles: ['Admin', 'Research'],
-      icon: 'tree'
-    },
-    children: [
-      {
-        path: '/projects/list',
-        component: () => import('@/views/projects/list'),
-        name: 'ProjectsList',
-        meta: { title: 'Project list', icon: 'list' }
-      },
-      {
-        path: '/projects/create',
-        component: () => import('@/views/projects/create'),
-        name: 'CreateProject',
-        meta: { title: 'Create project', icon: 'edit' }
-      },
-      {
-        path: '/projects/:id',
-        component: () => import('@/views/projects/edit'),
-        name: 'EditProject',
-        meta: { title: 'Edit project', activeMenu: '/projects/:id' },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/research',
-    component: Layout,
-    redirect: '/research/list',
-    name: 'Research',
-    meta: {
-      title: 'Research',
-      roles: ['Admin', 'Research'],
-      icon: 'education'
-    },
-    children: [
-      {
-        path: '/research/list',
-        component: () => import('@/views/research/list'),
-        name: 'ResearchList',
-        meta: { title: 'Research list', icon: 'list' }
-      },
-      {
-        path: '/research/create',
-        component: () => import('@/views/research/create'),
-        name: 'CreateResearch',
-        meta: { title: 'Create research', icon: 'edit' }
-      },
-      {
-        path: '/research/:id',
-        component: () => import('@/views/research/edit'),
-        name: 'EditResearch',
-        meta: { title: 'Edit research', activeMenu: '/research/:id' },
         hidden: true
       }
     ]
