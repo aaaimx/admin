@@ -12,6 +12,8 @@ const getters = {
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs,
   steps: state => state.app.steps,
-  events: state => state.certificates.events
+  events: state => state.certificates.events,
+  lines: state => state.projects.lines,
+  partners: state => state.members.partners.filter(p => p.type === 'Research Center' || p.type === 'Partner')
 }
 export default getters

@@ -34,6 +34,21 @@
           :value="val"
         />
       </el-select>
+      <el-select
+        v-model.number="listQuery.line"
+        @change="handleFilter"
+        placeholder="By Research Line"
+        clearable
+        class="filter-item"
+      >
+        <el-option
+          v-for="line in $store.getters.lines"
+          :key="line.id"
+          :label="line.topic"
+          :value="line.id"
+        />
+      </el-select>
+
       <!-- <el-button
         v-waves
         class="filter-item"
@@ -141,7 +156,6 @@
         label="Research lines"
         sortable
         prop="lines"
-        v-if="showAllFields"
         class-name="status-col"
         width="200"
       >
@@ -205,29 +219,29 @@
 </template>
 
 <script>
-import { fetchList, remove } from "@/api/research";
-import waves from "@/directive/waves"; // waves directive
-import { parseTime } from "@/utils";
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
-import { off } from "element-ui/lib/utils/dom";
-import { mapState } from "vuex";
-import tableMixin from "@/mixins/table-handlers";
-import authorsMixin from "@/mixins/authors";
+import { fetchList, remove } from '@/api/research'
+import waves from '@/directive/waves' // waves directive
+import { parseTime } from '@/utils'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { off } from 'element-ui/lib/utils/dom'
+import { mapState } from 'vuex'
+import tableMixin from '@/mixins/table-handlers'
+import authorsMixin from '@/mixins/authors'
 export default {
-  name: "ResearchTable",
+  name: 'ResearchTable',
   components: { Pagination },
   directives: { waves },
   filters: {
-    statusFilter(active) {
-      return active ? "success" : "danger";
+    statusFilter (active) {
+      return active ? 'success' : 'danger'
     }
   },
   mixins: [tableMixin, authorsMixin],
   computed: {
-    ...mapState("projects", ["lines"]),
-    ...mapState("members", ["partners", "divisions", "collaborators", "roles"])
+    ...mapState('projects', ['lines']),
+    ...mapState('members', ['partners', 'divisions', 'collaborators', 'roles'])
   },
-  data() {
+  data () {
     return {
       tableKey: 0,
       list: null,
@@ -241,80 +255,80 @@ export default {
         type: undefined
       },
       typeOptions: {
-        Thesis: "success",
-        Article: "info",
-        Presentation: "secondary"
+        Thesis: 'success',
+        Article: 'info',
+        Presentation: 'secondary'
       },
       sortOptions: [
-        { label: "ID Ascending", key: "+id" },
-        { label: "ID Descending", key: "-id" }
+        { label: 'ID Ascending', key: '+id' },
+        { label: 'ID Descending', key: '-id' }
       ],
-      performAction: "",
+      performAction: '',
       showAllFields: false
-    };
+    }
   },
-  async created() {
-    if (!this.lines.length) await this.$store.dispatch("projects/fetchLines");
-    this.getList();
+  async created () {
+    if (!this.lines.length) await this.$store.dispatch('projects/fetchLines')
+    this.getList()
   },
   methods: {
     // mixins
-    getInstitute(uuid) {
-      let i = this.partners.filter(el => el.uuid === uuid);
-      return i[0] ? i[0].name : "-----";
+    getInstitute (uuid) {
+      let i = this.partners.filter(el => el.uuid === uuid)
+      return i[0] ? i[0].name : '-----'
     },
 
-    getLine(line) {
-      return this.lines.filter(el => el.id === line)[0].topic;
+    getLine (line) {
+      return this.lines.filter(el => el.id === line)[0].topic
     },
 
-    getColName(colId) {
-      return this.collaborators.filter(el => el.id === colId)[0];
+    getColName (colId) {
+      return this.collaborators.filter(el => el.id === colId)[0]
     },
 
     // methods
-    getList() {
-      this.listLoading = true;
-      let { limit, page, offset } = this.listQuery;
-      this.listQuery.offset = limit * (page - 1);
+    getList () {
+      this.listLoading = true
+      let { limit, page, offset } = this.listQuery
+      this.listQuery.offset = limit * (page - 1)
       fetchList(this.listQuery).then(res => {
-        console.log(res);
-        this.list = res.results;
-        this.total = res.count;
-        this.listLoading = false;
-      });
+        console.log(res)
+        this.list = res.results
+        this.total = res.count
+        this.listLoading = false
+      })
     },
-    handleModifyStatus(row, active) {
-      ({
+    handleModifyStatus (row, active) {
+      ;({
         id: row.id,
         active
       }.then(
         res => {
           this.$message({
-            message: "Course status changed",
-            type: "success"
-          });
-          row.active = active;
+            message: 'Course status changed',
+            type: 'success'
+          })
+          row.active = active
         },
         err => {
           this.$message({
-            message: "Something went wrong:( Try Again!",
-            type: "error"
-          });
+            message: 'Something went wrong:( Try Again!',
+            type: 'error'
+          })
         }
-      ));
+      ))
     },
 
-    handleDelete(row) {
+    handleDelete (row) {
       this.$notify({
-        title: "Success",
-        message: "Delete Successfully",
-        type: "success",
+        title: 'Success',
+        message: 'Delete Successfully',
+        type: 'success',
         duration: 2000
-      });
-      const index = this.list.indexOf(row);
-      this.list.splice(index, 1);
+      })
+      const index = this.list.indexOf(row)
+      this.list.splice(index, 1)
     }
   }
-};
+}
 </script>

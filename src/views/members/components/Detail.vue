@@ -121,7 +121,7 @@
                   </el-form-item>
                 </el-col> -->
 
-                <el-col :span="24" :xs="24">
+                <el-col :span="24" :lg="12">
                   <el-form-item
                     label="Role / Charge:"
                     prop="charge"
@@ -143,7 +143,7 @@
                   </el-form-item>
                 </el-col>
 
-                <el-col :span="8" :xs="24">
+                <el-col :span="8" :lg="12">
                   <el-form-item
                     label="Divisions:"
                     prop="divisions"
