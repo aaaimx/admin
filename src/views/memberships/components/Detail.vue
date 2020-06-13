@@ -31,6 +31,17 @@
           <el-col :span="24">
             <div class="postInfo-container">
               <el-row>
+                <el-col v-if="isEdit" :span="8" :lg="7" :xs="24">
+                  <el-image
+                    style="padding: 10%"
+                    :src="postForm.file.replace('download', 'preview')"
+                    :preview-src-list="[
+                      postForm.file.replace('download', 'preview')
+                    ]"
+                  >
+                  </el-image>
+                </el-col>
+
                 <el-col :span="12" :xs="24">
                   <el-form-item
                     label="Name:"
@@ -56,16 +67,6 @@
                       type="date"
                       placeholder="Pick a day"
                     ></el-date-picker>
-                  </el-form-item>
-
-                  <el-form-item
-                    v-show="postForm.avatar"
-                    label="Currently:"
-                    class="postInfo-container-item"
-                  >
-                    <a target="_blank" class="link-type" :href="postForm.avatar"
-                      ><svg-icon icon-class="link"
-                    /></a>
                   </el-form-item>
                   <el-form-item
                     label="Upload photo:"
@@ -97,9 +98,6 @@
                       ></el-option>
                     </el-select>
                   </el-form-item>
-                </el-col>
-                <el-col v-show="isEdit" :span="12" :xs="24">
-                  <Upload v-model="photo" />
                 </el-col>
               </el-row>
             </div>
@@ -140,7 +138,7 @@ export default {
       loading: false,
       rules,
       tempRoute: {},
-      photo: 'membership.jpg',
+      photo: '',
       id: null
     }
   },
@@ -162,15 +160,18 @@ export default {
     },
     updateExp () {
       this.postForm.type === 'Anual'
-        ? (this.postForm.exp = moment().add(12, 'M').format())
-        : (this.postForm.exp = moment().add(6, 'M').format())
+        ? (this.postForm.exp = moment()
+            .add(12, 'M')
+            .format())
+        : (this.postForm.exp = moment()
+            .add(6, 'M')
+            .format())
     },
     fetchData (id) {
       let loading = this.loadingFullPage()
       fetch(id)
         .then(data => {
           loading.close()
-          // this.photo = this.getPhoto(data.avatar);
           this.$store.commit('memberships/SET_MEMBERSHIP', data)
         })
         .catch(err => {
@@ -182,15 +183,23 @@ export default {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          let request
+          this.postForm.exp = moment(this.postForm.exp).format()
+
           var form_data = new FormData()
-          if (this.$refs.avatar.files.length)
-            form_data.append('avatar', this.$refs.avatar.files[0])
-          else delete this.postForm.avatar
-          delete this.postForm.member
-          for (var key in this.postForm) {
+          var data = this.postForm
+
+          delete data.member
+          delete data.file
+          delete data.avatar
+
+          for (var key in data) {
             form_data.append(key, this.postForm[key])
           }
+
+          form_data.append('avatar', this.$refs.avatar.files[0])
+
+          console.log(data)
+          let request
           if (this.isEdit) request = update(this.id, form_data)
           else request = create(form_data)
 
@@ -201,8 +210,6 @@ export default {
               )
               this.loading = false
               if (this.isEdit) this.fetchData(this.id)
-              else this.photo = this.getPhoto(response.avatar)
-              this.$refs.avatar.value = ''
               this.$router.push('/memberships/' + response.uuid)
             })
             .catch(error => {

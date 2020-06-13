@@ -127,17 +127,14 @@
               <span>{{ row.description.slice(0, 80) }}...</span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="Preview"
-            prop="QR"
-            width="130"
-            align="center"
-          >
+          <el-table-column label="Preview" prop="QR" width="130" align="center">
             <template v-if="scope.row.QR" slot-scope="scope">
               <el-image
                 style="width: 100px; height: 100px"
                 :src="scope.row.file.replace('download', 'preview')"
-                :preview-src-list="[scope.row.file.replace('download', 'preview')]"
+                :preview-src-list="[
+                  scope.row.file.replace('download', 'preview')
+                ]"
               >
               </el-image>
 

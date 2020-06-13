@@ -91,7 +91,7 @@
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.to }}</span>
+          <span>{{ scope.row.member }}</span>
         </template>
       </el-table-column>
 
@@ -107,45 +107,39 @@
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="Description"
-        sortable
-        prop="active"
-        class-name="status-col"
-        width="300"
-      >
-        <template slot-scope="{ row }">
-          <span>{{ row.description }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="QR"
-        sortable
-        prop="QR"
-        min-width="25"
-        align="center"
-      >
+      <el-table-column label="Preview" prop="QR" width="100" align="center">
         <template v-if="scope.row.QR" slot-scope="scope">
+          <el-image
+            style="width: 80px; height: 100px"
+            :src="scope.row.file.replace('download', 'preview')"
+            :preview-src-list="[scope.row.file.replace('download', 'preview')]"
+          >
+          </el-image>
+
           <a target="_blank" class="link-type" :href="checkUrl(scope.row.QR)"
             ><svg-icon icon-class="link"
           /></a>
+          &nbsp;
+          <a target="_blank" class="link-type" :href="scope.row.file"
+            ><svg-icon icon-class="download"
+          /></a>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="Status"
+        sortable
+        prop="exp"
+        class-name="status-col"
+        width="150"
+      >
+        <template slot-scope="{ row }">
+          <el-tag :type="checkExp(row.exp)">{{
+            row.exp | statusFilter
+          }}</el-tag>
         </template>
       </el-table-column>
 
       <el-table-column
-        label="Cert"
-        sortable
-        prop="file"
-        min-width="25"
-        align="center"
-      >
-        <template v-if="scope.row.file" slot-scope="scope">
-          <a target="_blank" class="link-type" :href="scope.row.file"
-            ><svg-icon icon-class="link"
-          /></a>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column
         label="Actions"
         align="center"
         fixed="right"
@@ -158,17 +152,17 @@
             size="small"
             type="success"
             @click="handleModifyStatus(row, true)"
-            >Published</el-button
+            >Activate</el-button
           >
           <el-button
             v-else
             size="small"
             type="danger"
             @click="handleModifyStatus(row, false)"
-            >Draft</el-button
+            >Deactivate</el-button
           >
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
@@ -191,31 +185,32 @@
 </template>
 
 <script>
-import { fetchList, remove, updateStatus } from "@/api/membership";
-import waves from "@/directive/waves"; // waves directive
-import { parseTime } from "@/utils";
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
-import { off } from "element-ui/lib/utils/dom";
-import { mapState } from "vuex";
-import tableMixin from "@/mixins/table-handlers";
+import { fetchList, remove, updateStatus } from '@/api/membership'
+import waves from '@/directive/waves' // waves directive
+import { parseTime } from '@/utils'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { off } from 'element-ui/lib/utils/dom'
+import { mapState } from 'vuex'
+import tableMixin from '@/mixins/table-handlers'
+import moment from 'moment'
 
 export default {
-  name: "CertificatesTable",
+  name: 'CertificatesTable',
   components: { Pagination },
   directives: { waves },
   filters: {
-    statusFilter(active) {
-      return active ? "success" : "danger";
+    statusFilter (date) {
+      return moment() > moment(date) ? 'Expired' : 'Valid'
     },
-    statusRole(active) {
-      return active ? "success" : "danger";
+    statusRole (active) {
+      return active ? 'success' : 'danger'
     }
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("memberships", ["types"])
+    ...mapState('memberships', ['types'])
   },
-  data() {
+  data () {
     return {
       tableKey: 0,
       list: null,
@@ -228,65 +223,69 @@ export default {
         offset: 0,
         type: undefined
       },
-      performAction: "",
+      performAction: '',
       showAllFields: false
-    };
+    }
   },
-  beforeMount() {
-    this.getList();
+  beforeMount () {
+    this.getList()
   },
   methods: {
-    checkUrl(url) {
-      if (url.indexOf("http") !== -1) return url;
-      else return "http://" + url;
+    checkUrl (url) {
+      if (url.indexOf('http') !== -1) return url
+      else return 'http://' + url
     },
+    checkExp (date) {
+      return moment() > moment(date) ? 'danger' : 'success'
+    },
+
     // methods
-    getList() {
-      this.listLoading = true;
-      let { limit, page, offset } = this.listQuery;
-      this.listQuery.offset = limit * (page - 1);
+    getList () {
+      this.listLoading = true
+      let { limit, page, offset } = this.listQuery
+      this.listQuery.offset = limit * (page - 1)
       fetchList(this.listQuery).then(res => {
-        this.list = res.results;
-        this.total = res.count;
-        this.listLoading = false;
-      });
+        this.list = res.results
+        this.total = res.count
+        this.listLoading = false
+      })
     },
-    handleDownload() {
-      this.downloadLoading = true;
-      this.json = this.list;
-      this.downloadLoading = false;
+    handleDownload () {
+      this.downloadLoading = true
+      this.json = this.list
+      this.downloadLoading = false
     },
-    handleModifyStatus(row, active) {
+    handleModifyStatus (row, active) {
       updateStatus({
         id: row.id,
         active
       }).then(
         res => {
           this.$message({
-            message: "Member status changed",
-            type: "success"
-          });
-          row.active = active;
+            message: 'Member status changed',
+            type: 'success'
+          })
+          row.active = active
         },
         err => {
           this.$message({
-            message: "Something went wrong:( Try Again!",
-            type: "error"
-          });
+            message: 'Something went wrong:( Try Again!',
+            type: 'error'
+          })
         }
-      );
+      )
     },
 
-    handleDelete(row) {
+    handleDelete (row) {
       this.$notify({
-        title: "Success",
-        message: "Delete Successfully",
-        type: "success",
+        title: 'Success',
+        message: 'Delete Successfully',
+        type: 'success',
         duration: 2000
-      });
-      const index = this.list.indexOf(row);
-      this.list.splice(index, 1);
+      })
+      const index = this.list.indexOf(row)
+      this.list.splice(index, 1)
     }
   }
-};
+}
 </script>
