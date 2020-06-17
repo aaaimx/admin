@@ -176,7 +176,6 @@ export default {
 <style lang="scss" scoped>
 .dndList {
   background: #fff;
-  padding-bottom: 40px;
   &:after {
     content: "";
     display: table;

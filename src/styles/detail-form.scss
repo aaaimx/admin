@@ -5,10 +5,10 @@
     .el-date-editor.el-input, .el-select {
       width: 100%;
     }
-    
+
     .createPost-main-container {
-      padding: 40px 45px 20px 50px;
-  
+      padding: 20px 25px 10px 25px;
+
       .postInfo-container {
         position: relative;
         @include clearfix;
@@ -17,7 +17,7 @@
         }
       }
     }
-  
+
     .word-counter {
       width: 40px;
       position: absolute;
@@ -25,7 +25,7 @@
       top: 0px;
     }
   }
-  
+
   .article-textarea /deep/ {
     textarea {
       padding-right: 40px;

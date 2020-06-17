@@ -44,16 +44,6 @@
         >Reset order</el-button
       >
     </div>
-    <!-- <div :style="{width:width2}" class="dndList-list">
-      <h3>{{ list2Title }}</h3>
-      <draggable :list="list2" group="article" class="dragArea">
-        <div v-for="element in list2" :key="element.id" class="list-complete-item">
-          <div class="list-complete-item-handle2" @click="pushEle(element)">
-            {{ element.position }} [{{ element.author }}] {{ element.title }}
-          </div>
-        </div>
-      </draggable>
-    </div> -->
   </div>
 </template>
 
@@ -176,7 +166,6 @@ export default {
 <style lang="scss" scoped>
 .dndList {
   background: #fff;
-  padding-bottom: 40px;
   &:after {
     content: "";
     display: table;
