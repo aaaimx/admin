@@ -1,5 +1,10 @@
-
 const state = {
+  listQuery: {
+    page: 1,
+    limit: 10,
+    offset: 0,
+    type: undefined
+  },
   postForm: {
     display_name: '',
     QR: '',

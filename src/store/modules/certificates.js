@@ -4,6 +4,12 @@ const state = {
   certs: [],
   events: [],
   types: ['RECOGNITION', 'APPRECIATION', 'PARTICIPATION'],
+  listQuery: {
+    page: 1,
+    limit: 10,
+    offset: 0,
+    type: undefined
+  },
   postForm: {
     type: '',
     to: '',

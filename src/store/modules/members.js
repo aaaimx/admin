@@ -5,6 +5,15 @@ import { fetchRoles, fetchList } from '@/api/member'
 const state = {
   partners: [],
   divisions: [],
+  listQuery: {
+    page: 1,
+    limit: 10,
+    offset: 0,
+    name: undefined,
+    panel: undefined,
+    active: undefined,
+    order: null
+  },
   roles: [
     {
       id: 4,

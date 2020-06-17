@@ -456,7 +456,7 @@ export default {
   },
   mixins: [tableMixin, certsMixin],
   computed: {
-    ...mapState('certificates', ['types'])
+    ...mapState('certificates', ['types', 'listQuery'])
   },
   data () {
     return {
@@ -467,12 +467,6 @@ export default {
       listLoading: true,
       downloadLoading: false,
       activeNames: [],
-      listQuery: {
-        page: 1,
-        limit: 10,
-        offset: 0,
-        type: undefined
-      },
       performAction: '',
       showAllFields: false
     }

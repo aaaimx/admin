@@ -2,6 +2,13 @@ import { fetchList } from '@/api/research'
 
 const state = {
   research: [],
+  listQuery: {
+    page: 1,
+    limit: 5,
+    offset: 0,
+    title: undefined,
+    type: undefined
+  },
   postForm: {
     title: '',
     resume: '',

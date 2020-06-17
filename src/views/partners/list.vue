@@ -62,7 +62,11 @@
       >
         <template slot-scope="scope">
           <a target="_blank" class="link-type" :href="scope.row.logoFile"
-            ><img width="100px" :src="getPhoto(scope.row.logoFile)" alt="" srcset=""
+            ><img
+              width="100px"
+              :src="getPhoto(scope.row.logoFile)"
+              alt=""
+              srcset=""
           /></a>
         </template>
       </el-table-column>
@@ -160,103 +164,97 @@
 </template>
 
 <script>
-import { fetchList, remove, updateStatus } from "@/api/partner";
-import waves from "@/directive/waves"; // waves directive
-import { parseTime } from "@/utils";
-import { getDrivePhoto } from "@/utils/google-drive";
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
-import JsonEditor from "@/components/JsonEditor";
-import { off } from "element-ui/lib/utils/dom";
-import { mapState } from "vuex";
-import tableMixin from "@/mixins/table-handlers";
+import { fetchList, remove, updateStatus } from '@/api/partner'
+import waves from '@/directive/waves' // waves directive
+import { parseTime } from '@/utils'
+import { getDrivePhoto } from '@/utils/google-drive'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import JsonEditor from '@/components/JsonEditor'
+import { off } from 'element-ui/lib/utils/dom'
+import { mapState } from 'vuex'
+import tableMixin from '@/mixins/table-handlers'
 
 export default {
-  name: "PartnersTable",
+  name: 'PartnersTable',
   components: { Pagination, JsonEditor },
   directives: { waves },
   filters: {
-    statusFilter(active) {
-      return active ? "success" : "danger";
+    statusFilter (active) {
+      return active ? 'success' : 'danger'
     },
-    statusRole(active) {
-      return active ? "success" : "danger";
+    statusRole (active) {
+      return active ? 'success' : 'danger'
     }
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState("partners", ["partners", "types"])
+    ...mapState('partners', ['partners', 'types', 'listQuery'])
   },
-  data() {
+  data () {
     return {
       tableKey: 0,
       list: null,
       total: 0,
       listLoading: true,
       downloadLoading: false,
-      listQuery: {
-        page: 1,
-        limit: 10,
-        offset: 0,
-        type: undefined
-      },
-      performAction: "",
+      performAction: '',
       showAllFields: false
-    };
+    }
   },
-  beforeMount() {
-    this.getList();
+  beforeMount () {
+    this.getList()
   },
   methods: {
     // methods
-    getPhoto(photo) {
-      return getDrivePhoto(photo);
+    getPhoto (photo) {
+      return getDrivePhoto(photo)
     },
-    getList() {
-      this.listLoading = true;
-      let { limit, page, offset } = this.listQuery;
-      this.listQuery.offset = limit * (page - 1);
+    getList () {
+      this.listLoading = true
+      let { limit, page, offset } = this.listQuery
+      this.listQuery.offset = limit * (page - 1)
       fetchList(this.listQuery).then(res => {
-        this.list = res.results;
-        this.total = res.count;
-        this.listLoading = false;
-      });
+        this.list = res.results
+        this.total = res.count
+        this.listLoading = false
+      })
     },
-    handleDownload() {
-      this.downloadLoading = true;
-      this.json = this.list;
-      this.downloadLoading = false;
+    handleDownload () {
+      this.downloadLoading = true
+      this.json = this.list
+      this.downloadLoading = false
     },
-    handleModifyStatus(row, active) {
+    handleModifyStatus (row, active) {
       updateStatus({
         id: row.id,
         active
       }).then(
         res => {
           this.$message({
-            message: "Member status changed",
-            type: "success"
-          });
-          row.active = active;
+            message: 'Member status changed',
+            type: 'success'
+          })
+          row.active = active
         },
         err => {
           this.$message({
-            message: "Something went wrong:( Try Again!",
-            type: "error"
-          });
+            message: 'Something went wrong:( Try Again!',
+            type: 'error'
+          })
         }
-      );
+      )
     },
 
-    handleDelete(row) {
+    handleDelete (row) {
       this.$notify({
-        title: "Success",
-        message: "Delete Successfully",
-        type: "success",
+        title: 'Success',
+        message: 'Delete Successfully',
+        type: 'success',
         duration: 2000
-      });
-      const index = this.list.indexOf(row);
-      this.list.splice(index, 1);
+      })
+      const index = this.list.indexOf(row)
+      this.list.splice(index, 1)
     }
   }
-};
+}
 </script>

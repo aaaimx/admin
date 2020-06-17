@@ -200,7 +200,7 @@ export default {
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState('projects', ['lines']),
+    ...mapState('projects', ['lines', 'listQuery']),
     ...mapState('members', ['partners', 'divisions', 'collaborators', 'roles'])
   },
   data () {
@@ -209,13 +209,6 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 10,
-        offset: 0,
-        title: undefined,
-        institute: undefined
-      },
       sortOptions: [
         { label: 'ID Ascending', key: '+id' },
         { label: 'ID Descending', key: '-id' }

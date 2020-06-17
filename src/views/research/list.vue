@@ -239,6 +239,7 @@ export default {
   mixins: [tableMixin, authorsMixin],
   computed: {
     ...mapState('projects', ['lines']),
+    ...mapState('research', ['listQuery']),
     ...mapState('members', ['partners', 'divisions', 'collaborators', 'roles'])
   },
   data () {
@@ -247,13 +248,6 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 5,
-        offset: 0,
-        title: undefined,
-        type: undefined
-      },
       typeOptions: {
         Thesis: 'success',
         Article: 'info',

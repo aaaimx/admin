@@ -83,7 +83,7 @@
           >
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="Member"
         sortable
         prop="to"
@@ -93,7 +93,7 @@
         <template slot-scope="scope">
           <span>{{ scope.row.member }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column
         label="Type"
@@ -208,7 +208,7 @@ export default {
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState('memberships', ['types'])
+    ...mapState('memberships', ['types', 'listQuery'])
   },
   data () {
     return {
@@ -217,12 +217,6 @@ export default {
       total: 0,
       listLoading: true,
       downloadLoading: false,
-      listQuery: {
-        page: 1,
-        limit: 10,
-        offset: 0,
-        type: undefined
-      },
       performAction: '',
       showAllFields: false
     }

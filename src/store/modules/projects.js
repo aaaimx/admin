@@ -2,6 +2,13 @@ import { fetchLines } from '@/api/project'
 
 const state = {
   lines: [],
+  listQuery: {
+    page: 1,
+    limit: 10,
+    offset: 0,
+    title: undefined,
+    institute: undefined
+  },
   postForm: {
     uuid: '',
     title: '',

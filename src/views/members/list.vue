@@ -241,7 +241,7 @@ export default {
   },
   mixins: [tableMixin],
   computed: {
-    ...mapState('members', ['partners', 'divisions', 'roles'])
+    ...mapState('members', ['partners', 'divisions', 'roles', 'listQuery'])
   },
   data () {
     return {
@@ -251,15 +251,6 @@ export default {
       listLoading: true,
       downloadLoading: false,
       json: null,
-      listQuery: {
-        page: 1,
-        limit: 10,
-        offset: 0,
-        name: undefined,
-        panel: undefined,
-        active: undefined,
-        order: null
-      },
       statusOptions,
       sortOptions: [
         { label: 'ID Ascending', key: '+id' },

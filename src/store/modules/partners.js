@@ -2,12 +2,13 @@ import { fetchListC } from '@/api/certificate'
 
 const state = {
   certs: [],
-  types: [
-    'Research Center',
-    'Sponsor',
-    'Partner',
-    'Division'
-  ],
+  types: ['Research Center', 'Sponsor', 'Partner', 'Division'],
+  listQuery: {
+    page: 1,
+    limit: 10,
+    offset: 0,
+    type: undefined
+  },
   postForm: {
     name: '',
     alias: '',
