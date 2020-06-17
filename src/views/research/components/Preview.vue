@@ -23,13 +23,16 @@
           >{{ research.projects[0] }}</router-link
         ></small
       >
+
       <el-button style="float: right; padding: 3px 0" type="text">{{
         research.pub_in || research.event || 'Full-text'
       }}</el-button>
-    </div>
-
-    <a v-for="author in research.authors" :key="author.id" class="text item">
-      <!-- <el-popover placement="top-start" trigger="hover">
+      <a
+        v-for="author in research.authors.concat(research.advisors)"
+        :key="author.id"
+        class="text item"
+      >
+        <!-- <el-popover placement="top-start" trigger="hover">
         <div class="el-popover__title">
           <router-link
             class="link-type"
@@ -50,20 +53,20 @@
           </small>
         </el-avatar></el-popover
       >&nbsp; -->
-      <router-link class="link-type" :to="'/members/' + author.member" tag="a"
-        >{{ author.name }} {{ author.surname }}
-        <sup class="link-type">{{ author.position }}</sup
-        ><br
-      /></router-link>
-    </a>
+        <router-link class="link-type" :to="'/members/' + author.member" tag="a"
+          >{{ author.name }} {{ author.surname }}
+          <sup class="link-type">{{ author.position }}</sup
+          ><br
+        /></router-link>
+      </a>
+    </div>
+
     <aside v-if="research.resume" style="margin-top:15px; line-height: 21px">
       <small>
         {{ research.resume }}
       </small>
     </aside>
 
-    <p class="info"></p>
-    <hr />
     <div>
       <el-tag
         v-for="item in lines.filter(l => research.lines.indexOf(l.id) !== -1)"
