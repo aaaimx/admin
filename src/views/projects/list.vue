@@ -84,7 +84,7 @@
         sortable
         prop="title"
         label="Title"
-        min-width="150px"
+        min-width="300"
         align="center"
       >
         <template slot-scope="{ row }">

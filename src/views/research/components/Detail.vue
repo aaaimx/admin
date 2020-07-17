@@ -31,14 +31,14 @@
           style="margin-top:15px;"
           type="border-card"
         >
-          <code-loader v-if="!lines.length || !postForm.type"></code-loader>
-          <el-tab-pane v-else label="Preview" name="preview">
+          <!-- <code-loader v-if="isLoading"></code-loader> -->
+          <el-tab-pane v-if="isEdit" label="Preview" name="preview">
             <keep-alive>
               <ResearchPreview :research="postForm" />
             </keep-alive>
           </el-tab-pane>
 
-          <el-tab-pane label="Edit" name="details">
+          <el-tab-pane label="Form" name="form">
             <keep-alive>
               <div class="box-item">
                 <el-row>
@@ -138,9 +138,9 @@
                             >
                               <el-option
                                 v-for="item in lines"
-                                :key="item.id"
+                                :key="item.topic"
                                 :label="item.topic.slice(0, 30).concat('...')"
-                                :value="item.id"
+                                :value="item.topic"
                                 >{{ item.topic }}</el-option
                               >
                             </el-select>
@@ -235,7 +235,7 @@
               </div>
             </keep-alive>
           </el-tab-pane>
-          <el-tab-pane label="Collaborators" name="colls">
+          <el-tab-pane label="Collaborators" v-if="isEdit" name="colls">
             <keep-alive>
               <el-row>
                 <el-col v-show="isEdit" :span="12" :lg="12" :xs="24">
@@ -309,7 +309,8 @@ export default {
     return {
       rules,
       tempRoute: {},
-      activeName: 'preview',
+      activeName: 'form',
+      isLoading: false,
       id: null,
       projects: [],
       tabMapOptions: [
@@ -328,6 +329,7 @@ export default {
   async created () {
     if (!this.lines.length) await this.$store.dispatch('projects/fetchLines')
     if (this.isEdit) {
+      this.activeName = 'preview'
       this.id = this.$route.params && this.$route.params.id
       this.fetchData(this.id)
     } else {

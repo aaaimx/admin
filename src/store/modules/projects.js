@@ -7,7 +7,8 @@ const state = {
     limit: 10,
     offset: 0,
     title: undefined,
-    institute: undefined
+    institute: undefined,
+    order: '-start'
   },
   postForm: {
     uuid: '',

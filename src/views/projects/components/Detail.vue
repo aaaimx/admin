@@ -15,13 +15,22 @@
           @click="submitForm"
           v-text="isEdit ? 'Save changes' : 'Save'"
         ></el-button>
-        <el-button
-          v-loading="loading"
-          v-show="isEdit"
-          type="danger"
-          @click="deleteProject"
-          >Delete project</el-button
+        <el-popconfirm
+          confirmButtonText="OK"
+          cancelButtonText="No, Thanks"
+          icon="el-icon-info"
+          iconColor="red"
+          @onConfirm="deleteResource"
+          title="Are you sure to delete this?"
         >
+          <el-button
+            v-loading="loading"
+            slot="reference"
+            v-show="isEdit"
+            type="danger"
+            >Delete project</el-button
+          >
+        </el-popconfirm>
       </sticky>
 
       <div class="createPost-main-container">
@@ -132,7 +141,7 @@
                     >
                       <el-option
                         v-for="item in collaborators"
-                        :key="item.name"
+                        :key="item.name + item.surname"
                         :label="item.name + ' ' + item.surname"
                         :value="item.name + ' ' + item.surname"
                       ></el-option>
@@ -154,9 +163,9 @@
                     >
                       <el-option
                         v-for="item in lines"
-                        :key="item.id"
+                        :key="item.topic"
                         :label="item.topic.slice(0, 30).concat('...')"
-                        :value="item.id"
+                        :value="item.topic"
                         >{{ item.topic }}</el-option
                       >
                     </el-select>
@@ -199,113 +208,114 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { fetchProj, create, update, remove } from "@/api/project";
-import { fetchList, fetch } from "@/api/member";
-import formsMixin from "@/mixins/forms";
-import rules from "./validators";
+import { mapState } from 'vuex'
+import { fetchProj, create, update, remove } from '@/api/project'
+import { fetchList, fetch } from '@/api/member'
+import formsMixin from '@/mixins/forms'
+import rules from './validators'
 
 const defaultForm = {
-  title: "",
-  start: "",
-  end: "",
-  in_charge: "",
-  institute: "",
+  title: '',
+  start: '',
+  end: '',
+  in_charge: '',
+  institute: '',
   collaborators: [],
   lines: []
-};
+}
 export default {
-  name: "ProjectDetail",
+  name: 'ProjectDetail',
   mixins: [formsMixin],
   components: {
-    MDinput: () => import("@/components/MDinput"),
-    LineModal: () => import("@/components/Modals/Line"),
-    MemberModal: () => import("@/components/Modals/Member"),
-    Sticky: () => import("@/components/Sticky")
+    MDinput: () => import('@/components/MDinput'),
+    LineModal: () => import('@/components/Modals/Line'),
+    MemberModal: () => import('@/components/Modals/Member'),
+    Sticky: () => import('@/components/Sticky')
   },
-  data() {
+  data () {
     return {
       loading: false,
       rules,
       tempRoute: {},
       id: null,
       collaborators: []
-    };
+    }
   },
   computed: {
-    ...mapState("members", ["partners"]),
-    ...mapState("projects", ["postForm", "lines"])
+    ...mapState('members', ['partners']),
+    ...mapState('projects', ['postForm', 'lines'])
   },
-  created() {
-    if (!this.lines.length) this.$store.dispatch("projects/fetchLines");
-    if (!this.partners.length) this.$store.dispatch("members/fetchPartners");
+  created () {
+    if (!this.lines.length) this.$store.dispatch('projects/fetchLines')
+    if (!this.partners.length) this.$store.dispatch('members/fetchPartners')
     if (this.isEdit) {
-      this.id = this.$route.params && this.$route.params.id;
-      this.fetchData(this.id);
+      this.id = this.$route.params && this.$route.params.id
+      this.fetchData(this.id)
     } else {
-      this.$store.commit("projects/SET_PROJECT", defaultForm);
+      this.$store.commit('projects/SET_PROJECT', defaultForm)
     }
-    this.tempRoute = Object.assign({}, this.$route);
+    this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
-    fetchMember(name) {
+    fetchMember (name) {
       fetchList({
         name
       }).then(res => {
-        this.collaborators = res.results;
-      });
+        this.collaborators = res.results
+      })
     },
-    fetchData(id) {
-      let loading = this.loadingFullPage();
+    fetchData (id) {
+      let loading = this.loadingFullPage()
       fetchProj(id)
         .then(data => {
-          let colls = [];
+          let colls = []
           data.collaborators.forEach(el => {
-            colls.push(fetch(el));
-          });
+            colls.push(fetch(el))
+          })
           Promise.all(colls).then(values => {
-            this.collaborators = values;
-            loading.close();
-          });
-          this.$store.commit("projects/SET_PROJECT", data);
+            this.collaborators = values
+            loading.close()
+          })
+          this.$store.commit('projects/SET_PROJECT', data)
         })
         .catch(err => {
-          loading.close();
-          console.log(err);
-        });
+          loading.close()
+          console.log(err)
+        })
     },
-    submitForm() {
+    submitForm () {
       this.$refs.postForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          let request;
-          if (this.isEdit) request = update(this.postForm);
-          else request = create(this.postForm);
+          this.loading = true
+          let request
+          if (this.isEdit) request = update(this.postForm)
+          else request = create(this.postForm)
           request
             .then(response => {
               this.handleSave(
                 `${this.namespace} <b>${this.postForm.title}</b> was sucessfully saved`
-              );
-              console.log(response);
-              this.loading = false;
-              this.$router.push("/projects/" + response.uuid);
+              )
+              console.log(response)
+              this.loading = false
+              this.$router.push('/projects/' + response.uuid)
             })
             .catch(error => {
-              this.loading = false;
-              console.log(error);
+              this.loading = false
+              console.log(error)
 
-              this.handleError();
-            });
+              this.handleError()
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
-    deleteProject() {
-      this.handleError();
-      this.postForm.active = false;
+    deleteResource () {
+      this.handleDelete()
+      this.$store.dispatch('tagsView/delCachedView', 'EditProject')
+
     }
   }
-};
+}
 </script>
