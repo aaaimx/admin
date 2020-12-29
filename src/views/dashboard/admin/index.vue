@@ -3,6 +3,22 @@
     <list-loader v-if="loading"></list-loader>
     <list-loader v-if="loading"></list-loader>
     <el-row v-else :gutter="32">
+      <panel-group
+        :members="statistics.members[0].value"
+        :incomes="statistics.finances[0].value + statistics.finances[1].value"
+        :expenses="statistics.finances[2].value"
+        :balance="
+          statistics.finances[0].value +
+            statistics.finances[1].value -
+            statistics.finances[2].value
+        "
+      />
+      <el-col :xs="24">
+        <div class="chart-container">
+          <chart height="100%" width="100%" />
+        </div>
+        <br />
+      </el-col>
       <el-col :xs="24" :md="10" :lg="10">
         <div class="chart-wrapper">
           <pie-chart
@@ -12,7 +28,7 @@
           />
         </div>
       </el-col>
-      <el-col :xs="24" :md="14" :lg="14">
+      <!-- <el-col :xs="24" :md="14" :lg="14">
         <div class="chart-wrapper">
           <pie-chart
             legend="DIVISION MEMBERS"
@@ -20,8 +36,8 @@
             :data="statistics.divisions"
           />
         </div>
-      </el-col>
-      <el-col :xs="24" :md="12" :lg="12">
+      </el-col> -->
+      <el-col :xs="24" :md="14" :lg="14">
         <div class="chart-wrapper">
           <pie-chart
             legend="PARTNERS"
@@ -30,7 +46,7 @@
           />
         </div>
       </el-col>
-      <el-col :xs="24" :md="12" :lg="12">
+      <el-col :xs="24" :md="14" :lg="14">
         <div class="chart-wrapper">
           <pie-chart
             legend="CERTIFICATES"
@@ -39,7 +55,7 @@
           />
         </div>
       </el-col>
-      <el-col :xs="24" :md="8" :lg="8">
+      <el-col :xs="24" :md="10" :lg="10">
         <div class="chart-wrapper">
           <pie-chart
             legend="MEMBERS"
@@ -57,7 +73,7 @@
           />
         </div>
       </el-col>
-      <el-col :xs="24" :md="8" :lg="8">
+      <!-- <el-col :xs="24" :md="8" :lg="8">
         <div class="chart-wrapper">
           <pie-chart
             legend="FINANCES"
@@ -66,13 +82,14 @@
             :data="statistics.finances"
           />
         </div>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>
 
 <script>
 import PieChart from './components/PieChart.vue'
+import Chart from '@/components/Charts/MixChart'
 import { statistics } from '@/api/research'
 import { ListLoader } from 'vue-content-loader'
 
@@ -98,7 +115,9 @@ export default {
   name: 'DashboardAdmin',
   components: {
     PieChart,
-    ListLoader
+    ListLoader,
+    Chart,
+    PanelGroup: () => import('./components/PanelGroup')
   },
   data () {
     return {
@@ -116,6 +135,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('invoices/getInvoices')
     statistics().then(res => {
       this.statistics = res
       this.loading = false
@@ -150,5 +170,10 @@ export default {
   .chart-wrapper {
     padding: 8px;
   }
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 84px);
 }
 </style>

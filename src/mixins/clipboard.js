@@ -10,9 +10,9 @@ const clipMixin = {
       clip(text, event)
       if (text.length) this.clipboardSuccess(field)
     },
-    clipboardSuccess (value) {
+    clipboardSuccess () {
       this.$message({
-        message: `<b>${value}</b> copied to clipboard!`,
+        message: `Copied to clipboard!`,
         type: 'success',
         dangerouslyUseHTMLString: true,
         duration: 1500

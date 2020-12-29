@@ -5,7 +5,7 @@
       <dnd-list
         :list1="advisors"
         :list2="list2"
-        list1-title="Authors"
+        list1-title="advisors"
         list2-title=""
       />
     </div>
@@ -26,9 +26,15 @@
         :value="item.id"
       ></el-option>
     </el-select>
-    <el-button icon="el-icon-plus" @click="addAdvisor()" size="small"
-      >Add advisor</el-button
+    <el-button
+      icon="el-icon-check"
+      type="success"
+      circle
+      @click="addAdvisor()"
+      size="mini"
+      ></el-button
     >
+    <MemberModal />
   </div>
 </template>
 
@@ -41,7 +47,10 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'DndListDemo',
-  components: { DndList },
+  components: {
+    DndList,
+    MemberModal: () => import('@/components/Modals/Member')
+  },
   props: {
     title: {
       type: String,
@@ -102,6 +111,7 @@ export default {
           duration: 2000
         })
       }
+      this.advisor = ''
     }
   }
 }

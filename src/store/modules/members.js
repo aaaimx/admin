@@ -7,7 +7,7 @@ const state = {
   divisions: [],
   listQuery: {
     page: 1,
-    limit: 10,
+    limit: 12,
     offset: 0,
     name: undefined,
     panel: undefined,

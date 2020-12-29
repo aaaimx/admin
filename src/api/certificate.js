@@ -7,6 +7,14 @@ export function fetchListC () {
   })
 }
 
+export function getFolders () {
+  return request({
+    url: '/storage/?folder=certificates',
+    method: 'GET'
+  })
+}
+
+
 export function fetchEvents () {
   return request({
     url: '/events/',
@@ -58,10 +66,24 @@ export function update (id, data) {
   return request({
     url: `/certificates/${id}/`,
     method: 'PUT',
-    headers: { 'Content-Type': 'multipart/form-data' },
     data
   })
 }
+
+/**
+ *
+ * @param {*} id String
+ * @param {*} data Object
+ */
+export function uploadFile (id, data) {
+  return request({
+    url: `/certificates/${id}/upload/`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'multipart/form-data'},
+    data
+  })
+}
+
 
 /**
  *

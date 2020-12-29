@@ -174,114 +174,94 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { fetch, create, update } from "@/api/member";
-import rules from "./validators";
-import formsMixin from "@/mixins/forms";
+import { mapState } from 'vuex'
+import { fetch, create, update } from '@/api/member'
+import rules from './validators'
+import formsMixin from '@/mixins/forms'
 const defaultForm = {
-  name: "",
-  surname: "",
-  email: "",
+  name: '',
+  surname: '',
+  email: '',
   active: false,
   board: false,
   committee: false,
-  thumbnailUrl: "",
+  thumbnailUrl: '',
   thumbnailFile: null,
-  charge: "",
+  charge: '',
   adscription: null,
   membership: null,
   divisions: [],
   roles: []
-};
+}
 export default {
-  name: "MemberDetail",
+  name: 'MemberDetail',
   mixins: [formsMixin],
   components: {
-    Status: () => import("@/components/Dropdown/Status"),
-    Upload: () => import("@/components/Upload/SingleImage3"),
-    MDinput: () => import("@/components/MDinput"),
-    Sticky: () => import("@/components/Sticky")
+    Status: () => import('@/components/Dropdown/Status'),
+    Upload: () => import('@/components/Upload/SingleImage3'),
+    MDinput: () => import('@/components/MDinput'),
+    Sticky: () => import('@/components/Sticky')
   },
-  data() {
+  data () {
     return {
       loading: false,
       rules,
       tempRoute: {},
       id: null,
-      photo: ""
-    };
+      photo: ''
+    }
   },
   computed: {
-    ...mapState("members", ["postForm", "partners", "divisions", "roles"])
+    ...mapState('members', ['postForm', 'partners', 'divisions', 'roles'])
   },
-  created() {
-    if (!this.divisions.length) this.$store.dispatch("members/fetchDivisions");
-    if (!this.partners.length) this.$store.dispatch("members/fetchPartners");
-    if (this.isEdit) {
-      this.id = this.$route.params && this.$route.params.id;
-      this.fetchData(this.id);
-    } else {
-      this.$store.commit("members/SET_MEMBER", defaultForm);
-    }
-    this.tempRoute = Object.assign({}, this.$route);
+  async created () {
+    if (!this.divisions.length) await this.$store.dispatch('members/fetchDivisions')
+    if (!this.partners.length) await this.$store.dispatch('members/fetchPartners')
+    if (this.isEdit) await this.fetchData(this.$route.params.id)
+    else this.$store.commit('members/SET_MEMBER', defaultForm)
+    this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
-    getPhoto(photo) {
+    async fetchData (id) {
+      let loading = this.loadingFullPage()
       try {
-        var res = photo.split("https://drive.google.com/file/d/");
-        res = res[1];
-        res = res.split("/view?usp=drivesdk");
-        return "https://drive.google.com/uc?id=" + res[0];
+        const data = await fetch(id)
+        this.$store.commit('members/SET_MEMBER', data)
       } catch (error) {
-        return "";
+        console.log(error)
+      } finally {
+        loading.close()
       }
     },
-    fetchData(id) {
-      let loading = this.loadingFullPage();
-      fetch(id)
-        .then(data => {
-          loading.close();
-          data.thumbnailFile = this.getPhoto(data.thumbnailFile);
-          this.$store.commit("members/SET_MEMBER", data);
-        })
-        .catch(err => {
-          loading.close();
-          console.log(err);
-        });
-    },
-    submitForm() {
-      this.$refs.postForm.validate(valid => {
+    async submitForm () {
+      this.$refs.postForm.validate(async (valid) => {
         if (valid) {
-          this.loading = true;
-          let request;
+          const loading = this.loadingFullPage()
+          let response
           let data = this.postForm
-          delete data.thumbnailFile;
-          if (this.isEdit) request = update(data);
-          else request = create(data);
-
-          request
-            .then(response => {
-              console.log(response);
-              this.loading = false;
-              this.$router.push("/members/" + response.id);
-              this.handleSave(
-                `${this.namespace} <b>${this.postForm.name} ${this.postForm.surname}</b> was sucessfully saved`
-              );
-            })
-            .catch(error => {
-              this.loading = false;
-              this.handleError();
-            });
+          try {
+            if (this.isEdit) response = await update(data)
+            else response = await create(data)
+            this.$router.push('/members/' + response.id)
+            this.handleSave(
+                `${this.namespace} <b>${this.postForm.surname}, ${this.postForm.name}</b> was sucessfully saved`
+              )
+          } catch (error) {
+            console.log(error)
+            this.handleError()
+          } finally {
+            loading.close()
+          }
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
-    deleteMember() {
-      this.handleDelete();
-      this.postForm.active = false;
+    deleteMember () {
+      this.handleDelete()
+      this.postForm.active = false
     }
   }
-};
+}
 </script>

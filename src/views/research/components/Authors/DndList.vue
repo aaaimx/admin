@@ -8,17 +8,17 @@
         class="dragArea"
       >
         <div
-          v-for="(element, index) in list1"
-          :key="element.id"
+          v-for="(author, index) in list1"
+          :key="author.id"
           class="list-complete-item"
         >
           <div class="list-complete-item-handle">
-          {{ element.name }} {{ element.surname }} <sup class="link-type">{{ ++index }}</sup>
+          {{ author.surname }}, {{ author.name }} <sup class="link-type">{{ ++index }}</sup>
           </div>
           <div style="position:absolute;right:0px;">
             <span
               style="float: right ;margin-top: -20px;margin-right:5px;"
-              @click="deleteEle(element)"
+              @click="deleteEle(author)"
             >
               <i style="color:#ff4949" class="el-icon-delete" />
             </span>
@@ -29,12 +29,12 @@
       </draggable>
 
       <el-button
-        icon="el-icon-circle-check-outline"
+        icon="el-icon-check"
         @click="saveAuthors()"
         size="small"
         v-loading="loading"
         type="success"
-        >Save authors</el-button
+        >Save order</el-button
       >
       <el-button
         icon="el-icon-refresh"

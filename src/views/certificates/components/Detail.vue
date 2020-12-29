@@ -43,7 +43,7 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="12" :xs="24">
-                  <Upload v-show="isEdit" v-model="photo" />
+                  <Upload v-show="isEdit" v-model="postForm.file" />
                 </el-col>
                 <el-col :span="12" :xs="24">
                   <el-form-item
@@ -110,7 +110,7 @@
                         v-for="item in $store.getters.events"
                         :key="item.title"
                         :label="item.title"
-                        :value="item.title"
+                        :value="item.title === 'No event' ? null : item.title"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -123,53 +123,61 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col v-show="isEdit" :span="12" :xs="24">
-                  <el-form-item
-                    v-show="postForm.file"
-                    label="Currently:"
-                    class="postInfo-container-item"
-                  >
-                    <a target="_blank" class="link-type" :href="postForm.file"
-                      ><svg-icon icon-class="link"
-                    /></a>
-                  </el-form-item>
-                  <el-form-item
-                    label="Change:"
-                    prop="file"
-                    class="postInfo-container-item"
-                  >
-                    <input
-                      type="file"
-                      accept="image/png, image/jpeg"
-                      id="file"
-                      ref="file"
-                    />
-                  </el-form-item>
 
-                  <!-- <el-upload
-                      class="upload-demo"
-                      ref="file"
-                      :multiple="false"
-                      action="https://aaaimx-admin.herokuapp.com"
-                      :auto-upload="false"
+                <el-col v-show="isEdit" :span="24" :xs="24">
+                  <aside>
+                    <h2>Upload file (FTP)</h2>
+                    <el-form-item
+                      v-show="postForm.file"
+                      label="Currently:"
+                      class="postInfo-container-item"
                     >
-                      <el-button slot="trigger" size="small" type="primary"
-                        >Selecciona un archivo</el-button
+                      <a target="_blank" class="link-type" :href="postForm.file"
+                        ><svg-icon icon-class="link"
+                      /></a>
+                    </el-form-item>
+                    <el-form-item
+                      label="Folder:"
+                      prop="upload"
+                      class="postInfo-container-item"
+                    >
+                      <br />
+                      <el-select
+                        v-model="postForm.upload"
+                        filterable
+                        clearable
+                        placeholder="Select folder"
                       >
-                      <el-button
-                        style="margin-left: 10px;"
-                        size="small"
-                        type="success"
-                        @click="submitUpload"
-                        >Cargar al servidor</el-button
-                      >
-                      <div slot="tip" class="el-upload__tip">
-                        Solo archivos jpg/png con un tamaño menor de 500kb
-                      </div>
-                    </el-upload> -->
+                        <el-option
+                          v-for="item in folders"
+                          :key="item"
+                          :label="item"
+                          :value="item"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+
+                    <el-form-item
+                      label="Change:"
+                      prop="file"
+                      class="postInfo-container-item"
+                    >
+                      <input
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        id="file"
+                        ref="file"
+                      />
+                    </el-form-item>
+                    <el-button
+                      type="warning"
+                      icon="el-icon-upload"
+                      v-if="isEdit"
+                      @click="changeFile(postForm.uuid)"
+                      >Upload file</el-button
+                    >
+                  </aside>
                 </el-col>
-                <!-- https://github.com/RaulNovelo/aaaimx-admin/issues/4 -->
-                <!-- <qrcode :value="postForm.QR" :options="{ width: 200 }"></qrcode> -->
               </el-row>
             </div>
           </el-col>
@@ -181,7 +189,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import { fetch, create, update } from '@/api/certificate'
+import {
+  fetch,
+  create,
+  update,
+  getFolders,
+  uploadFile
+} from '@/api/certificate'
 import { getDrivePhoto } from '@/utils/google-drive'
 import rules from './validators'
 import formsMixin from '@/mixins/forms'
@@ -210,7 +224,9 @@ export default {
     return {
       loading: false,
       rules,
+      uploadTo: '',
       tempRoute: {},
+      folders: [],
       photo: '',
       id: null
     }
@@ -218,7 +234,9 @@ export default {
   computed: {
     ...mapState('certificates', ['postForm', 'types'])
   },
-  created () {
+  async created () {
+    let res = await getFolders()
+    this.folders = res.folders.filter(el => el.search(/\./) === -1)
     if (this.isEdit) {
       this.id = this.$route.params && this.$route.params.id
       this.fetchData(this.id)
@@ -228,57 +246,54 @@ export default {
     this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
-    submitUpload (file) {
-      this.$refs.upload.submit()
-    },
-    getPhoto (photo) {
-      return getDrivePhoto(photo)
-    },
-    fetchData (id) {
+    async fetchData (id) {
       let loading = this.loadingFullPage()
-      fetch(id)
-        .then(data => {
-          loading.close()
-          this.photo = data.file.replace('download', 'preview') //this.getPhoto(data.file);
-          this.$store.commit('certificates/SET_CERT', data)
-        })
-        .catch(err => {
-          loading.close()
-          console.log(err)
-        })
+      try {
+        const data = await fetch(id)
+        this.$store.commit('certificates/SET_CERT', data)
+      } catch (error) {
+        console.log(err)
+      } finally {
+        loading.close()
+      }
     },
-    submitForm () {
-      this.$refs.postForm.validate(valid => {
+    async changeFile (uuid) {
+      const loading = this.loadingFullPage()
+      const form_data = new FormData()
+      try {
+        if (this.$refs.file.files.length)
+          form_data.append('file', this.$refs.file.files[0])
+        else delete this.postForm.file
+        for (var key in this.postForm) {
+          form_data.append(key, this.postForm[key])
+        }
+        const res = await uploadFile(uuid, form_data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        loading.close()
+      }
+    },
+    async submitForm () {
+      this.$refs.postForm.validate(async valid => {
         if (valid) {
-          this.loading = true
-          let request
-          var form_data = new FormData()
-          if (this.$refs.file.files.length)
-            form_data.append('file', this.$refs.file.files[0])
-          else delete this.postForm.file
-          for (var key in this.postForm) {
-            form_data.append(key, this.postForm[key])
+          const loading = this.loadingFullPage()
+          let response
+          try {
+            if (this.isEdit) response = await update(this.id, this.postForm)
+            else response = await create(this.postForm)
+            this.handleSave(
+              `${this.namespace} <b>${this.postForm.uuid}</b> was sucessfully saved`
+            )
+            if (this.isEdit) this.fetchData(this.id)
+            this.$refs.file.value = ''
+            this.$router.push('/certificates/' + response.uuid)
+          } catch (error) {
+            console.log(error)
+            this.handleError()
+          } finally {
+           loading.close()
           }
-          console.log(form_data)
-          if (this.isEdit) request = update(this.id, form_data)
-          else request = create(form_data)
-
-          request
-            .then(response => {
-              this.handleSave(
-                `${this.namespace} <b>${this.postForm.type}: ${this.postForm.to}</b> was sucessfully saved`
-              )
-              this.loading = false
-              if (this.isEdit) this.fetchData(this.id)
-              else this.photo = this.getPhoto(response.file)
-              this.$refs.file.value = ''
-              this.$router.push('/certificates/' + response.uuid)
-            })
-            .catch(error => {
-              this.loading = false
-              console.log(error)
-              this.handleError()
-            })
         } else {
           console.log('error submit!!')
           return false
@@ -286,8 +301,8 @@ export default {
       })
     },
     deleteCert () {
-      this.handleDelete()
-      this.postForm.active = false
+      // this.handleDelete()
+      // this.postForm.active = false
     }
   }
 }

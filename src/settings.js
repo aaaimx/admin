@@ -34,7 +34,7 @@ module.exports = {
    */
   errorLog: ['production', 'development'],
   HOST:
-    process.env.NODE_ENV !== 'development'
+    process.env.NODE_ENV === 'development'
       ? 'http://127.0.0.1:8000'
-      : 'https://aaaimx-admin.herokuapp.com'
+      : 'https://aaaimx-admin-stage.herokuapp.com'
 }

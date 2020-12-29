@@ -4,7 +4,7 @@
       <el-input
         style="max-width: 300px"
         v-model="listQuery.title"
-        @change="handleFilter"
+        @input="handleFilter"
         @keyup.enter="handleFilter"
         placeholder="Search by name"
         clearable
@@ -15,7 +15,7 @@
         v-model="listQuery.year"
         @change="handleFilter"
         type="number"
-        min="2018"
+        min="2010"
         placeholder="By year"
         clearable
         class="filter-item"
@@ -43,9 +43,9 @@
       >
         <el-option
           v-for="line in $store.getters.lines"
-          :key="line.id"
+          :key="line.topic"
           :label="line.topic"
-          :value="line.id"
+          :value="line.topic"
         />
       </el-select>
 
@@ -165,7 +165,7 @@
             size="mini"
             :key="line"
             type="info"
-            >{{ getLine(line) }}</el-tag
+            >{{ line }}</el-tag
           >
         </template>
       </el-table-column>

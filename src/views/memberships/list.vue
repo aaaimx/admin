@@ -5,7 +5,7 @@
         style="max-width: 300px"
         v-model="listQuery.to"
         placeholder="Search by member"
-        @change="handleFilter"
+        @input="handleFilter"
         clearable
         class="filter-item"
       />
@@ -13,7 +13,7 @@
         style="max-width: 300px"
         v-model="listQuery.query"
         placeholder="Search by query"
-        @change="handleFilter"
+        @input="handleFilter"
         clearable
         class="filter-item"
       />

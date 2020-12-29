@@ -1,7 +1,28 @@
 import { sendEmail } from '@/api/email'
+import { publishCert }  from '@/api/certificate'
 
 const certsMixin = {
   methods: {
+    publish (row, published) {
+      row.loading = true
+      publishCert(row.uuid, published).then(
+        res => {
+          this.$message({
+            message: 'Certificate status changed',
+            type: 'success'
+          })
+          row.published = published
+          row.loading = false
+        },
+        err => {
+          row.loading = false
+          this.$message({
+            message: 'Something went wrong:( Try Again!',
+            type: 'error'
+          })
+        }
+      )
+    },
     sendEmail (row) {
       this.$prompt('Please input an e-mail', 'Send by email', {
         confirmButtonText: 'OK',

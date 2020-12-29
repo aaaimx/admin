@@ -8,17 +8,17 @@
         class="dragArea"
       >
         <div
-          v-for="(element, index) in list1"
-          :key="element.id"
+          v-for="(advisor, index) in list1"
+          :key="advisor.id"
           class="list-complete-item"
         >
           <div class="list-complete-item-handle">
-            {{ element.name }} {{ element.surname }} <sup class="link-type">{{ ++index }}</sup>
+            {{ advisor.surname }}, {{ advisor.name }} <sup class="link-type">{{ ++index }}</sup>
           </div>
           <div style="position:absolute;right:0px;">
             <span
               style="float: right ;margin-top: -20px;margin-right:5px;"
-              @click="deleteEle(element)"
+              @click="deleteEle(advisor)"
             >
               <i style="color:#ff4949" class="el-icon-delete" />
             </span>
@@ -47,9 +47,9 @@
     <!-- <div :style="{width:width2}" class="dndList-list">
       <h3>{{ list2Title }}</h3>
       <draggable :list="list2" group="article" class="dragArea">
-        <div v-for="element in list2" :key="element.id" class="list-complete-item">
-          <div class="list-complete-item-handle2" @click="pushEle(element)">
-            {{ element.position }} [{{ element.advisor }}] {{ element.title }}
+        <div v-for="advisor in list2" :key="advisor.id" class="list-complete-item">
+          <div class="list-complete-item-handle2" @click="pushEle(advisor)">
+            {{ advisor.position }} [{{ advisor.advisor }}] {{ advisor.title }}
           </div>
         </div>
       </draggable>

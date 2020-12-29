@@ -10,7 +10,7 @@
       <br />
       <br />
       <strong>{{ research.title }}</strong> <br />
-      <small style="color: gray">Jan {{ research.year }}</small> <br />
+      <small style="color: gray">{{ research.year }}</small> <br />
       <small v-if="research.projects[0]" style="color: gray"
         >Project:
         <router-link
@@ -54,7 +54,7 @@
         </el-avatar></el-popover
       >&nbsp; -->
         <router-link class="link-type" :to="'/members/' + author.member" tag="a"
-          >{{ author.name }} {{ author.surname }}
+          >{{ author.surname }}, {{ author.name }}
           <sup class="link-type">{{ author.position }}</sup
           ><br
         /></router-link>
@@ -69,12 +69,12 @@
 
     <div>
       <el-tag
-        v-for="item in lines.filter(l => research.lines.indexOf(l.id) !== -1)"
-        :key="item.id"
+        v-for="line in research.lines"
+        :key="line"
         size="small"
         type="info"
       >
-        {{ item.topic }}
+        {{ line }}
       </el-tag>
     </div>
   </el-card>
@@ -83,9 +83,6 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  props: ['research'],
-  computed: {
-    ...mapState('projects', ['lines'])
-  }
+  props: ['research']
 }
 </script>

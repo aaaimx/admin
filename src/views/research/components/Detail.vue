@@ -83,7 +83,7 @@
                             <el-input
                               v-model="postForm.year"
                               type="number"
-                              min="2018"
+                              min="2010"
                               placeholder="Year"
                               clearable
                               class="filter-item"

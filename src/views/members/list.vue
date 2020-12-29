@@ -4,7 +4,7 @@
       <el-input
         style="max-width: 300px"
         v-model="listQuery.name"
-        @change="handleFilter"
+        @input="handleFilter"
         @keyup.enter="handleFilter"
         placeholder="Search by name"
         clearable
@@ -38,13 +38,7 @@
           :value="item.name"
         />
       </el-select>
-      <!-- <el-button
-        v-waves
-        class="filter-item"
-        type="primary"
-        icon="el-icon-search"
-        @click="handleFilter"
-      >Search</el-button> -->
+
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -53,16 +47,7 @@
         @click="handleCreateOrUpdate('/members/create')"
         >Create</el-button
       >
-      <!-- <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-      >
-        Export
-      </el-button> -->
+
       <el-checkbox
         v-model="listQuery.panel"
         class="filter-item"
@@ -71,129 +56,19 @@
         >Board & Committee</el-checkbox
       >
     </div>
+    <el-row>
+      <el-col
+        :span="8"
+        :xs="24"
+        :md="12"
+        :lg="8"
+        v-for="o in list"
+        :key="o.id"
+      >
+        <CardDetail :member="o" />
+      </el-col>
+    </el-row>
 
-    <el-table
-      :key="tableKey"
-      ref="multipleTable"
-      v-loading="listLoading"
-      :data="list"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      @sort-change="sortChange"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column
-        type="selection"
-        width="55"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        prop="name"
-        label="Name"
-        min-width="150px"
-        align="center"
-      >
-        <template slot-scope="{ row }">
-          <span
-            class="link-type"
-            @click="handleCreateOrUpdate('/members/' + row.id)"
-            >{{ row.name }} {{ row.surname }}</span
-          >
-        </template>
-      </el-table-column>
-      <!-- <el-table-column
-        label="Adscription"
-        sortable
-        prop="adscription"
-        min-width="100px"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <span>{{ getInstitute(scope.row.adscription) }}</span>
-        </template>
-      </el-table-column> -->
-      <el-table-column
-        label="Charge"
-        sortable
-        prop="charge"
-        min-width="80px"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <span>{{ scope.row.charge }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        v-if="showAllFields"
-        sortable
-        prop="email"
-        label="Email"
-        align="center"
-        min-width="90"
-      >
-        <template slot-scope="{ row }">
-          <span class="link-type">{{ row.email }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="Divisions"
-        sortable
-        prop="divisions"
-        class-name="status-col"
-        width="200"
-      >
-        <template slot-scope="{ row }">
-          <el-tag
-            v-for="div in row.divisions"
-            size="mini"
-            :key="div"
-            type="info"
-            >{{ getDiv(div) }}</el-tag
-          >
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="Status"
-        sortable
-        prop="active"
-        class-name="status-col"
-        width="100"
-      >
-        <template slot-scope="{ row }">
-          <el-tag :type="row.active | statusFilter">{{
-            row.active ? 'Active' : 'Inactive'
-          }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="Actions"
-        align="center"
-        fixed="right"
-        min-width="100"
-        class-name="small-padding fixed-width"
-      >
-        <template slot-scope="{ row }">
-          <!-- <el-button type="primary" size="mini" @click="handleUpdate(row)">Edit</el-button> -->
-          <el-button
-            v-if="!row.active"
-            size="mini"
-            type="success"
-            @click="handleModifyStatus(row, true)"
-            >Active</el-button
-          >
-          <el-button
-            v-else
-            size="small"
-            type="danger"
-            @click="handleModifyStatus(row, false)"
-            >Inactive</el-button
-          >
-        </template>
-      </el-table-column>
-    </el-table>
     <div style="margin-top: 20px">
       <el-select size="mini" v-model="performAction" placeholder="------------">
         <el-option label="------------" value></el-option>
@@ -229,7 +104,7 @@ const statusOptions = [
 
 export default {
   name: 'MembersTable',
-  components: { Pagination, JsonEditor },
+  components: { Pagination, JsonEditor, CardDetail: () => import('./components/Card') },
   directives: { waves },
   filters: {
     statusFilter (active) {

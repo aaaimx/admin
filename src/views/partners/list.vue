@@ -5,7 +5,7 @@
         style="max-width: 300px"
         v-model="listQuery.name"
         placeholder="Search by name"
-        @change="handleFilter"
+        @input="handleFilter"
         @keyup.enter="handleFilter"
         clearable
         class="filter-item"

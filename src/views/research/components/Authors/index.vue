@@ -27,9 +27,15 @@
         :value="item.id"
       ></el-option>
     </el-select>
-    <el-button icon="el-icon-plus" @click="addAuthor()" size="small"
-      >Add author</el-button
+    <el-button
+      icon="el-icon-check"
+      type="success"
+      circle
+      @click="addAuthor()"
+      size="mini"
+      ></el-button
     >
+    <MemberModal />
   </div>
 </template>
 
@@ -42,7 +48,10 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'DndListDemo',
-  components: { DndList },
+  components: {
+    DndList,
+    MemberModal: () => import('@/components/Modals/Member')
+  },
   props: {
     title: {
       type: String,
@@ -103,6 +112,7 @@ export default {
           duration: 2000
         })
       }
+      this.author = ''
     }
   }
 }

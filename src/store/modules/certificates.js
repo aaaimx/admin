@@ -25,7 +25,7 @@ const mutations = {
     state.postForm = Object.assign({}, cert)
   },
   SET_EVENTS: (state, events) => {
-    state.events = events
+    state.events = [{ id: 0, title: 'No event' }, ...events]
   }
 }
 
