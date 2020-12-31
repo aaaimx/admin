@@ -55,6 +55,18 @@ const routes = [
             /* webpackChunkName: "certificate-form" */ '../views/certificates/Form.vue'
           ),
         props: true
+      },
+      {
+        meta: {
+          title: 'Edit Event'
+        },
+        path: '/events/:id',
+        name: 'event.edit',
+        component: () =>
+          import(
+            /* webpackChunkName: "event-form" */ '../views/events/EditForm.vue'
+          ),
+        props: true
       }
     ]
   },

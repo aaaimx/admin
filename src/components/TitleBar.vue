@@ -10,7 +10,7 @@
           </ul>
         </div>
       </div>
-      <EventForm :is-active="isModalActive" @cancel="cancel" />
+      <EventModal :is-active="isModalActive" @cancel="cancel" />
       <div class="level-right">
         <div class="level-item">
           <div class="buttons is-right">
@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import EventForm from '@/views/events/Form'
+import EventModal from '@/views/events/CreateModal'
 export default {
   name: 'TitleBar',
   components: {
-    EventForm
+    EventModal
   },
   data () {
     return {
