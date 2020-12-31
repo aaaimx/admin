@@ -15,7 +15,15 @@
 
 # AAAIMX Research & Academic Productivity Manager 
 Administration panel for the management of articles, theses, presentations, authors and advisers.
+## Table of Contents
 
+* [Other versions](#other-versions)
+* [Description & Demo](#description--demo)
+* [Quick Start](#quick-start)
+* [Browser Support](#browser-support)
+* [Reporting Issues](#reporting-issues)
+* [Licensing](#licensing)
+* [Useful Links](#useful-links)
 ## Getting Started
 
 ### Prerequisites 📋
@@ -42,6 +50,11 @@ $ npm run start
 ## Built With
 
 - [Vue.js](https://vuejs.org/) - The Progressive JavaScript Framework
+- [JustBoil.me](https://justboil.me)
+- [Vue.js Guide](https://vuejs.org/v2/guide/)
+- [Vue CLI Guide](https://cli.vuejs.org/guide/)
+- [Buefy](https://buefy.org)
+- [Bulma](https://bulma.io)
 
 ## Contributing
 
@@ -59,10 +72,55 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Credits
 
-- **Vue Element Admin** - _Base template_ - [PanJiaChen](https://github.com/PanJiaChen/vue-element-admin)
+**Admin Null** is simple and beautiful premium Vue.js Buefy Bulma admin dashboard (SPA/PWA).
 
-## License 📄
+* PWA/SPA — Single page app
+* Built with Vue.js, Buefy & Bulma
+* SCSS sources with variables
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Other versions
+
+This is Vue CLI dashboard version (Bulma, Buefy, Vue.js). Other versions below.
+
+#### Nuxt.js version
+
+**Free** Bulma Nuxt.js Buefy admin dashboard — https://github.com/justboil/admin-null-nuxt
+
+**Premium** Bulma Nuxt.js Buefy admin dashboard — https://justboil.me/bulma-admin-template/null-nuxt
+
+## Description & Demo
+
+## Quick Start
+
+#### Get the repo
+
+* Download an archive from Gumroad (you'll get a private link as soon, as you purchase)
+* Unzip
+
+#### Install
+
+`cd` to project's dir and run `npm install` 
+
+#### Serve
+
+To pre-compile & hot-reload for development run `npm run serve`
+
+#### Build
+
+Production-ready with minified bundle `npm run build`
+
+## Browser Support
+
+We try to make sure dashboard works well in the latest versions of all major browsers
+
+<img src="https://justboil.me/images/browsers-svg/chrome.svg" width="64" height="64" alt="Chrome"> <img src="https://justboil.me/images/browsers-svg/firefox.svg" width="64" height="64" alt="Firefox"> <img src="https://justboil.me/images/browsers-svg/edge.svg" width="64" height="64" alt="Edge"> <img src="https://justboil.me/images/browsers-svg/safari.svg" width="64" height="64" alt="Safari"> <img src="https://justboil.me/images/browsers-svg/opera.svg" width="64" height="64" alt="Opera">
+
+## Licensing 📄 
+
+- Copyright &copy; 2019-2020 JustBoil.me (https://justboil.me)
+- More on Licences: https://justboil.me/info/licenses
 
 Made with ❤️ by [AAAIMX](https://github.com/aaaimx) 😊
+
+
