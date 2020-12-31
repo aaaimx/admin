@@ -19,14 +19,19 @@
         <button class="button">APPRECIATION</button>
         <button class="button">PARTICIPATION</button>
       </div>
-      <form slot="right" @submit.prevent="actionSample">
+      <form slot="right">
         <div class="field has-addons">
           <div class="control">
-            <input class="input" type="text" placeholder="Sample field..." />
+            <input
+              class="input"
+              v-model="listQuery.search"
+              type="text"
+              placeholder="Search..."
+            />
           </div>
           <div class="control">
             <button type="submit" class="button is-primary">
-              <b-icon icon="dots-horizontal" custom-size="default" />
+              <b-icon icon="magnify" custom-size="default" />
             </button>
           </div>
         </div>
@@ -40,20 +45,22 @@
         @cancel="trashCancel"
       />
       <b-table
+        :data="list"
+        :striped="true"
+        :hoverable="true"
         :checked-rows.sync="checkedRows"
         :checkable="checkable"
         :loading="isLoading"
-        :paginated="paginated"
+        :paginated="false"
+        :current-page="listQuery.page"
+        :per-page="listQuery.limit"
+        :total="total"
+        backend-pagination
         :opened-detailed="defaultOpenedDetails"
         @details-open="onCollapse"
         detailed
         detail-key="uuid"
         :show-detail-icon="true"
-        :per-page="perPage"
-        :striped="true"
-        :hoverable="true"
-        default-sort="date_start"
-        :data="list"
       >
         <!-- <b-table-column
         cell-class="has-no-head-mobile is-image-cell"
@@ -159,6 +166,46 @@
             </template>
           </div>
         </section>
+
+        <div slot="footer" class="is-flex is-justify-content-space-between">
+          <b-dropdown
+            v-model="listQuery.limit"
+            append-to-body
+            aria-role="list"
+          >
+            <button
+              class="button is-secondary is-small"
+              slot="trigger"
+              slot-scope="{ active }"
+            >
+              <span>Por página: {{ listQuery.limit }}</span>
+              <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
+            </button>
+            <b-dropdown-item aria-role="listitem" :value="5">5</b-dropdown-item>
+            <b-dropdown-item aria-role="listitem" :value="10"
+              >10</b-dropdown-item
+            >
+            <b-dropdown-item aria-role="listitem" :value="25"
+              >25</b-dropdown-item
+            >
+            <b-dropdown-item aria-role="listitem" :value="50"
+              >50</b-dropdown-item
+            >
+          </b-dropdown>
+          <b-pagination
+            :total="total"
+            v-model="listQuery.page"
+            :simple="false"
+            :rounded="false"
+            size="is-small"
+            :per-page="listQuery.limit"
+            aria-next-label="Next page"
+            aria-previous-label="Previous page"
+            aria-page-label="Page"
+            aria-current-label="Current page"
+          >
+          </b-pagination>
+        </div>
       </b-table>
     </div>
   </card-component>
@@ -186,7 +233,12 @@ export default {
       isModalActive: false,
       defaultOpenedDetails: [],
       list: [],
-      listQuery: {},
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 10,
+        offset: 0
+      },
       trashObject: null,
       events: [],
       isLoading: false,
@@ -207,6 +259,14 @@ export default {
   mounted () {
     this.getList()
   },
+  watch: {
+    listQuery: {
+      handler (val) {
+        this.getList()
+      },
+      deep: true
+    }
+  },
   methods: {
     actionSample () {
       this.$router.push('/certificates/new')
@@ -217,8 +277,7 @@ export default {
     },
     getList () {
       this.isLoading = true
-      const { limit, page } = this.listQuery
-      this.listQuery.offset = limit * (page - 1)
+      this.listQuery.offset = this.listQuery.limit * (this.listQuery.page - 1)
       fetchList(this.listQuery).then(res => {
         this.list = res.results
         this.total = res.count

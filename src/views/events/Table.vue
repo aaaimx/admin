@@ -14,10 +14,15 @@
         <button class="button" disabled>This month</button>
         <button class="button" disabled>This year</button>
       </div>
-      <form slot="right" @submit.prevent="actionSample">
+      <form slot="right" @submit.prevent="getEvents">
         <div class="field has-addons">
           <div class="control">
-            <input class="input" type="text" placeholder="Search..." />
+            <input
+              class="input"
+              v-model="listQuery.search"
+              type="text"
+              placeholder="Search..."
+            />
           </div>
           <div class="control">
             <button type="submit" class="button is-primary">
@@ -35,20 +40,23 @@
         @cancel="trashCancel"
       />
       <b-table
+        :data="events"
+        :striped="true"
+        :hoverable="true"
         :checked-rows.sync="checkedRows"
         :checkable="checkable"
         :loading="isLoading"
-        :paginated="paginated"
+        :paginated="true"
+        :current-page="current_page"
+        :per-page="listQuery.limit"
+        :total="total"
+        backend-pagination
         :opened-detailed="defaultOpenedDetails"
         @details-open="onCollapse"
         detailed
         detail-key="id"
         :show-detail-icon="true"
-        :per-page="perPage"
-        :striped="true"
-        :hoverable="true"
         default-sort="date_start"
-        :data="events"
       >
         <!-- <b-table-column
         cell-class="has-no-head-mobile is-image-cell"
@@ -180,17 +188,47 @@
             </template>
           </div>
         </section>
+
+        <div slot="footer" class="is-flex is-justify-content-space-between">
+          <div></div>
+          <b-dropdown
+            v-model="listQuery.limit"
+            @active-change="getEvents"
+            append-to-body
+            aria-role="list"
+          >
+            <button
+              class="button is-secondary"
+              slot="trigger"
+              slot-scope="{ active }"
+            >
+              <span>Por página: {{ listQuery.limit }}</span>
+              <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
+            </button>
+            <b-dropdown-item aria-role="listitem" :value="5">5</b-dropdown-item>
+            <b-dropdown-item aria-role="listitem" :value="10"
+              >10</b-dropdown-item
+            >
+            <b-dropdown-item aria-role="listitem" :value="25"
+              >25</b-dropdown-item
+            >
+            <b-dropdown-item aria-role="listitem" :value="50"
+              >50</b-dropdown-item
+            >
+          </b-dropdown>
+        </div>
       </b-table>
     </div>
   </card-component>
 </template>
 
 <script>
-import { fetchList, fetchEvents } from '@/api/certificates'
+import { fetchList } from '@/api/certificates'
+import { fetchList as fetchEvents } from '@/api/events'
 import ModalBox from '@/components/ConfirmDelete'
 
 export default {
-  name: 'EventsTableSample',
+  name: 'EventsTable',
   components: { ModalBox },
   props: {
     dataUrl: {
@@ -207,7 +245,12 @@ export default {
       isModalActive: false,
       defaultOpenedDetails: [],
       certificates: [],
-      listQuery: {},
+      total: 0,
+      listQuery: {
+        limit: 10,
+        offset: 0
+      },
+      current_page: 1,
       trashObject: null,
       events: [],
       isLoading: false,
@@ -228,6 +271,14 @@ export default {
   created () {
     this.getEvents()
   },
+  watch: {
+    listQuery: {
+      handler (val) {
+        console.log(val)
+      },
+      deep: true
+    }
+  },
   methods: {
     actionSample () {
       this.$buefy.toast.open({
@@ -245,9 +296,11 @@ export default {
     },
     getEvents () {
       this.isLoading = true
-      fetchEvents()
+      this.listQuery.offset = this.listQuery.limit * (this.current_page - 1)
+      fetchEvents(this.listQuery)
         .then(r => {
           this.isLoading = false
+          this.total = r.count
           this.events = r.results
         })
         .catch(e => {
@@ -260,8 +313,6 @@ export default {
     },
     getList () {
       this.listLoading = true
-      const { limit, page } = this.listQuery
-      this.listQuery.offset = limit * (page - 1)
       fetchList(this.listQuery).then(res => {
         this.list = res.results
         this.total = res.count
