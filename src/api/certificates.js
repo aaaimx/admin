@@ -1,12 +1,5 @@
 import request from '@/services/axios'
 
-export function fetchListC () {
-  return request({
-    url: '/certificates/',
-    method: 'GET'
-  })
-}
-
 export function getFolders () {
   return request({
     url: '/storage/?folder=certificates',

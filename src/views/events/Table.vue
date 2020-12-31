@@ -95,7 +95,7 @@
         >
           <div class="buttons is-right">
             <router-link
-              :to="{ name: 'client.edit', params: { id: props.row.id } }"
+              :to="{ name: 'event.edit', params: { id: props.row.id } }"
               class="button is-small is-primary"
             >
               <b-icon icon="calendar-edit" size="is-small" />

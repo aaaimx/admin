@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import each from 'lodash/each'
 import { login, refreshToken, getInfo } from '@/api/user'
+import { getAllDivisions } from '@/api/productivity'
 import {
   getToken,
   getRefresh,
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     userName: null,
     userEmail: null,
     userAvatar: null,
+
+    // productivity
+    divisions: [],
 
     // token
     token: getToken(),
@@ -214,6 +218,12 @@ export default new Vuex.Store({
             reject(error)
           })
       })
+    },
+
+    async getData ({ commit, state }) {
+      const data = await getAllDivisions()
+      console.log(data)
+      commit('basic', { key: 'divisions', value: data })
     },
 
     // user logout

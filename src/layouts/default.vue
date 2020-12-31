@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <nav-bar/>
+    <nav-bar />
     <aside-menu
       :menu="menu"
       :menu-bottom="menuBottom"
       @menu-click="menuClick"
-      :class="{'has-secondary':!!menuSecondary}" />
+      :class="{ 'has-secondary': !!menuSecondary }"
+    />
     <aside-menu
       v-if="menuSecondary"
       :menu="menuSecondary"
@@ -13,11 +14,12 @@
       :label="menuSecondaryLabel"
       :icon="menuSecondaryIcon"
       @menu-click="menuClick"
-      @close="menuSecondaryCloseClick"/>
-    <router-view/>
-    <aside-right/>
-    <footer-bar/>
-    <overlay/>
+      @close="menuSecondaryCloseClick"
+    />
+    <router-view />
+    <aside-right />
+    <footer-bar />
+    <overlay />
   </div>
 </template>
 
@@ -59,25 +61,28 @@ export default {
         }
       ]
     },
-    ...mapState([
-      'isOverlayVisible'
-    ])
+    ...mapState(['isOverlayVisible'])
   },
   created () {
     this.$store.commit('darkModeToggle')
-    // this.$store.dispatch('verifyToken')
+    this.$store.dispatch('getData')
     this.$store.commit('user', {
       name: 'Admin',
       email: 'admin@aaaimx.org',
-      avatar: 'https://avatars.dicebear.com/4.5/api/bottts/mxssssssssssssssssss.svg'
+      avatar:
+        'https://avatars.dicebear.com/4.5/api/bottts/mxssssssssssssssssss.svg'
     })
   },
   methods: {
     async menuClick (item) {
       if (item.menuSecondary) {
         this.menuSecondary = item.menuSecondary
-        this.menuSecondaryLabel = item.menuSecondaryLabel ? item.menuSecondaryLabel : null
-        this.menuSecondaryIcon = item.menuSecondaryIcon ? item.menuSecondaryIcon : null
+        this.menuSecondaryLabel = item.menuSecondaryLabel
+          ? item.menuSecondaryLabel
+          : null
+        this.menuSecondaryIcon = item.menuSecondaryIcon
+          ? item.menuSecondaryIcon
+          : null
 
         this.$store.commit('asideActiveForcedKeyToggle', item)
         this.$store.commit('overlayToggle', true)

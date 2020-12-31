@@ -124,6 +124,27 @@ export default [
     },
     {
       href:
+        'https://docs.google.com/forms/d/1NPUSMUQm5l8FJHPw5AowO3h4mGzE2lnR34vcbGbct3A/edit',
+      label: 'Events (Google Form)',
+      external: true,
+      icon: 'format-list-bulleted'
+    },
+    {
+      href:
+        'https://docs.google.com/spreadsheets/d/1MYYRaFOsy1-oljzJaoPAYk6k6kZLJQPw9d_fIl9e0AI/edit#gid=730085670',
+      label: 'Activities (Spreadsheet)',
+      external: true,
+      icon: 'google-spreadsheet'
+    },
+    {
+      href:
+        'https://drive.google.com/file/d/1GAFKWsyFI81-DGsdlJxUsJ6ZsYApqLGs/view',
+      label: 'Events Protocol',
+      external: true,
+      icon: 'file-word-box'
+    },
+    {
+      href:
         'https://us-files.hostinger.mx/',
       label: 'AAAIMX FTP',
       external: true,

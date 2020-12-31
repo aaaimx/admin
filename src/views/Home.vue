@@ -56,8 +56,8 @@
 <script>
 // @ is an alias to /src
 import TitleBar from '@/components/TitleBar'
-import EventsTable from './components/EventsTable'
-import CertificatesTable from './components/CertificatesTable'
+import EventsTable from './events/Table'
+import CertificatesTable from './certificates/Table'
 import HeroBarMain from '@/components/HeroBarMain'
 export default {
   name: 'home',

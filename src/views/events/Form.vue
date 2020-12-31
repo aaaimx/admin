@@ -1,5 +1,10 @@
 <template>
-  <b-modal :active.sync="isModalActive" has-modal-card>
+  <b-modal
+    :active.sync="isModalActive"
+    has-modal-card
+    :width="700"
+    scroll="keep"
+  >
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">New Event</p>
@@ -14,7 +19,7 @@
               required
             />
           </b-field>
-          <b-field label="Type" message="Event type">
+          <b-field horizontal label="Type" message="Event type">
             <b-select v-model="form.type" placeholder="Select a type" expanded>
               <option value="Workshop">Workshop</option>
               <option value="Course">Course</option>
@@ -23,7 +28,42 @@
               <option value="Other">Other</option>
             </b-select>
           </b-field>
-          <b-field label="Date start" message="Event start">
+
+          <b-field horizontal label="Division" message="Division event">
+            <b-select
+              v-model="form.division"
+              placeholder="Select division"
+              expanded
+            >
+              <option
+                v-for="item in $store.state.divisions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Room space"
+            message="Number of particpants"
+            horizontal
+            v-if="!form.isPublic"
+          >
+            <b-input
+              name="max"
+              min="1"
+              max="100"
+              type="number"
+              v-model="form.max_particpants"
+              required
+            />
+          </b-field>
+          <b-field horizontal>
+            <b-checkbox type="is-link" v-model="form.isPublic" class="is-thin">
+              Open to the public
+            </b-checkbox>
+          </b-field>
+          <b-field horizontal label="Date start" message="Event start">
             <b-datetimepicker
               placeholder="Select a datetime..."
               icon="calendar-today"
@@ -33,7 +73,7 @@
             >
             </b-datetimepicker>
           </b-field>
-          <b-field label="Date end" message="Event end">
+          <b-field horizontal label="Date end" message="Event end">
             <b-datetimepicker
               v-model="form.date_end"
               placeholder="Select a datetime..."
@@ -43,16 +83,30 @@
             >
             </b-datetimepicker>
           </b-field>
-          <notification v-if="id" class="is-warning">
-            <div>
-              <span><b>Be carefully!.</b> Image will be reseted.</span>
-            </div>
-          </notification>
+
+          <b-field label="Hours" message="Total hours (CC)" horizontal>
+            <b-input
+              name="max"
+              min="1"
+              max="100"
+              type="number"
+              v-model="form.hours"
+            />
+          </b-field>
+
+          <b-field label="Description">
+            <b-input
+              :rows="10"
+              maxlength="500"
+              v-model="form.description"
+              type="textarea"
+            ></b-input>
+          </b-field>
         </form>
       </section>
       <footer class="modal-card-foot">
         <b-button type="is-primary" :loading="isLoading" native-type="submit">{{
-          id ? 'Save changes' : 'Create certificate'
+          id ? 'Save changes' : 'Create event'
         }}</b-button>
         <button class="button is-danger" @click="cancel">Cancel</button>
       </footer>
@@ -80,7 +134,8 @@ export default {
       isLoading: false,
       isModalActive: false,
       id: null,
-      form: {}
+      form: {},
+      divisions: []
     }
   },
   methods: {

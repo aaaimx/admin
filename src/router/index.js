@@ -22,7 +22,7 @@ const routes = [
         path: '/home',
         name: 'home',
         component: () =>
-          import(/* webpackChunkName: "profile" */ '../views/home/index.vue')
+          import(/* webpackChunkName: "profile" */ '../views/Home.vue')
       },
       {
         meta: {
@@ -41,7 +41,7 @@ const routes = [
         name: 'certificate.new',
         component: () =>
           import(
-            /* webpackChunkName: "certificate-form" */ '../views/CertificateForm.vue'
+            /* webpackChunkName: "certificate-form" */ '../views/certificates/Form.vue'
           )
       },
       {
@@ -52,7 +52,7 @@ const routes = [
         name: 'certificate.edit',
         component: () =>
           import(
-            /* webpackChunkName: "certificate-form" */ '../views/CertificateForm.vue'
+            /* webpackChunkName: "certificate-form" */ '../views/certificates/Form.vue'
           ),
         props: true
       }
