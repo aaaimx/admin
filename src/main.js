@@ -36,7 +36,7 @@ Object.keys(filters).forEach(key => {
 Vue.directive('linkified', linkify)
 
 /* Default title tag */
-const defaultDocumentTitle = 'Admin Null Vue Bulma Premium'
+const defaultDocumentTitle = 'AAAIMX Productivity Manager'
 
 /* Collapse mobile aside menu on route change & set title */
 router.afterEach(to => {
