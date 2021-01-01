@@ -18,6 +18,7 @@
     />
     <router-view />
     <aside-right />
+    <bottom-nav />
     <footer-bar />
     <overlay />
   </div>
@@ -27,6 +28,7 @@
 // @ is an alias to /src
 import { mapState } from 'vuex'
 import NavBar from '@/components/NavBar'
+import BottomNav from '@/components/BottomNav'
 import AsideMenu from '@/components/Aside/AsideMenu'
 import FooterBar from '@/components/FooterBar'
 import Overlay from '@/components/Overlay'
@@ -40,7 +42,8 @@ export default {
     Overlay,
     FooterBar,
     AsideMenu,
-    NavBar
+    NavBar,
+    BottomNav
   },
   data () {
     return {

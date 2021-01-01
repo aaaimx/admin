@@ -5,6 +5,11 @@ export default [
       to: '/',
       icon: 'desktop-mac',
       label: 'Dashboard'
+    },
+    {
+      to: '/certificates',
+      icon: 'certificate',
+      label: 'Certificates'
     }
   ],
   //   'Examples',
@@ -107,7 +112,7 @@ export default [
   //       icon: 'lock-reset'
   //     }
   //   ],
-  'Useful links',
+  'Social links',
   [
     {
       href: 'https://www.aaaimx.org/',
@@ -115,6 +120,27 @@ export default [
       external: true,
       icon: 'web'
     },
+    {
+      href: 'https://www.facebook.com/aaaimx',
+      label: 'AAAI Student Chapter',
+      external: true,
+      icon: 'facebook'
+    },
+    {
+      href: 'https://www.instagram.com/aaaimx/',
+      label: '@aaaimx',
+      external: true,
+      icon: 'instagram'
+    },
+    {
+      href: 'https://www.linkedin.com/company/aaaimx/',
+      label: 'in/aaaimx',
+      external: true,
+      icon: 'linkedin'
+    }
+  ],
+  'Committee links',
+  [
     {
       href:
         'https://drive.google.com/drive/u/0/folders/1_I5r8bEjjtLP-JUomPv2RpFyLLT5s5yo',
@@ -142,10 +168,18 @@ export default [
       label: 'Events Protocol',
       external: true,
       icon: 'file-word-box'
+    }
+  ],
+  'Dev links',
+  [
+    {
+      href: 'https://hpanel.hostinger.com/hosting/aaaimx.org/',
+      label: 'AAAIMX Hosting',
+      external: true,
+      icon: 'web-box'
     },
     {
-      href:
-        'https://us-files.hostinger.mx/',
+      href: 'https://us-files.hostinger.mx/',
       label: 'AAAIMX FTP',
       external: true,
       icon: 'file-cloud'

@@ -35,6 +35,17 @@ const routes = [
       },
       {
         meta: {
+          title: 'Certificates'
+        },
+        path: '/certificates',
+        name: 'certificates',
+        component: () =>
+          import(
+            /* webpackChunkName: "certificates" */ '../views/Certificates.vue'
+          )
+      },
+      {
+        meta: {
           title: 'New Certificate'
         },
         path: '/certificates/new',
