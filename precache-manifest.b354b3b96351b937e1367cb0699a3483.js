@@ -44,7 +44,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/profile-legacy.9493d64e.js"
   },
   {
-    "revision": "6b2b47c2dc018a6c6d289e4132d96e72",
+    "revision": "c725f0dfac72ed5f798d34b4e14940c4",
     "url": "/aaaimx-admin/manifest.json"
   }
 ]);
