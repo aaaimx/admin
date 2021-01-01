@@ -28,11 +28,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/data-sources/updates.json"
   },
   {
-    "revision": "9ed33b873e49a44feb61a3e2fea0dc2a",
-    "url": "/aaaimx-admin/favicon.png"
-  },
-  {
-    "revision": "8a6a63965a0703db4bfe97421e329936",
+    "revision": "46cabc9901106cac46c20634bb951bf7",
     "url": "/aaaimx-admin/index.html"
   },
   {
@@ -68,7 +64,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/profile.6eed70e9.js"
   },
   {
-    "revision": "c0bfb331009ce4a1fc721a86f18ab8a8",
+    "revision": "6b2b47c2dc018a6c6d289e4132d96e72",
     "url": "/aaaimx-admin/manifest.json"
   },
   {

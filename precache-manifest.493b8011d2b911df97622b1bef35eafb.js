@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificate-form~event-form~profile.006daab7.css"
   },
   {
-    "revision": "1347b0555537ed03f0cd02f036f9ebf2",
+    "revision": "6a9a54a4cd4d6d93cd92923099e9a35b",
     "url": "/aaaimx-admin/index.html"
   },
   {
@@ -44,7 +44,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/profile-legacy.9493d64e.js"
   },
   {
-    "revision": "c0bfb331009ce4a1fc721a86f18ab8a8",
+    "revision": "6b2b47c2dc018a6c6d289e4132d96e72",
     "url": "/aaaimx-admin/manifest.json"
   }
 ]);
