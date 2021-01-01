@@ -6,7 +6,16 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/aaaimx-admin',
+  publicPath: '/aaaimx-admin/',
+  pwa: {
+    // configure the workbox plugin
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      // swSrc is required in InjectManifest mode.
+      swSrc: 'public/service-worker.js'
+      // ...other Workbox options...
+    }
+  },
   // Remove moment.js from chart.js
   // https://www.chartjs.org/docs/latest/getting-started/integration.html#bundlers-webpack-rollup-etc
   configureWebpack: config => {

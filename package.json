@@ -6,8 +6,11 @@
     "serve": "cross-env NODE_ENV=development vue-cli-service serve",
     "prod": "cross-env NODE_ENV=prod vue-cli-service serve",
     "build": "vue-cli-service build --modern",
-    "deploy:gh-pages": "cross-env NODE_DEBUG=gh-pages gh-pages -d dist -b demo -t",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES npm run build",
+    "deploy:gh-pages": "cross-env NODE_DEBUG=gh-pages gh-pages -d dist -t",
+    "publish": "npm run build:gh-pages && npm run deploy:gh-pages"
+    
   },
   "dependencies": {
     "axios": "^0.20.0",

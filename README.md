@@ -13,8 +13,8 @@
 </p>
 <!-- end banner -->
 
-# AAAIMX Research & Academic Productivity Manager 
-Administration panel for the management of articles, theses, presentations, authors and advisers.
+# AAAIMX Productivity Manager 
+Administration panel for the management of events and productivity
 ## Table of Contents
 
 * [Other versions](#other-versions)
