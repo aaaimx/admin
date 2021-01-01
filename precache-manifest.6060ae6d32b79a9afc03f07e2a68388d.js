@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificate-form~event-form~profile.006daab7.css"
   },
   {
-    "revision": "1347b0555537ed03f0cd02f036f9ebf2",
+    "revision": "8a4cdb0f4da0052ec8764008cfab8060",
     "url": "/aaaimx-admin/index.html"
   },
   {

@@ -28,7 +28,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/data-sources/updates.json"
   },
   {
-    "revision": "8a6a63965a0703db4bfe97421e329936",
+    "revision": "09d6dfdce13bea25372f0a72a1cdc294",
     "url": "/aaaimx-admin/index.html"
   },
   {
