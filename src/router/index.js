@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import { getToken, decodeToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 
 Vue.use(Router)
 
@@ -141,8 +141,7 @@ router.beforeEach(async (to, from, next) => {
       try {
         // get user info
         await store.dispatch('refreshToken')
-        const decoded = decodeToken(token)
-        console.log(decoded)
+        // const decoded = decodeToken(token)
         next()
       } catch (error) {
         console.log(error)

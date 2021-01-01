@@ -15,7 +15,7 @@
     <section class="section is-main-section">
       <notification class="is-info">
         <div>
-          <span><b>Demo only.</b> No data will be saved/updated</span>
+          <span><b>Edit event.</b> Data will be updated</span>
         </div>
       </notification>
       <tiles>
@@ -24,9 +24,10 @@
           icon="calendar-edit"
           class="tile is-child"
         >
-          <form>
+          <form @submit.prevent="submit">
             <b-field label="Title" message="Event name">
               <b-input
+                readonly
                 placeholder="e.g. SINABIA 2019"
                 name="title"
                 v-model="form.title"
@@ -57,7 +58,7 @@
                 <option value="Course">Course</option>
                 <option value="Webinar">Webinar</option>
                 <option value="Simposium">Simposium</option>
-                <option value="Other">Other</option>
+                <option value="">Other</option>
               </b-select>
             </b-field>
 
@@ -76,7 +77,7 @@
               </b-select>
             </b-field>
             <b-field
-              label="Room space"
+              label="Corum"
               message="Number of particpants"
               horizontal
               v-if="!form.isPublic"
@@ -86,8 +87,7 @@
                 min="1"
                 max="100"
                 type="number"
-                v-model="form.max_particpants"
-                required
+                v-model="form.corum"
               />
             </b-field>
             <b-field horizontal>
@@ -101,6 +101,7 @@
             </b-field>
             <b-field horizontal label="Date start" message="Event start">
               <b-datetimepicker
+                v-model="date_start"
                 placeholder="Select a datetime..."
                 icon="calendar-today"
                 :locale="locale"
@@ -110,6 +111,7 @@
             </b-field>
             <b-field horizontal label="Date end" message="Event end">
               <b-datetimepicker
+                v-model="date_end"
                 placeholder="Select a datetime..."
                 icon="calendar-today"
                 :locale="locale"
@@ -131,27 +133,27 @@
             <b-field label="Description">
               <b-input
                 :rows="10"
-                maxlength="500"
                 v-model="form.description"
                 type="textarea"
               ></b-input>
             </b-field>
+            <b-field>
+              <b-button
+                type="is-primary"
+                :loading="isLoading"
+                native-type="submit"
+                >Save changes</b-button
+              >
+            </b-field>
           </form>
         </card-component>
         <card-component
+          v-if="form.title"
           title="Event details"
           icon="calendar"
           class="tile is-child"
         >
-          <b-field  label="Title">
-            <b-input :value="form.title" custom-class="is-static" readonly />
-          </b-field>
-          <b-field  label="Division">
-            <b-input :value="form.division" custom-class="is-static" readonly />
-          </b-field>
-          <b-field  label="Type">
-            <b-input :value="form.type" custom-class="is-static" readonly />
-          </b-field>
+          <EventPreview :event="form" />
         </card-component>
       </tiles>
     </section>
@@ -164,14 +166,16 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import Notification from '@/components/Notification'
-import { fetch } from '@/api/events'
+import EventPreview from './EventPreview'
+import { fetch, update } from '@/api/events'
 export default {
   name: 'EventForm',
   components: {
     Tiles,
     HeroBar,
     TitleBar,
-    Notification
+    Notification,
+    EventPreview
   },
   props: {
     id: {
@@ -184,6 +188,8 @@ export default {
       locale: undefined, // Browser locale
       isLoading: false,
       isModalActive: false,
+      date_start: null,
+      date_end: null,
       form: this.getClearFormObject(),
       createdReadable: null
     }
@@ -241,7 +247,8 @@ export default {
         fetch(this.id)
           .then(item => {
             this.form = item
-            console.log(item)
+            this.date_start = new Date(item.date_start)
+            this.date_end = new Date(item.date_end)
             this.isLoading = false
           })
           .catch(e => {
@@ -257,17 +264,21 @@ export default {
     input (v) {
       this.createdReadable = dayjs(v).format('MMM D, YYYY')
     },
-    submit () {
+    async submit () {
       this.isLoading = true
-
-      setTimeout(() => {
-        this.isLoading = false
-
+      try {
+        this.form.date_start = this.date_start
+        this.form.date_end = this.date_end
+        await update(this.id, this.form)
         this.$buefy.snackbar.open({
-          message: 'Demo only',
+          message: 'Event updated',
           queue: false
         })
-      }, 500)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.isLoading = false
+      }
     }
   }
 }

@@ -357,7 +357,6 @@ export default {
       let data
       try {
         this.form.file = ''
-        console.log(data)
         if (this.id) data = await update(this.id, this.form)
         else data = await create(this.form)
         this.$buefy.snackbar.open({

@@ -4,6 +4,7 @@ import '@/scss/main.scss'
 /* Core */
 import Vue from 'vue'
 import Buefy from 'buefy'
+import linkify from 'vue-linkify'
 
 /* Router & Store */
 import router from './router'
@@ -11,6 +12,9 @@ import store from './store'
 
 /* Service Worker */
 import './registerServiceWorker'
+
+/* Global filters */
+import * as filters from './filters'
 
 /* Vue. Main component */
 import App from './App.vue'
@@ -23,6 +27,13 @@ GlobalComponents.keys().reduce((modules, modulePath) => {
   Vue.component(moduleName, value.default)
   return modules
 }, {})
+
+// register global utility filters
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
+Vue.directive('linkified', linkify)
 
 /* Default title tag */
 const defaultDocumentTitle = 'Admin Null Vue Bulma Premium'

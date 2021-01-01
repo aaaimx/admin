@@ -117,31 +117,9 @@
           </div>
         </b-table-column>
 
-        <template slot="detail">
-          <!-- <article class="media">
-          <figure class="media-left">
-            <p class="image is-64x64">
-              <img src="/static/img/placeholder-128x128.png" />
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong
-                  >{{ props.row }}
-                  {{ props.row }}</strong
-                >
-                <small>@{{ props.row }}</small>
-                <small>31m</small>
-                <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-                ornare magna eros, eu pellentesque tortor vestibulum ut.
-                Maecenas non massa sem. Etiam finibus odio quis feugiat
-                facilisis.
-              </p>
-            </div>
-          </div>
-        </article> -->
+        <template slot="detail" slot-scope="props">
+          <EventPreview :event="props.row" />
+          <hr>
           <CertList ref="certlist" :event="current_event" />
         </template>
 
@@ -174,10 +152,11 @@
 import { fetchList as fetchEvents } from '@/api/events'
 import ModalBox from '@/components/ConfirmDelete'
 import CertList from './CertList'
+import EventPreview from './EventPreview'
 
 export default {
   name: 'EventsTable',
-  components: { ModalBox, CertList },
+  components: { ModalBox, CertList, EventPreview },
   props: {
     dataUrl: {
       type: String,

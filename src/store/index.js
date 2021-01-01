@@ -222,7 +222,6 @@ export default new Vuex.Store({
 
     async getData ({ commit, state }) {
       const data = await getAllDivisions()
-      console.log(data)
       commit('basic', { key: 'divisions', value: data })
     },
 

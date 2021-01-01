@@ -18,3 +18,15 @@ export function fetch (id) {
     method: 'GET'
   })
 }
+
+/**
+ *
+ * @param {*} id String
+ */
+export function update (id, data) {
+  return request({
+    url: `/events/${id}/`,
+    method: 'PUT',
+    data
+  })
+}
