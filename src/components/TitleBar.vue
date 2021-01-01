@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import EventModal from '@/views/events/CreateModal'
+import EventModal from '@/views/events/EventModal'
 export default {
   name: 'TitleBar',
   components: {

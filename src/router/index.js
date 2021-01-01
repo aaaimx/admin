@@ -64,7 +64,7 @@ const routes = [
         name: 'event.edit',
         component: () =>
           import(
-            /* webpackChunkName: "event-form" */ '../views/events/EditForm.vue'
+            /* webpackChunkName: "event-form" */ '../views/events/EventDetail.vue'
           ),
         props: true
       }

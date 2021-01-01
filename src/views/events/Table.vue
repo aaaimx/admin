@@ -119,7 +119,7 @@
 
         <template slot="detail" slot-scope="props">
           <EventPreview :event="props.row" />
-          <hr>
+          <hr />
           <CertList ref="certlist" :event="current_event" />
         </template>
 
@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import { fetchList as fetchEvents } from '@/api/events'
+import { fetchList as fetchEvents, remove } from '@/api/events'
 import ModalBox from '@/components/ConfirmDelete'
 import CertList from './CertList'
 import EventPreview from './EventPreview'
@@ -239,12 +239,14 @@ export default {
       this.trashObject = trashObject
       this.isModalActive = true
     },
-    trashConfirm () {
-      this.isModalActive = false
+    async trashConfirm () {
+      await remove(this.trashObject.id)
       this.$buefy.snackbar.open({
-        message: 'Confirmed',
+        message: 'Event deleted',
         queue: false
       })
+      this.isModalActive = false
+      this.getEvents()
     },
     trashCancel () {
       this.isModalActive = false
