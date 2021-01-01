@@ -11,7 +11,7 @@
       <notification class="is-info">
         <div>
           <b-icon icon="buffer" custom-size="default" />
-          <b>Sorted and paginated table.</b>&nbsp;Based on Buefy's table.
+          <b>Certificates table.</b>&nbsp;Search and filter that you need
         </div>
       </notification>
       <card-component class="has-table has-thead-hidden">

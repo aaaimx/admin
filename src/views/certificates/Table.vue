@@ -150,30 +150,7 @@
         </b-table-column>
 
         <template slot="detail" slot-scope="props">
-          <article class="media">
-            <div class="media-left">
-              <figure>
-                <img width="200px" :src="props.row.file" />
-              </figure>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong>{{ props.row.to }}</strong> &nbsp;
-                  <small>{{ props.row.uuid }}</small>
-                  <copy-to-clipboard :text="props.row.uuid">
-                    <b-icon size="is-small" icon="clipboard" />
-                  </copy-to-clipboard>
-
-                  <br />
-                  {{ props.row.description }}
-                  <br />
-
-                  <b-tag type="is-primary">{{ props.row.type }}</b-tag>
-                </p>
-              </div>
-            </div>
-          </article>
+          <Preview :cert="props.row" styleMode="single"/>
         </template>
 
         <section class="section" slot="empty">
@@ -204,10 +181,11 @@
 <script>
 import { fetchList, remove } from '@/api/certificates'
 import ModalBox from '@/components/ConfirmDelete'
+import Preview from './CertPreview'
 
 export default {
   name: 'CertificatesTable',
-  components: { ModalBox },
+  components: { ModalBox, Preview },
   props: {
     dataUrl: {
       type: String,
