@@ -1,11 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "acd96e864d78e736ce79",
+    "revision": "b62876d3a587e23ea746",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
     "revision": "eb21a584892a253522c0",
     "url": "/aaaimx-admin/css/certificate-form~profile.006daab7.css"
+  },
+  {
+    "revision": "8befea4c1a3d0cf14c70",
+    "url": "/aaaimx-admin/css/certificates.006daab7.css"
   },
   {
     "revision": "16ea0dc745ef5a4e286c",
@@ -28,12 +32,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/data-sources/updates.json"
   },
   {
-    "revision": "4e9d8b923d55f14587bd4abd4bbd1f36",
+    "revision": "810e153d13b33eef7e55a2da4ceb2b3b",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "acd96e864d78e736ce79",
-    "url": "/aaaimx-admin/js/app.6ca5f83d.js"
+    "revision": "b62876d3a587e23ea746",
+    "url": "/aaaimx-admin/js/app.cc4665cb.js"
   },
   {
     "revision": "b4bae7774903a935c45f",
@@ -44,12 +48,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/certificate-form~profile.321731c0.js"
   },
   {
+    "revision": "8befea4c1a3d0cf14c70",
+    "url": "/aaaimx-admin/js/certificates.bba393ca.js"
+  },
+  {
     "revision": "1249b766e74aced366d0",
     "url": "/aaaimx-admin/js/chunk-vendors.a2b3203b.js"
   },
   {
-    "revision": "acc7d9707acc0be42833",
-    "url": "/aaaimx-admin/js/default.5c901a88.js"
+    "revision": "d1fa7da6d39fb8a130c3",
+    "url": "/aaaimx-admin/js/default.c1e9958e.js"
   },
   {
     "revision": "16ea0dc745ef5a4e286c",
@@ -60,8 +68,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/full-page.a2b3ac83.js"
   },
   {
-    "revision": "c996b9937ed12a6980fb",
-    "url": "/aaaimx-admin/js/profile.6eed70e9.js"
+    "revision": "fae72b69a74784e6d841",
+    "url": "/aaaimx-admin/js/profile.0da1a069.js"
   },
   {
     "revision": "c725f0dfac72ed5f798d34b4e14940c4",
