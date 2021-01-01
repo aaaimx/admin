@@ -184,6 +184,13 @@
               readonly
             />
           </b-field>
+          <notification class="is-warning">
+              <div>
+                <span
+                  ><b>Publish/Unpublish.</b> Make available online.</span
+                >
+              </div>
+            </notification>
           <b-button
             @click="updateStatus(!form.published)"
             :type="form.published ? 'is-warning' : 'is-success'"

@@ -34,18 +34,18 @@
               <b-icon icon="account" custom-size="default"/>
               <span>My Profile</span>
             </router-link>
-            <a class="navbar-item">
+            <!-- <a class="navbar-item">
               <b-icon icon="settings" custom-size="default"/>
               <span>Settings</span>
             </a>
             <a class="navbar-item">
               <b-icon icon="email" custom-size="default"/>
               <span>Messages</span>
-            </a>
+            </a> -->
             <hr class="navbar-divider">
-            <a class="navbar-item">
-              <b-icon icon="logout" custom-size="default"/>
-              <span>Log Out</span>
+            <a class="navbar-item" @click="logout">
+              <b-icon icon="logout" type="is-danger" custom-size="default"/>
+              <span class="has-text-danger">Log Out</span>
             </a>
           </div>
         </nav-bar-menu>

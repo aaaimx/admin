@@ -150,11 +150,12 @@ export default {
             message: 'Event created',
             queue: false
           })
+          this.form = defaultForm
           this.$router.push('/events/' + data.id)
         }
       } catch (error) {
         console.log(error)
-        this.$buefy.snackbar.open({
+        this.$buefy.toast.open({
           message: 'Something went wrong :(... Try again!',
           type: 'is-danger',
           queue: false
