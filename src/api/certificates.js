@@ -7,13 +7,6 @@ export function getFolders () {
   })
 }
 
-export function fetchEvents () {
-  return request({
-    url: '/events/',
-    method: 'GET'
-  })
-}
-
 /**
  *
  * @param {*} query Object
@@ -81,7 +74,7 @@ export function uploadFile (id, data) {
  * @param {*} id String
  * @param {*} data Object
  */
-export function publishCert (id, published) {
+export function publish (id, published) {
   return request({
     url: `/certificates/${id}/`,
     method: 'PATCH',

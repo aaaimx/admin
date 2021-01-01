@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 // create an axios instance
@@ -18,12 +17,9 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-    // config.headers.post['Content-Type'] = 'application/json'
-    // config.headers.put['Content-Type'] = 'application/json'
-    // config.headers.patch['Content-Type'] = 'application/json'
-    if (store.state.token) {
-      config.headers.Authorization = 'Bearer ' + getToken()
+    const token = getToken()
+    if (token) {
+      config.headers.Authorization = 'Bearer ' + token
     }
     return config
   },

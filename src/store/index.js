@@ -250,7 +250,6 @@ export default new Vuex.Store({
         refreshToken(refresh)
           .then(data => {
             commit('SET_TOKEN', '')
-
             removeToken()
             setToken(data.access)
             resolve()

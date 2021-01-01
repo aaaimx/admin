@@ -140,6 +140,7 @@ router.beforeEach(async (to, from, next) => {
       // determine whether the user has obtained his permission roles through getInfo
       try {
         // get user info
+        await store.dispatch('refreshToken')
         const decoded = decodeToken(token)
         console.log(decoded)
         next()

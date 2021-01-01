@@ -25,6 +25,7 @@
     "spinkit": "^1.2.5",
     "vue": "^2.6.12",
     "vue-chartjs": "^3.5.0",
+    "vue-copy-to-clipboard": "^1.0.3",
     "vue-router": "^3.4.3",
     "vuex": "^3.5.1"
   },

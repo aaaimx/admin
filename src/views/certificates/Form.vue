@@ -26,14 +26,15 @@
         >
           <form @submit.prevent="submit">
             <b-field v-if="id" label="ID" horizontal>
-              <b-input
-                v-model="form.uuid"
-                icon-right="clipboard"
-                icon-right-clickable
-                @icon-right-click="copyToClipboard"
-                custom-class="is-static"
-                readonly
-              />
+              <copy-to-clipboard :text="id">
+                <b-input
+                  v-model="form.uuid"
+                  icon-right="clipboard"
+                  icon-right-clickable
+                  custom-class="is-static"
+                  readonly
+                />
+              </copy-to-clipboard>
             </b-field>
             <hr />
             <b-field label="Facilitator" message="Certificate name" horizontal>
@@ -184,6 +185,7 @@
             />
           </b-field>
           <b-button
+            @click="updateStatus(!form.published)"
             :type="form.published ? 'is-warning' : 'is-success'"
             :loading="isLoading"
             >{{
@@ -224,10 +226,11 @@ import {
   create,
   update,
   remove,
+  publish,
   uploadFile,
-  getFolders,
-  fetchEvents
+  getFolders
 } from '@/api/certificates'
+import { fetchList as fetchEvents } from '@/api/events'
 export default {
   name: 'CertificateForm',
   components: {
@@ -312,13 +315,12 @@ export default {
   methods: {
     getClearFormObject () {
       return {
-        event: 'Talleres ML 2020',
-        to: 'AAAIMX',
-        type: 'RECOGNITION',
-        description: 'This is a test'
+        event: '',
+        to: '',
+        type: '',
+        description: ''
       }
     },
-    copyToClipboard () {},
     async getEvents () {
       const data = await fetchEvents()
       this.events = data.results.map(el => el.title)
@@ -367,6 +369,21 @@ export default {
       } catch (error) {
         console.log(error)
       } finally {
+        this.isLoading = false
+      }
+    },
+    async updateStatus (status) {
+      this.isLoading = true
+      try {
+        await publish(this.id, status)
+        this.$buefy.snackbar.open({
+          message: 'Status updated',
+          queue: false
+        })
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.form.published = status
         this.isLoading = false
       }
     },

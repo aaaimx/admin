@@ -13,11 +13,27 @@
     />
     <card-toolbar slot="toolbar" class="is-upper">
       <div slot="left" class="buttons has-addons">
-        <button class="button is-active" @click="actionSample">
+        <button
+          class="button is-link"
+          @click="listQuery.type = 'RECOGNITION'"
+          :class="{ 'is-active': listQuery.type === 'RECOGNITION' }"
+        >
           RECOGNITION
         </button>
-        <button class="button">APPRECIATION</button>
-        <button class="button">PARTICIPATION</button>
+        <button
+          class="button is-link"
+          @click="listQuery.type = 'APPRECIATION'"
+          :class="{ 'is-active': listQuery.type === 'APPRECIATION' }"
+        >
+          APPRECIATION
+        </button>
+        <button
+          class="button is-link"
+          @click="listQuery.type = 'PARTICIPATION'"
+          :class="{ 'is-active': listQuery.type === 'PARTICIPATION' }"
+        >
+          PARTICIPATION
+        </button>
       </div>
       <form slot="right">
         <div class="field has-addons">
@@ -116,6 +132,14 @@
               <b-icon icon="pencil" size="is-small" />
             </router-link>
             <button
+              :class="{ 'is-success': props.row.published }"
+              class="button is-small"
+              type="button"
+              @click.prevent="trashModal(props.row)"
+            >
+              <b-icon icon="web" size="is-small" />
+            </button>
+            <button
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
@@ -137,7 +161,9 @@
                 <p>
                   <strong>{{ props.row.to }}</strong> &nbsp;
                   <small>{{ props.row.uuid }}</small>
-                  <b-icon size="is-small" icon="clipboard"></b-icon>
+                  <copy-to-clipboard :text="props.row.uuid">
+                    <b-icon size="is-small" icon="clipboard" />
+                  </copy-to-clipboard>
 
                   <br />
                   {{ props.row.description }}
@@ -167,44 +193,8 @@
           </div>
         </section>
 
-        <div slot="footer" class="is-flex is-justify-content-space-between">
-          <b-dropdown
-            v-model="listQuery.limit"
-            append-to-body
-            aria-role="list"
-          >
-            <button
-              class="button is-secondary is-small"
-              slot="trigger"
-              slot-scope="{ active }"
-            >
-              <span>Por página: {{ listQuery.limit }}</span>
-              <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
-            </button>
-            <b-dropdown-item aria-role="listitem" :value="5">5</b-dropdown-item>
-            <b-dropdown-item aria-role="listitem" :value="10"
-              >10</b-dropdown-item
-            >
-            <b-dropdown-item aria-role="listitem" :value="25"
-              >25</b-dropdown-item
-            >
-            <b-dropdown-item aria-role="listitem" :value="50"
-              >50</b-dropdown-item
-            >
-          </b-dropdown>
-          <b-pagination
-            :total="total"
-            v-model="listQuery.page"
-            :simple="false"
-            :rounded="false"
-            size="is-small"
-            :per-page="listQuery.limit"
-            aria-next-label="Next page"
-            aria-previous-label="Previous page"
-            aria-page-label="Page"
-            aria-current-label="Current page"
-          >
-          </b-pagination>
+        <div slot="footer">
+          <Pagination :listQuery="listQuery" :total="total" />
         </div>
       </b-table>
     </div>
@@ -216,7 +206,7 @@ import { fetchList, remove } from '@/api/certificates'
 import ModalBox from '@/components/ConfirmDelete'
 
 export default {
-  name: 'EventsTableSample',
+  name: 'CertificatesTable',
   components: { ModalBox },
   props: {
     dataUrl: {
@@ -235,6 +225,7 @@ export default {
       list: [],
       total: 0,
       listQuery: {
+        type: null,
         page: 1,
         limit: 10,
         offset: 0
@@ -268,6 +259,10 @@ export default {
     }
   },
   methods: {
+    handleClick (type) {
+      console.log(type)
+      this.listQuery.type = type
+    },
     actionSample () {
       this.$router.push('/certificates/new')
     },

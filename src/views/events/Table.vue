@@ -14,7 +14,7 @@
         <button class="button" disabled>This month</button>
         <button class="button" disabled>This year</button>
       </div>
-      <form slot="right" @submit.prevent="getEvents">
+      <form slot="right">
         <div class="field has-addons">
           <div class="control">
             <input
@@ -46,12 +46,11 @@
         :checked-rows.sync="checkedRows"
         :checkable="checkable"
         :loading="isLoading"
-        :paginated="true"
-        :current-page="current_page"
+        :current-page="listQuery.page"
         :per-page="listQuery.limit"
         :total="total"
         backend-pagination
-        :opened-detailed="defaultOpenedDetails"
+        :opened-detailed="openedEvents"
         @details-open="onCollapse"
         detailed
         detail-key="id"
@@ -143,33 +142,7 @@
             </div>
           </div>
         </article> -->
-          <div class="columns is-multiline is-desktop">
-            <div
-              v-for="cert in certificates"
-              :key="cert.uuid"
-              class="column is-half-tablet is-one-quarter-desktop"
-            >
-              <div class="card">
-                <div class="card-image">
-                  <figure class="is-4by3">
-                    <img :src="cert.file" alt="Placeholder image" />
-                  </figure>
-                </div>
-                <div class="card-content" style="padding: 10px">
-                  <div class="media">
-                    <div class="media-content">
-                      <p class="title is-6">{{ cert.to }}</p>
-                      <p class="subtitle is-7">{{ cert.type }}</p>
-                    </div>
-                  </div>
-
-                  <!-- <div class="content">
-                  {{cert.description}}
-                </div> -->
-                </div>
-              </div>
-            </div>
-          </div>
+          <CertList ref="certlist" :event="current_event" />
         </template>
 
         <section class="section" slot="empty">
@@ -189,33 +162,8 @@
           </div>
         </section>
 
-        <div slot="footer" class="is-flex is-justify-content-space-between">
-          <div></div>
-          <b-dropdown
-            v-model="listQuery.limit"
-            @active-change="getEvents"
-            append-to-body
-            aria-role="list"
-          >
-            <button
-              class="button is-secondary"
-              slot="trigger"
-              slot-scope="{ active }"
-            >
-              <span>Por página: {{ listQuery.limit }}</span>
-              <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
-            </button>
-            <b-dropdown-item aria-role="listitem" :value="5">5</b-dropdown-item>
-            <b-dropdown-item aria-role="listitem" :value="10"
-              >10</b-dropdown-item
-            >
-            <b-dropdown-item aria-role="listitem" :value="25"
-              >25</b-dropdown-item
-            >
-            <b-dropdown-item aria-role="listitem" :value="50"
-              >50</b-dropdown-item
-            >
-          </b-dropdown>
+        <div slot="footer">
+          <Pagination :listQuery="listQuery" :total="total" />
         </div>
       </b-table>
     </div>
@@ -223,13 +171,13 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/certificates'
 import { fetchList as fetchEvents } from '@/api/events'
 import ModalBox from '@/components/ConfirmDelete'
+import CertList from './CertList'
 
 export default {
   name: 'EventsTable',
-  components: { ModalBox },
+  components: { ModalBox, CertList },
   props: {
     dataUrl: {
       type: String,
@@ -243,14 +191,14 @@ export default {
   data () {
     return {
       isModalActive: false,
-      defaultOpenedDetails: [],
+      openedEvents: [],
       certificates: [],
       total: 0,
       listQuery: {
         limit: 10,
         offset: 0
       },
-      current_page: 1,
+      current_event: '',
       trashObject: null,
       events: [],
       isLoading: false,
@@ -274,7 +222,7 @@ export default {
   watch: {
     listQuery: {
       handler (val) {
-        console.log(val)
+        this.getEvents()
       },
       deep: true
     }
@@ -288,15 +236,12 @@ export default {
       })
     },
     onCollapse (row) {
-      console.log(row)
-      this.defaultOpenedDetails = [row.id]
-      fetchList({ event: row.title }).then(res => {
-        this.certificates = res.results
-      })
+      this.openedEvents = [row.id]
+      this.current_event = row.title
     },
     getEvents () {
       this.isLoading = true
-      this.listQuery.offset = this.listQuery.limit * (this.current_page - 1)
+      this.listQuery.offset = this.listQuery.limit * (this.listQuery.page - 1)
       fetchEvents(this.listQuery)
         .then(r => {
           this.isLoading = false
@@ -310,14 +255,6 @@ export default {
             type: 'is-danger'
           })
         })
-    },
-    getList () {
-      this.listLoading = true
-      fetchList(this.listQuery).then(res => {
-        this.list = res.results
-        this.total = res.count
-        this.listLoading = false
-      })
     },
     trashModal (trashObject) {
       this.trashObject = trashObject

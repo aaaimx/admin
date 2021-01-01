@@ -35,7 +35,11 @@ table.table {
     }
   }
 }
-
+/* This stylizes buefy's table stripped */
+.b-table .table tr.detail {
+  box-shadow: inset 0 1px 3px #dbdbdb;
+  background: #363636;
+}
 .b-table {
   .table {
     border: 0;
@@ -69,9 +73,9 @@ table.table {
       border-color: $button-border-color;
       color: $base-color;
 
-      &[disabled] {
-        background-color: transparent;
-      }
+      // &[disabled] {
+      //   background-color: transparent;
+      // }
     }
   }
 }
@@ -82,7 +86,12 @@ table.table {
   }
 }
 
+
 @include mobile {
+  /* This stylizes buefy's table stripped on mobile */
+  .b-table .table-wrapper.has-mobile-cards tr:not([class*=is-]) {
+    background: #363636;
+  }
   .card {
     &.has-table {
       .b-table {
