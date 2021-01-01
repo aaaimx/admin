@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a170a7eb7bb257753f1f",
+    "revision": "4703c7a9022a214b14ed",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -8,12 +8,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificate-form~event-form~profile.006daab7.css"
   },
   {
-    "revision": "8a4cdb0f4da0052ec8764008cfab8060",
+    "revision": "a79410075e0a6ea480d2b977cfa696a5",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "a170a7eb7bb257753f1f",
-    "url": "/aaaimx-admin/js/app-legacy.71f1f498.js"
+    "revision": "4703c7a9022a214b14ed",
+    "url": "/aaaimx-admin/js/app-legacy.52ff8f78.js"
   },
   {
     "revision": "9a0b7f5674e4f7b094da",
