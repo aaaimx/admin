@@ -151,13 +151,13 @@ export default [
       icon: 'file-cloud'
     },
     {
-      href: 'https://aaaimx-admin-stage.herokuapp.com/',
+      href: 'https://aaaimx-admin.herokuapp.com/',
       label: 'Django Admin',
       external: true,
       icon: 'application'
     },
     {
-      href: 'https://aaaimx-admin-stage.herokuapp.com/api/',
+      href: 'https://aaaimx-admin.herokuapp.com/api/',
       label: 'API Docs',
       external: true,
       icon: 'file-document'
