@@ -1,12 +1,12 @@
 import axios from 'axios'
-import store from '@/store'
 import { getToken } from '@/utils/auth'
-import { errMessage, reLogin } from '@/utils/messages'
-import { HOST } from '@/settings'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: HOST + '/api', // url = base url + request url
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://127.0.0.1:8000/api'
+      : 'https://aaaimx-admin.herokuapp.com/api', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
   credentials: 'same-origin',
@@ -17,12 +17,9 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-    // config.headers.post['Content-Type'] = 'application/json'
-    // config.headers.put['Content-Type'] = 'application/json'
-    // config.headers.patch['Content-Type'] = 'application/json'
-    if (store.getters.token) {
-      config.headers.Authorization = 'Bearer ' + getToken()
+    const token = getToken()
+    if (token) {
+      config.headers.Authorization = 'Bearer ' + token
     }
     return config
   },
@@ -48,7 +45,6 @@ service.interceptors.response.use(
       // 401/403: Unauthorized / Token expired
       if (res.status === 401 || res.status === 403) {
         // to re-login
-        reLogin()
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
@@ -57,13 +53,11 @@ service.interceptors.response.use(
   },
   error => {
     const { response, message } = error
-    console.log(response)
-    errMessage(message)
+    console.log(response, message)
 
     // 401/403: Unauthorized / Token expired
     if (response.status === 401 || response.status === 403) {
       // to re-login
-      reLogin()
     }
     return Promise.reject(response)
   }

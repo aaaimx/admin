@@ -1,327 +1,165 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import { HOST } from '@/settings'
-/* Layout */
-import Layout from '@/layout'
+import { getToken } from '@/utils/auth'
 
 Vue.use(Router)
 
-/**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
- */
-
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
-export const constantRoutes = [
+const routes = [
   {
-    path: '/redirect',
-    component: Layout,
-    hidden: true,
-    meta: { public: true },
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
-  },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    meta: { public: true },
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    meta: { public: true },
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    meta: { public: true },
-    hidden: true
-  },
-  {
+    name: 'Dashboard',
     path: '/',
-    component: Layout,
-    redirect: '/dashboard',
+    redirect: '/home',
+    component: () =>
+      import(/* webpackChunkName: "default" */ '@/layouts/default.vue'),
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-      }
-    ]
-  }
-]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = [
-  {
-    path: '/research',
-    component: Layout,
-    redirect: '/research/list',
-    name: 'Research',
-    meta: {
-      title: 'Research',
-      roles: ['Admin', 'Research'],
-      icon: 'education'
-    },
-    children: [
-      // Members Routes
-      {
-        path: '/members/list',
-        component: () => import('@/views/members/list'),
-        name: 'MembersList',
-        meta: { title: 'Members', icon: 'people' }
+        // Document title tag
+        // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
+        meta: {
+          title: 'Dashboard'
+        },
+        path: '/home',
+        name: 'home',
+        component: () =>
+          import(/* webpackChunkName: "profile" */ '../views/Home.vue')
       },
       {
-        path: '/members/create',
-        component: () => import('@/views/members/create'),
-        name: 'CreateMember',
-        meta: { title: 'Create member', icon: 'edit' },
-        hidden: true
+        meta: {
+          title: 'Profile'
+        },
+        path: '/profile',
+        name: 'profile',
+        component: () =>
+          import(/* webpackChunkName: "profile" */ '../views/Profile.vue')
       },
       {
-        path: '/members/:id',
-        component: () => import('@/views/members/edit'),
-        name: 'EditMember',
-        meta: { title: 'Edit member', activeMenu: '/members/:id' },
-        hidden: true
-      },
-
-      // Partner routes
-      {
-        path: '/partners/list',
-        component: () => import('@/views/partners/list'),
-        name: 'PartnersList',
-        meta: { title: 'Partners', icon: 'international' }
+        meta: {
+          title: 'New Certificate'
+        },
+        path: '/certificates/new',
+        name: 'certificate.new',
+        component: () =>
+          import(
+            /* webpackChunkName: "certificate-form" */ '../views/certificates/Form.vue'
+          )
       },
       {
-        path: '/partners/create',
-        component: () => import('@/views/partners/create'),
-        name: 'CreatePartner',
-        meta: { title: 'Create Partner', icon: 'edit' },
-        hidden: true
-      },
-      {
-        path: '/partners/:id',
-        component: () => import('@/views/partners/edit'),
-        name: 'EditPartner',
-        meta: { title: 'Edit Partner', activeMenu: '/partners/:id' },
-        hidden: true
-      },
-
-      // Research Routes
-      {
-        path: '/research/list',
-        component: () => import('@/views/research/list'),
-        name: 'ResearchList',
-        meta: { title: 'Research', icon: 'tree-table' }
-      },
-      {
-        path: '/research/create',
-        component: () => import('@/views/research/create'),
-        name: 'CreateResearch',
-        meta: { title: 'Create research', icon: 'edit' },
-        hidden: true
-      },
-      {
-        path: '/research/:id',
-        component: () => import('@/views/research/edit'),
-        name: 'EditResearch',
-        meta: { title: 'Edit research', activeMenu: '/research/:id' },
-        hidden: true
-      },
-
-      // Project routes
-      {
-        path: '/projects/list',
-        component: () => import('@/views/projects/list'),
-        name: 'ProjectsList',
-        meta: { title: 'Projects', icon: 'tree' }
-      },
-      {
-        path: '/projects/create',
-        component: () => import('@/views/projects/create'),
-        name: 'CreateProject',
-        meta: { title: 'Create project', icon: 'edit' },
-        hidden: true
-      },
-      {
-        path: '/projects/:id',
-        component: () => import('@/views/projects/edit'),
-        name: 'EditProject',
-        meta: { title: 'Edit project', activeMenu: '/projects/:id' },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/logistic',
-    component: Layout,
-    redirect: '/certificates/list',
-    name: 'Logistic',
-    meta: {
-      title: 'Logistic',
-      roles: ['Admin', 'Logistic'],
-      icon: 'component'
-    },
-    children: [
-      {
-        path: '/certificates/list',
-        component: () => import('@/views/certificates/list'),
-        name: 'CertificatesList',
-        meta: { title: 'Certificates', icon: 'medal' }
-      },
-      {
-        path: '/certificates/create',
-        component: () => import('@/views/certificates/create'),
-        name: 'CreateCertificate',
-        meta: { title: 'Create certificate', icon: 'edit' }
-      },
-      {
+        meta: {
+          title: 'Edit Certificate'
+        },
         path: '/certificates/:id',
-        component: () => import('@/views/certificates/edit'),
-        name: 'EditCertificate',
-        meta: { title: 'Edit certificate', activeMenu: '/certificates/:id' },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/finances',
-    component: Layout,
-    redirect: '/memberships/list',
-    name: 'Finances',
-    meta: {
-      title: 'Finances',
-      roles: ['Admin', 'Finances'],
-      icon: 'chart'
-    },
-    children: [
-      {
-        path: '/memberships/list',
-        component: () => import('@/views/memberships/list'),
-        name: 'MembershipsList',
-        meta: { title: 'Memberships', icon: 'membership' }
+        name: 'certificate.edit',
+        component: () =>
+          import(
+            /* webpackChunkName: "certificate-form" */ '../views/certificates/Form.vue'
+          ),
+        props: true
       },
       {
-        path: '/memberships/create',
-        component: () => import('@/views/memberships/create'),
-        name: 'CreateMembership',
-        meta: { title: 'Create Membership', icon: 'edit' }
+        meta: {
+          title: 'Edit Event'
+        },
+        path: '/events/:id',
+        name: 'event.edit',
+        component: () =>
+          import(
+            /* webpackChunkName: "event-form" */ '../views/events/EventDetail.vue'
+          ),
+        props: true
+      }
+    ]
+  },
+  {
+    path: '/full-page',
+    component: () =>
+      import(/* webpackChunkName: "full-page" */ '../layouts/fullpage.vue'),
+    children: [
+      {
+        meta: {
+          title: 'Login',
+          isPublic: true
+        },
+        path: '/login',
+        name: 'login',
+        component: () =>
+          import(
+            /* webpackChunkName: "full-page" */ '../views/full-page/Login.vue'
+          )
       },
       {
-        path: '/memberships/:id',
-        component: () => import('@/views/memberships/edit'),
-        name: 'EditMembership',
-        meta: { title: 'Edit Membership', activeMenu: '/memberships/:id' },
-        hidden: true
-      }
-    ]
-  },
-
-  {
-    path: 'website-link',
-    component: Layout,
-    children: [
+        meta: {
+          title: 'Error 404',
+          isPublic: true
+        },
+        path: '/404',
+        name: '404NotFound',
+        component: () =>
+          import(
+            /* webpackChunkName: "full-page" */ '../views/full-page/Error.vue'
+          ),
+        props: { isInCard: false }
+      },
       {
-        path: 'http://www.aaaimx.org',
-        meta: { title: 'www.aaaimx.org', icon: 'international' }
+        meta: {
+          title: 'Lock screen'
+        },
+        path: '/lock',
+        name: 'lock-screen',
+        component: () =>
+          import(
+            /* webpackChunkName: "full-page" */ '../views/full-page/LockScreen.vue'
+          )
       }
     ]
   },
-  {
-    path: 'admin-link',
-    component: Layout,
-    children: [
-      {
-        path: `${HOST}`,
-        meta: { title: 'AAAIMX Admin', icon: 'link' }
-      }
-    ]
-  },
-  {
-    path: 'emails-link',
-    component: Layout,
-    meta: {
-      roles: ['Admin']
-    },
-    children: [
-      {
-        path: 'https://aaaimx-emails.herokuapp.com',
-        meta: { title: 'AAAIMX Emails', icon: 'email' }
-      }
-    ]
-  },
-
-  {
-    path: 'documentation',
-    component: Layout,
-    meta: {
-      roles: ['Admin']
-    },
-    children: [
-      {
-        path:
-          'https://aaaimx.postman.co/collections/4606205-b4e23490-7bf2-4b9e-870c-968df479aaad',
-        meta: { title: 'API Docs', icon: 'documentation' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true, meta: { public: true } }
+  { path: '*', redirect: '/404' }
 ]
 
-const createRouter = () =>
-  new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
-  })
-
-const router = createRouter()
-
-router.beforeEach((to, from, next) => {
-  if (!to.meta.public) {
-    store.dispatch('user/inspectToken')
+const router = new Router({
+  base: process.env.BASE_URL,
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
   }
-  next()
 })
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter () {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
-}
+router.beforeEach(async (to, from, next) => {
+  // determine whether the user has logged in
+  const token = getToken()
+
+  if (token) {
+    if (to.path === '/login') {
+      // if is logged in, redirect to the home page
+      next({ path: '/' })
+    } else {
+      // determine whether the user has obtained his permission roles through getInfo
+      try {
+        // get user info
+        await store.dispatch('refreshToken')
+        // const decoded = decodeToken(token)
+        next()
+      } catch (error) {
+        console.log(error)
+        // remove token and go to login page to re-login
+        await store.dispatch('logout')
+        next(`/login?redirect=${to.path}`)
+      }
+    }
+  } else {
+    /* has no token */
+    if (to.meta.isPublic) {
+      // in the free login whitelist, go directly
+      next()
+    } else {
+      // other pages that do not have permission to access are redirected to the login page.
+      next(`/login?redirect=${to.path}`)
+    }
+  }
+})
 
 export default router

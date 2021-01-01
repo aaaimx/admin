@@ -1,76 +1,65 @@
+/* Styles */
+import '@/scss/main.scss'
+
+/* Core */
 import Vue from 'vue'
+import Buefy from 'buefy'
+import linkify from 'vue-linkify'
 
-import Cookies from 'js-cookie'
-
-import 'normalize.css/normalize.css' // a modern alternative to CSS resets
-
-import Element from 'element-ui'
-import './styles/element-variables.scss'
-
-import '@/styles/index.scss' // global css
-
-import '@/styles/detail-form.scss' // create/update form css
-import 'driver.js/dist/driver.min.css' // import driver.js css
-
-import App from './App'
-import store from './store'
+/* Router & Store */
 import router from './router'
+import store from './store'
 
-import './icons' // icon
-import './permission' // permission control
-import './utils/error-log' // error log
+/* Service Worker */
+import './registerServiceWorker'
 
-import * as filters from './filters' // global filters
+/* Global filters */
+import * as filters from './filters'
 
-import DatePicker from 'element-ui/lib/date-picker'
-import VueI18n from 'vue-i18n'
-import request from './services/axios'
-import ElementLocale from 'element-ui/lib/locale'
-import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
-import 'element-ui/lib/theme-chalk/display.css'
+/* Vue. Main component */
+import App from './App.vue'
 
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online! ! !
- */
-import { mockXHR } from '../mock'
-// import vuePopper from 'element-ui/lib/utils/vue-popper'
-import VueCompositionApi from '@vue/composition-api'
-
-import VueQrcode from '@chenfengyuan/vue-qrcode'
-Vue.component(VueQrcode.name, VueQrcode)
-
-Vue.use(VueCompositionApi)
-const Service = {}
-Service.install = function (Vue, options) {
-  Vue.prototype.$http = request
-}
-
-Vue.use(VueI18n)
-Vue.use(DatePicker)
-Vue.use(Service)
-Vue.use(ElementUI, { locale })
-
-Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
-})
+/* register multiple components */
+const GlobalComponents = require.context('@/components/Global', true, /\.vue$/)
+GlobalComponents.keys().reduce((modules, modulePath) => {
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = GlobalComponents(modulePath)
+  Vue.component(moduleName, value.default)
+  return modules
+}, {})
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
-Vue.config.productionTip = true
+Vue.directive('linkified', linkify)
 
-/* eslint-disable */
+/* Default title tag */
+const defaultDocumentTitle = 'Admin Null Vue Bulma Premium'
+
+/* Collapse mobile aside menu on route change & set title */
+router.afterEach(to => {
+  store.commit('asideMobileStateToggle', false)
+  store.commit('overlayToggle', false)
+  store.commit('asideActiveForcedKeyToggle', null)
+
+  if (to.meta && to.meta.title) {
+    document.title = `${to.meta.title} — ${defaultDocumentTitle}`
+  } else {
+    document.title = defaultDocumentTitle
+  }
+})
+
+Vue.config.productionTip = false
+
+Vue.use(Buefy)
+
 new Vue({
-  el: '#app',
   router,
   store,
-  render: h => h(App)
-})
+  render: h => h(App),
+  mounted () {
+    document.documentElement.classList.remove('has-spinner-active')
+  }
+}).$mount('#app')

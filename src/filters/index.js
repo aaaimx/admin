@@ -1,6 +1,3 @@
-// import parseTime, formatTime and set to filter
-export { parseTime, formatTime } from '@/utils'
-
 /**
  * Show plural label if time is plural number
  * @param {number} time
@@ -79,11 +76,13 @@ export function uppercaseFirst (string) {
  */
 export function longDate (date) {
   var event = new Date(date)
-  event.setDate(event.getDate() + 1)
+  event.setDate(event.getDate())
   const options = {
+    weekday: 'short',
     year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+    month: 'short',
+    day: 'numeric',
+    hour12: false
   }
-  return event.toLocaleDateString('es-MX', options)
+  return event.toLocaleString('es-MX', options)
 }
