@@ -9,7 +9,7 @@
     <card-toolbar slot="toolbar" class="is-upper">
       <div slot="left" class="buttons has-addons">
         <button class="button is-active" @click="actionSample">
-          This week
+          All time
         </button>
         <button class="button" disabled>This month</button>
         <button class="button" disabled>This year</button>
@@ -209,7 +209,7 @@ export default {
   methods: {
     actionSample () {
       this.$buefy.toast.open({
-        message: 'Some action',
+        message: 'Everything OK!',
         type: 'is-info',
         queue: false
       })
