@@ -2,7 +2,7 @@
   <div id="app">
     <nav-bar />
     <aside-menu
-      :menu="menu"
+      :menu="menuList"
       :menu-bottom="menuBottom"
       @menu-click="menuClick"
       :class="{ 'has-secondary': !!menuSecondary }"
@@ -27,13 +27,13 @@
 <script>
 // @ is an alias to /src
 import { mapState } from 'vuex'
-import NavBar from '@/components/NavBar'
-import BottomNav from '@/components/BottomNav'
-import AsideMenu from '@/components/Aside/AsideMenu'
-import FooterBar from '@/components/FooterBar'
-import Overlay from '@/components/Overlay'
-import AsideRight from '@/components/Aside/AsideRight'
-import menu from './menu'
+import NavBar from '@/components/Layout/NavBar'
+import BottomNav from '@/components/Layout/BottomNav'
+import AsideMenu from '@/components/Layout/AsideMenu'
+import FooterBar from '@/components/Layout/FooterBar'
+import Overlay from '@/components/Layout/Overlay'
+import AsideRight from '@/components/Layout/AsideRight'
+import menuList from '@/router/menus'
 
 export default {
   name: 'App',
@@ -50,7 +50,7 @@ export default {
       menuSecondary: null,
       menuSecondaryLabel: null,
       menuSecondaryIcon: null,
-      menu
+      menuList
     }
   },
   computed: {

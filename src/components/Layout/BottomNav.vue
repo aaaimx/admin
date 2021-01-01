@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import menuList from '@/router/menu'
+import menuList from '@/router/menus/mobile'
 export default {
   data () {
     return {

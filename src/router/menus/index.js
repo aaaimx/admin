@@ -137,6 +137,12 @@ export default [
       label: 'in/aaaimx',
       external: true,
       icon: 'linkedin'
+    },
+    {
+      href: 'https://github.com/aaaimx',
+      label: 'AAAIMX',
+      external: true,
+      icon: 'github-circle'
     }
   ],
   'Committee links',
@@ -170,11 +176,17 @@ export default [
       icon: 'file-word-box'
     }
   ],
-  'Dev links',
+  'Developer links',
   [
     {
+      href: 'https://github.com/disoftw',
+      label: 'Software Division',
+      external: true,
+      icon: 'github-circle'
+    },
+    {
       href: 'https://hpanel.hostinger.com/hosting/aaaimx.org/',
-      label: 'AAAIMX Hosting',
+      label: 'Hostinger',
       external: true,
       icon: 'web-box'
     },

@@ -7,11 +7,6 @@
       <a class="navbar-item is-hidden-desktop" @click.prevent="menuToggleMobile">
         <b-icon :icon="menuToggleMobileIcon"/>
       </a>
-      <div class="navbar-item no-left-space has-control">
-        <div class="control">
-          <input class="input" placeholder="Search everywhere...">
-        </div>
-      </div>
     </div>
     <div class="navbar-brand is-right">
       <a class="navbar-item navbar-item-menu-toggle is-hidden-desktop" @click.prevent="updatesToggle">
@@ -43,7 +38,7 @@
               <span>Messages</span>
             </a> -->
             <hr class="navbar-divider">
-            <a class="navbar-item" @click="logout">
+            <a class="navbar-item is-hidden-mobile" @click="logout">
               <b-icon icon="logout" type="is-danger" custom-size="default"/>
               <span class="has-text-danger">Log Out</span>
             </a>
@@ -53,7 +48,7 @@
           <b-icon icon="bell" custom-size="default" :class="{'has-update-mark':hasUpdates}" />
           <span>Updates</span>
         </a>
-        <a class="navbar-item is-desktop-icon-only" title="Log out" @click="logout">
+        <a class="navbar-item is-desktop-icon-only has-text-danger" title="Log out" @click="logout">
           <b-icon icon="logout" custom-size="default"/>
           <span>Log out</span>
         </a>
@@ -64,7 +59,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import NavBarMenu from '@/components/NavBarMenu'
+import NavBarMenu from './NavBarMenu'
 import UserAvatar from '@/components/UserAvatar'
 
 export default {
