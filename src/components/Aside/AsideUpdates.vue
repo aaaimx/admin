@@ -1,6 +1,12 @@
 <template>
   <div>
-    <aside-updates-item v-for="item in items" :key="item.id" :status="item.status" :icon="item.icon" :ago="item.ago">
+    <aside-updates-item
+      v-for="item in items"
+      :key="item.id"
+      :status="item.status"
+      :icon="item.icon"
+      :ago="item.ago"
+    >
       <p>{{ item.text }}</p>
     </aside-updates-item>
   </div>
@@ -35,10 +41,7 @@ export default {
           })
         })
         .catch(err => {
-          this.$buefy.toast.open({
-            message: `Error: ${err.message}`,
-            type: 'is-danger'
-          })
+          console.log(err)
         })
     }
   }
