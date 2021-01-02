@@ -21,14 +21,9 @@
 </template>
 
 <script>
+import fullpageMixin from '@/mixins/fullpage'
 export default {
   name: 'FullPage',
-  mounted () {
-    this.$store.commit('fullPage', true)
-    this.$store.commit('asideRightToggle', false)
-  },
-  beforeDestroy () {
-    this.$store.commit('fullPage', false)
-  }
+  mixins: [fullpageMixin]
 }
 </script>

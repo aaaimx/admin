@@ -6,7 +6,7 @@ const service = axios.create({
   baseURL:
     process.env.NODE_ENV === 'development'
       ? 'http://127.0.0.1:8000/api'
-      : 'https://aaaimx-admin.herokuapp.com/api', // url = base url + request url
+      : 'https://aaaimx-admin-stage.herokuapp.com/api', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
   credentials: 'same-origin',

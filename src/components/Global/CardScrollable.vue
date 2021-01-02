@@ -1,21 +1,51 @@
 <template>
-  <card-component :title="title" :icon="icon" :is-scrollable="true" :has-button-slot="true" :has-footer-slot="true" @ps-ready="psReady">
-    <refresh-button slot="button" :is-loading="isLoading" @button-click="delayedFetch"/>
-    <card-toolbar slot="toolbar" class="is-upper" :class="(status.toolbarClass)?status.toolbarClass:null">
+  <card-component
+    :title="title"
+    :icon="icon"
+    :is-scrollable="true"
+    :has-button-slot="true"
+    :has-footer-slot="true"
+    @ps-ready="psReady"
+  >
+    <action-button
+      slot="button"
+      :is-loading="isLoading"
+      @button-click="delayedFetch"
+    />
+    <card-toolbar
+      slot="toolbar"
+      class="is-upper"
+      :class="status.toolbarClass ? status.toolbarClass : null"
+    >
       <div v-if="status.text" slot="left">{{ status.text }}</div>
-      <span v-if="(status.label || status.labelIcon)" class="tag" :class="status.labelClass" slot="right">
-        <b-icon v-if="status.labelIcon" :icon="status.labelIcon" custom-size="default"/>
+      <span
+        v-if="status.label || status.labelIcon"
+        class="tag"
+        :class="status.labelClass"
+        slot="right"
+      >
+        <b-icon
+          v-if="status.labelIcon"
+          :icon="status.labelIcon"
+          custom-size="default"
+        />
         <span v-if="status.label">{{ status.label }}</span>
       </span>
     </card-toolbar>
 
     <div class="media-list">
-      <b-loading :is-full-page="false" :active="isLoading"/>
-      <media-item v-for="item in items" :key="item.id" :item="item" :has-share-buttons="hasShareButtons" :has-dismiss="hasDismiss"/>
+      <b-loading :is-full-page="false" :active="isLoading" />
+      <media-item
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
+        :has-share-buttons="hasShareButtons"
+        :has-dismiss="hasDismiss"
+      />
     </div>
 
     <a class="card-footer-item" slot="footer" @click.prevent="delayedFetch">
-      <b-icon icon="autorenew" custom-size="default"/>
+      <b-icon icon="autorenew" custom-size="default" />
       <span>Load more</span>
     </a>
   </card-component>
@@ -24,10 +54,10 @@
 <script>
 import axios from 'axios'
 import MediaItem from '@/components/MediaItem'
-import RefreshButton from './RefreshButton'
+import ActionButton from './ActionButton'
 export default {
   name: 'CardScrollable',
-  components: { RefreshButton, MediaItem },
+  components: { ActionButton, MediaItem },
   props: {
     title: {
       type: String,
@@ -66,9 +96,9 @@ export default {
     },
 
     /*
-    * This is an imitation, to show the loading state
-    * We delay for 500ms
-    * */
+     * This is an imitation, to show the loading state
+     * We delay for 500ms
+     * */
     delayedFetch () {
       this.isLoading = true
 

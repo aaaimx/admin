@@ -5,7 +5,7 @@
     class="has-table has-mobile-sort-spaced"
     :has-button-slot="true"
   >
-    <refresh-button slot="button" @click="actionSample" />
+    <action-button slot="button" @click="actionSample" />
     <card-toolbar slot="toolbar" class="is-upper">
       <div slot="left" class="buttons has-addons">
         <button class="button is-active" @click="actionSample">
@@ -15,21 +15,7 @@
         <button class="button" disabled>This year</button>
       </div>
       <form slot="right">
-        <div class="field has-addons">
-          <div class="control">
-            <input
-              class="input"
-              v-model="listQuery.search"
-              type="text"
-              placeholder="Search..."
-            />
-          </div>
-          <div class="control">
-            <button type="submit" class="button is-primary">
-              <b-icon icon="magnify" custom-size="default" />
-            </button>
-          </div>
-        </div>
+        <SearchInput :listQuery="listQuery" />
       </form>
     </card-toolbar>
     <div>
@@ -124,20 +110,7 @@
         </template>
 
         <section class="section" slot="empty">
-          <div class="content has-text-grey has-text-centered">
-            <template v-if="isLoading">
-              <p>
-                <b-icon icon="dots-horizontal" size="is-large" />
-              </p>
-              <p>Fetching data...</p>
-            </template>
-            <template v-else>
-              <p>
-                <b-icon icon="emoticon-sad" size="is-large" />
-              </p>
-              <p>Nothing's here&hellip;</p>
-            </template>
-          </div>
+          <EmptyData :isLoading="isLoading" />
         </section>
 
         <div slot="footer">

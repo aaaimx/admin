@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'RefreshButton',
+  name: 'ActionButton',
   props: {
     icon: {
       type: String,

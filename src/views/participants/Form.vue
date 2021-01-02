@@ -6,7 +6,7 @@
           <div class="card">
             <div class="card-image">
               <figure class="image ">
-                <img src="../assets/logos.png" alt="Placeholder image" />
+                <img src="../../assets/logos.png" alt="Placeholder image" />
               </figure>
             </div>
           </div>
@@ -29,7 +29,7 @@
                 width="90px"
                 alt=""
               />
-              <img src="../assets/logo.png" width="90px" alt="" />
+              <img src="../../assets/logo.png" width="90px" alt="" />
               <br />
               <small>
                 Contributing to more students having knowledge of Artificial
@@ -217,8 +217,10 @@
 </template>
 <script>
 import mapValues from 'lodash/mapValues'
-import { getFutureEvents, registerParticipant } from '@/api/events'
+import { getFutureEvents } from '@/api/events'
+import { registerParticipant } from '@/api/participants'
 import socialLinks from '@/router/menus/social_links'
+import fullpageMixin from '@/mixins/fullpage'
 
 const defaulForm = {
   fullname: 'raul novelo cruz',
@@ -231,6 +233,7 @@ const defaulForm = {
 
 export default {
   name: 'EventRegisterForm',
+  mixins: [fullpageMixin],
   data () {
     return {
       isLoading: false,
@@ -311,13 +314,6 @@ export default {
         return null
       })
     }
-  },
-  mounted () {
-    this.$store.commit('fullPage', true)
-    this.$store.commit('asideRightToggle', false)
-  },
-  beforeDestroy () {
-    this.$store.commit('fullPage', false)
   }
 }
 </script>
