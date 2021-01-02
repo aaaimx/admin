@@ -1,6 +1,6 @@
 <template>
   <card-component
-    title="Events"
+    :title="`${total} Events`"
     icon="calendar-multiple"
     class="has-table has-mobile-sort-spaced"
     :has-button-slot="true"

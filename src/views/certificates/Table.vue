@@ -1,6 +1,6 @@
 <template>
   <card-component
-    title="Certificates"
+    :title="`${total} Certificates`"
     icon="certificate"
     class="has-table has-mobile-sort-spaced"
     :has-button-slot="true"

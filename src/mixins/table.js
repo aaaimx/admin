@@ -7,7 +7,9 @@ module.exports = {
       defaultOpenedDetails: [],
       trashObject: null,
       isModalActive: false,
-      isLoading: false
+      isLoading: false,
+      sortOrder: 'desc',
+      defaultSortOrder: 'desc'
     }
   },
   mounted () {
@@ -15,7 +17,7 @@ module.exports = {
   },
   watch: {
     listQuery: {
-      handler (val) {
+      handler () {
         this.getData()
       },
       deep: true
@@ -30,8 +32,21 @@ module.exports = {
     }
   },
   methods: {
-    onCollapse (id) {
-      this.defaultOpenedDetails = [id]
+    /*
+     * Handle sort event
+     */
+    onSort (field, order) {
+      let ordering = field
+      this.sortField = field
+      this.sortOrder = order
+      if (order === 'desc') ordering = '-' + field
+      this.listQuery.ordering = ordering
+    },
+    /*
+     * Handle collapse event
+     */
+    onCollapse (row) {
+      this.defaultOpenedDetails = [row[this.key]]
     },
     trashModal (trashObject) {
       this.trashObject = trashObject

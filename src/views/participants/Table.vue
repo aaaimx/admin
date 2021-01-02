@@ -1,6 +1,6 @@
 <template>
   <card-component
-    title="Participants"
+    :title="`${total} Participants`"
     icon="account-multiple"
     class="has-table"
     :has-button-slot="true"
@@ -25,55 +25,37 @@
       />
       <b-table
         :data="list"
-        :backend-pagination="true"
-        :backend-sorting="true"
         :striped="true"
         :hoverable="true"
+        :bordered="false"
+        :narrowed="true"
         :checkable="true"
-        :detailed="false"
-        :paginated="false"
-        :show-detail-icon="true"
         :checked-rows.sync="checkedRows"
+        :detailed="false"
+        :show-detail-icon="true"
+        :detail-key="key"
+        :opened-detailed="defaultOpenedDetails"
+        @details-open="onCollapse"
+        backend-pagination
+        :total="total"
+        :paginated="false"
         :loading="isLoading"
         :current-page="listQuery.page"
         :per-page="listQuery.limit"
-        :total="total"
-        :opened-detailed="defaultOpenedDetails"
-        @details-open="row => onCollapse(row.id)"
-        detail-key="id"
+        backend-sorting
+        :default-sort-direction="defaultSortOrder"
+        :default-sort="[sortField, sortOrder]"
+        @sort="onSort"
       >
-        <b-table-column label="Email" field="email" sortable v-slot="props">
-          {{ props.row.email }}
-        </b-table-column>
-        <b-table-column label="Name" field="fullname" sortable v-slot="props">
-          {{ props.row.fullname }}
-        </b-table-column>
         <b-table-column
-          label="Adscription"
-          field="adscription"
-          sortable
+          v-for="item in headers"
+          :key="item.field"
+          :label="item.label"
+          :field="item.field"
+          :sortable="item.sortable"
           v-slot="props"
         >
-          {{ props.row.adscription }}
-        </b-table-column>
-        <b-table-column label="Career" field="career" sortable v-slot="props">
-          {{ props.row.career }}
-        </b-table-column>
-        <b-table-column
-          label="Department"
-          field="department"
-          sortable
-          v-slot="props"
-        >
-          {{ props.row.department }}
-        </b-table-column>
-        <b-table-column
-          label="Enroll"
-          field="enrollment"
-          sortable
-          v-slot="props"
-        >
-          {{ props.row.enrollment }}
+          {{ props.row[item.field] }}
         </b-table-column>
         <b-table-column
           custom-key="actions"
@@ -81,14 +63,11 @@
           v-slot="props"
         >
           <div class="buttons is-right">
-            <button
-              :class="{ 'is-success': props.row.published }"
-              class="button is-small"
-              type="button"
-              @click.prevent="trashModal(props.row)"
-            >
-              <b-icon icon="web" size="is-small" />
-            </button>
+            <b-tooltip label="Validate hours">
+              <button class="button is-small is-success" type="button">
+                <b-icon icon="check-circle" size="is-small" />
+              </button>
+            </b-tooltip>
             <button
               class="button is-small is-danger"
               type="button"
@@ -106,7 +85,45 @@
         </section>
 
         <template slot="footer">
-          <Pagination :listQuery="listQuery" :total="total" />
+          <div class="is-flex is-justify-content-space-between">
+            <div style="margin: 0.5rem;">
+              <b-dropdown append-to-body aria-role="list">
+                <button
+                  class="button is-primary is-small"
+                  slot="trigger"
+                  slot-scope="{ active }"
+                >
+                  <span>Actions</span>
+                  <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
+                </button>
+
+                <b-dropdown-item aria-role="listitem">
+                  <div class="media">
+                    <b-icon
+                      class="has-text-success media-left"
+                      icon="email-send"
+                    />
+                    <div class="media-content">
+                      <h3>Send confirmation</h3>
+                    </div>
+                  </div>
+                </b-dropdown-item>
+
+                <b-dropdown-item aria-role="listitem">
+                  <div class="media">
+                    <b-icon
+                      class="has-text-primary media-left"
+                      icon="file-excel-box"
+                    />
+                    <div class="media-content">
+                      <h3>Export as xlsx</h3>
+                    </div>
+                  </div>
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
+            <Pagination :listQuery="listQuery" :total="total" />
+          </div>
         </template>
       </b-table>
     </div>
@@ -129,20 +146,53 @@ export default {
   },
   data () {
     return {
+      headers: [
+        {
+          label: 'Email',
+          field: 'email',
+          sortable: true
+        },
+        {
+          label: 'Name',
+          field: 'fullname',
+          sortable: true
+        },
+        {
+          label: 'Adscription',
+          field: 'adscription',
+          sortable: true
+        },
+        {
+          label: 'Career',
+          field: 'career',
+          sortable: true
+        },
+        // {
+        //   label: 'Department',
+        //   field: 'department',
+        //   sortable: true
+        // },
+        {
+          label: 'Enroll',
+          field: 'enrollment',
+          sortable: true
+        }
+      ],
       listQuery: {
         event: this.event_id,
+        ordering: null,
         page: 1,
         limit: 10,
         offset: 0
-      }
+      },
+      key: 'id',
+      sortField: 'name'
     }
   },
   methods: {
-    handleClick (type) {
-      console.log(type)
-      this.listQuery.type = type
-    },
-    actionSample () {},
+    /*
+     * Load async data
+     */
     getData () {
       this.isLoading = true
       this.listQuery.offset = this.listQuery.limit * (this.listQuery.page - 1)
@@ -166,7 +216,12 @@ export default {
         message: 'Confirmed',
         queue: false
       })
-    }
+    },
+    handleClick (type) {
+      console.log(type)
+      this.listQuery.type = type
+    },
+    actionSample () {}
   }
 }
 </script>
