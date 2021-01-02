@@ -223,7 +223,7 @@ import socialLinks from '@/router/menus/social_links'
 const defaulForm = {
   fullname: 'raul novelo cruz',
   email: 'raul.novelo@aaaimx.org',
-  enrollment: 'E17081430',
+  enrollment: '',
   department: 'Departamento de Sistemas y Computación (DSC)',
   career: 'Ingeniería en Sistemas Computacionales',
   adscription: 'ITM'
