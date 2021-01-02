@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c874c35f9aa96a17e8b0",
+    "revision": "71cc4c5254a9614e7a92",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -12,8 +12,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificates.1fc78545.css"
   },
   {
-    "revision": "9f58b2840b4df6ad5ba6",
-    "url": "/aaaimx-admin/css/full-page.8033d790.css"
+    "revision": "a3d206951a869c425b56",
+    "url": "/aaaimx-admin/css/default.9f7cf020.css"
+  },
+  {
+    "revision": "7847560d0786c364c4b3",
+    "url": "/aaaimx-admin/css/full-page.e2fd1be9.css"
   },
   {
     "revision": "d1022da5808dfebb1646",
@@ -28,12 +32,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/img/logos.4b35cc27.png"
   },
   {
-    "revision": "686789cad80d4118ded89cfd458e08a7",
+    "revision": "7f34e61ffbdbaecc125b49b63529b633",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "c874c35f9aa96a17e8b0",
-    "url": "/aaaimx-admin/js/app-legacy.e33bfa70.js"
+    "revision": "71cc4c5254a9614e7a92",
+    "url": "/aaaimx-admin/js/app-legacy.8228264b.js"
   },
   {
     "revision": "2bd3ba6203f21422c123",
@@ -52,16 +56,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/chunk-vendors-legacy.5df0c08a.js"
   },
   {
-    "revision": "25ebd6a42f8163b698e5",
-    "url": "/aaaimx-admin/js/default-legacy.2e39f5d8.js"
+    "revision": "a3d206951a869c425b56",
+    "url": "/aaaimx-admin/js/default-legacy.0c83e52f.js"
   },
   {
     "revision": "370597272be975d97b0c",
     "url": "/aaaimx-admin/js/event-form-legacy.5feeaf65.js"
   },
   {
-    "revision": "9f58b2840b4df6ad5ba6",
-    "url": "/aaaimx-admin/js/full-page-legacy.3262f26e.js"
+    "revision": "7847560d0786c364c4b3",
+    "url": "/aaaimx-admin/js/full-page-legacy.0a97e38b.js"
   },
   {
     "revision": "d1022da5808dfebb1646",

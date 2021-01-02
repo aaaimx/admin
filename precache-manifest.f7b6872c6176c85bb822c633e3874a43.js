@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6b5513547906c6443348",
+    "revision": "fb8ab6888cef617147c4",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -12,12 +12,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificates.1fc78545.css"
   },
   {
+    "revision": "701d9067e78c45b78efd",
+    "url": "/aaaimx-admin/css/default.9f7cf020.css"
+  },
+  {
     "revision": "80d7967a6d7623dfd3cd",
     "url": "/aaaimx-admin/css/event-form~profile.006daab7.css"
   },
   {
-    "revision": "40040432a536aeb12b6a",
-    "url": "/aaaimx-admin/css/full-page.8033d790.css"
+    "revision": "b1c740c3b6408caaad0f",
+    "url": "/aaaimx-admin/css/full-page.e2fd1be9.css"
   },
   {
     "revision": "9ec7adb5f649e73478df",
@@ -48,12 +52,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/img/logos.4b35cc27.png"
   },
   {
-    "revision": "e970fed44683c2046f0d27fd2618fda5",
+    "revision": "b0a50e1f31c35ee387f6c2013953def8",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "6b5513547906c6443348",
-    "url": "/aaaimx-admin/js/app.a1853bba.js"
+    "revision": "fb8ab6888cef617147c4",
+    "url": "/aaaimx-admin/js/app.168a8883.js"
   },
   {
     "revision": "2ed7e5e28fea870529b4",
@@ -68,8 +72,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/chunk-vendors.a2b3203b.js"
   },
   {
-    "revision": "7c872d342b69c615ddc5",
-    "url": "/aaaimx-admin/js/default.bf099a62.js"
+    "revision": "701d9067e78c45b78efd",
+    "url": "/aaaimx-admin/js/default.dac93ca1.js"
   },
   {
     "revision": "fc9566c2fe00ac293ab3",
@@ -80,8 +84,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/event-form~profile.51a0916b.js"
   },
   {
-    "revision": "40040432a536aeb12b6a",
-    "url": "/aaaimx-admin/js/full-page.54432783.js"
+    "revision": "b1c740c3b6408caaad0f",
+    "url": "/aaaimx-admin/js/full-page.0f70d1d5.js"
   },
   {
     "revision": "9ec7adb5f649e73478df",
