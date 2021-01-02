@@ -66,7 +66,7 @@ export default {
     },
     ...mapState(['isOverlayVisible'])
   },
-  created () {
+  mounted () {
     this.$store.commit('darkModeToggle')
     this.$store.dispatch('getData')
     this.$store.commit('user', {
@@ -120,3 +120,12 @@ export default {
   }
 }
 </script>
+
+<style>
+:root {
+  --background: #000000;
+}
+body {
+  background: var(--background) !important;
+}
+</style>

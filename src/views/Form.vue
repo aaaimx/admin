@@ -323,15 +323,14 @@ export default {
 </script>
 <style>
 :root {
-  --brandColor: hsl(166, 67%, 51%);
   --background: #f9f3de;
   --textDark: hsla(0, 0%, 0%, 0.66);
   --textLight: hsla(0, 0%, 0%, 0.33);
 }
 
 body {
-  background: var(--background);
-  color: var(--textDark);
+  background: var(--background) !important;
+  color: var(--textDark) !important;
 }
 
 .field:not(:last-child) {

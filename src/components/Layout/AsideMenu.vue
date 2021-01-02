@@ -27,7 +27,7 @@
         </template>
       </div>
     </div>
-    <div class="menu is-menu-bottom">
+    <div class="menu is-menu-bottom is-primary">
       <aside-menu-list :menu="menuBottom" @menu-click="menuClick"/>
     </div>
   </aside>
