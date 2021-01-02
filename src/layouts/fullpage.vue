@@ -23,7 +23,7 @@
 <script>
 export default {
   name: 'FullPage',
-  created () {
+  mounted () {
     this.$store.commit('fullPage', true)
     this.$store.commit('asideRightToggle', false)
   },

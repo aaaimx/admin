@@ -82,6 +82,16 @@ const routes = [
     ]
   },
   {
+    meta: {
+      title: 'Form',
+      isPublic: true
+    },
+    path: '/form',
+    name: 'form',
+    component: () =>
+      import(/* webpackChunkName: "full-page" */ '../views/Form.vue')
+  },
+  {
     path: '/full-page',
     component: () =>
       import(/* webpackChunkName: "full-page" */ '../layouts/fullpage.vue'),

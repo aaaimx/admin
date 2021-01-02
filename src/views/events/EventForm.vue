@@ -54,7 +54,7 @@
       />
     </b-field>
     <b-field horizontal>
-      <b-checkbox type="is-link" v-model="form.isPublic" class="is-thin">
+      <b-checkbox type="is-link" v-model="form.open_to_public" class="is-thin">
         Open to the public
       </b-checkbox>
     </b-field>
@@ -82,7 +82,7 @@
     <b-field label="Hours" message="Total hours (CC)" horizontal>
       <b-input
         name="max"
-        min="1"
+        min="0"
         max="100"
         type="number"
         v-model="form.hours"
@@ -104,6 +104,10 @@
 import { create, update } from '@/api/events'
 const defaultForm = {
   title: '',
+  corum: 0,
+  hours: 0,
+  published: false,
+  open_to_public: false,
   date_start: null,
   date_end: null,
   description: '',

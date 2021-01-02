@@ -8,6 +8,13 @@ export function fetchList (params) {
   })
 }
 
+export function getFutureEvents () {
+  return request({
+    url: '/events/future/',
+    method: 'GET'
+  })
+}
+
 /**
  *
  * @param {*} id String
@@ -51,5 +58,13 @@ export function remove (id) {
   return request({
     url: `/events/${id}/`,
     method: 'DELETE'
+  })
+}
+
+export function registerParticipant (data) {
+  return request({
+    url: '/participants/register/',
+    method: 'POST',
+    data
   })
 }
