@@ -1,0 +1,2003 @@
+{
+    "data": [
+        {
+            "id": "4852235477",
+            "avatar": "https://cdn.discordapp.com/avatars/485223547770372108/c32f0f344fa8d8ed9fc260b6f44bc76a.webp",
+            "name": "Mauricio G Orozco-del-Castillo",
+            "username": "球 Đråkøn 龍",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Arthropods Project",
+                "Finance Committee",
+                "Executive Committee",
+                "Researchers",
+                "Sanitizing Robot Project",
+                "Technical Committee",
+                "Thesis Edwin González",
+                "Trading Project",
+                "Data Depression Project",
+                "Events Committee",
+                "Professors",
+                "Outreach Committee",
+                "Parallel Projects",
+                "Chair",
+                "Thesis Advisors",
+                "Thesis Yamili Canché",
+                "Digital Window Project",
+                "Board",
+                "Thesis Víctor Medina",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6899383522",
+            "avatar": "https://cdn.discordapp.com/avatars/689938352216080402/d8bdd2b858d1a50f51125a9703454608.webp",
+            "name": "Raul Novelo-Cruz",
+            "username": "raul.novel",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "DW Frontend",
+                "Wolf Coders",
+                "Executive Committee",
+                "President",
+                "Technical Committee",
+                "Leaders",
+                "Trading Project",
+                "SD Leader",
+                "DW Backend",
+                "Digital Window Project",
+                "SW Division",
+                "Graphic Designers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3586884756",
+            "avatar": "https://cdn.discordapp.com/avatars/358688475651768320/6a1434b922d3787c7ad6ab1ef7bea11e.webp",
+            "name": "Paul Mena",
+            "username": "PAUL SPARTAN",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "OD Leader",
+                "Gamers",
+                "OP Division",
+                "Finance Committee",
+                "Alphas",
+                "Executive Committee",
+                "Twitch Subscriber",
+                "Technical Committee",
+                "Leaders",
+                "Trading Project",
+                "ML Division",
+                "Twitch Subscriber: Tier 3",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4899477928",
+            "avatar": "https://cdn.discordapp.com/avatars/489947792899440641/ee06f4172eb195f0edcff604fcf22a52.webp",
+            "name": "Didier Crespo",
+            "username": "DJCrespo",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "Gamers",
+                "Wolfcast",
+                "Alphas",
+                "Executive Committee",
+                "Leaders",
+                "SOC Division",
+                "Events Committee",
+                "Outreach Committee",
+                "SID Leader",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6305204735",
+            "avatar": "https://cdn.discordapp.com/avatars/630520473591218236/f46b686bed5db6753cea7e57c4feea77.webp",
+            "name": "Esteban Brito",
+            "username": "Overlord",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "MATH Division",
+                "Wolfcast",
+                "MLDivision Leader",
+                "Executive Committee",
+                "Technical Committee",
+                "Leaders",
+                "Trading Project",
+                "Data Depression Project",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6969409746",
+            "avatar": "https://cdn.discordapp.com/avatars/696940974601142305/77c6d2de6b37819cc1444f7d100b8984.webp",
+            "name": "Humberto Córdova",
+            "username": "Humberto Córdova",
+            "dateJoined": "7/28/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "ROB Division",
+                "Executive Committee",
+                "Sanitizing Robot Project",
+                "Technical Committee",
+                "Leaders",
+                "BD Leader",
+                "ML Division",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3161724298",
+            "avatar": "https://cdn.discordapp.com/avatars/316172429829603330/339ec3567840bd08826973e733b1a9ee.webp",
+            "name": "Fernando Herrera",
+            "username": "Fernando Herrera",
+            "dateJoined": "6/9/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "Gamers",
+                "MATH Division",
+                "Finance Committee",
+                "Executive Committee",
+                "Technical Committee",
+                "Leaders",
+                "Math Leader",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6914536354",
+            "avatar": "https://cdn.discordapp.com/avatars/691453635472785418/6c426b7ebd509aebe587e742d132dd79.webp",
+            "name": "Humberto Sarabia",
+            "username": "humbertosarabia",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "Thesis Students",
+                "ROB Division",
+                "Executive Committee",
+                "Sanitizing Robot Project",
+                "Leaders",
+                "Trading Project",
+                "RD Leader",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3127922359",
+            "avatar": "https://cdn.discordapp.com/avatars/312792235982979072/6981e14f0e2bb30874bd1ddbb5f43d07.webp",
+            "name": "Juan Vidal",
+            "username": "Begunwinterr12",
+            "dateJoined": "7/7/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "MATH Division",
+                "Wolfcast",
+                "Alphas",
+                "Events Committee",
+                "ML Division",
+                "Collaborators",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3050037454",
+            "avatar": "https://cdn.discordapp.com/avatars/305003745412907010/e659b43e1b23b049903a30066f90c302.webp",
+            "name": "Juan Gamboa",
+            "username": "Gamboa Juan",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "DW Frontend",
+                "Wolf Coders",
+                "Gamers",
+                "DW Backend",
+                "Collaborators",
+                "Digital Window Project",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5280813385",
+            "avatar": "https://cdn.discordapp.com/avatars/528081338587152385/59b63a60f592d46429d159aaa8fe8b7b.webp",
+            "name": "Fernando Gallardo",
+            "username": "GALLARDO05",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Students",
+                "WC Leader",
+                "DW Frontend",
+                "Wolf Coders",
+                "Gamers",
+                "DW Backend",
+                "Digital Window Project",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6945897419",
+            "avatar": "https://cdn.discordapp.com/avatars/694589741982810152/dc750f60f281626b414025f4dff1a15a.webp",
+            "name": "Nora Cuevas",
+            "username": "Nora Cuevas",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Arthropods Project",
+                "Wolf Coders",
+                "Sanitizing Robot Project",
+                "Professors",
+                "Parallel Projects",
+                "Class DIP (PdI)",
+                "Thesis Advisors",
+                "Digital Window Project",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7178373868",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Carlos Bermejo",
+            "username": "cbermejo00",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Arthropods Project",
+                "Wolf Coders",
+                "Sanitizing Robot Project",
+                "Professors",
+                "Parallel Projects",
+                "Class DIP (PdI)",
+                "Thesis Advisors",
+                "Digital Window Project",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6099009833",
+            "avatar": "https://cdn.discordapp.com/avatars/609900983300128788/69d6864bb34cf4fe02f05a989ced4ed2.webp",
+            "name": "Esteban Álvarez",
+            "username": "alvarezP98",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "Executive Committee",
+                "Technical Committee",
+                "Collaborators",
+                "SW Division",
+                "Graphic Designers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6940176120",
+            "avatar": "https://cdn.discordapp.com/avatars/694017612085985361/a651b7014f7c9ac7d4686b22f2225967.webp",
+            "name": "Héctor Ruiz",
+            "username": "Hector_MRj",
+            "dateJoined": "6/8/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Wolfcast",
+                "SOC Division",
+                "ML Division",
+                "Outreach Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4725335374",
+            "avatar": "https://cdn.discordapp.com/avatars/472533537422180394/18f41c2489ed9b8d0d7c23d214c3ed75.webp",
+            "name": "Braulio Rosado",
+            "username": "Braulio Rosado",
+            "dateJoined": "8/30/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Wolfcast",
+                "Alphas",
+                "Events Committee",
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5632332537",
+            "avatar": "https://cdn.discordapp.com/avatars/563233253775900693/dd35429c65fd9630079450ed69216403.webp",
+            "name": "Vicente Yah",
+            "username": "Vicente Yah",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Admin",
+                "Students",
+                "MATH Division",
+                "Executive Committee",
+                "Technical Committee",
+                "Leaders",
+                "Math Leader",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6953391975",
+            "avatar": "https://cdn.discordapp.com/avatars/695339197501931531/91f6db7a2b07e5476f50e761a03f0e6b.webp",
+            "name": "Jenery Bautista",
+            "username": "Sailor Moon 🌙",
+            "dateJoined": "9/7/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "MATH Division",
+                "Events Committee",
+                "ML Division",
+                "Collaborators",
+                "Graphic Designers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7221136255",
+            "avatar": "https://cdn.discordapp.com/avatars/722113625573031956/fe045405f1a4f81e17ad06f70c847978.webp",
+            "name": "Carolina Domínguez",
+            "username": "Carolina Domínguez",
+            "dateJoined": "9/16/2020",
+            "roles": [
+                "Students",
+                "Wolfcast",
+                "SOC Division",
+                "ML Division",
+                "Outreach Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7570750919",
+            "avatar": "https://cdn.discordapp.com/avatars/757075091984089170/2e5fdef576cad3fc8ca90f855a062fbf.webp",
+            "name": "Melissa Montero",
+            "username": "MJMG",
+            "dateJoined": "12/18/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "MATH Division",
+                "Events Committee",
+                "Outreach Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3072614336",
+            "avatar": "https://cdn.discordapp.com/avatars/307261433614303234/3e0b81d4848b5f217658a6e385db3f74.webp",
+            "name": "Iván Mota",
+            "username": "masterpart",
+            "dateJoined": "6/9/2020",
+            "roles": [
+                "Students",
+                "DW Frontend",
+                "Wolf Coders",
+                "DW Backend",
+                "Digital Window Project",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3283921803",
+            "avatar": "https://cdn.discordapp.com/avatars/328392180387545088/11fd66e0bf2cc8badc16ecf3302e4338.webp",
+            "name": "Rafael Salazar",
+            "username": "LordBlitz",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Wolfcast",
+                "SOC Division",
+                "Events Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6338399175",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Enrique Romo",
+            "username": "Enrique Romo",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "ROB Division",
+                "Alphas",
+                "Outreach Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7301910924",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Francisco Hernandez",
+            "username": "Francisco Javier",
+            "dateJoined": "7/7/2020",
+            "roles": [
+                "Researchers",
+                "Thesis Edwin González",
+                "Thesis Advisors",
+                "Thesis Yamili Canché",
+                "Board",
+                "Thesis Víctor Medina",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3351465162",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Kevin Sánchez",
+            "username": "akdulio",
+            "dateJoined": "12/16/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "MATH Division",
+                "Events Committee",
+                "Outreach Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6305074328",
+            "avatar": "https://cdn.discordapp.com/avatars/630507432887582720/e95b67ea45a89fc7c06510ab21fee7ab.webp",
+            "name": "Victor Hugo Martinez",
+            "username": "Depresión Tropical",
+            "dateJoined": "6/8/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Wolfcast",
+                "SOC Division",
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6917321007",
+            "avatar": "https://cdn.discordapp.com/avatars/691732100784717894/2cfed88e94f4094548e9f3f2c8174738.webp",
+            "name": "Bruno May",
+            "username": "Bruno27",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "Wolf Coders",
+                "Collaborators",
+                "Digital Window Project",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6152310612",
+            "avatar": "https://cdn.discordapp.com/avatars/615231061252636694/2d1c1ef77ea817e59eb020e91aa8b4fe.webp",
+            "name": "Carlos Moo",
+            "username": "Carlos Moo",
+            "dateJoined": "6/8/2020",
+            "roles": [
+                "Students",
+                "Events Committee",
+                "Outreach Committee",
+                "Collaborators",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4174299519",
+            "avatar": "https://cdn.discordapp.com/avatars/417429951986401281/d63e05a96ae73086e9bdf838b60d9277.webp",
+            "name": "Gilberto Arcos",
+            "username": "GilbertoArcos",
+            "dateJoined": "6/16/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Events Committee",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6928276081",
+            "avatar": "https://cdn.discordapp.com/avatars/692827608148082779/958fdc690c17fb620859367b0af139b7.webp",
+            "name": "Julissa Aldana",
+            "username": "Julissa Aldana",
+            "dateJoined": "9/16/2020",
+            "roles": [
+                "Students",
+                "Wolfcast",
+                "SOC Division",
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6468683892",
+            "avatar": "https://cdn.discordapp.com/avatars/646868389213765652/555740b2789f4692605e3736dfcd7fda.webp",
+            "name": "Ana Ayil",
+            "username": "Kura_San",
+            "dateJoined": "9/16/2020",
+            "roles": [
+                "Students",
+                "Wolfcast",
+                "SOC Division",
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6913683355",
+            "avatar": "https://cdn.discordapp.com/avatars/691368335522398248/04e9fe71d42c56f4599c0b8b2f5f7602.webp",
+            "name": "Maribel Romero",
+            "username": "MaribelRomero",
+            "dateJoined": "9/16/2020",
+            "roles": [
+                "Students",
+                "Wolfcast",
+                "SOC Division",
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6330592152",
+            "avatar": "https://cdn.discordapp.com/avatars/633059215262482445/b76b4fd696166eaf11b4e3c7581151d8.webp",
+            "name": "Viridiana Ramayo",
+            "username": "ViridianaRG",
+            "dateJoined": "6/8/2020",
+            "roles": [
+                "Students",
+                "Wolfcast",
+                "SOC Division",
+                "Events Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "1999970866",
+            "avatar": "https://cdn.discordapp.com/avatars/199997086643650561/8b43fe3959eed868d375b6a07581a514.webp",
+            "name": "Juan Gonzalez",
+            "username": "Juan González",
+            "dateJoined": "6/9/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Wolfcast",
+                "SOC Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7180278351",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Jorge Hernández",
+            "username": "Jorge Hernández",
+            "dateJoined": "6/4/2020",
+            "roles": [
+                "Researchers",
+                "Parallel Projects",
+                "Thesis Advisors",
+                "Congress",
+                "Board",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3492912382",
+            "avatar": "https://cdn.discordapp.com/avatars/349291238236880897/b047b9b7623e0be40fc031069e791392.webp",
+            "name": "Alfonso Toriz",
+            "username": "Toriz",
+            "dateJoined": "9/16/2020",
+            "roles": [
+                "Wolfcast",
+                "SOC Division",
+                "ML Division",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7047430501",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "David Mendoza",
+            "username": "DavidMendoza5",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "ROB Division",
+                "Executive Committee",
+                "Technical Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7574665298",
+            "avatar": "https://cdn.discordapp.com/avatars/757466529896988813/ac8532ec6df1518a095c37d14c2f5fb9.webp",
+            "name": "Ana López",
+            "username": "Ana López",
+            "dateJoined": "9/24/2020",
+            "roles": [
+                "Students",
+                "Outreach Committee",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7410696149",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/4.png",
+            "name": "Joel Trejo",
+            "username": "trejoel",
+            "dateJoined": "8/6/2020",
+            "roles": [
+                "Researchers",
+                "Professors",
+                "Thesis Advisors",
+                "Board",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3877691086",
+            "avatar": "https://cdn.discordapp.com/avatars/387769108638334977/f053977c66eeb5b383ffef96975e8add.webp",
+            "name": "Mario Germán",
+            "username": "Mariocgo",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Executive Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4627101591",
+            "avatar": "https://cdn.discordapp.com/avatars/462710159118958594/f9c9a1d5b3106761963a0a6074bed7cd.webp",
+            "name": "Christopher Hochstrasser",
+            "username": "Lord Cobra",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "Gamers",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7299596410",
+            "avatar": "https://cdn.discordapp.com/avatars/729959641060081727/782e421cdb8816e9ffb65a430974a526.webp",
+            "name": "Gabriela Yañez",
+            "username": "Gaby Yañez-Casas",
+            "dateJoined": "7/7/2020",
+            "roles": [
+                "Thesis Students",
+                "Master Student",
+                "Researchers",
+                "Guest",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "2746868982",
+            "avatar": "https://cdn.discordapp.com/avatars/274686898243633152/8c234019ef524b52ed83f24eba065416.webp",
+            "name": "Axel Chan",
+            "username": "Axel Chan",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7047615629",
+            "avatar": "https://cdn.discordapp.com/avatars/704761562954596353/7a92cecb3a0ae3b281ac70386903c6a9.webp",
+            "name": "Yamili Canché",
+            "username": "YamiliCanche",
+            "dateJoined": "6/26/2020",
+            "roles": [
+                "Thesis Students",
+                "Master Student",
+                "Class AI",
+                "Thesis Yamili Canché",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6917239491",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/4.png",
+            "name": "Mara Salazar",
+            "username": "Mara D",
+            "dateJoined": "8/8/2020",
+            "roles": [
+                "Students",
+                "ROB Division",
+                "Outreach Committee",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5058129831",
+            "avatar": "https://cdn.discordapp.com/avatars/505812983197335572/de0856d363096a4338f948596e47fc52.webp",
+            "name": "Benjamin Salas",
+            "username": "OrdinaryTrain",
+            "dateJoined": "6/16/2020",
+            "roles": [
+                "Students",
+                "Members",
+                "Gamers",
+                "Alphas",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6945699864",
+            "avatar": "https://cdn.discordapp.com/avatars/694569986412249149/8887be5af428b41e06a37a0c815f033f.webp",
+            "name": "Saul Urtecho",
+            "username": "ソール・ウルテコ",
+            "dateJoined": "7/1/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "Arthropods Project",
+                "MATH Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7602119290",
+            "avatar": "https://cdn.discordapp.com/avatars/760211929074630686/c8b0e720a2eea7c2302802de2946c373.webp",
+            "name": "Katia Cob",
+            "username": "katiasof",
+            "dateJoined": "11/3/2020",
+            "roles": [
+                "Students",
+                "Events Committee",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7483732942",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/4.png",
+            "name": "Eduardo Abreu",
+            "username": "Estuani",
+            "dateJoined": "9/15/2020",
+            "roles": [
+                "Thesis Students",
+                "Gamers",
+                "Master Student",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7036230143",
+            "avatar": "https://cdn.discordapp.com/avatars/703623014356615232/e745719bd07e2efa9a7cea6bb9bf8b05.webp",
+            "name": "Silvia Rivero",
+            "username": "Silvia Rivero",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "Outreach Committee",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7537625513",
+            "avatar": "https://cdn.discordapp.com/avatars/753762551380181152/0e3338a68e5b01658bdd2f3d90402794.webp",
+            "name": "Angélica Sansores",
+            "username": "Angélica Sansores",
+            "dateJoined": "9/24/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4883610346",
+            "avatar": "https://cdn.discordapp.com/avatars/488361034609066002/4dda48fe2d7247da223e5c2d0dfa0ee2.webp",
+            "name": "Raúl Góngora",
+            "username": "RaulMARK17",
+            "dateJoined": "6/16/2020",
+            "roles": [
+                "Students",
+                "Executive Committee",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5087565360",
+            "avatar": "https://cdn.discordapp.com/avatars/508756536009556009/b87e467645744df002d2bae3b4765808.webp",
+            "name": "Víctor Medina",
+            "username": "gozu",
+            "dateJoined": "6/18/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "Data Depression Project",
+                "Thesis Víctor Medina",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7453929360",
+            "avatar": "https://cdn.discordapp.com/avatars/745392936027553812/d38e1e7c0c2614172a10d661c2577a51.webp",
+            "name": "Mariana Carrillo",
+            "username": "Mariana Carrillo",
+            "dateJoined": "9/24/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "2696473873",
+            "avatar": "https://cdn.discordapp.com/avatars/269647387394441227/3f121a67a54716fca76868282fcb9176.webp",
+            "name": "Luis López-Río",
+            "username": "Majoras",
+            "dateJoined": "7/7/2020",
+            "roles": [
+                "Students",
+                "Wolf Coders",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5075706088",
+            "avatar": "https://cdn.discordapp.com/avatars/507570608851255297/deb0d6f236fef1707596ea2de5bb10e1.webp",
+            "name": "Miguel Peraza",
+            "username": "revmshell",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6426907196",
+            "avatar": "https://cdn.discordapp.com/avatars/642690719693275158/a5ecf38279b0f8b5bc0da65adb3423cb.webp",
+            "name": "Roger Herrera",
+            "username": "Rogerherrera",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6896873048",
+            "avatar": "https://cdn.discordapp.com/avatars/689687304813674522/ca3324a68ff9c76c54237fe5a8e545c6.webp",
+            "name": "Jared Cano",
+            "username": "AugustKiller13",
+            "dateJoined": "9/22/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3149353831",
+            "avatar": "https://cdn.discordapp.com/avatars/314935383185948672/22ad9a7fc8348cbf12bd1ee2258b4e0a.webp",
+            "name": "Andres Cervera",
+            "username": "AndresCervera",
+            "dateJoined": "8/24/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7512299581",
+            "avatar": "https://cdn.discordapp.com/avatars/751229958172704849/8fbbd81419341babca32bf6c4be8acaa.webp",
+            "name": "Anahí Estrella",
+            "username": "Anahí Estrella",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7501509916",
+            "avatar": "https://cdn.discordapp.com/avatars/750150991646687322/f871c4c12118a448320f01451554ce1b.webp",
+            "name": "Azul Garcia",
+            "username": "Azul Garcia",
+            "dateJoined": "9/24/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6950424121",
+            "avatar": "https://cdn.discordapp.com/avatars/695042412107530250/eef06752ecf4b0855446ec26ff1f6d08.webp",
+            "name": "Héctor Rodríguez",
+            "username": "hecrod",
+            "dateJoined": "6/27/2020",
+            "roles": [
+                "Thesis Students",
+                "Master Student",
+                "Alumni",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7541061358",
+            "avatar": "https://cdn.discordapp.com/avatars/754106135866376284/51e447bd6365d8301c8835f6662db632.webp",
+            "name": "Saul Navarro",
+            "username": "Saul Navarro",
+            "dateJoined": "9/25/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "MATH Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3265557350",
+            "avatar": "https://cdn.discordapp.com/avatars/326555735074799626/b130085c449b30fdeaeb68e0e0a8f25a.webp",
+            "name": "Ivan Madera",
+            "username": "Ivan Madera",
+            "dateJoined": "9/28/2020",
+            "roles": [
+                "Students",
+                "OP Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5699813114",
+            "avatar": "https://cdn.discordapp.com/avatars/569981311415091242/c88838d48f42ddb2c72ce48fff66c810.webp",
+            "name": "Walter Vives",
+            "username": "WalterVives",
+            "dateJoined": "6/15/2020",
+            "roles": [
+                "Gamers",
+                "Data Depression Project",
+                "Guest",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4762535607",
+            "avatar": "https://cdn.discordapp.com/avatars/476253560703811584/3f1f9e9153493fefbca36d839aa2a28e.webp",
+            "name": "Gerardo Cetzal",
+            "username": "geceba",
+            "dateJoined": "11/23/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "Wolf Coders",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4870529911",
+            "avatar": "https://cdn.discordapp.com/avatars/487052991111626785/6b24535ec0f536d4178e9609dad39de5.webp",
+            "name": "Ángel Uicab",
+            "username": "Ángel Israel Uicab González",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4055909965",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Alberto Chi",
+            "username": "ATONEMENT",
+            "dateJoined": "6/15/2020",
+            "roles": [
+                "Students",
+                "SOC Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7240841835",
+            "avatar": "https://cdn.discordapp.com/avatars/724084183592337434/7bc35f4c47cb2f0a9a8e17a8574d0e33.webp",
+            "name": "Paula Perez",
+            "username": "Paula Perez",
+            "dateJoined": "6/20/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6953558567",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "name": "Abel Sima",
+            "username": "Sima",
+            "dateJoined": "7/16/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "Arthropods Project",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4982990131",
+            "avatar": "https://cdn.discordapp.com/avatars/498299013104140288/fa9508f3ae78c25a90503773b77c59af.webp",
+            "name": "Julián Estrella",
+            "username": "Julián Estrella",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6189567756",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Pedro Tun",
+            "username": "ELEmiratos",
+            "dateJoined": "10/22/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6439691004",
+            "avatar": "https://cdn.discordapp.com/avatars/643969100434898966/ba0ebf255c0bc30dd6aa8c40fcf7c8b1.webp",
+            "name": "Daniel Cruz",
+            "username": "DaniCruz",
+            "dateJoined": "6/15/2020",
+            "roles": [
+                "Gamers",
+                "Data Depression Project",
+                "Guest",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7588333463",
+            "avatar": "https://cdn.discordapp.com/avatars/758833346314108954/d9ab19f33df15f1637ccfde8cf49f7ec.webp",
+            "name": "Marilyn Cruz",
+            "username": "Marilyn Cruz",
+            "dateJoined": "9/30/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6635918330",
+            "avatar": "https://cdn.discordapp.com/avatars/663591833087246347/8ad6d91de28dc437e7e762945f41be0e.webp",
+            "name": "Michelle Quintal",
+            "username": "MichelleWarner",
+            "dateJoined": "7/23/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4109015359",
+            "avatar": "https://cdn.discordapp.com/avatars/410901535963217920/14585b62029676659360f00136d46017.webp",
+            "name": "Miguel Cobos",
+            "username": "Miguel Cobos",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6906884478",
+            "avatar": "https://cdn.discordapp.com/avatars/690688447891112016/5aa198d6ef368479e445cd32c9807062.webp",
+            "name": "Agnes Rojas",
+            "username": "agnesrojase",
+            "dateJoined": "9/27/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6922218166",
+            "avatar": "https://cdn.discordapp.com/avatars/692221816600657963/d75533fad2a2533debd50450e3fa830a.webp",
+            "name": "Antonio Reyes",
+            "username": "antonioreyescamara",
+            "dateJoined": "6/9/2020",
+            "roles": [
+                "Students",
+                "ROB Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4461197877",
+            "avatar": "https://cdn.discordapp.com/avatars/446119787739873282/fbfb0cbc7f309d84514118d0ee1b3985.webp",
+            "name": "Emilio Ruiz",
+            "username": "EmiRuiz_22",
+            "dateJoined": "8/31/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "Alphas",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3759969707",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Carlos Cerón",
+            "username": "CharlesACR75",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Trading Project",
+                "Sponsors",
+                "Congress",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6953722272",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/2.png",
+            "name": "Ricardo Ancona",
+            "username": "Ricardo Ancona",
+            "dateJoined": "6/26/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "2521997426",
+            "avatar": "https://cdn.discordapp.com/avatars/252199742681907201/174eda74e34de6bd40849d00f0260952.webp",
+            "name": "Oscar Marin",
+            "username": "Oscar Marin",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Students",
+                "ML Division",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7530257916",
+            "avatar": "https://cdn.discordapp.com/avatars/753025791607963688/3130221f9e66ac2ebff1991bcbafee95.webp",
+            "name": "Alberto Mendez",
+            "username": "AlbertoMendez",
+            "dateJoined": "9/27/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6950427228",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Edwin González",
+            "username": "egonzalez96",
+            "dateJoined": "6/26/2020",
+            "roles": [
+                "Thesis Students",
+                "Master Student",
+                "Thesis Edwin González",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6949315232",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Selene Can",
+            "username": "SeleneCanPool",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7453458028",
+            "avatar": "https://cdn.discordapp.com/avatars/745345802875961502/145db7ba94dcb1733875301479365c0e.webp",
+            "name": "Rodrigo Camas",
+            "username": "camitas14",
+            "dateJoined": "9/24/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7297314546",
+            "avatar": "https://cdn.discordapp.com/avatars/729731454699045014/716a1d971eb2fcd6db0f748d43290e28.webp",
+            "name": "Mauricio Ocampo",
+            "username": "Mauricio Ocampo",
+            "dateJoined": "8/27/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6730629756",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/4.png",
+            "name": "Saul Ochoa",
+            "username": "Saul Ochoa",
+            "dateJoined": "6/8/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7814349787",
+            "avatar": "https://cdn.discordapp.com/avatars/781434978785034292/2fd9eb12947364927543cc104aad35e1.webp",
+            "name": "Juan A. Recio",
+            "username": "Juan A. Recio",
+            "dateJoined": "11/26/2020",
+            "roles": [
+                "Researchers",
+                "UCM",
+                "Board",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7566855129",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "name": "Amauri Cocom",
+            "username": "Amauri Cocom",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7225822305",
+            "avatar": "https://cdn.discordapp.com/avatars/722582230567878786/13382da4901135c040a28a94f11409ef.webp",
+            "name": "Asael Magaña",
+            "username": "Asael Magaña",
+            "dateJoined": "6/16/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "BIO Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4780709430",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "name": "Jose Serrano",
+            "username": "JE Serrano",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Trial",
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5979611085",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Miguel Escudero",
+            "username": "mikegamer",
+            "dateJoined": "7/13/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7264262791",
+            "avatar": "https://cdn.discordapp.com/avatars/726426279175258112/ce860569ec573482b04cc4b33943662c.webp",
+            "name": "Jeni Molina",
+            "username": "Jeni Molina",
+            "dateJoined": "6/27/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3881945198",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "name": "Jorge Canche",
+            "username": "jiacc",
+            "dateJoined": "9/11/2020",
+            "roles": [
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4064520649",
+            "avatar": "https://cdn.discordapp.com/avatars/406452064936394753/22949805f333dd585205ee9ba188fc12.webp",
+            "name": "Sofia Prieto",
+            "username": "Surasy",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "1329389146",
+            "avatar": "https://cdn.discordapp.com/avatars/132938914645147648/20a4948631327b3c9059eda9b619331b.webp",
+            "name": "Itzamna Serrano",
+            "username": "Spitfire",
+            "dateJoined": "9/19/2020",
+            "roles": [
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7487305508",
+            "avatar": "https://cdn.discordapp.com/avatars/748730550826696845/c66952f02f84f2345266ae6bd759a1b0.webp",
+            "name": "Luis Peña",
+            "username": "Luis Peña",
+            "dateJoined": "8/27/2020",
+            "roles": [
+                "Students",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4779525474",
+            "avatar": "https://cdn.discordapp.com/avatars/477952547462578186/d027da0a8642154c1d90255238586cc6.webp",
+            "name": "Victor Romero",
+            "username": "Victor Romero",
+            "dateJoined": "8/30/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6337451990",
+            "avatar": "https://cdn.discordapp.com/avatars/633745199062843403/6c915701552a1cd3200018a68839ba17.webp",
+            "name": "Alejandra Uc",
+            "username": "Alejandra Uc Valladares",
+            "dateJoined": "7/23/2020",
+            "roles": [
+                "Students",
+                "ROB Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7533914882",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Luis Navarrete",
+            "username": "Luis Navarrete",
+            "dateJoined": "9/9/2020",
+            "roles": [
+                "Collaborators",
+                "SW Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6953402658",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/2.png",
+            "name": "Angel Quintal",
+            "username": "Quintal Angel",
+            "dateJoined": "7/16/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4242406772",
+            "avatar": "https://cdn.discordapp.com/avatars/424240677283561474/3aa704dfe394998337f8f31fc62132a1.webp",
+            "name": "Angel Hau",
+            "username": "Angel Hau",
+            "dateJoined": "9/17/2020",
+            "roles": [
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7222018573",
+            "avatar": "https://cdn.discordapp.com/avatars/722201857392640031/5e08e49058726ef1b1b4903f17b6b23d.webp",
+            "name": "Carolina Orozco",
+            "username": "Caro",
+            "dateJoined": "6/15/2020",
+            "roles": [
+                "Data Depression Project",
+                "Guest",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5095197549",
+            "avatar": "https://cdn.discordapp.com/avatars/509519754994909184/5b19b8967ae1d7b5a20a6869656f54c6.webp",
+            "name": "Brayan Rodriguez",
+            "username": "Brayan Rodriguez",
+            "dateJoined": "9/17/2020",
+            "roles": [
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5074342068",
+            "avatar": "https://cdn.discordapp.com/avatars/507434206889115658/05f977a245af8f07b91491adf854bddb.webp",
+            "name": "Santiago Vadillo",
+            "username": "Santiago Vadillo",
+            "dateJoined": "7/8/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4399845222",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "name": "Romeo Gómez",
+            "username": "RomeoGB",
+            "dateJoined": "6/27/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5240908210",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Ruben Chacón",
+            "username": "rubendcg",
+            "dateJoined": "8/24/2020",
+            "roles": [
+                "Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5090504928",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Daniel Hernández",
+            "username": "Danielo",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4064569152",
+            "avatar": "https://cdn.discordapp.com/avatars/406456915258769409/8eb85a345960a4ff1b0f2190f6c620f6.webp",
+            "name": "Alejandro Aizel",
+            "username": "alejandro_aizel",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6921621116",
+            "avatar": "https://cdn.discordapp.com/avatars/692162111681593374/b179fcf0f1da55c3adf9773c62a0eb03.webp",
+            "name": "Kevin Vicente",
+            "username": "XplosiveLion",
+            "dateJoined": "7/7/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6954359076",
+            "avatar": "https://cdn.discordapp.com/avatars/695435907649634316/ba5ea5d8f758f2917da10255201705d0.webp",
+            "name": "Gustavo Valencia",
+            "username": "gustavovalencia",
+            "dateJoined": "8/24/2020",
+            "roles": [
+                "Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "2086860437",
+            "avatar": "https://cdn.discordapp.com/avatars/208686043782840322/7467982a15414bbd9f68a8f31addefc3.webp",
+            "name": "Nicolas Pastore",
+            "username": "NicolasPastore [Mad Cream Games]",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4644821630",
+            "avatar": "https://cdn.discordapp.com/avatars/464482163044253696/2d8f45a8cca181e1bfe22d7477bab911.webp",
+            "name": "Gaspar Sulub",
+            "username": "Gaspar.Sulub",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7474851449",
+            "avatar": "https://cdn.discordapp.com/avatars/747485144990089366/e3c162c630f0737f93f01aecd2b8706e.webp",
+            "name": "Josué Pat",
+            "username": "Josué Emmanuel Pat Cetina",
+            "dateJoined": "8/24/2020",
+            "roles": [
+                "Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3222082632",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Diego Rodríguez",
+            "username": "diegoarp",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7487347663",
+            "avatar": "https://cdn.discordapp.com/avatars/748734766349549609/d2946328b7cd19b8d41fe7a32450a6b9.webp",
+            "name": "Josue Palomo",
+            "username": "Josue Palomo",
+            "dateJoined": "8/28/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3713247116",
+            "avatar": "https://cdn.discordapp.com/avatars/371324711688470528/35a3b11045392155332671592b7aa10f.webp",
+            "name": "Russell Vinajera",
+            "username": "☬ ₳ⱠɄ₵₳ⱤĐ ☬",
+            "dateJoined": "8/25/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "2559123217",
+            "avatar": "https://cdn.discordapp.com/avatars/255912321786839041/8988ef1f982e9d5fc8e163f9ab070141.webp",
+            "name": "Giovanny González",
+            "username": "gggiovanny",
+            "dateJoined": "7/16/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6954365326",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Angel Chan",
+            "username": "Angel Chan",
+            "dateJoined": "8/24/2020",
+            "roles": [
+                "Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3881947890",
+            "avatar": "https://cdn.discordapp.com/avatars/388194789071388672/dde8bae2617493d9acd15d51c94b2b14.webp",
+            "name": "Mónica Brito",
+            "username": "monibin",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4303823543",
+            "avatar": "https://cdn.discordapp.com/avatars/430382354305908780/fe0ecd548bf20b955e34dc15b29497c5.webp",
+            "name": "Iago Zamorano",
+            "username": "Iagger",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7253883227",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Mario Moreno",
+            "username": "ACDC 12",
+            "dateJoined": "11/11/2020",
+            "roles": [
+                "Professors",
+                "Digital Window Project",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "2358467118",
+            "avatar": "https://cdn.discordapp.com/avatars/235846711828938755/e5ff43de4cb01f2839e6e5ebb212a504.webp",
+            "name": "Marcos Pat",
+            "username": "Dexter",
+            "dateJoined": "6/10/2020",
+            "roles": [
+                "Students",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4017547638",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Adrian Navarro",
+            "username": "adriannavarror",
+            "dateJoined": "8/24/2020",
+            "roles": [
+                "Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3039252477",
+            "avatar": "https://cdn.discordapp.com/avatars/303925247730647043/2de495f41f445c6e62c943e290b5d07b.webp",
+            "name": "Alberto Eusebio",
+            "username": "a1",
+            "dateJoined": "9/17/2020",
+            "roles": [
+                "ML Division",
+                "Collaborators",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5714099743",
+            "avatar": "https://cdn.discordapp.com/avatars/571409974341664779/ec7146999d7aadd2b4d77fd80d638a6a.webp",
+            "name": "Diego Lopez",
+            "username": "nocturner",
+            "dateJoined": "7/10/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6335333946",
+            "avatar": "https://cdn.discordapp.com/avatars/633533394604785675/8bbcad16ee3c27643913e866bbc428ee.webp",
+            "name": "Pablo Várguez",
+            "username": "Pablo Várguez",
+            "dateJoined": "7/23/2020",
+            "roles": [
+                "Students",
+                "ROB Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4090681846",
+            "avatar": "https://cdn.discordapp.com/avatars/409068184638062602/820fe891454c109046a7c70b322976ab.webp",
+            "name": "Jade Martín",
+            "username": "Jade Martín",
+            "dateJoined": "7/7/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4171583064",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Alexis Canche",
+            "username": "Alexis Canche",
+            "dateJoined": "9/18/2020",
+            "roles": [
+                "Students",
+                "ML Division",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4519922910",
+            "avatar": "https://cdn.discordapp.com/avatars/451992291075424276/548f6c4fac59e7fcb8636a0e9427701a.webp",
+            "name": "Emilio Puigcerver",
+            "username": "Emilio Puigcerver🦈",
+            "dateJoined": "8/30/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "6574772870",
+            "avatar": "https://cdn.discordapp.com/avatars/657477287054278666/54f25128705cb6d3e9148a7a5f5c470a.webp",
+            "name": "Jennifer Yerbes",
+            "username": "Az <3",
+            "dateJoined": "7/7/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5645399994",
+            "avatar": "https://cdn.discordapp.com/avatars/564539999475859456/d51f26d6a6d23028e132ff8404f972ae.webp",
+            "name": "Omar Romero",
+            "username": "OmarRomero16",
+            "dateJoined": "8/31/2020",
+            "roles": [
+                "Students",
+                "Gamers",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4030329204",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "name": "Austin Cahuich",
+            "username": "AustinCaEs",
+            "dateJoined": "7/8/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3542985187",
+            "avatar": "https://cdn.discordapp.com/avatars/354298518778806272/ce8cda4b032bdde1e07091838b3fa972.webp",
+            "name": "Mario Tabasco",
+            "username": "Matvok",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3186018260",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/2.png",
+            "name": "David Huchim",
+            "username": "davidhuchim",
+            "dateJoined": "8/27/2020",
+            "roles": [
+                "Students",
+                "Class DIP (PdI)",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "5342222844",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/4.png",
+            "name": "Eduardo Esparza",
+            "username": "Eduardo Esparza",
+            "dateJoined": "8/15/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4319193744",
+            "avatar": "https://cdn.discordapp.com/avatars/431919374413332501/4090a7aaee8f197e6511b07a798f8d2b.webp",
+            "name": "Alex Corpas",
+            "username": "alexcorpas10",
+            "dateJoined": "11/27/2020",
+            "roles": [
+                "Gamers",
+                "UCM",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "2345221600",
+            "avatar": "https://cdn.discordapp.com/avatars/234522160041820160/db8406fde519e9bbf16acf79b1f7a275.webp",
+            "name": "Ricardo Meza",
+            "username": "Distor",
+            "dateJoined": "8/20/2020",
+            "roles": [
+                "Students",
+                "Thesis Students",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3602395216",
+            "avatar": "https://cdn.discordapp.com/avatars/360239521683734540/88e63d75faa9940598e0a74d62074b1e.webp",
+            "name": "Angel González",
+            "username": "AngelGonx11",
+            "dateJoined": "6/3/2020",
+            "roles": [
+                "Students",
+                "Wolf Coders",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "4972575220",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "name": "Rafael Puerto",
+            "username": "Rafael Puerto Valladares",
+            "dateJoined": "8/6/2020",
+            "roles": [
+                "Alumni",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3195632517",
+            "avatar": "https://cdn.discordapp.com/avatars/319563251794837504/a28d94916a6d94f0db7eb5de25f7ec62.webp",
+            "name": "Eric Suárez",
+            "username": "SuaveGalleta",
+            "dateJoined": "9/27/2020",
+            "roles": [
+                "Alumni",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "7047243297",
+            "avatar": "https://cdn.discordapp.com/avatars/704724329795026944/d1f6970812dbd3e2982ba1bb86e68813.webp",
+            "name": "Laura Zapata",
+            "username": "lzapatam",
+            "dateJoined": "8/27/2020",
+            "roles": [
+                "Class AI",
+                "@everyone"
+            ]
+        },
+        {
+            "id": "3046539955",
+            "avatar": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "name": "Daniel Ordaz",
+            "username": "Dorben",
+            "dateJoined": "7/24/2020",
+            "roles": [
+                "Alumni",
+                "@everyone"
+            ]
+        }
+    ]
+}

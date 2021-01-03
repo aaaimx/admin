@@ -151,9 +151,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ModalBox from '@/components/ConfirmDelete'
-import roles from '@/utils/roles'
+import roles from '@/data-sources/roles'
+import clients from '@/data-sources/clients'
 
 export default {
   name: 'ClientsTableSample',
@@ -176,7 +176,7 @@ export default {
         search: null
       },
       clients: [],
-      roles,
+      roles: roles.data,
       isLoading: false,
       paginated: true,
       perPage: 10,
@@ -207,38 +207,29 @@ export default {
     getData () {
       if (this.dataUrl) {
         this.isLoading = true
-        axios
-          .get(this.dataUrl)
-          .then(r => {
-            this.isLoading = false
-            this.clients = r.data.data
-            if (this.listQuery.role) {
-              this.clients = this.clients.filter(
-                m => m.roles.indexOf(this.listQuery.role) !== -1
-              )
-            }
-            if (this.listQuery.search) {
-              this.clients = this.clients.filter(
-                m =>
-                  m.name
-                    .toUpperCase()
-                    .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
-                  m.username
-                    .toUpperCase()
-                    .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
-                  m.id
-                    .toUpperCase()
-                    .indexOf(this.listQuery.search.toUpperCase()) !== -1
-              )
-            }
-          })
-          .catch(e => {
-            this.isLoading = false
-            this.$buefy.toast.open({
-              message: `Error: ${e.message}`,
-              type: 'is-danger'
-            })
-          })
+        setTimeout(() => {
+          this.isLoading = false
+          this.clients = clients.data
+          if (this.listQuery.role) {
+            this.clients = this.clients.filter(
+              m => m.roles.indexOf(this.listQuery.role) !== -1
+            )
+          }
+          if (this.listQuery.search) {
+            this.clients = this.clients.filter(
+              m =>
+                m.name
+                  .toUpperCase()
+                  .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
+                m.username
+                  .toUpperCase()
+                  .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
+                m.id
+                  .toUpperCase()
+                  .indexOf(this.listQuery.search.toUpperCase()) !== -1
+            )
+          }
+        }, 1000)
       }
     },
     trashModal (trashObject) {
