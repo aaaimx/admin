@@ -15,6 +15,8 @@
 
 # AAAIMX Productivity Manager 
 Administration panel for the management of events and productivity
+
+![Demo](demo.gif)
 ## Table of Contents
 
 * [Other versions](#other-versions)
