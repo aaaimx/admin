@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "56062909894b779e0f15",
+    "revision": "91ca16126f4c2e362e62",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -16,19 +16,23 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/default.9f7cf020.css"
   },
   {
-    "revision": "d7b3e2c1dd08c073b969",
-    "url": "/aaaimx-admin/css/event-form~profile.006daab7.css"
+    "revision": "ed126640d2ca400487f1",
+    "url": "/aaaimx-admin/css/event-form.006daab7.css"
+  },
+  {
+    "revision": "096f677758ba1ea63b62",
+    "url": "/aaaimx-admin/css/events.1fc78545.css"
   },
   {
     "revision": "93518a914c865b9ad275",
     "url": "/aaaimx-admin/css/full-page.e2fd1be9.css"
   },
   {
-    "revision": "660717861b8652e4dc1f",
-    "url": "/aaaimx-admin/css/profile.89611cf6.css"
+    "revision": "172c2890b19ee4a5e250",
+    "url": "/aaaimx-admin/css/profile.006daab7.css"
   },
   {
-    "revision": "5735ac76596680193ca1953cecf961c2",
+    "revision": "deb2a6af79b25a21391ea5952bdb3df8",
     "url": "/aaaimx-admin/data-sources/clients.json"
   },
   {
@@ -52,12 +56,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/img/logos.4b35cc27.png"
   },
   {
-    "revision": "098ebb3358f397c5936e6b3b7cea9253",
+    "revision": "57353542b4efe3500cfebeb0eb759d9e",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "56062909894b779e0f15",
-    "url": "/aaaimx-admin/js/app.e3019d0e.js"
+    "revision": "91ca16126f4c2e362e62",
+    "url": "/aaaimx-admin/js/app.bdeb6058.js"
   },
   {
     "revision": "033efddcdf1e962040f5",
@@ -76,20 +80,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/default.dac93ca1.js"
   },
   {
-    "revision": "d60a63ef0ce47875b9d8",
-    "url": "/aaaimx-admin/js/event-form.953e6be1.js"
+    "revision": "ed126640d2ca400487f1",
+    "url": "/aaaimx-admin/js/event-form.f44445a8.js"
   },
   {
-    "revision": "d7b3e2c1dd08c073b969",
-    "url": "/aaaimx-admin/js/event-form~profile.83c269e4.js"
+    "revision": "096f677758ba1ea63b62",
+    "url": "/aaaimx-admin/js/events.29cba298.js"
   },
   {
     "revision": "93518a914c865b9ad275",
     "url": "/aaaimx-admin/js/full-page.0bc0c6ac.js"
   },
   {
-    "revision": "660717861b8652e4dc1f",
-    "url": "/aaaimx-admin/js/profile.a4d50223.js"
+    "revision": "172c2890b19ee4a5e250",
+    "url": "/aaaimx-admin/js/profile.ebf110c5.js"
   },
   {
     "revision": "c725f0dfac72ed5f798d34b4e14940c4",

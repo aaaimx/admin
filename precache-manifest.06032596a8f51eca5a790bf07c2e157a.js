@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9084ff2013dcec25d212",
+    "revision": "12f69c4faf3cdd1e5813",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificate-form~event-form~profile.006daab7.css"
   },
   {
-    "revision": "9ee0edb32371f2daaa2e",
-    "url": "/aaaimx-admin/css/certificates.1fc78545.css"
+    "revision": "0c5a0b4344cf1338f89a",
+    "url": "/aaaimx-admin/css/certificates~events.081da297.css"
   },
   {
     "revision": "a3d206951a869c425b56",
@@ -20,10 +20,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/full-page.e2fd1be9.css"
   },
   {
-    "revision": "e62c2c0ea3e4ee5bf4c0",
-    "url": "/aaaimx-admin/css/profile.89611cf6.css"
-  },
-  {
     "revision": "98aa61782be016eb8fc5c33fb525ebab",
     "url": "/aaaimx-admin/img/logo.98aa6178.png"
   },
@@ -32,12 +28,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/img/logos.4b35cc27.png"
   },
   {
-    "revision": "fb4bdd54668846b717578b3aefe1f768",
+    "revision": "12a45ff3fec0f3e3cf516e305978af61",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "9084ff2013dcec25d212",
-    "url": "/aaaimx-admin/js/app-legacy.467bbd5c.js"
+    "revision": "12f69c4faf3cdd1e5813",
+    "url": "/aaaimx-admin/js/app-legacy.12c38e8b.js"
   },
   {
     "revision": "5e93e69e695c0b2c6fd2",
@@ -48,8 +44,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/certificate-form~event-form~profile-legacy.3497eab9.js"
   },
   {
-    "revision": "9ee0edb32371f2daaa2e",
-    "url": "/aaaimx-admin/js/certificates-legacy.4b677834.js"
+    "revision": "07ce0aeb7df62b37b3a1",
+    "url": "/aaaimx-admin/js/certificates-legacy.97b18eca.js"
+  },
+  {
+    "revision": "0c5a0b4344cf1338f89a",
+    "url": "/aaaimx-admin/js/certificates~events-legacy.1d5ce49a.js"
   },
   {
     "revision": "e22daf54e0d666217eb8",
@@ -64,12 +64,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/event-form-legacy.bfb57120.js"
   },
   {
+    "revision": "ad6720a9b5b3e8507942",
+    "url": "/aaaimx-admin/js/events-legacy.ad50e911.js"
+  },
+  {
     "revision": "c515e83693af624edfe0",
     "url": "/aaaimx-admin/js/full-page-legacy.f3f67706.js"
   },
   {
-    "revision": "e62c2c0ea3e4ee5bf4c0",
-    "url": "/aaaimx-admin/js/profile-legacy.28183d58.js"
+    "revision": "2f4592784d37415ee3eb",
+    "url": "/aaaimx-admin/js/profile-legacy.2d33620c.js"
   },
   {
     "revision": "c725f0dfac72ed5f798d34b4e14940c4",
