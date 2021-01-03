@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "12f69c4faf3cdd1e5813",
+    "revision": "56be8e5949a7a7eb4f28",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -28,12 +28,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/img/logos.4b35cc27.png"
   },
   {
-    "revision": "12a45ff3fec0f3e3cf516e305978af61",
+    "revision": "f62052e901e6b242773682b3eb6298be",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "12f69c4faf3cdd1e5813",
-    "url": "/aaaimx-admin/js/app-legacy.12c38e8b.js"
+    "revision": "56be8e5949a7a7eb4f28",
+    "url": "/aaaimx-admin/js/app-legacy.9fc8b790.js"
   },
   {
     "revision": "5e93e69e695c0b2c6fd2",
@@ -72,8 +72,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/full-page-legacy.f3f67706.js"
   },
   {
-    "revision": "2f4592784d37415ee3eb",
-    "url": "/aaaimx-admin/js/profile-legacy.2d33620c.js"
+    "revision": "39122fbf56f508191fe9",
+    "url": "/aaaimx-admin/js/profile-legacy.ec52674e.js"
   },
   {
     "revision": "c725f0dfac72ed5f798d34b4e14940c4",
