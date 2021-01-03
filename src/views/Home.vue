@@ -47,7 +47,7 @@
         </div>
       </div> -->
 
-      <EventsTable />
+      <MembersTable />
     </section>
   </div>
 </template>
@@ -55,13 +55,13 @@
 <script>
 // @ is an alias to /src
 import TitleBar from '@/components/TitleBar'
-import EventsTable from './events/Table'
+import MembersTable from './members/MembersTable'
 import HeroBarMain from '@/components/HeroBarMain'
 export default {
   name: 'home',
   components: {
     HeroBarMain,
-    EventsTable,
+    MembersTable,
     TitleBar
   },
   data () {

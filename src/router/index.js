@@ -46,6 +46,15 @@ const routes = [
       },
       {
         meta: {
+          title: 'Events'
+        },
+        path: '/events',
+        name: 'events',
+        component: () =>
+          import(/* webpackChunkName: "events" */ '../views/Events.vue')
+      },
+      {
+        meta: {
           title: 'New Certificate'
         },
         path: '/certificates/new',
