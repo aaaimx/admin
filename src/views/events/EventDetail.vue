@@ -35,6 +35,7 @@
           <EventPreview :event="event" />
         </card-component>
       </tiles>
+      <ParticipantsTable :event_id="id"/>
     </section>
   </div>
 </template>
@@ -44,6 +45,7 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import Notification from '@/components/Notification'
+import ParticipantsTable from '@/views/participants/Table'
 import EventPreview from './EventPreview'
 import EventForm from './EventForm'
 import { fetch } from '@/api/events'
@@ -55,7 +57,8 @@ export default {
     TitleBar,
     Notification,
     EventPreview,
-    EventForm
+    EventForm,
+    ParticipantsTable
   },
   props: {
     id: {

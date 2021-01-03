@@ -2,7 +2,7 @@
   <div id="app">
     <nav-bar />
     <aside-menu
-      :menu="menu"
+      :menu="menuList"
       :menu-bottom="menuBottom"
       @menu-click="menuClick"
       :class="{ 'has-secondary': !!menuSecondary }"
@@ -18,6 +18,7 @@
     />
     <router-view />
     <aside-right />
+    <bottom-nav />
     <footer-bar />
     <overlay />
   </div>
@@ -26,12 +27,13 @@
 <script>
 // @ is an alias to /src
 import { mapState } from 'vuex'
-import NavBar from '@/components/NavBar'
-import AsideMenu from '@/components/Aside/AsideMenu'
-import FooterBar from '@/components/FooterBar'
-import Overlay from '@/components/Overlay'
-import AsideRight from '@/components/Aside/AsideRight'
-import menu from './menu'
+import NavBar from '@/components/Layout/NavBar'
+import BottomNav from '@/components/Layout/BottomNav'
+import AsideMenu from '@/components/Layout/AsideMenu'
+import FooterBar from '@/components/Layout/FooterBar'
+import Overlay from '@/components/Layout/Overlay'
+import AsideRight from '@/components/Layout/AsideRight'
+import menuList from '@/router/menus'
 
 export default {
   name: 'App',
@@ -40,14 +42,15 @@ export default {
     Overlay,
     FooterBar,
     AsideMenu,
-    NavBar
+    NavBar,
+    BottomNav
   },
   data () {
     return {
       menuSecondary: null,
       menuSecondaryLabel: null,
       menuSecondaryIcon: null,
-      menu
+      menuList
     }
   },
   computed: {
@@ -63,7 +66,7 @@ export default {
     },
     ...mapState(['isOverlayVisible'])
   },
-  created () {
+  mounted () {
     this.$store.commit('darkModeToggle')
     this.$store.dispatch('getData')
     this.$store.commit('user', {
@@ -117,3 +120,12 @@ export default {
   }
 }
 </script>
+
+<style>
+:root {
+  --background: #000000;
+}
+body {
+  background: var(--background) !important;
+}
+</style>

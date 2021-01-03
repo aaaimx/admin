@@ -1,6 +1,11 @@
 <template>
   <div class="is-flex is-justify-content-space-between">
-    <b-dropdown v-model="listQuery.limit" append-to-body aria-role="list">
+    <b-dropdown
+      style="margin: 0.5rem;"
+      v-model="listQuery.limit"
+      append-to-body
+      aria-role="list"
+    >
       <button
         class="button is-secondary is-small"
         slot="trigger"
@@ -14,6 +19,7 @@
       <b-dropdown-item aria-role="listitem" :value="25">25</b-dropdown-item>
       <b-dropdown-item aria-role="listitem" :value="50">50</b-dropdown-item>
     </b-dropdown>
+    &nbsp;
     <b-pagination
       :total="total"
       v-model="listQuery.page"

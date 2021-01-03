@@ -6,25 +6,7 @@
         :key="cert.uuid"
         class="column is-half-tablet is-one-quarter-desktop"
       >
-        <div class="card">
-          <div class="card-image">
-            <figure class="is-4by3">
-              <img :src="cert.file" alt="Placeholder image" />
-            </figure>
-          </div>
-          <div class="card-content" style="padding: 10px">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-6">{{ cert.to }}</p>
-                <p class="subtitle is-7">{{ cert.type }}</p>
-              </div>
-            </div>
-
-            <!-- <div class="content">
-                  {{cert.description}}
-                </div> -->
-          </div>
-        </div>
+        <CertPreview :cert="cert" hide-description />
       </div>
     </div>
     <Pagination :listQuery="listQuery" :total="total" />
@@ -32,9 +14,11 @@
 </template>
 
 <script>
+import CertPreview from '@/views/certificates/CertPreview'
 import { fetchList } from '@/api/certificates'
 export default {
   props: ['event'],
+  components: { CertPreview },
   data () {
     return {
       certificates: [],

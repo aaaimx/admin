@@ -22,7 +22,7 @@
           </b-field>
         </card-component>
       </tiles>
-      <password-update-form/>
+      <password-update-form v-show="false"/>
     </section>
   </div>
 </template>

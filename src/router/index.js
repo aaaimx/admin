@@ -35,6 +35,17 @@ const routes = [
       },
       {
         meta: {
+          title: 'Certificates'
+        },
+        path: '/certificates',
+        name: 'certificates',
+        component: () =>
+          import(
+            /* webpackChunkName: "certificates" */ '../views/Certificates.vue'
+          )
+      },
+      {
+        meta: {
           title: 'New Certificate'
         },
         path: '/certificates/new',
@@ -69,6 +80,16 @@ const routes = [
         props: true
       }
     ]
+  },
+  {
+    meta: {
+      title: 'Event Registration',
+      isPublic: true
+    },
+    path: '/event/registration',
+    name: 'form',
+    component: () =>
+      import(/* webpackChunkName: "full-page" */ '../views/participants/Form.vue')
   },
   {
     path: '/full-page',
