@@ -9,7 +9,11 @@ export default [
     name: 'certificates',
     icon: 'certificate'
   },
-
+  {
+    to: '/events',
+    name: 'events',
+    icon: 'calendar'
+  },
   {
     to: '/profile',
     name: 'profile',

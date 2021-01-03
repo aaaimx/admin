@@ -15,7 +15,7 @@
         <div class="level-item">
           <div class="buttons is-right">
             <a class="button is-light" @click="isModalActive = true">
-              <b-icon icon="calendar" custom-size="default" />
+              <b-icon icon="calendar-week" custom-size="default" />
               <span>Create event</span>
             </a>
           </div>

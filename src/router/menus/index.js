@@ -12,6 +12,11 @@ export default [
       to: '/certificates',
       icon: 'certificate',
       label: 'Certificates'
+    },
+    {
+      to: '/events',
+      icon: 'calendar',
+      label: 'Events'
     }
   ],
   //   'Examples',
