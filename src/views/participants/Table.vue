@@ -101,6 +101,18 @@
                   <div class="media">
                     <b-icon
                       class="has-text-success media-left"
+                      icon="check-circle"
+                    />
+                    <div class="media-content">
+                      <h3>Mark as responsible</h3>
+                    </div>
+                  </div>
+                </b-dropdown-item>
+
+                <b-dropdown-item aria-role="listitem">
+                  <div class="media">
+                    <b-icon
+                      class="has-text-info media-left"
                       icon="email-send"
                     />
                     <div class="media-content">

@@ -40,8 +40,8 @@
       </b-select>
     </b-field>
     <b-field
-      label="Corum"
-      message="Number of particpants"
+      label="Quorum"
+      message="Max participants"
       horizontal
       v-if="!form.isPublic"
     >

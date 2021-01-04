@@ -13,11 +13,11 @@
       :can-cancel="false"
     ></b-loading>
     <section class="section is-main-section">
-      <notification class="is-info">
+      <!-- <notification class="is-info">
         <div>
           <span><b>Edit event.</b> Data will be updated</span>
         </div>
-      </notification>
+      </notification> -->
       <tiles>
         <card-component
           :title="formCardTitle"
@@ -35,7 +35,8 @@
           <EventPreview :event="event" />
         </card-component>
       </tiles>
-      <ParticipantsTable :event_id="id"/>
+      <ParticipantsTable :event_id="id" />
+      <CertTable v-if="event.title" :event="event.title" />
     </section>
   </div>
 </template>
@@ -45,6 +46,7 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import ParticipantsTable from '@/views/participants/Table'
+import CertTable from '@/views/certificates/Table'
 import EventPreview from './EventPreview'
 import EventForm from './EventForm'
 import { fetch } from '@/api/events'
@@ -56,7 +58,8 @@ export default {
     TitleBar,
     EventPreview,
     EventForm,
-    ParticipantsTable
+    ParticipantsTable,
+    CertTable
   },
   props: {
     id: {

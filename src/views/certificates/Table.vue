@@ -91,7 +91,7 @@
         <b-table-column label="Type" sortable field="type" v-slot="props">
           <small>{{ props.row.type }}</small>
         </b-table-column>
-        <b-table-column label="Event" sortable field="event" v-slot="props">
+        <b-table-column label="Event" field="event" v-slot="props">
           <small v-if="!props.row.event" class="has-text-grey is-abbr-like"
             >No event</small
           >
@@ -101,7 +101,7 @@
               : props.row.event
           }}</small>
         </b-table-column>
-        <b-table-column label="Date" field="created_at" v-slot="props">
+        <b-table-column label="Date" sortable field="created_at" v-slot="props">
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.created_at"
@@ -111,6 +111,7 @@
         <b-table-column
           field="published"
           label="Status"
+          sortable
           centered
           v-slot="props"
         >
@@ -214,11 +215,18 @@ import tableMixin from '@/mixins/table'
 export default {
   name: 'CertificatesTable',
   components: { ModalBox, Preview },
+  props: {
+    event: {
+      type: String,
+      default: null
+    }
+  },
   mixins: [tableMixin],
   data () {
     return {
       listQuery: {
         type: '',
+        event: this.event,
         ordering: null,
         page: 1,
         limit: 10,
@@ -237,6 +245,7 @@ export default {
     clearFilters () {
       this.listQuery = {
         type: '',
+        event: this.event,
         ordering: null,
         page: 1,
         limit: 10,

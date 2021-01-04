@@ -136,20 +136,11 @@
                   <span>Actions</span>
                   <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
                 </button>
-
                 <b-dropdown-item aria-role="listitem">
                   <div class="media has-text-dark">
-                    <b-icon class="media-left" type="is-success" icon="web" />
+                    <b-icon class="media-left" type="is-primary" icon="file-excel" />
                     <div class="media-content">
-                      <h3>Publish selected</h3>
-                    </div>
-                  </div>
-                </b-dropdown-item>
-                <b-dropdown-item aria-role="listitem">
-                  <div class="media has-text-dark">
-                    <b-icon class="media-left" type="is-danger" icon="web" />
-                    <div class="media-content">
-                      <h3>Mark as draft</h3>
+                      <h3>Export as excel</h3>
                     </div>
                   </div>
                 </b-dropdown-item>
