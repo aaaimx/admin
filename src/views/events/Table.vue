@@ -29,6 +29,8 @@
         :data="events"
         :striped="true"
         :hoverable="true"
+        :bordered="false"
+        :narrowed="true"
         :checked-rows.sync="checkedRows"
         :checkable="checkable"
         :loading="isLoading"

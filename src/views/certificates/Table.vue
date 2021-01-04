@@ -7,9 +7,9 @@
   >
     <action-button
       slot="button"
-      icon="pen-plus"
-      label="New certificate"
-      @button-click="actionSample"
+      icon="autorenew"
+      label="Clear filters"
+      @button-click="clearFilters"
     />
     <card-toolbar slot="toolbar" class="is-upper">
       <div slot="left" class="buttons has-addons">
@@ -50,19 +50,25 @@
         :data="list"
         :striped="true"
         :hoverable="true"
+        :bordered="false"
+        :narrowed="true"
+        :checkable="true"
         :checked-rows.sync="checkedRows"
-        :checkable="checkable"
-        :loading="isLoading"
-        :paginated="false"
-        :current-page="listQuery.page"
-        :per-page="listQuery.limit"
-        :total="total"
-        backend-pagination
+        :detailed="true"
+        :show-detail-icon="true"
+        :detail-key="key"
         :opened-detailed="defaultOpenedDetails"
         @details-open="onCollapse"
-        detailed
-        detail-key="uuid"
-        :show-detail-icon="true"
+        backend-pagination
+        :total="total"
+        :paginated="false"
+        :loading="isLoading"
+        :current-page="listQuery.page"
+        :per-page="listQuery.limit"
+        backend-sorting
+        :default-sort-direction="defaultSortOrder"
+        :default-sort="[sortField, sortOrder]"
+        @sort="onSort"
       >
         <!-- <b-table-column
         cell-class="has-no-head-mobile is-image-cell"
@@ -76,34 +82,47 @@
         {{ props.row.uuid }}
       </b-table-column> -->
         <b-table-column label="To" field="to" sortable v-slot="props">
-          {{ props.row.to }}
+          <template>
+            <router-link tag="a" :to="'/certificates/' + props.row.uuid">
+              <small>{{ props.row.to }}</small>
+            </router-link>
+          </template>
         </b-table-column>
-        <b-table-column label="Type" field="type" sortable v-slot="props">
-          {{ props.row.type }}
+        <b-table-column label="Type" sortable field="type" v-slot="props">
+          <small>{{ props.row.type }}</small>
         </b-table-column>
-        <b-table-column label="Event" field="event" sortable v-slot="props">
-          {{ props.row.event }}
+        <b-table-column label="Event" sortable field="event" v-slot="props">
+          <small v-if="!props.row.event" class="has-text-grey is-abbr-like"
+            >No event</small
+          >
+          <small v-else>{{
+            props.row.event.length > 15
+              ? props.row.event.slice(0, 15) + '...'
+              : props.row.event
+          }}</small>
         </b-table-column>
-        <!-- <b-table-column
-        cell-class="is-progress-col"
-        label="Progress"
-        field="progress"
-        sortable
-        v-slot="props"
-      >
-        <progress
-          class="progress is-small is-primary"
-          :value="props.row.progress"
-          max="100"
-          >{{ props.row.progress }}</progress
-        >
-      </b-table-column> -->
-        <b-table-column label="Date" v-slot="props">
+        <b-table-column label="Date" field="created_at" v-slot="props">
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.created_at"
-            >{{ new Date(props.row.created_at).toLocaleString() }}</small
+            >{{ new Date(props.row.created_at).toLocaleDateString() }}</small
           >
+        </b-table-column>
+        <b-table-column
+          field="published"
+          label="Status"
+          centered
+          v-slot="props"
+        >
+          <span
+            class="tag is-rounded"
+            :class="{
+              'is-success': props.row.published,
+              'is-danger': !props.row.published
+            }"
+          >
+            {{ props.row.published ? 'Online' : 'Draft' }}
+          </span>
         </b-table-column>
         <b-table-column
           custom-key="actions"
@@ -111,20 +130,24 @@
           v-slot="props"
         >
           <div class="buttons is-right">
-            <router-link
-              :to="{ name: 'certificate.edit', params: { id: props.row.uuid } }"
-              class="button is-small is-primary"
+            <a
+              tag="a"
+              target="_blank"
+              :href="
+                'https://www.aaaimx.org/certificates/?id=' + props.row.uuid
+              "
+              class="button is-small is-info"
             >
-              <b-icon icon="pencil" size="is-small" />
-            </router-link>
-            <button
+              <b-icon icon="eye" size="is-small" />
+            </a>
+            <!-- <button
               :class="{ 'is-success': props.row.published }"
               class="button is-small"
               type="button"
               @click.prevent="trashModal(props.row)"
             >
               <b-icon icon="web" size="is-small" />
-            </button>
+            </button> -->
             <button
               class="button is-small is-danger"
               type="button"
@@ -144,7 +167,38 @@
         </section>
 
         <div slot="footer">
-          <Pagination :listQuery="listQuery" :total="total" />
+          <div class="is-flex is-justify-content-space-between">
+            <div style="margin: 0.5rem;">
+              <b-dropdown append-to-body aria-role="list">
+                <button
+                  class="button is-primary is-small"
+                  slot="trigger"
+                  slot-scope="{ active }"
+                >
+                  <span>Actions</span>
+                  <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
+                </button>
+
+                <b-dropdown-item aria-role="listitem">
+                  <div class="media has-text-dark">
+                    <b-icon class="media-left" type="is-success" icon="web" />
+                    <div class="media-content">
+                      <h3>Publish selected</h3>
+                    </div>
+                  </div>
+                </b-dropdown-item>
+                <b-dropdown-item aria-role="listitem">
+                  <div class="media has-text-dark">
+                    <b-icon class="media-left" type="is-danger" icon="web" />
+                    <div class="media-content">
+                      <h3>Mark as draft</h3>
+                    </div>
+                  </div>
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
+            <Pagination :listQuery="listQuery" :total="total" />
+          </div>
         </div>
       </b-table>
     </div>
@@ -155,58 +209,24 @@
 import { fetchList, remove } from '@/api/certificates'
 import ModalBox from '@/components/ConfirmDelete'
 import Preview from './CertPreview'
+import tableMixin from '@/mixins/table'
 
 export default {
   name: 'CertificatesTable',
   components: { ModalBox, Preview },
-  props: {
-    dataUrl: {
-      type: String,
-      default: null
-    },
-    checkable: {
-      type: Boolean,
-      default: false
-    }
-  },
+  mixins: [tableMixin],
   data () {
     return {
-      isModalActive: false,
-      defaultOpenedDetails: [],
-      list: [],
-      total: 0,
       listQuery: {
-        type: null,
+        type: '',
+        ordering: null,
         page: 1,
         limit: 10,
         offset: 0
       },
-      trashObject: null,
-      events: [],
-      isLoading: false,
-      paginated: false,
-      perPage: 10,
-      checkedRows: []
-    }
-  },
-  computed: {
-    trashObjectName () {
-      if (this.trashObject) {
-        return this.trashObject.name
-      }
-
-      return null
-    }
-  },
-  mounted () {
-    this.getList()
-  },
-  watch: {
-    listQuery: {
-      handler (val) {
-        this.getList()
-      },
-      deep: true
+      key: 'uuid',
+      sortField: 'date_created',
+      defaultSortOrder: 'asc'
     }
   },
   methods: {
@@ -214,14 +234,21 @@ export default {
       console.log(type)
       this.listQuery.type = type
     },
+    clearFilters () {
+      this.listQuery = {
+        type: '',
+        ordering: null,
+        page: 1,
+        limit: 10,
+        offset: 0
+      }
+      this.sortField = 'date_created'
+      this.defaultSortOrder = 'asc'
+    },
     actionSample () {
       this.$router.push('/certificates/new')
     },
-    onCollapse (row) {
-      console.log(row)
-      this.defaultOpenedDetails = [row.uuid]
-    },
-    getList () {
+    getData () {
       this.isLoading = true
       this.listQuery.offset = this.listQuery.limit * (this.listQuery.page - 1)
       fetchList(this.listQuery).then(res => {
@@ -230,10 +257,6 @@ export default {
         this.isLoading = false
       })
     },
-    trashModal (trashObject) {
-      this.trashObject = trashObject
-      this.isModalActive = true
-    },
     async trashConfirm () {
       this.isModalActive = false
       try {
@@ -241,16 +264,13 @@ export default {
       } catch (error) {
         console.log(error)
       } finally {
-        this.getList()
+        this.getData()
       }
 
       this.$buefy.snackbar.open({
         message: 'Confirmed',
         queue: false
       })
-    },
-    trashCancel () {
-      this.isModalActive = false
     }
   }
 }

@@ -44,7 +44,6 @@
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
-import Notification from '@/components/Notification'
 import ParticipantsTable from '@/views/participants/Table'
 import EventPreview from './EventPreview'
 import EventForm from './EventForm'
@@ -55,7 +54,6 @@ export default {
     Tiles,
     HeroBar,
     TitleBar,
-    Notification,
     EventPreview,
     EventForm,
     ParticipantsTable

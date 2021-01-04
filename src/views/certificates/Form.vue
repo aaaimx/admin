@@ -251,7 +251,6 @@ import dayjs from 'dayjs'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
-import Notification from '@/components/Notification'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import ImagePreview from './ImagePreview'
 
@@ -271,7 +270,6 @@ export default {
     Tiles,
     HeroBar,
     TitleBar,
-    Notification,
     ImagePreview
   },
   props: {

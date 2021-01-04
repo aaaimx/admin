@@ -1,6 +1,11 @@
 <template>
-  <button type="button" class="button is-small" :class="{'is-loading':isLoading}" @click.prevent="click">
-    <b-icon :icon="icon" custom-size="default"/>
+  <button
+    type="button"
+    class="button is-small"
+    :class="{ 'is-loading': isLoading }"
+    @click.prevent="click"
+  >
+    <b-icon :icon="icon" custom-size="default" />
     <span>{{ label }}</span>
   </button>
 </template>
