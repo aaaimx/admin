@@ -69,12 +69,27 @@
                 <template slot="empty">No results found</template>
               </b-autocomplete>
             </b-field>
+            <b-field label="Folder" message="FTP folder" horizontal>
+              <b-select
+                v-model="form.ftp_folder"
+                placeholder="Select a folder"
+                required
+                expanded
+              >
+                <option
+                  v-for="item in folders"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></option>
+              </b-select>
+            </b-field>
             <b-field label="Description">
-              <b-input
-                maxlength="255"
+              <ckeditor
+                :editor="editor"
                 v-model="form.description"
-                type="textarea"
-              ></b-input>
+                :config="editorConfig"
+              ></ckeditor>
             </b-field>
 
             <notification v-if="id" class="is-warning">
@@ -114,15 +129,28 @@
               ></a>
             </b-field>
             <b-field label="Change file">
-              <file-picker
-                required
-                accept="application/pdf"
-                @input="file => (newFile = file)"
-              />
+              <b-upload v-model="newFile" drag-drop>
+                <section class="section">
+                  <div class="content has-text-centered">
+                    <p>
+                      <b-icon icon="upload" size="is-large"> </b-icon>
+                    </p>
+                    <p>Drop your file here or click to upload</p>
+                  </div>
+                </section>
+              </b-upload>
             </b-field>
+
+            <div class="tags" v-if="newFile.name">
+              <span
+                class="tag is-primary"
+              >
+                {{ newFile.name }}
+              </span>
+            </div>
             <b-field label="Upload to" message="FTP folder">
               <b-select
-                v-model="form.upload"
+                v-model="form.ftp_folder"
                 placeholder="Select a folder"
                 required
                 expanded
@@ -165,7 +193,7 @@
               custom-size="default"
             />
           </a>
-          <img :src="form.file" class="image has-max-width is-aligned-center" />
+          <ImagePreview :size="0.7" :cert="form" />
           <hr />
           <b-field label="Name">
             <b-input :value="form.to" custom-class="is-static" readonly />
@@ -176,21 +204,11 @@
           <b-field label="Event">
             <b-input :value="form.event" custom-class="is-static" readonly />
           </b-field>
-          <b-field label="Description">
-            <b-input
-              :value="form.description"
-              type="textarea"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
           <notification class="is-warning">
-              <div>
-                <span
-                  ><b>Publish/Unpublish.</b> Make available online.</span
-                >
-              </div>
-            </notification>
+            <div>
+              <span><b>Publish/Unpublish.</b> Make available online.</span>
+            </div>
+          </notification>
           <b-button
             @click="updateStatus(!form.published)"
             :type="form.published ? 'is-warning' : 'is-success'"
@@ -221,13 +239,22 @@
   </div>
 </template>
 
+<style>
+.ck p,
+.ck strong {
+  color: black !important;
+}
+</style>
+
 <script>
 import dayjs from 'dayjs'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
-import FilePicker from '@/components/FilePicker'
 import Notification from '@/components/Notification'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import ImagePreview from './ImagePreview'
+
 import {
   fetch,
   create,
@@ -241,11 +268,11 @@ import { fetchList as fetchEvents } from '@/api/events'
 export default {
   name: 'CertificateForm',
   components: {
-    FilePicker,
     Tiles,
     HeroBar,
     TitleBar,
-    Notification
+    Notification,
+    ImagePreview
   },
   props: {
     id: {
@@ -256,13 +283,19 @@ export default {
     return {
       events: [],
       folders: [],
-      newFile: null,
+      newFile: {},
       name: '',
       selected: null,
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
-      isProfileExists: false
+      isProfileExists: false,
+      editor: ClassicEditor,
+      editorData: '<p>Rich-text editor content.</p>',
+      editorConfig: {
+        // The configuration of the rich-text editor.
+        toolbar: ['headers', 'bold', 'italic', '|', 'link']
+      }
     }
   },
   computed: {
@@ -421,6 +454,7 @@ export default {
           formData.append(key, this.form[key])
         }
         await uploadFile(this.id, formData)
+        window.location.reload()
       } catch (error) {
         console.log(error)
       } finally {

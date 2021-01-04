@@ -1,16 +1,17 @@
 <template>
   <div>
     <b-modal v-model="isImageModalActive">
-      <figure class="is-4by3">
-        <img :title="cert.uuid" :src="cert.file" />
-      </figure>
+      <ImagePreview :size="1.2" :cert="cert" />
     </b-modal>
     <div class="card" v-if="styleMode === 'card'">
       <div class="card-image">
-        <figure class="is-4by3" @click="isImageModalActive = true">
-          <img :src="cert.file" alt="Placeholder image" />
-        </figure>
+        <ImagePreview
+          @click="isImageModalActive = true"
+          :size="0.35"
+          :cert="cert"
+        />
       </div>
+
       <div class="card-content">
         <div class="media">
           <div class="media-content">
@@ -42,35 +43,34 @@
     </div>
     <div class="card" v-else>
       <div class="card-image is-hidden-desktop">
-        <figure class="is-4by3" @click="isImageModalActive = true">
-          <img :src="cert.file" alt="Placeholder image" />
-        </figure>
+        <ImagePreview :size="1.2" :cert="cert" />
       </div>
       <div class="card-content">
         <article class="media">
-          <div class="media-left is-hidden-mobile">
-            <figure @click="isImageModalActive = true">
-              <img width="200px" :src="cert.file" />
-            </figure>
+          <div
+            class="media-left is-hidden-mobile"
+            @click="isImageModalActive = true"
+          >
+            <ImagePreview
+              width="200px"
+              :size="0.23"
+              :cert="cert"
+            />
           </div>
           <div class="media-content">
             <div class="content">
-              <p>
-                <strong @click="isImageModalActive = true">{{
-                  cert.to
-                }}</strong>
-                &nbsp;
-                <small>{{ cert.uuid }}</small>
-                <copy-to-clipboard :text="cert.uuid">
-                  <b-icon size="is-small" icon="clipboard" />
-                </copy-to-clipboard>
+              <strong @click="isImageModalActive = true">{{ cert.to }}</strong>
+              &nbsp;
+              <small>{{ cert.uuid }}</small>
+              <copy-to-clipboard :text="cert.uuid">
+                <b-icon size="is-small" icon="clipboard" />
+              </copy-to-clipboard>
 
-                <br />
-                {{ cert.description }}
-                <br />
+              <br />
+              <div v-html="cert.description"></div>
+              <br />
 
-                <b-tag type="is-primary">{{ cert.type }}</b-tag>
-              </p>
+              <b-tag type="is-primary">{{ cert.type }}</b-tag>
             </div>
           </div>
         </article>
@@ -90,6 +90,7 @@ p {
 </style>
 
 <script>
+import ImagePreview from './ImagePreview'
 export default {
   props: {
     cert: {
@@ -100,6 +101,7 @@ export default {
       default: 'card'
     }
   },
+  components: { ImagePreview },
   data () {
     return {
       isImageModalActive: false

@@ -10,9 +10,11 @@
     "build:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES npm run build",
     "deploy:gh-pages": "cross-env NODE_DEBUG=gh-pages gh-pages -d dist -t",
     "publish": "npm run build:gh-pages && npm run deploy:gh-pages"
-    
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^24.0.0",
+    "@ckeditor/ckeditor5-theme-lark": "^24.0.0",
+    "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "axios": "^0.20.0",
     "buefy": "^0.9.3",
     "bulma": "^0.9.0",

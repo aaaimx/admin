@@ -19,6 +19,10 @@ import * as filters from './filters'
 /* Vue. Main component */
 import App from './App.vue'
 
+// https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs-v2.html
+import CKEditor from '@ckeditor/ckeditor5-vue2'
+
+Vue.use(CKEditor)
 /* register multiple components */
 const GlobalComponents = require.context('@/components/Global', true, /\.vue$/)
 GlobalComponents.keys().reduce((modules, modulePath) => {
