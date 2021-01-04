@@ -67,7 +67,7 @@ export default {
     ...mapState(['isOverlayVisible'])
   },
   mounted () {
-    this.$store.commit('darkModeToggle')
+    this.$store.commit('darkModeEnable')
     this.$store.dispatch('getData')
     this.$store.commit('user', {
       name: 'Admin',
@@ -99,7 +99,7 @@ export default {
             queue: false
           })
         } else if (item.action === 'dark-mode-toggle') {
-          this.$store.commit('darkModeToggle')
+          this.$store.commit('darkModeEnable')
         }
       }
     },
@@ -120,12 +120,3 @@ export default {
   }
 }
 </script>
-
-<style>
-:root {
-  --background: #000000;
-}
-body {
-  background: var(--background) !important;
-}
-</style>

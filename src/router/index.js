@@ -91,16 +91,6 @@ const routes = [
     ]
   },
   {
-    meta: {
-      title: 'Event Registration',
-      isPublic: true
-    },
-    path: '/event/registration',
-    name: 'form',
-    component: () =>
-      import(/* webpackChunkName: "full-page" */ '../views/participants/Form.vue')
-  },
-  {
     path: '/full-page',
     component: () =>
       import(/* webpackChunkName: "full-page" */ '../layouts/fullpage.vue'),

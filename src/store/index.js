@@ -164,16 +164,10 @@ export default new Vuex.Store({
     },
 
     /* Dark Mode */
-    darkModeToggle (state, payload = null) {
+    darkModeEnable (state) {
       const htmlClassName = 'is-dark-mode-active'
-
-      state.isDarkModeActive = !state.isDarkModeActive
-
-      if (state.isDarkModeActive) {
-        document.documentElement.classList.add(htmlClassName)
-      } else {
-        document.documentElement.classList.remove(htmlClassName)
-      }
+      state.isDarkModeActive = true
+      document.documentElement.classList.add(htmlClassName)
     },
     SET_TOKEN: (state, token) => {
       state.token = token
