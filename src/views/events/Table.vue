@@ -5,7 +5,12 @@
     class="has-table has-mobile-sort-spaced"
     :has-button-slot="true"
   >
-    <action-button slot="button" @click="actionSample" />
+    <action-button
+      slot="button"
+      icon="autorenew"
+      label="Clear filters"
+      @button-click="clearFilters"
+    />
     <card-toolbar slot="toolbar" class="is-upper">
       <div slot="left" class="buttons has-addons">
         <button class="button is-active" @click="actionSample">
@@ -26,24 +31,28 @@
         @cancel="trashCancel"
       />
       <b-table
-        :data="events"
+        :data="list"
         :striped="true"
         :hoverable="true"
-        :bordered="false"
+        :bordered="true"
         :narrowed="true"
+        :checkable="true"
         :checked-rows.sync="checkedRows"
-        :checkable="checkable"
+        :detailed="true"
+        :show-detail-icon="true"
+        :detail-key="key"
+        :opened-detailed="defaultOpenedDetails"
+        @details-open="onCollapse"
+        backend-pagination
+        :total="total"
+        :paginated="false"
         :loading="isLoading"
         :current-page="listQuery.page"
         :per-page="listQuery.limit"
-        :total="total"
-        backend-pagination
-        :opened-detailed="openedEvents"
-        @details-open="onCollapse"
-        detailed
-        detail-key="id"
-        :show-detail-icon="true"
-        default-sort="date_start"
+        backend-sorting
+        :default-sort-direction="defaultSortOrder"
+        :default-sort="[sortField, sortOrder]"
+        @sort="onSort"
       >
         <!-- <b-table-column
         cell-class="has-no-head-mobile is-image-cell"
@@ -54,34 +63,34 @@
         </div>
       </b-table-column> -->
         <b-table-column label="Event" field="title" sortable v-slot="props">
-          {{ props.row.title.slice(0, 50) }}...
+          <template>
+            <router-link tag="a" :to="'/events/' + props.row.id">
+              <small>{{ props.row.title }}</small>
+            </router-link>
+          </template>
         </b-table-column>
         <b-table-column label="Type" field="type" sortable v-slot="props">
-          {{ props.row.type }}
+          <small>{{ props.row.type }}</small>
         </b-table-column>
         <b-table-column label="Place" field="place" sortable v-slot="props">
-          {{ props.row.place }}
+          <small>{{ props.row.place }}</small>
         </b-table-column>
-        <!-- <b-table-column
-        cell-class="is-progress-col"
-        label="Progress"
-        field="progress"
-        sortable
-        v-slot="props"
-      >
-        <progress
-          class="progress is-small is-primary"
-          :value="props.row.progress"
-          max="100"
-          >{{ props.row.progress }}</progress
-        >
-      </b-table-column> -->
-        <b-table-column label="Date" v-slot="props">
+        <b-table-column label="Date start" v-slot="props">
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.date_start"
-            >{{ new Date(props.row.date_start).toLocaleString() }}</small
+            >{{ new Date(props.row.date_start).toLocaleDateString() }}</small
           >
+        </b-table-column>
+        <b-table-column label="Date end" v-slot="props">
+          <small
+            class="has-text-grey is-abbr-like"
+            :title="props.row.date_end"
+            >{{ new Date(props.row.date_end).toLocaleDateString() }}</small
+          >
+        </b-table-column>
+        <b-table-column label="Hours" centered sortable v-slot="props">
+          <small>{{ props.row.hours }}</small>
         </b-table-column>
         <b-table-column
           custom-key="actions"
@@ -116,7 +125,38 @@
         </section>
 
         <div slot="footer">
-          <Pagination :listQuery="listQuery" :total="total" />
+          <div class="is-flex is-justify-content-space-between">
+            <div style="margin: 0.5rem;">
+              <b-dropdown append-to-body aria-role="list">
+                <button
+                  class="button is-primary is-small"
+                  slot="trigger"
+                  slot-scope="{ active }"
+                >
+                  <span>Actions</span>
+                  <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
+                </button>
+
+                <b-dropdown-item aria-role="listitem">
+                  <div class="media has-text-dark">
+                    <b-icon class="media-left" type="is-success" icon="web" />
+                    <div class="media-content">
+                      <h3>Publish selected</h3>
+                    </div>
+                  </div>
+                </b-dropdown-item>
+                <b-dropdown-item aria-role="listitem">
+                  <div class="media has-text-dark">
+                    <b-icon class="media-left" type="is-danger" icon="web" />
+                    <div class="media-content">
+                      <h3>Mark as draft</h3>
+                    </div>
+                  </div>
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
+            <Pagination :listQuery="listQuery" :total="total" />
+          </div>
         </div>
       </b-table>
     </div>
@@ -128,60 +168,40 @@ import { fetchList as fetchEvents, remove } from '@/api/events'
 import ModalBox from '@/components/ConfirmDelete'
 import CertList from './CertList'
 import EventPreview from './EventPreview'
+import tableMixin from '@/mixins/table'
 
 export default {
   name: 'EventsTable',
   components: { ModalBox, CertList, EventPreview },
-  props: {
-    dataUrl: {
-      type: String,
-      default: null
-    },
-    checkable: {
-      type: Boolean,
-      default: false
-    }
-  },
+  mixins: [tableMixin],
   data () {
     return {
-      isModalActive: false,
-      openedEvents: [],
-      certificates: [],
-      total: 0,
       listQuery: {
+        search: '',
+        ordering: null,
+        page: 1,
         limit: 10,
         offset: 0
       },
-      current_event: '',
-      trashObject: null,
-      events: [],
-      isLoading: false,
-      paginated: false,
-      perPage: 10,
-      checkedRows: []
-    }
-  },
-  computed: {
-    trashObjectName () {
-      if (this.trashObject) {
-        return this.trashObject.name
-      }
-
-      return null
-    }
-  },
-  created () {
-    this.getEvents()
-  },
-  watch: {
-    listQuery: {
-      handler (val) {
-        this.getEvents()
-      },
-      deep: true
+      key: 'id',
+      sortField: 'date_start',
+      defaultSortOrder: 'desc',
+      certificates: [],
+      current_event: ''
     }
   },
   methods: {
+    clearFilters () {
+      this.listQuery = {
+        search: '',
+        ordering: null,
+        page: 1,
+        limit: 10,
+        offset: 0
+      }
+      this.sortField = 'date_start'
+      this.defaultSortOrder = 'asc'
+    },
     actionSample () {
       this.$buefy.toast.open({
         message: 'Everything OK!',
@@ -189,18 +209,14 @@ export default {
         queue: false
       })
     },
-    onCollapse (row) {
-      this.openedEvents = [row.id]
-      this.current_event = row.title
-    },
-    getEvents () {
+    getData () {
       this.isLoading = true
       this.listQuery.offset = this.listQuery.limit * (this.listQuery.page - 1)
       fetchEvents(this.listQuery)
         .then(r => {
           this.isLoading = false
           this.total = r.count
-          this.events = r.results
+          this.list = r.results
         })
         .catch(e => {
           this.isLoading = false
@@ -210,10 +226,6 @@ export default {
           })
         })
     },
-    trashModal (trashObject) {
-      this.trashObject = trashObject
-      this.isModalActive = true
-    },
     async trashConfirm () {
       await remove(this.trashObject.id)
       this.$buefy.snackbar.open({
@@ -222,9 +234,6 @@ export default {
       })
       this.isModalActive = false
       this.getEvents()
-    },
-    trashCancel () {
-      this.isModalActive = false
     }
   }
 }
