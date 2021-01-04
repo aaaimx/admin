@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ac0dfdec4585b5fbcd43",
+    "revision": "71139c2cf44c9a7d1615",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -56,12 +56,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/img/logos.4b35cc27.png"
   },
   {
-    "revision": "663d8e5a54ef23a7ee2605db3166492e",
+    "revision": "5c91252da8ed1687aa06030806b4e7b5",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "ac0dfdec4585b5fbcd43",
-    "url": "/aaaimx-admin/js/app.087f65a9.js"
+    "revision": "71139c2cf44c9a7d1615",
+    "url": "/aaaimx-admin/js/app.90ce52ec.js"
   },
   {
     "revision": "4ecea9a84643f6c7995d",
@@ -88,8 +88,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/event-form.4dd480d2.js"
   },
   {
-    "revision": "ca1deda6376302bdc90d",
-    "url": "/aaaimx-admin/js/events.6094fce0.js"
+    "revision": "95b9c178617866feee62",
+    "url": "/aaaimx-admin/js/events.40e28049.js"
   },
   {
     "revision": "a1cd610906dd8b9ebe32",
