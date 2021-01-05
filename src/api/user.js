@@ -18,8 +18,7 @@ export function getGroups () {
 export function getInfo (id) {
   return request({
     url: `/users/${id}/`,
-    method: 'get'
-    // params: { token }
+    method: 'GET'
   })
 }
 

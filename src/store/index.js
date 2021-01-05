@@ -20,6 +20,7 @@ export default new Vuex.Store({
     userName: null,
     userEmail: null,
     userAvatar: null,
+    userLastLogin: null,
 
     // productivity
     divisions: [],
@@ -184,8 +185,7 @@ export default new Vuex.Store({
         login({ username: username.trim(), password: password })
           .then(data => {
             const { access, refresh } = data
-            var decoded = decodeToken(access)
-            console.log(decoded)
+            // var decoded = decodeToken(access)
             commit('SET_TOKEN', access)
             setToken(access)
             setRefreshToken(refresh)
@@ -205,11 +205,15 @@ export default new Vuex.Store({
         getInfo(token.user_id)
           .then(data => {
             const roles = data.groups
-            commit('user', data)
+            console.log(data)
+            commit('basic', {
+              key: 'userLastLogin',
+              value: data.last_login
+            })
             resolve(roles)
           })
           .catch(error => {
-            reject(error)
+            console.log(error)
           })
       })
     },
