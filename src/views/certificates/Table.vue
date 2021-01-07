@@ -98,7 +98,7 @@
           <small v-else>{{
             props.row.event.length > 15
               ? props.row.event.slice(0, 15) + '...'
-              : props.row.event
+              : props.row.event.title
           }}</small>
         </b-table-column>
         <b-table-column label="Date" sortable field="created_at" v-slot="props">
@@ -225,7 +225,7 @@ export default {
   components: { ModalBox, Preview },
   props: {
     event: {
-      type: String,
+      type: Number,
       default: null
     }
   },

@@ -65,12 +65,15 @@
         <b-table-column label="Event" field="title" sortable v-slot="props">
           <template>
             <router-link tag="a" :to="'/events/' + props.row.id">
-              <small>{{ props.row.title }}</small>
+              <small>{{ props.row.title.slice(0, 50) }}</small>
             </router-link>
           </template>
         </b-table-column>
         <b-table-column label="Type" field="type" sortable v-slot="props">
           <small>{{ props.row.type }}</small>
+        </b-table-column>
+        <b-table-column label="Division" field="division" sortable v-slot="props">
+          <small>{{ props.row.division ? props.row.division.name : 'AAAIMX' }}</small>
         </b-table-column>
         <b-table-column label="Place" field="place" sortable v-slot="props">
           <small>{{ props.row.place }}</small>
@@ -98,12 +101,12 @@
           v-slot="props"
         >
           <div class="buttons is-right">
-            <router-link
+            <!-- <router-link
               :to="{ name: 'event.edit', params: { id: props.row.id } }"
               class="button is-small is-primary"
             >
               <b-icon icon="calendar-edit" size="is-small" />
-            </router-link>
+            </router-link> -->
             <button
               class="button is-small is-light"
               type="button"

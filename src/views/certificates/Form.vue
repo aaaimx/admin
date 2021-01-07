@@ -59,14 +59,28 @@
             <b-field label="Event" horizontal>
               <b-autocomplete
                 required
-                v-model="form.event"
-                :data="filteredDataArray"
+                v-model="search"
+                :data="events"
                 placeholder="e.g. SINABIA 2019"
                 clearable
-                @input="getEvents"
+                field="title"
+                open-on-focus
+                :loading="isFetching"
+                @typing="getEvents"
                 @select="option => (selected = option)"
               >
                 <template slot="empty">No results found</template>
+                <template slot-scope="props">
+                  <div class="media">
+                    <div class="media-content">
+                      <b>{{ props.option.title }}</b>
+                      <br />
+                      <small>
+                        {{ props.option.date_end | longDate }}
+                      </small>
+                    </div>
+                  </div>
+                </template>
               </b-autocomplete>
             </b-field>
             <b-field label="Folder" message="FTP folder" horizontal>
@@ -197,7 +211,7 @@
               custom-size="default"
             />
           </a>
-          <ImagePreview :size="0.7" :cert="form" />
+          <ImagePreview :size="0.7" :cert="form"/>
           <hr />
           <b-field label="Name">
             <b-input :value="form.to" custom-class="is-static" readonly />
@@ -206,7 +220,7 @@
             <b-input :value="form.type" custom-class="is-static" readonly />
           </b-field>
           <b-field label="Event">
-            <b-input :value="form.event" custom-class="is-static" readonly />
+            <b-input v-if="selected" :value="selected.title" custom-class="is-static" readonly />
           </b-field>
           <notification class="is-warning">
             <div>
@@ -268,7 +282,7 @@ import {
   uploadFile,
   getFolders
 } from '@/api/certificates'
-import { fetchList as fetchEvents } from '@/api/events'
+import { fetchList as fetchEvents, fetch as fetchEvent } from '@/api/events'
 
 export default {
   name: 'CertificateForm',
@@ -289,6 +303,8 @@ export default {
       folders: [],
       newFile: {},
       name: '',
+      search: '',
+      isFetching: false,
       selected: null,
       isLoading: false,
       form: this.getClearFormObject(),
@@ -303,16 +319,6 @@ export default {
     }
   },
   computed: {
-    filteredDataArray () {
-      return this.events.filter(option => {
-        return (
-          option
-            .toString()
-            .toLowerCase()
-            .indexOf(this.form.event.toLowerCase()) >= 0
-        )
-      })
-    },
     titleStack () {
       let lastCrumb
 
@@ -355,6 +361,7 @@ export default {
   },
   created () {
     this.getData()
+    this.getEvents()
   },
   methods: {
     getClearFormObject () {
@@ -366,31 +373,42 @@ export default {
       }
     },
     async getEvents () {
-      const data = await fetchEvents()
-      this.events = data.results.map(el => el.title)
+      this.isFetching = true
+      try {
+        const data = await fetchEvents({ search: this.search })
+        this.events = data.results
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.isFetching = false
+      }
     },
     async getData () {
       const res = await getFolders()
       this.folders = res.folders.filter(el => el.search(/\./) === -1)
       if (this.id) {
         this.isLoading = true
-        fetch(this.id)
-          .then(item => {
-            if (item) {
-              this.form = item
-            } else {
-              this.$router.push({ name: 'certificate.new' })
+        try {
+          const item = await fetch(this.id)
+          if (item) {
+            this.form = item
+            if (item.event) {
+              const data = await fetchEvent(item.event)
+              this.selected = data
             }
-            this.isLoading = false
+          } else {
+            this.$router.push({ name: 'certificate.new' })
+          }
+        } catch (error) {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${error}`,
+            type: 'is-danger',
+            queue: false
           })
-          .catch(e => {
-            this.isLoading = false
-            this.$buefy.toast.open({
-              message: `Error: ${e}`,
-              type: 'is-danger',
-              queue: false
-            })
-          })
+        } finally {
+          this.isLoading = false
+        }
       }
     },
     input (v) {
@@ -401,6 +419,7 @@ export default {
       let data
       try {
         this.form.file = ''
+        this.form.event = this.selected.id
         if (this.id) data = await update(this.id, this.form)
         else data = await create(this.form)
         this.$buefy.snackbar.open({

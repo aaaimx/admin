@@ -36,7 +36,7 @@
         </card-component>
       </tiles>
       <ParticipantsTable :event_id="id" />
-      <CertTable v-if="event.title" :event="event.title" />
+      <CertTable v-if="event.id" :event="event.id" />
     </section>
   </div>
 </template>
