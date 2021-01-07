@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c71ed1207f66d70fafc6",
+    "revision": "d0aa08433cdc4a07fd9e",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
-    "revision": "4e4f8b913d234df5a785",
+    "revision": "e13df6fb83c437a3a31a",
     "url": "/aaaimx-admin/css/certificate-form.4c75dd5e.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/event-form.c89761f9.css"
   },
   {
-    "revision": "51f4678b2f9b3229a102",
+    "revision": "3d87b93cd0fdcc78b930",
     "url": "/aaaimx-admin/css/events.c89761f9.css"
   },
   {
@@ -48,16 +48,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "c96d717b591e30164935855b1ad0bb58",
+    "revision": "61d2e730f26e374b5961248f16ee7cc6",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "c71ed1207f66d70fafc6",
-    "url": "/aaaimx-admin/js/app.cf62da44.js"
+    "revision": "d0aa08433cdc4a07fd9e",
+    "url": "/aaaimx-admin/js/app.65db41f4.js"
   },
   {
-    "revision": "4e4f8b913d234df5a785",
-    "url": "/aaaimx-admin/js/certificate-form.8f6cbe15.js"
+    "revision": "e13df6fb83c437a3a31a",
+    "url": "/aaaimx-admin/js/certificate-form.e83d09cc.js"
   },
   {
     "revision": "c3f1f6c8d01b2c147c5e",
@@ -80,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/event-form.bc745603.js"
   },
   {
-    "revision": "51f4678b2f9b3229a102",
-    "url": "/aaaimx-admin/js/events.9f2fbcd7.js"
+    "revision": "3d87b93cd0fdcc78b930",
+    "url": "/aaaimx-admin/js/events.a858661f.js"
   },
   {
     "revision": "c2b251ceaf02bf001852",
