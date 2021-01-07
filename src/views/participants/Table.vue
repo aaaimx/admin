@@ -84,9 +84,9 @@
           <EmptyData :isLoading="isLoading" />
         </section>
 
-        <template slot="footer">
-          <div class="is-flex is-justify-content-space-between">
-            <div style="margin: 0.5rem;">
+        <template slot="footer" style="padding: 1%;">
+          <div class="columns">
+            <div class="column is-one-third-desktop">
               <b-dropdown append-to-body aria-role="list">
                 <button
                   class="button is-primary is-small"
@@ -134,7 +134,7 @@
                 </b-dropdown-item>
               </b-dropdown>
             </div>
-            <Pagination :listQuery="listQuery" :total="total" />
+            <Pagination class="column" :listQuery="listQuery" :total="total" />
           </div>
         </template>
       </b-table>

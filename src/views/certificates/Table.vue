@@ -173,9 +173,9 @@
           <EmptyData :isLoading="isLoading" />
         </section>
 
-        <div slot="footer">
-          <div class="is-flex is-justify-content-space-between">
-            <div style="margin: 0.5rem;">
+        <div slot="footer" style="padding: 1%;">
+          <div class="columns is-desktop">
+            <div class="column is-one-third-desktop">
               <b-dropdown append-to-body aria-role="list">
                 <button
                   class="button is-primary is-small"
@@ -203,7 +203,9 @@
                 </b-dropdown-item>
               </b-dropdown>
             </div>
-            <Pagination :listQuery="listQuery" :total="total" />
+            <div class="column">
+              <Pagination :listQuery="listQuery" :total="total" />
+            </div>
           </div>
         </div>
       </b-table>
