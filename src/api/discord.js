@@ -1,5 +1,12 @@
 import request from '@/services/discord'
 
+export function getMembers () {
+  return request({
+    url: '/members/',
+    method: 'GET'
+  })
+}
+
 /**
  *
  * @param {Object} data Event data

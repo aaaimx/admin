@@ -1,6 +1,6 @@
 <template>
   <card-component
-    :title="`${clients.length} Members`"
+    :title="`${total} Members`"
     icon="account-multiple"
     class="has-table"
     :has-button-slot="true"
@@ -11,11 +11,7 @@
         <SearchInput :listQuery="listQuery" />
       </form>
       <form slot="right">
-        <b-select
-          @input="getData"
-          placeholder="Select a role"
-          v-model="listQuery.role"
-        >
+        <b-select placeholder="Select a role" v-model="listQuery.role">
           <option v-for="role in roles" :key="role" :value="role">{{
             role
           }}</option>
@@ -31,7 +27,7 @@
       />
       <b-table
         :checked-rows.sync="checkedRows"
-        :checkable="false"
+        :checkable="true"
         :loading="isLoading"
         :paginated="paginated"
         :per-page="perPage"
@@ -40,7 +36,7 @@
         :narrowed="true"
         default-sort="name"
         :show-detail-icon="true"
-        :data="clients"
+        :data="list"
         detailed
         detail-key="id"
       >
@@ -71,10 +67,10 @@
           sortable
           v-slot="props"
         >
-          {{ props.row.username }}
+          <small>@{{ props.row.username }}</small>
         </b-table-column>
         <b-table-column label="ID" field="id" sortable v-slot="props">
-          {{ props.row.id }}
+          {{ props.row.id.slice(0, 10) }}
         </b-table-column>
         <b-table-column label="Date joined" v-slot="props">
           <small
@@ -85,21 +81,23 @@
         </b-table-column>
         <b-table-column
           custom-key="actions"
+          centered
           cell-class="is-actions-cell"
-          v-if="false"
           v-slot="props"
         >
           <div class="buttons is-right">
-            <a class="button is-small is-primary">
+            <!-- <a class="button is-small is-primary">
               <b-icon icon="account-edit" size="is-small" />
-            </a>
-            <button
-              class="button is-small is-danger"
-              type="button"
-              @click.prevent="trashModal(props.row)"
-            >
-              <b-icon icon="trash-can" size="is-small" />
-            </button>
+            </a> -->
+            <b-tooltip type="is-primary" label="Kick">
+              <button
+                class="button is-small is-danger"
+                type="button"
+                @click.prevent="trashModal(props.row)"
+              >
+                <b-icon icon="karate" size="is-small" />
+              </button>
+            </b-tooltip>
           </div>
         </b-table-column>
         <template slot="detail" slot-scope="props">
@@ -130,21 +128,31 @@
           </article>
         </template>
         <section class="section" slot="empty">
-          <div class="content has-text-grey has-text-centered">
-            <template v-if="isLoading">
-              <p>
-                <b-icon icon="dots-horizontal" size="is-large" />
-              </p>
-              <p>Fetching data...</p>
-            </template>
-            <template v-else>
-              <p>
-                <b-icon icon="emoticon-sad" size="is-large" />
-              </p>
-              <p>Nothing's here&hellip;</p>
-            </template>
-          </div>
+          <EmptyData :isLoading="isLoading" />
         </section>
+        <div slot="footer">
+          <div style="margin: 0.5rem;">
+            <b-dropdown append-to-body aria-role="list">
+              <button
+                class="button is-primary is-small"
+                slot="trigger"
+                slot-scope="{ active }"
+              >
+                <span>Actions</span>
+                <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
+              </button>
+              <b-dropdown-item aria-role="listitem">
+                <div class="media has-text-dark">
+                  <b-icon class="media-left" type="is-danger" icon="karate" />
+                  <div class="media-content">
+                    <h3>Kick selected</h3>
+                  </div>
+                </div>
+              </b-dropdown-item>
+            </b-dropdown>
+            <!-- <Pagination :listQuery="listQuery" :total="total" /> -->
+          </div>
+        </div>
       </b-table>
     </div>
   </card-component>
@@ -153,15 +161,15 @@
 <script>
 import ModalBox from '@/components/ConfirmDelete'
 import roles from '@/data-sources/roles'
-import clients from '@/data-sources/clients'
+import { getMembers } from '@/api/discord'
 
 export default {
-  name: 'ClientsTableSample',
+  name: 'MembersTable',
   components: { ModalBox },
   props: {
     dataUrl: {
       type: String,
-      default: '/data-sources/clients.json'
+      default: '/data-sources/list.json'
     },
     checkable: {
       type: Boolean,
@@ -175,7 +183,9 @@ export default {
       listQuery: {
         search: null
       },
-      clients: [],
+      total: 0,
+      members: [],
+      list: [],
       roles: roles.data,
       isLoading: false,
       paginated: true,
@@ -195,7 +205,7 @@ export default {
   watch: {
     listQuery: {
       handler () {
-        this.getData()
+        this.handleFilters()
       },
       deep: true
     }
@@ -204,32 +214,40 @@ export default {
     this.getData()
   },
   methods: {
-    getData () {
+    async getData () {
       if (this.dataUrl) {
         this.isLoading = true
-        setTimeout(() => {
+        try {
+          const data = await getMembers()
+          this.total = data.members.length
+          this.members = data.members
+          this.list = data.members
+        } catch (error) {
+          console.log(error)
+        } finally {
           this.isLoading = false
-          this.clients = clients.data
-          if (this.listQuery.role) {
-            this.clients = this.clients.filter(
-              m => m.roles.indexOf(this.listQuery.role) !== -1
-            )
-          }
-          if (this.listQuery.search) {
-            this.clients = this.clients.filter(
-              m =>
-                m.name
-                  .toUpperCase()
-                  .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
-                m.username
-                  .toUpperCase()
-                  .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
-                m.id
-                  .toUpperCase()
-                  .indexOf(this.listQuery.search.toUpperCase()) !== -1
-            )
-          }
-        }, 1000)
+        }
+      }
+    },
+    handleFilters () {
+      this.list = this.members
+      if (this.listQuery.role) {
+        this.list = this.list.filter(
+          m => m.roles.indexOf(this.listQuery.role) !== -1
+        )
+      }
+      if (this.listQuery.search) {
+        this.list = this.list.filter(
+          m =>
+            m.name
+              .toUpperCase()
+              .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
+            m.username
+              .toUpperCase()
+              .indexOf(this.listQuery.search.toUpperCase()) !== -1 ||
+            m.id.toUpperCase().indexOf(this.listQuery.search.toUpperCase()) !==
+              -1
+        )
       }
     },
     trashModal (trashObject) {
