@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "adf878f1a850fd1ba96f",
+    "revision": "ed5cff092bb84285cff2",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -12,15 +12,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificate-form~certificates~event-form~events.be4fa277.css"
   },
   {
-    "revision": "0d73805f7b7517017e16",
+    "revision": "a6170b22b9100114a9a6",
     "url": "/aaaimx-admin/css/certificates.c89761f9.css"
   },
   {
-    "revision": "31d9e639f141975be3aa",
+    "revision": "57a61b15600a2f1c04b4",
     "url": "/aaaimx-admin/css/event-form.c89761f9.css"
   },
   {
-    "revision": "3604270a082451fd98bf",
+    "revision": "2bb97844f7046b656039",
     "url": "/aaaimx-admin/css/events.c89761f9.css"
   },
   {
@@ -48,12 +48,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "7a6ec4db6c361f612b844ea402c1d919",
+    "revision": "ce6624b4d10562e9a4b4b29986e84adf",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "adf878f1a850fd1ba96f",
-    "url": "/aaaimx-admin/js/app.fc9e1e9d.js"
+    "revision": "ed5cff092bb84285cff2",
+    "url": "/aaaimx-admin/js/app.067a5ef4.js"
   },
   {
     "revision": "a19dd419e5b43bc2e508",
@@ -64,8 +64,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/certificate-form~certificates~event-form~events.379b0aca.js"
   },
   {
-    "revision": "0d73805f7b7517017e16",
-    "url": "/aaaimx-admin/js/certificates.73952974.js"
+    "revision": "a6170b22b9100114a9a6",
+    "url": "/aaaimx-admin/js/certificates.02b7def4.js"
   },
   {
     "revision": "d31cdfcc3541a045ccf4",
@@ -76,12 +76,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/default.d2c586ec.js"
   },
   {
-    "revision": "31d9e639f141975be3aa",
-    "url": "/aaaimx-admin/js/event-form.ba61d5b5.js"
+    "revision": "57a61b15600a2f1c04b4",
+    "url": "/aaaimx-admin/js/event-form.9ac54c77.js"
   },
   {
-    "revision": "3604270a082451fd98bf",
-    "url": "/aaaimx-admin/js/events.694a473b.js"
+    "revision": "2bb97844f7046b656039",
+    "url": "/aaaimx-admin/js/events.e54956b7.js"
   },
   {
     "revision": "c2b251ceaf02bf001852",

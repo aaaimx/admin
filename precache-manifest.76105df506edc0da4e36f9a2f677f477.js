@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b647297dba6d8d122c23",
+    "revision": "93bcc4c2423872f36fa5",
     "url": "/aaaimx-admin/css/app.cf86db68.css"
   },
   {
@@ -16,15 +16,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/css/certificate-form~certificates~event-form~events~profile.006daab7.css"
   },
   {
-    "revision": "c2f05fa7ddcade6d579f",
+    "revision": "5bd6a8ccd07db889d35f",
     "url": "/aaaimx-admin/css/certificates.c89761f9.css"
   },
   {
-    "revision": "7da59ec39e2a75509c6c",
+    "revision": "37476f529ae1439b28ad",
     "url": "/aaaimx-admin/css/event-form.c89761f9.css"
   },
   {
-    "revision": "db4e9e47548a3ed620ed",
+    "revision": "72b81e2f3649667e1afd",
     "url": "/aaaimx-admin/css/events.c89761f9.css"
   },
   {
@@ -32,12 +32,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "7bf5b7265d9a4b3a21fb67677d8ca2b5",
+    "revision": "ab0e37bb8a723575c19b41098a1a7cfc",
     "url": "/aaaimx-admin/index.html"
   },
   {
-    "revision": "b647297dba6d8d122c23",
-    "url": "/aaaimx-admin/js/app-legacy.a3f3871f.js"
+    "revision": "93bcc4c2423872f36fa5",
+    "url": "/aaaimx-admin/js/app-legacy.3fa74ad0.js"
   },
   {
     "revision": "e348d36f1b450105907e",
@@ -52,8 +52,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/certificate-form~certificates~event-form~events~profile-legacy.cb11c91e.js"
   },
   {
-    "revision": "c2f05fa7ddcade6d579f",
-    "url": "/aaaimx-admin/js/certificates-legacy.23af48c5.js"
+    "revision": "5bd6a8ccd07db889d35f",
+    "url": "/aaaimx-admin/js/certificates-legacy.33ecb02d.js"
   },
   {
     "revision": "d9739c9be26d170224ae",
@@ -64,12 +64,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aaaimx-admin/js/default-legacy.9385d4ad.js"
   },
   {
-    "revision": "7da59ec39e2a75509c6c",
-    "url": "/aaaimx-admin/js/event-form-legacy.a059ec41.js"
+    "revision": "37476f529ae1439b28ad",
+    "url": "/aaaimx-admin/js/event-form-legacy.b5854f84.js"
   },
   {
-    "revision": "db4e9e47548a3ed620ed",
-    "url": "/aaaimx-admin/js/events-legacy.acde87af.js"
+    "revision": "72b81e2f3649667e1afd",
+    "url": "/aaaimx-admin/js/events-legacy.4b9ca0a3.js"
   },
   {
     "revision": "6733dfa3812cc87034d8",
