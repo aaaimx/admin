@@ -80,7 +80,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/profile-legacy.82ba3cf1.js"
   },
   {
-    "revision": "c725f0dfac72ed5f798d34b4e14940c4",
+    "revision": "a039c05e2257c6641d70aca5a7c85769",
     "url": "/admin/manifest.json"
   }
 ]);
