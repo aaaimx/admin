@@ -84,14 +84,20 @@
                 ></option>
               </b-select>
             </b-field>
-            <b-field label="Description">
+            <!-- <b-field label="Old description">
               <ckeditor
                 :editor="editor"
-                v-model="form.description"
+                :value="form.description"
                 :config="editorConfig"
               ></ckeditor>
+            </b-field> -->
+            <b-field label="Description">
+              <b-input
+                maxlength="255"
+                v-model="form.description"
+                type="textarea"
+              ></b-input>
             </b-field>
-
             <notification v-if="id" class="is-warning">
               <div>
                 <span><b>Be carefully!.</b> Image will be reseted.</span>
@@ -142,9 +148,7 @@
             </b-field>
 
             <div class="tags" v-if="newFile.name">
-              <span
-                class="tag is-primary"
-              >
+              <span class="tag is-primary">
                 {{ newFile.name }}
               </span>
             </div>
@@ -253,6 +257,7 @@ import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import ImagePreview from './ImagePreview'
+import { sendCertToDiscord } from '@/api/discord'
 
 import {
   fetch,
@@ -264,6 +269,7 @@ import {
   getFolders
 } from '@/api/certificates'
 import { fetchList as fetchEvents } from '@/api/events'
+
 export default {
   name: 'CertificateForm',
   components: {
@@ -401,12 +407,23 @@ export default {
           message: 'Certificate saved',
           queue: false
         })
-        if (this.id) window.location.reload()
-        else this.$router.push('/certificates/' + data.uuid)
+        if (this.id) {
+          window.location.reload()
+        } else {
+          this.$router.push('/certificates/' + data.uuid)
+          this.sendMessage(data)
+        }
       } catch (error) {
         console.log(error)
       } finally {
         this.isLoading = false
+      }
+    },
+    async sendMessage (data) {
+      try {
+        await sendCertToDiscord(data)
+      } catch (error) {
+        console.log(error)
       }
     },
     async updateStatus (status) {

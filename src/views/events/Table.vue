@@ -75,14 +75,14 @@
         <b-table-column label="Place" field="place" sortable v-slot="props">
           <small>{{ props.row.place }}</small>
         </b-table-column>
-        <b-table-column label="Date start" v-slot="props">
+        <b-table-column label="Date start" sortable v-slot="props">
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.date_start"
             >{{ new Date(props.row.date_start).toLocaleDateString() }}</small
           >
         </b-table-column>
-        <b-table-column label="Date end" v-slot="props">
+        <b-table-column label="Date end" sortable v-slot="props">
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.date_end"
@@ -105,6 +105,13 @@
               <b-icon icon="calendar-edit" size="is-small" />
             </router-link>
             <button
+              class="button is-small is-light"
+              type="button"
+              @click.prevent="sendMessageReminder(props.row)"
+            >
+              <b-icon icon="discord" size="is-small" />
+            </button>
+            <button
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
@@ -117,7 +124,7 @@
         <template slot="detail" slot-scope="props">
           <EventPreview :event="props.row" />
           <hr />
-          <CertList ref="certlist" :event="current_event" />
+          <CertList ref="certlist" :event="props.row.title" />
         </template>
 
         <section class="section" slot="empty">
@@ -138,7 +145,11 @@
                 </button>
                 <b-dropdown-item aria-role="listitem">
                   <div class="media has-text-dark">
-                    <b-icon class="media-left" type="is-primary" icon="file-excel" />
+                    <b-icon
+                      class="media-left"
+                      type="is-primary"
+                      icon="file-excel"
+                    />
                     <div class="media-content">
                       <h3>Export as excel</h3>
                     </div>
@@ -156,6 +167,7 @@
 
 <script>
 import { fetchList as fetchEvents, remove } from '@/api/events'
+import { sendEventToDiscord } from '@/api/discord'
 import ModalBox from '@/components/ConfirmDelete'
 import CertList from './CertList'
 import EventPreview from './EventPreview'
@@ -217,6 +229,25 @@ export default {
           })
         })
     },
+    async sendMessageReminder (data) {
+      this.isLoading = true
+      try {
+        await sendEventToDiscord(data)
+        this.$buefy.snackbar.open({
+          message: 'Message sent to Discord',
+          queue: false
+        })
+      } catch (error) {
+        console.log(error)
+        this.$buefy.toast.open({
+          type: 'is-danger',
+          message: 'Something went wrong :(. Try later!!!',
+          queue: false
+        })
+      } finally {
+        this.isLoading = false
+      }
+    },
     async trashConfirm () {
       await remove(this.trashObject.id)
       this.$buefy.snackbar.open({
@@ -224,7 +255,7 @@ export default {
         queue: false
       })
       this.isModalActive = false
-      this.getEvents()
+      this.getData()
     }
   }
 }

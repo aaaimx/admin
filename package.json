@@ -1,5 +1,5 @@
 {
-  "name": "admin-null-vue-bulma-dashboard",
+  "name": "aaaimx-admin",
   "version": "1.4.2",
   "private": true,
   "scripts": {
@@ -58,7 +58,11 @@
   },
   "eslintConfig": {
     "root": true,
+    "globals": {
+      "window": true
+    },
     "env": {
+      "browser": true,
       "node": true
     },
     "extends": [

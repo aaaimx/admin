@@ -141,14 +141,20 @@
             >
               <b-icon icon="eye" size="is-small" />
             </a>
-            <!-- <button
-              :class="{ 'is-success': props.row.published }"
-              class="button is-small"
+            <button
+              class="button is-small is-primary"
               type="button"
-              @click.prevent="trashModal(props.row)"
+              @click.prevent="generateCert(props.row)"
             >
-              <b-icon icon="web" size="is-small" />
-            </button> -->
+              <b-icon icon="refresh" size="is-small" />
+            </button>
+            <button
+              class="button is-small is-light"
+              type="button"
+              @click.prevent="sendCertMessage(props.row)"
+            >
+              <b-icon icon="discord" size="is-small" />
+            </button>
             <button
               class="button is-small is-danger"
               type="button"
@@ -179,7 +185,6 @@
                   <span>Actions</span>
                   <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
                 </button>
-
                 <b-dropdown-item aria-role="listitem">
                   <div class="media has-text-dark">
                     <b-icon class="media-left" type="is-success" icon="web" />
@@ -207,7 +212,8 @@
 </template>
 
 <script>
-import { fetchList, remove } from '@/api/certificates'
+import { fetchList, remove, update } from '@/api/certificates'
+import { sendCertToDiscord } from '@/api/discord'
 import ModalBox from '@/components/ConfirmDelete'
 import Preview from './CertPreview'
 import tableMixin from '@/mixins/table'
@@ -234,7 +240,8 @@ export default {
       },
       key: 'uuid',
       sortField: 'date_created',
-      defaultSortOrder: 'asc'
+      defaultSortOrder: 'asc',
+      action: ''
     }
   },
   methods: {
@@ -265,6 +272,69 @@ export default {
         this.total = res.count
         this.isLoading = false
       })
+    },
+    async generateCert (row) {
+      this.isLoading = true
+      try {
+        await update(row.uuid, row)
+        this.getData()
+      } catch (error) {
+        console.log(error)
+        this.$buefy.dialog.alert({
+          title: 'Something went wrong :(',
+          message:
+            'Please navigate to the certificate detail and cofirm the required information not be empty',
+          type: 'is-danger',
+          hasIcon: true,
+          icon: 'times-circle',
+          iconPack: 'fa',
+          ariaRole: 'alertdialog',
+          ariaModal: true
+        })
+      } finally {
+        this.isLoading = false
+      }
+    },
+    async onAction (action) {
+      console.log(action)
+      switch (action) {
+        case 'certs':
+          this.isLoading = true
+          try {
+            const promises = this.checkedRows.map(element => {
+              return update(element.uuid, element)
+            })
+            Promise.all(promises).then(values => {
+              this.getData()
+            })
+          } catch (error) {
+            console.log(error)
+          } finally {
+            this.isLoading = false
+          }
+          break
+        default:
+          break
+      }
+    },
+    async sendCertMessage (data) {
+      this.isLoading = true
+      try {
+        await sendCertToDiscord(data)
+        this.$buefy.snackbar.open({
+          message: 'Message sent to Discord',
+          queue: false
+        })
+      } catch (error) {
+        console.log(error)
+        this.$buefy.toast.open({
+          type: 'is-danger',
+          message: 'Something went wrong :(. Try later!!!',
+          queue: false
+        })
+      } finally {
+        this.isLoading = false
+      }
     },
     async trashConfirm () {
       this.isModalActive = false

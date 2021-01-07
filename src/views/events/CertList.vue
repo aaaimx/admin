@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="columns is-multiline is-desktop">
+  <div v-if="certificates.length">
+    <div class="columns is-multiline is-desktop" >
       <div
         v-for="cert in certificates"
         :key="cert.uuid"

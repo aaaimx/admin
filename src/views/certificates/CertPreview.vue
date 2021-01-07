@@ -67,7 +67,7 @@
               </copy-to-clipboard>
 
               <br />
-              <div v-html="cert.description"></div>
+              <div v-text="cert.description"></div>
               <br />
 
               <b-tag type="is-primary">{{ cert.type }}</b-tag>

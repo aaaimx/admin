@@ -102,6 +102,7 @@
 
 <script>
 import { create, update } from '@/api/events'
+import { sendEventToDiscord } from '@/api/discord'
 const defaultForm = {
   title: '',
   corum: 0,
@@ -150,6 +151,7 @@ export default {
           })
         } else {
           const data = await create(this.form)
+          await sendEventToDiscord(data)
           this.$buefy.snackbar.open({
             message: 'Event created',
             queue: false
