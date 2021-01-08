@@ -11,11 +11,32 @@
         <SearchInput :listQuery="listQuery" />
       </form>
       <form slot="right">
-        <b-select placeholder="Select a role" v-model="listQuery.role">
-          <option v-for="role in roles" :key="role" :value="role">{{
-            role
-          }}</option>
-        </b-select>
+        <b-dropdown
+          v-model="listQuery.role"
+          :max-height="500"
+          scrollable
+          append-to-body
+          position="is-bottom-left"
+          aria-role="list"
+        >
+          <button class="button is-link" slot="trigger" slot-scope="{ active }">
+            <span>{{ listQuery.role || 'Select role' }}</span>
+            <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
+          </button>
+          <b-dropdown-item
+            v-for="role in roles"
+            :key="role.name"
+            :value="role.name"
+            aria-role="listitem"
+          >
+            <div class="media" :style="{ color: role.color }">
+              <b-icon size="is-small" class="media-left" icon="tag" />
+              <div class="media-content">
+                <h3>{{ role.name }}</h3>
+              </div>
+            </div>
+          </b-dropdown-item>
+        </b-dropdown>
       </form>
     </card-toolbar>
     <div>
@@ -160,7 +181,6 @@
 
 <script>
 import ModalBox from '@/components/ConfirmDelete'
-import roles from '@/data-sources/roles'
 import { getMembers } from '@/api/discord'
 
 export default {
@@ -186,7 +206,7 @@ export default {
       total: 0,
       members: [],
       list: [],
-      roles: roles.data,
+      roles: [],
       isLoading: false,
       paginated: true,
       perPage: 10,
@@ -221,6 +241,7 @@ export default {
           const data = await getMembers()
           this.total = data.members.length
           this.members = data.members
+          this.roles = data.roles
           this.list = data.members
         } catch (error) {
           console.log(error)
