@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "53f13c51ef6565e21167",
+    "revision": "f069e3eb739569b70e0e",
     "url": "/admin/css/app.cf86db68.css"
   },
   {
@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/certificate-form~certificates~event-form~events.b91906a8.css"
   },
   {
-    "revision": "e9188028c491c9856de5",
+    "revision": "79eb69bb148acf593a1e",
     "url": "/admin/css/certificate-form~certificates~event-form~events~profile.006daab7.css"
   },
   {
@@ -32,12 +32,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "8f81823c2aa38c719a044371b30dc04c",
+    "revision": "821892db7880fd37adf7e9def274e193",
     "url": "/admin/index.html"
   },
   {
-    "revision": "53f13c51ef6565e21167",
-    "url": "/admin/js/app-legacy.7684a76d.js"
+    "revision": "f069e3eb739569b70e0e",
+    "url": "/admin/js/app-legacy.aad49d3d.js"
   },
   {
     "revision": "9aafb2ea7b6f2064852f",
@@ -48,8 +48,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/certificate-form~certificates~event-form~events-legacy.3382a934.js"
   },
   {
-    "revision": "e9188028c491c9856de5",
-    "url": "/admin/js/certificate-form~certificates~event-form~events~profile-legacy.fbd9a5ee.js"
+    "revision": "79eb69bb148acf593a1e",
+    "url": "/admin/js/certificate-form~certificates~event-form~events~profile-legacy.9fec4267.js"
   },
   {
     "revision": "2dae3df7ab59dbaddc8f",
