@@ -134,14 +134,14 @@
                   </div>
                 </b-dropdown-item>
 
-                <b-dropdown-item aria-role="listitem">
+                <b-dropdown-item aria-role="listitem" @click="export2Excel">
                   <div class="media">
                     <b-icon
                       class="has-text-primary media-left"
                       icon="file-excel-box"
                     />
                     <div class="media-content">
-                      <h3>Export as xlsx</h3>
+                      <h3>Export as Excel</h3>
                     </div>
                   </div>
                 </b-dropdown-item>
@@ -248,7 +248,22 @@ export default {
       console.log(type)
       this.listQuery.type = type
     },
-    actionSample () {}
+    export2Excel () {
+      this.isLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const header = ['Participantes', 'Email', 'Carrera']
+        const filterVal = ['fullname', 'email', 'career']
+        const data = this.checkedRows.map(v => filterVal.map(j => v[j]))
+        excel.export_json_to_excel({
+          header,
+          data,
+          filename: this.event.title.replace(' ', '_'),
+          autoWidth: true,
+          bookType: 'xlsx'
+        })
+        this.isLoading = false
+      })
+    }
   }
 }
 </script>

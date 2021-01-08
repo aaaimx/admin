@@ -7,7 +7,7 @@
   >
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Send email</p>
+        <p class="modal-card-title title is-5">Send email to participants</p>
       </header>
       <section class="modal-card-body email-card">
         <b-loading
@@ -15,7 +15,7 @@
           v-model="isLoading"
           :can-cancel="false"
         ></b-loading>
-        <b-field label="Add some tags">
+        <b-field label="Recipients">
           <b-taginput
             v-model="tags"
             ellipsis
@@ -55,7 +55,6 @@
 </style>
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { Email } from '@/vendor/smtp'
 
 export default {
   name: 'EmailModal',
@@ -79,7 +78,7 @@ export default {
       isLoading: false,
       tags: [],
       body:
-        '<p>Nos da gusto que nos estén acompañando en el <strong>(curso/taller/plática con nombre</strong>) que será impartido el día (fecha, en dado caso que sea varios días es: del día (<strong>fecha de inicio</strong>) al (<strong>fecha que termina</strong>)), a las (hora, en dado caso que sea un horario es: de (<strong>hora inicial - hora final</strong>)) a través de nuestro canal de <strong>Discord</strong> donde estarás participando con nuestros talleristas, para poder acceder es necesario que tengas una cuenta en esta plataforma y acceder con el <strong>link</strong> que se encuentra a continuación:</p><p><br><a href="https://discord.gg/N7eZzK9">https://discord.gg/N7eZzK9</a>&nbsp;</p><p><br data-cke-filler="true"></p><p>Cuando entres es necesario que te identifiques con tu <strong>nombre</strong> y te dirijas al canal exclusivo para talleres, es necesario que entres <strong>10 minutos</strong> para confirmar tu asistencia, ¡muchas gracias por acompañarnos!.&nbsp;</p><p><br data-cke-filler="true"></p><p><strong>AAAIMX Student Chapter México.</strong></p>',
+        `<p>Nos da gusto que nos estén acompañando en el <strong>${this.event.title}</strong> que será impartido el día <strong>${new Date(this.event.date_start).toLocaleDateString()}</strong> al <strong>${new Date(this.event.date_start).toLocaleDateString()}</strong>, a las <strong>HORA INICIAL - HORA FINAL</strong> a través de nuestro canal de <strong>Discord</strong> donde estarás participando con nuestros talleristas, para poder acceder es necesario que tengas una cuenta en esta plataforma y acceder con el <strong>link</strong> que se encuentra a continuación:</p><p><br><a href="https://discord.gg/N7eZzK9">https://discord.gg/N7eZzK9</a>&nbsp;</p><p><br data-cke-filler="true"></p><p>Cuando entres es necesario que te identifiques con tu <strong>Nombre(s) y Apellido(s)</strong> y te dirijas al canal exclusivo para talleres (<strong>#room-1</strong> o <strong>#room-2</strong>), es necesario que entres <strong>10 minutos antes</strong> para confirmar tu asistencia, ¡muchas gracias por acompañarnos!.&nbsp;</p><p><br data-cke-filler="true"></p><p><strong>AAAIMX Student Chapter México.</strong></p>`,
       editor: ClassicEditor,
       editorConfig: {
         // The configuration of the rich-text editor.
@@ -93,21 +92,23 @@ export default {
     },
     confirm () {
       this.isLoading = true
-      Email.send({
-        SecureToken: '9bae29bc-1cbc-41c5-a289-6156d9190086',
-        To: this.tags,
-        From: 'contact@aaaimx.org',
-        Subject: this.event.title,
-        Body: this.body
-      }).then(message => {
-        this.isLoading = false
-        this.$buefy.toast.open({
-          message: 'Email sent to particpants!',
-          type: 'is-success',
-          queue: false
+      import('@/vendor/SMTP')
+        .Email.send({
+          SecureToken: '9bae29bc-1cbc-41c5-a289-6156d9190086',
+          To: this.tags,
+          From: 'contact@aaaimx.org',
+          Subject: this.event.title,
+          Body: this.body
         })
-        this.$emit('confirm')
-      })
+        .then(message => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: 'Email sent to particpants!',
+            type: 'is-success',
+            queue: false
+          })
+          this.$emit('confirm')
+        })
     }
   },
   watch: {

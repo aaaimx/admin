@@ -96,8 +96,8 @@
             >No event</small
           >
           <small v-else>{{
-            props.row.event.length > 15
-              ? props.row.event.slice(0, 15) + '...'
+            props.row.event.title.length > 15
+              ? props.row.event.title.slice(0, 30) + '...'
               : props.row.event.title
           }}</small>
         </b-table-column>
