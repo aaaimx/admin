@@ -65,21 +65,25 @@
         </b-table-column>
         <b-table-column
           custom-key="actions"
+          centered
           cell-class="is-actions-cell"
           v-slot="props"
         >
-          <div class="buttons is-right">
-            <b-tooltip label="Validate hours">
-              <button class="button is-small is-success" type="button">
-                <b-icon icon="check-circle" size="is-small" />
-              </button>
-            </b-tooltip>
+          <div class="buttons">
+            <button class="button is-small is-success" type="button">
+              <b-tooltip type="is-success" label="Validate hours">
+                <b-icon icon="check-circle" size="is-small"
+              /></b-tooltip>
+            </button>
+
             <button
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
             >
-              <b-icon icon="trash-can" size="is-small" />
+              <b-tooltip type="is-danger" label="Remove">
+                <b-icon icon="trash-can" size="is-small"
+              /></b-tooltip>
             </button>
           </div>
         </b-table-column>
@@ -115,7 +119,10 @@
                   </div>
                 </b-dropdown-item>
 
-                <b-dropdown-item aria-role="listitem" @click="isEmailModalActive = true">
+                <b-dropdown-item
+                  aria-role="listitem"
+                  @click="isEmailModalActive = true"
+                >
                   <div class="media">
                     <b-icon
                       class="has-text-info media-left"
@@ -225,11 +232,11 @@ export default {
     async trashConfirm () {
       this.isModalActive = false
       try {
-        await remove(this.trashObject.uuid)
+        await remove(this.trashObject.id)
       } catch (error) {
         console.log(error)
       } finally {
-        this.getList()
+        this.getData()
       }
 
       this.$buefy.snackbar.open({
@@ -241,8 +248,7 @@ export default {
       console.log(type)
       this.listQuery.type = type
     },
-    actionSample () {
-    }
+    actionSample () {}
   }
 }
 </script>

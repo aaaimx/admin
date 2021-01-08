@@ -127,10 +127,11 @@
         </b-table-column>
         <b-table-column
           custom-key="actions"
+          label="Actions"
           cell-class="is-actions-cell"
           v-slot="props"
         >
-          <div class="buttons is-right">
+          <div class="buttons">
             <a
               tag="a"
               target="_blank"
@@ -139,28 +140,36 @@
               "
               class="button is-small is-info"
             >
-              <b-icon icon="eye" size="is-small" />
+              <b-tooltip type="is-info" label="View online"
+                ><b-icon icon="open-in-new" size="is-small"
+              /></b-tooltip>
             </a>
             <button
               class="button is-small is-primary"
               type="button"
               @click.prevent="generateCert(props.row)"
             >
-              <b-icon icon="refresh" size="is-small" />
+              <b-tooltip type="is-link" label="Generate image"
+                ><b-icon icon="refresh" size="is-small"
+              /></b-tooltip>
             </button>
             <button
               class="button is-small is-light"
               type="button"
               @click.prevent="sendCertMessage(props.row)"
             >
-              <b-icon icon="discord" size="is-small" />
+              <b-tooltip type="is-primary" label="Send a Discord"
+                ><b-icon icon="discord" size="is-small"
+              /></b-tooltip>
             </button>
             <button
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
             >
-              <b-icon icon="trash-can" size="is-small" />
+              <b-tooltip type="is-danger" label="Delete">
+                <b-icon icon="trash-can" size="is-small"
+              /></b-tooltip>
             </button>
           </div>
         </b-table-column>

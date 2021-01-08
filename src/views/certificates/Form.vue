@@ -211,7 +211,7 @@
               custom-size="default"
             />
           </a>
-          <ImagePreview :size="0.7" :cert="form"/>
+          <ImagePreview :size="0.7" :cert="form" />
           <hr />
           <b-field label="Name">
             <b-input :value="form.to" custom-class="is-static" readonly />
@@ -220,7 +220,12 @@
             <b-input :value="form.type" custom-class="is-static" readonly />
           </b-field>
           <b-field label="Event">
-            <b-input v-if="selected" :value="selected.title" custom-class="is-static" readonly />
+            <b-input
+              v-if="selected"
+              :value="selected.title"
+              custom-class="is-static"
+              readonly
+            />
           </b-field>
           <notification class="is-warning">
             <div>
@@ -430,7 +435,7 @@ export default {
           window.location.reload()
         } else {
           this.$router.push('/certificates/' + data.uuid)
-          this.sendMessage(data)
+          this.sendMessage({ ...data, event: this.selected })
         }
       } catch (error) {
         console.log(error)

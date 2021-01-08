@@ -72,8 +72,15 @@
         <b-table-column label="Type" field="type" sortable v-slot="props">
           <small>{{ props.row.type }}</small>
         </b-table-column>
-        <b-table-column label="Division" field="division" sortable v-slot="props">
-          <small>{{ props.row.division ? props.row.division.name : 'AAAIMX' }}</small>
+        <b-table-column
+          label="Division"
+          field="division"
+          sortable
+          v-slot="props"
+        >
+          <small>{{
+            props.row.division ? props.row.division.name : 'AAAIMX'
+          }}</small>
         </b-table-column>
         <b-table-column label="Place" field="place" sortable v-slot="props">
           <small>{{ props.row.place }}</small>
@@ -97,30 +104,33 @@
         </b-table-column>
         <b-table-column
           custom-key="actions"
+          label="Actions"
           cell-class="is-actions-cell"
           v-slot="props"
         >
-          <div class="buttons is-right">
+          <div class="buttons">
             <!-- <router-link
               :to="{ name: 'event.edit', params: { id: props.row.id } }"
               class="button is-small is-primary"
             >
               <b-icon icon="calendar-edit" size="is-small" />
             </router-link> -->
-            <button
-              class="button is-small is-light"
-              type="button"
-              @click.prevent="sendMessageReminder(props.row)"
-            >
-              <b-icon icon="discord" size="is-small" />
-            </button>
-            <button
+            <b-tooltip type="is-primary" label="Send a Discord"
+              ><button
+                class="button is-small is-light"
+                type="button"
+                @click.prevent="sendMessageReminder(props.row)"
+              >
+                <b-icon icon="discord" size="is-small" /></button
+            ></b-tooltip>
+
+            <!-- <button
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
             >
               <b-icon icon="trash-can" size="is-small" />
-            </button>
+            </button> -->
           </div>
         </b-table-column>
 
@@ -254,7 +264,7 @@ export default {
     async trashConfirm () {
       await remove(this.trashObject.id)
       this.$buefy.snackbar.open({
-        message: 'Event deleted',
+        message: 'Event removed',
         queue: false
       })
       this.isModalActive = false

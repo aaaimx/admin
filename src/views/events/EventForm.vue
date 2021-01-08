@@ -42,7 +42,7 @@
       label="Quorum"
       message="Max participants"
       horizontal
-      v-if="!form.isPublic"
+      v-if="!form.open_to_public"
     >
       <b-input
         name="max"
@@ -142,6 +142,7 @@ export default {
       try {
         this.form.date_start = this.date_start
         this.form.date_end = this.date_end
+        if (this.form.open_to_public) this.form.corum = 0
         if (this.event) {
           await update(this.event.id, this.form)
           this.$buefy.snackbar.open({
@@ -150,7 +151,10 @@ export default {
           })
         } else {
           const data = await create(this.form)
-          await sendEventToDiscord(data)
+          const division = this.$store.state.divisions.filter(
+            d => this.form.division === d.id
+          )
+          await sendEventToDiscord({ ...data, division: division[0] })
           this.$buefy.snackbar.open({
             message: 'Event created',
             queue: false

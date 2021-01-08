@@ -9,7 +9,7 @@
       <header class="modal-card-head">
         <p class="modal-card-title">Send email</p>
       </header>
-      <section class="modal-card-body">
+      <section class="modal-card-body email-card">
         <b-loading
           :is-full-page="true"
           v-model="isLoading"
@@ -49,7 +49,7 @@
 .ck ol,
 .ck ul,
 .ck li,
-.modal-card input {
+.email-card input {
   color: black !important;
 }
 </style>
