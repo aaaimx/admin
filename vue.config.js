@@ -6,7 +6,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/aaaimx-admin/',
+  publicPath: '/admin/',
   pwa: {
     // configure the workbox plugin
     workboxPluginMode: 'InjectManifest',

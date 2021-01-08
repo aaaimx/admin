@@ -9,7 +9,7 @@
       slot="button"
       icon="account-plus"
       label="Create participant"
-      @button-click="actionSample"
+      @button-click="isEmailModalActive = true"
     />
     <card-toolbar slot="toolbar" class="is-upper">
       <form slot="left">
@@ -22,6 +22,12 @@
         :trash-object-name="trashObjectName"
         @confirm="trashConfirm"
         @cancel="trashCancel"
+      />
+      <EmailModal
+        :event="event"
+        :is-active="isEmailModalActive"
+        :checked-rows="checkedRows"
+        @cancel="isEmailModalActive = false"
       />
       <b-table
         :data="list"
@@ -109,7 +115,7 @@
                   </div>
                 </b-dropdown-item>
 
-                <b-dropdown-item aria-role="listitem">
+                <b-dropdown-item aria-role="listitem" @click="isEmailModalActive = true">
                   <div class="media">
                     <b-icon
                       class="has-text-info media-left"
@@ -145,14 +151,15 @@
 <script>
 import { fetchList, remove } from '@/api/participants'
 import ModalBox from '@/components/ConfirmDelete'
+import EmailModal from './EmailForm'
 import tableMixin from '@/mixins/table'
 
 export default {
   name: 'ParticipantsTable',
-  components: { ModalBox },
+  components: { ModalBox, EmailModal },
   mixins: [tableMixin],
   props: {
-    event_id: {
+    event: {
       default: null
     }
   },
@@ -191,14 +198,15 @@ export default {
         }
       ],
       listQuery: {
-        event: this.event_id,
+        event: this.event.id,
         ordering: null,
         page: 1,
         limit: 10,
         offset: 0
       },
       key: 'id',
-      sortField: 'name'
+      sortField: 'name',
+      isEmailModalActive: false
     }
   },
   methods: {
@@ -233,7 +241,8 @@ export default {
       console.log(type)
       this.listQuery.type = type
     },
-    actionSample () {}
+    actionSample () {
+    }
   }
 }
 </script>

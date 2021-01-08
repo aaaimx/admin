@@ -35,7 +35,7 @@
           <EventPreview :event="event" />
         </card-component>
       </tiles>
-      <ParticipantsTable :event_id="id" />
+      <ParticipantsTable v-if="event" :event="event" />
       <CertTable v-if="event.id" :event="event.id" />
     </section>
   </div>

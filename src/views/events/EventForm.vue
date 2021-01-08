@@ -2,7 +2,6 @@
   <form @submit.prevent="submit">
     <b-field label="Title" message="Event name">
       <b-input
-        :readonly="event"
         placeholder="e.g. SINABIA 2019"
         name="title"
         v-model="form.title"
@@ -47,7 +46,7 @@
     >
       <b-input
         name="max"
-        min="1"
+        min="0"
         max="100"
         type="number"
         v-model="form.corum"
