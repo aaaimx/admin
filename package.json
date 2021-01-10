@@ -3,8 +3,8 @@
   "version": "1.4.2",
   "private": true,
   "scripts": {
-    "serve": "cross-env NODE_ENV=development vue-cli-service serve",
-    "prod": "cross-env NODE_ENV=prod vue-cli-service serve",
+    "serve": "vue-cli-service serve --mode development",
+    "stage": "vue-cli-service serve --mode staging",
     "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint",
     "build:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES npm run build",
@@ -21,7 +21,9 @@
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
     "dayjs": "^1.8.35",
+    "file-saver": "^2.0.5",
     "js-cookie": "^2.2.1",
+    "jspdf": "^2.2.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "numeral": "^2.0.6",
@@ -33,7 +35,8 @@
     "vue-copy-to-clipboard": "^1.0.3",
     "vue-linkify": "^1.0.1",
     "vue-router": "^3.4.3",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.4",

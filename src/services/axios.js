@@ -1,12 +1,9 @@
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
-
+console.log(process.env.VUE_APP_API_URL, process.env.NODE_ENV)
 // create an axios instance
 const service = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://127.0.0.1:8000/api'
-      : 'https://aaaimx-admin.herokuapp.com/api', // url = base url + request url
+  baseURL: process.env.VUE_APP_API_URL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
   credentials: 'same-origin',

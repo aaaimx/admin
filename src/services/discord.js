@@ -1,11 +1,8 @@
 import axios from 'axios'
-
+console.log(process.env.VUE_APP_DISCORD_API_URL, process.env.NODE_ENV)
 // create an axios instance
 const service = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://127.0.0.1:4000/api'
-      : 'https://aaaimx-discord.herokuapp.com/api', // url = base url + request url
+  baseURL: process.env.VUE_APP_DISCORD_API_URL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
   timeout: 10000,
