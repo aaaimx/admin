@@ -277,7 +277,7 @@ import Tiles from '@/components/Tiles'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import ImagePreview from './ImagePreview'
 import { sendCertToDiscord } from '@/api/discord'
-
+import { mapState } from 'vuex'
 import {
   fetch,
   create,
@@ -288,7 +288,12 @@ import {
   getFolders
 } from '@/api/certificates'
 import { fetchList as fetchEvents, fetch as fetchEvent } from '@/api/events'
-
+const defaultForm = {
+  event: '',
+  to: '',
+  type: '',
+  description: ''
+}
 export default {
   name: 'CertificateForm',
   components: {
@@ -312,7 +317,7 @@ export default {
       isFetching: false,
       selected: null,
       isLoading: false,
-      form: this.getClearFormObject(),
+      form: {},
       createdReadable: null,
       isProfileExists: false,
       editor: ClassicEditor,
@@ -324,6 +329,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['postForm']),
     titleStack () {
       let lastCrumb
 
@@ -365,18 +371,11 @@ export default {
     }
   },
   created () {
+    this.form = this.postForm || defaultForm
     this.getData()
     this.getEvents()
   },
   methods: {
-    getClearFormObject () {
-      return {
-        event: '',
-        to: '',
-        type: '',
-        description: ''
-      }
-    },
     async getEvents () {
       this.isFetching = true
       try {
@@ -435,7 +434,9 @@ export default {
           window.location.reload()
         } else {
           this.$router.push('/certificates/' + data.uuid)
-          this.sendMessage({ ...data, event: this.selected })
+          if (process.env.NODE_ENV === 'production') {
+            this.sendMessage({ ...data, event: this.selected })
+          }
         }
       } catch (error) {
         console.log(error)

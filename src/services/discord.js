@@ -5,7 +5,6 @@ const service = axios.create({
   baseURL: process.env.VUE_APP_DISCORD_API_URL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   mode: 'cors',
-  timeout: 10000,
   credentials: 'same-origin'
 })
 

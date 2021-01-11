@@ -9,7 +9,7 @@
       slot="button"
       icon="account-plus"
       label="Create participant"
-      @button-click="isEmailModalActive = true"
+      @button-click="isParticipantModalActive = true"
     />
     <card-toolbar slot="toolbar" class="is-upper">
       <form slot="left">
@@ -28,6 +28,11 @@
         :is-active="isEmailModalActive"
         :checked-rows="checkedRows"
         @cancel="isEmailModalActive = false"
+      />
+      <CreateModal
+        :event="event"
+        :is-active="isParticipantModalActive"
+        @cancel=";(isParticipantModalActive = false), getData()"
       />
       <b-table
         :data="list"
@@ -75,7 +80,15 @@
                 <b-icon icon="check-circle" size="is-small"
               /></b-tooltip>
             </button>
-
+            <button
+              @click.prevent="createCert(props.row)"
+              class="button is-small is-info"
+              type="button"
+            >
+              <b-tooltip type="is-info" label="Create certificate">
+                <b-icon icon="pencil" size="is-small"
+              /></b-tooltip>
+            </button>
             <button
               class="button is-small is-danger"
               type="button"
@@ -159,11 +172,12 @@
 import { fetchList, remove } from '@/api/participants'
 import ModalBox from '@/components/ConfirmDelete'
 import EmailModal from './EmailForm'
+import CreateModal from './Modal'
 import tableMixin from '@/mixins/table'
 
 export default {
   name: 'ParticipantsTable',
-  components: { ModalBox, EmailModal },
+  components: { ModalBox, EmailModal, CreateModal },
   mixins: [tableMixin],
   props: {
     event: {
@@ -213,7 +227,8 @@ export default {
       },
       key: 'id',
       sortField: 'name',
-      isEmailModalActive: false
+      isEmailModalActive: false,
+      isParticipantModalActive: false
     }
   },
   methods: {
@@ -243,6 +258,18 @@ export default {
         message: 'Confirmed',
         queue: false
       })
+    },
+    createCert (p) {
+      this.$store.commit('basic', {
+        key: 'postForm',
+        value: {
+          event: this.event,
+          to: p.fullname,
+          type: 'PARTICIPATION',
+          description: this.event.title
+        }
+      })
+      this.$router.push('/certificates/new')
     },
     handleClick (type) {
       console.log(type)

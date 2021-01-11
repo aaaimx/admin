@@ -331,7 +331,10 @@ export default {
     async sendCertMessage (data) {
       this.isLoading = true
       try {
-        await sendCertToDiscord(data)
+        console.log(process.env.NODE_ENV)
+        if (process.env.NODE_ENV === 'production') {
+          await sendCertToDiscord(data)
+        }
         this.$buefy.snackbar.open({
           message: 'Message sent to Discord',
           queue: false

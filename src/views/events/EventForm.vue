@@ -154,7 +154,9 @@ export default {
           const division = this.$store.state.divisions.filter(
             d => this.form.division === d.id
           )
-          await sendEventToDiscord({ ...data, division: division[0] })
+          if (process.env.NODE_ENV === 'production') {
+            await sendEventToDiscord({ ...data, division: division[0] })
+          }
           this.$buefy.snackbar.open({
             message: 'Event created',
             queue: false

@@ -3,9 +3,11 @@
     <title-bar :title-stack="titleStack" />
     <hero-bar>
       {{ heroTitle }}
-      <!-- <router-link slot="right" :to="heroRouterLinkTo" class="button">
-        {{ heroRouterLinkLabel }}
-      </router-link> -->
+      <router-link slot="right" to="/certificates/new">
+        <b-button icon-left="pencil-plus" type="is-success">
+          New certificate
+        </b-button>
+      </router-link>
     </hero-bar>
     <b-loading
       :is-full-page="true"
