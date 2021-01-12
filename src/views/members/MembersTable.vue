@@ -19,7 +19,7 @@
           position="is-bottom-left"
           aria-role="list"
         >
-          <button class="button is-link" slot="trigger" slot-scope="{ active }">
+          <button class="button is-link is-small" slot="trigger" slot-scope="{ active }">
             <span>{{ listQuery.role || 'Select role' }}</span>
             <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
           </button>

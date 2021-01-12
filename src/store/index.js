@@ -24,6 +24,7 @@ export default new Vuex.Store({
 
     // productivity
     divisions: [],
+    postForm: null,
 
     // token
     token: getToken(),

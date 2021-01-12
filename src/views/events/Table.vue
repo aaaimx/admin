@@ -12,16 +12,66 @@
       @button-click="clearFilters"
     />
     <card-toolbar slot="toolbar" class="is-upper">
-      <div slot="left" class="buttons has-addons">
-        <button class="button is-active" @click="actionSample">
-          All time
-        </button>
-        <button class="button" disabled>This month</button>
-        <button class="button" disabled>This year</button>
-      </div>
-      <form slot="right">
+      <form slot="left">
         <SearchInput :listQuery="listQuery" />
       </form>
+      <div slot="right" class="columns">
+        <b-field class="ml-2">
+          <b-datepicker
+            type="month"
+            icon="calendar-today"
+            size="is-small"
+            placeholder="Click to select..."
+            v-model="listQuery.range"
+            range
+          >
+          </b-datepicker>
+        </b-field>
+        <b-field class="ml-2">
+          <b-select
+            v-model="listQuery.type"
+            placeholder="Type"
+            size="is-small"
+            expanded
+          >
+            <option value="Workshop">Workshop</option>
+            <option value="Course">Course</option>
+            <option value="Webinar">Webinar</option>
+            <option value="Simposium">Simposium</option>
+            <option value="">All</option>
+          </b-select>
+        </b-field>
+        <b-field class="ml-2">
+          <b-select
+            v-model="listQuery.place"
+            placeholder="Place"
+            size="is-small"
+            expanded
+          >
+            <option value="Online">Online</option>
+            <option value="ITM">ITM</option>
+            <option value="G4">G4</option>
+            <option value="Norte">Norte</option>
+            <option value="Poniente">Poniente</option>
+            <option value="">All</option>
+          </b-select>
+        </b-field>
+        <b-field class="ml-2">
+          <b-select
+            v-model="listQuery.division"
+            placeholder="Division"
+            size="is-small"
+            expanded
+          >
+            <option
+              v-for="item in $store.state.divisions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></option>
+          </b-select>
+        </b-field>
+      </div>
     </card-toolbar>
     <div>
       <modal-box
@@ -99,7 +149,13 @@
             >{{ new Date(props.row.date_end).toLocaleDateString() }}</small
           >
         </b-table-column>
-        <b-table-column label="Hours" centered sortable v-slot="props">
+        <b-table-column
+          label="Hours"
+          field="hours"
+          centered
+          sortable
+          v-slot="props"
+        >
           <small>{{ props.row.hours }}</small>
         </b-table-column>
         <b-table-column
@@ -109,28 +165,26 @@
           v-slot="props"
         >
           <div class="buttons">
-            <!-- <router-link
+            <router-link
               :to="{ name: 'event.edit', params: { id: props.row.id } }"
               class="button is-small is-primary"
-            >
-              <b-icon icon="calendar-edit" size="is-small" />
-            </router-link> -->
-            <b-tooltip type="is-primary" label="Send a Discord"
-              ><button
-                class="button is-small is-light"
-                type="button"
-                @click.prevent="sendMessageReminder(props.row)"
-              >
-                <b-icon icon="discord" size="is-small" /></button
-            ></b-tooltip>
-
-            <!-- <button
-              class="button is-small is-danger"
+              ><b-tooltip type="is-link" label="Edit event"
+                ><b-icon icon="calendar-edit" size="is-small"
+              /></b-tooltip> </router-link
+            ><button
+              class="button is-small is-light"
               type="button"
-              @click.prevent="trashModal(props.row)"
+              @click.prevent="sendMessageReminder(props.row)"
             >
-              <b-icon icon="trash-can" size="is-small" />
-            </button> -->
+              <b-tooltip type="is-primary" label="Send a Discord">
+                <b-icon icon="discord" size="is-small"
+              /></b-tooltip>
+            </button>
+            <button class="button is-small is-info" type="button">
+              <b-tooltip type="is-info" label="Participants">
+                <b-icon icon="download" size="is-small"
+              /></b-tooltip>
+            </button>
           </div>
         </b-table-column>
 

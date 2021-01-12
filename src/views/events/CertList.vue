@@ -32,12 +32,12 @@ export default {
     }
   },
   mounted () {
-    this.getData(this.event)
+    this.getData(this.event.id)
   },
   watch: {
     listQuery: {
       handler (val) {
-        this.getData(this.event)
+        this.getData(this.event.id)
       },
       deep: true
     }

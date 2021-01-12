@@ -28,5 +28,11 @@ export default [
     label: 'AAAIMX',
     external: true,
     icon: 'github-circle'
+  },
+  {
+    href: 'https://www.aaaimx.org/community/',
+    label: 'Community',
+    external: true,
+    icon: 'discord'
   }
 ]

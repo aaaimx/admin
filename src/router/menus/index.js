@@ -138,6 +138,12 @@ export default [
       icon: 'format-list-bulleted'
     },
     {
+      href: 'https://shorturl.at/uHJY0',
+      label: 'Events Form',
+      external: true,
+      icon: 'calendar-star'
+    },
+    {
       href:
         'https://docs.google.com/spreadsheets/d/1MYYRaFOsy1-oljzJaoPAYk6k6kZLJQPw9d_fIl9e0AI/edit#gid=730085670',
       label: 'Activities (Spreadsheet)',

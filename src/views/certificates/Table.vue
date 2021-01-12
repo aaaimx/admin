@@ -12,32 +12,47 @@
       @button-click="clearFilters"
     />
     <card-toolbar slot="toolbar" class="is-upper">
-      <div slot="left" class="buttons has-addons">
-        <button
-          class="button is-link"
-          @click="listQuery.type = 'RECOGNITION'"
-          :class="{ 'is-active': listQuery.type === 'RECOGNITION' }"
-        >
-          RECOGNITION
-        </button>
-        <button
-          class="button is-link"
-          @click="listQuery.type = 'APPRECIATION'"
-          :class="{ 'is-active': listQuery.type === 'APPRECIATION' }"
-        >
-          APPRECIATION
-        </button>
-        <button
-          class="button is-link"
-          @click="listQuery.type = 'PARTICIPATION'"
-          :class="{ 'is-active': listQuery.type === 'PARTICIPATION' }"
-        >
-          PARTICIPATION
-        </button>
-      </div>
-      <form slot="right">
+      <form slot="left">
         <SearchInput :listQuery="listQuery" />
       </form>
+      <div slot="right" class="columns">
+        <b-field class="ml-2">
+          <b-datepicker
+            type="month"
+            icon="calendar-today"
+            size="is-small"
+            placeholder="Select date range..."
+            v-model="listQuery.range"
+            range
+          >
+          </b-datepicker>
+        </b-field>
+        <b-field class="ml-2">
+          <b-select
+            v-model="listQuery.type"
+            placeholder="Type"
+            size="is-small"
+            expanded
+          >
+            <option value="RECOGNITION">RECOGNITION</option>
+            <option value="APPRECIATION">APPRECIATION</option>
+            <option value="PARTICIPATION">PARTICIPATION</option>
+            <option value="">All</option>
+          </b-select>
+        </b-field>
+        <b-field class="mx-2">
+          <b-select
+            v-model="listQuery.published"
+            placeholder="Status"
+            size="is-small"
+            expanded
+          >
+            <option value="true">Online</option>
+            <option value="false">Draft</option>
+            <option value="">All</option>
+          </b-select>
+        </b-field>
+      </div>
     </card-toolbar>
     <div>
       <modal-box
@@ -242,7 +257,7 @@ export default {
   data () {
     return {
       listQuery: {
-        type: '',
+        type: null,
         event: this.event,
         ordering: null,
         page: 1,

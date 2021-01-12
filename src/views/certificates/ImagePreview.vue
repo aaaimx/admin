@@ -48,7 +48,6 @@
 </style>
 
 <script>
-import jsPDF from '@/assets/jspdf.min.js'
 export default {
   props: ['cert', 'size', 'position', 'width'],
   methods: {
