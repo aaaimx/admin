@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d1c4b6fedfdeff6f9101",
+    "revision": "8b2e11cec2d41f45d51b",
     "url": "/admin/css/app.cf86db68.css"
   },
   {
@@ -24,7 +24,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/event-form.ae75c708.css"
   },
   {
-    "revision": "61da3e0db2d3c93cf4b3",
+    "revision": "df143702762bbafa60c7",
     "url": "/admin/css/events.a6fd186d.css"
   },
   {
@@ -36,12 +36,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "cf1d4d485de7437295756fe36045c75c",
+    "revision": "2a58279c68eb2450e90e58bd747a8954",
     "url": "/admin/index.html"
   },
   {
-    "revision": "d1c4b6fedfdeff6f9101",
-    "url": "/admin/js/app-legacy.d6d2749f.js"
+    "revision": "8b2e11cec2d41f45d51b",
+    "url": "/admin/js/app-legacy.99d70658.js"
   },
   {
     "revision": "d8183107fa2cf9178064",
@@ -84,8 +84,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/event-form-legacy.bbb68461.js"
   },
   {
-    "revision": "61da3e0db2d3c93cf4b3",
-    "url": "/admin/js/events-legacy.7612d7c8.js"
+    "revision": "df143702762bbafa60c7",
+    "url": "/admin/js/events-legacy.de05fec5.js"
   },
   {
     "revision": "376d732ff0d3c30d093c",
