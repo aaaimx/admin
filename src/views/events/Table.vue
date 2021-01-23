@@ -159,19 +159,46 @@
           <small>{{ props.row.hours }}</small>
         </b-table-column>
         <b-table-column
+          field="is_draft"
+          label="Status"
+          sortable
+          centered
+          v-slot="props"
+        >
+          <span
+            class="tag is-rounded"
+            :class="{
+              'is-success': !props.row.is_draft,
+              'is-danger': props.row.is_draft
+            }"
+          >
+            {{ !props.row.is_draft ? 'Online' : 'Draft' }}
+          </span>
+        </b-table-column>
+        <b-table-column
           custom-key="actions"
           label="Actions"
           cell-class="is-actions-cell"
           v-slot="props"
         >
           <div class="buttons">
-            <router-link
+            <!-- <router-link
               :to="{ name: 'event.edit', params: { id: props.row.id } }"
               class="button is-small is-primary"
               ><b-tooltip type="is-link" label="Edit event"
                 ><b-icon icon="calendar-edit" size="is-small"
               /></b-tooltip> </router-link
-            ><button
+            >-->
+            <button
+              class="button is-small is-success"
+              type="button"
+              @click.prevent="publishEvent(props.row)"
+            >
+              <b-tooltip type="is-primary" label="Publish/Unpublish">
+                <b-icon icon="web" size="is-small"
+              /></b-tooltip>
+            </button>
+            <button
               class="button is-small is-light"
               type="button"
               @click.prevent="sendMessageReminder(props.row)"
@@ -233,7 +260,7 @@
 </template>
 
 <script>
-import { fetchList as fetchEvents, remove } from '@/api/events'
+import { fetchList as fetchEvents, remove, partialUpdate } from '@/api/events'
 import { sendEventToDiscord } from '@/api/discord'
 import ModalBox from '@/components/ConfirmDelete'
 import CertList from './CertList'
@@ -313,6 +340,26 @@ export default {
         })
       } finally {
         this.isLoading = false
+      }
+    },
+    async publishEvent (row) {
+      this.isLoading = true
+      try {
+        await partialUpdate(row.id, { is_draft: !row.is_draft })
+        this.$buefy.snackbar.open({
+          message: 'Event Updated',
+          queue: false
+        })
+      } catch (error) {
+        console.log(error)
+        this.$buefy.toast.open({
+          type: 'is-danger',
+          message: 'Something went wrong :(. Try later!!!',
+          queue: false
+        })
+      } finally {
+        this.isLoading = false
+        this.getData()
       }
     },
     async trashConfirm () {

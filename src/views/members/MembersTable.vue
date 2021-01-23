@@ -93,7 +93,7 @@
         <b-table-column label="ID" field="id" sortable v-slot="props">
           {{ props.row.id.slice(0, 10) }}
         </b-table-column>
-        <b-table-column label="Date joined" v-slot="props">
+        <b-table-column label="Date joined" sortable v-slot="props">
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.dateJoined"

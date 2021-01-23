@@ -54,6 +54,18 @@ export function update (id, data) {
  *
  * @param {*} id String
  */
+export function partialUpdate (id, data) {
+  return request({
+    url: `/events/${id}/`,
+    method: 'PATCH',
+    data
+  })
+}
+
+/**
+ *
+ * @param {*} id String
+ */
 export function remove (id) {
   return request({
     url: `/events/${id}/`,

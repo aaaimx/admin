@@ -276,7 +276,6 @@ import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import ImagePreview from './ImagePreview'
-import { sendCertToDiscord } from '@/api/discord'
 import { mapState } from 'vuex'
 import {
   fetch,
@@ -434,21 +433,14 @@ export default {
           window.location.reload()
         } else {
           this.$router.push('/certificates/' + data.uuid)
-          if (process.env.NODE_ENV === 'production') {
-            this.sendMessage({ ...data, event: this.selected })
-          }
+          // if (process.env.NODE_ENV === 'production') {
+          //   this.sendMessage({ ...data, event: this.selected })
+          // }
         }
       } catch (error) {
         console.log(error)
       } finally {
         this.isLoading = false
-      }
-    },
-    async sendMessage (data) {
-      try {
-        await sendCertToDiscord(data)
-      } catch (error) {
-        console.log(error)
       }
     },
     async updateStatus (status) {

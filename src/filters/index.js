@@ -108,15 +108,27 @@ export function uppercaseFirst (string) {
  * Long date format
  * @param {*} date
  */
-export function longDate (date) {
+export function longDate (date, options) {
   var event = new Date(date)
   event.setDate(event.getDate())
-  const options = {
+  return event.toLocaleString('es-MX', {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-    hour12: false
-  }
-  return event.toLocaleString('es-MX', options)
+    hour12: false,
+    ...options
+  })
+}
+
+export function formatAMPM (date) {
+  date = new Date(date)
+  var hours = date.getHours()
+  var minutes = date.getMinutes()
+  var ampm = hours >= 12 ? 'pm' : 'am'
+  hours = hours % 12
+  hours = hours || 12 // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes
+  var strTime = hours + ':' + minutes + ' ' + ampm
+  return strTime
 }

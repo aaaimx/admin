@@ -87,7 +87,11 @@
         v-model="form.hours"
       />
     </b-field>
-
+    <b-field horizontal>
+      <b-checkbox type="is-link" v-model="form.is_draft" class="is-thin">
+        Draft Event
+      </b-checkbox>
+    </b-field>
     <b-field label="Description">
       <b-input :rows="10" v-model="form.description" type="textarea"></b-input>
     </b-field>
@@ -101,12 +105,11 @@
 
 <script>
 import { create, update } from '@/api/events'
-import { sendEventToDiscord } from '@/api/discord'
 const defaultForm = {
   title: '',
   corum: 0,
   hours: 0,
-  published: false,
+  is_draft: true,
   open_to_public: false,
   date_start: null,
   date_end: null,
@@ -151,12 +154,6 @@ export default {
           })
         } else {
           const data = await create(this.form)
-          const division = this.$store.state.divisions.filter(
-            d => this.form.division === d.id
-          )
-          if (process.env.NODE_ENV === 'production') {
-            await sendEventToDiscord({ ...data, division: division[0] })
-          }
           this.$buefy.snackbar.open({
             message: 'Event created',
             queue: false

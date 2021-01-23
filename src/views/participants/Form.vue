@@ -31,7 +31,7 @@
         />
       </b-field>
       <b-field>
-        <b-checkbox type="is-link" v-model="form.responsible" class="is-thin">
+        <b-checkbox type="is-link" v-model="form.is_responsible" class="is-thin">
           Es responsable
         </b-checkbox>
       </b-field>

@@ -55,7 +55,11 @@
 </style>
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-
+import { Email } from '@/vendor/SMTP'
+import { longDate, formatAMPM } from '@/filters'
+const options = {
+  weekday: 'long'
+}
 export default {
   name: 'EmailModal',
   props: {
@@ -77,8 +81,19 @@ export default {
       isModalActive: false,
       isLoading: false,
       tags: [],
-      body:
-        `<p>Nos da gusto que nos estén acompañando en el <strong>${this.event.title}</strong> que será impartido el día <strong>${new Date(this.event.date_start).toLocaleDateString()}</strong> al <strong>${new Date(this.event.date_start).toLocaleDateString()}</strong>, a las <strong>HORA INICIAL - HORA FINAL</strong> a través de nuestro canal de <strong>Discord</strong> donde estarás participando con nuestros talleristas, para poder acceder es necesario que tengas una cuenta en esta plataforma y acceder con el <strong>link</strong> que se encuentra a continuación:</p><p><br><a href="https://discord.gg/N7eZzK9">https://discord.gg/N7eZzK9</a>&nbsp;</p><p><br data-cke-filler="true"></p><p>Cuando entres es necesario que te identifiques con tu <strong>Nombre(s) y Apellido(s)</strong> y te dirijas al canal exclusivo para talleres (<strong>#room-1</strong> o <strong>#room-2</strong>), es necesario que entres <strong>10 minutos antes</strong> para confirmar tu asistencia, ¡muchas gracias por acompañarnos!.&nbsp;</p><p><br data-cke-filler="true"></p><p><strong>AAAIMX Student Chapter México.</strong></p>`,
+      body: `<p>Nos da gusto que nos estén acompañando en el <strong>${
+        this.event.title
+      }</strong> que será impartido el día <strong>${longDate(
+        this.event.date_start,
+        options
+      )}</strong> al <strong>${longDate(
+        this.event.date_end,
+        options
+      )}</strong>, a las <strong>${formatAMPM(
+        this.event.date_start
+      )} - ${formatAMPM(
+        this.event.date_end
+      )}</strong> a través de nuestro canal de <strong>Discord</strong> donde estarás participando con nuestros talleristas, para poder acceder es necesario que tengas una cuenta en esta plataforma y acceder con el <strong>link</strong> que se encuentra a continuación:</p><p><br><a href="https://discord.gg/2p6nyQ65zK">https://discord.gg/2p6nyQ65zK</a>&nbsp;</p><p><br data-cke-filler="true"></p><p>Cuando entres es necesario que te identifiques con tu <strong>Nombre(s) y Apellido(s)</strong> y te dirijas al canal exclusivo para talleres (<strong>#room-1</strong> o <strong>#room-2</strong>), es necesario que entres <strong>10 minutos antes</strong> para confirmar tu asistencia, ¡muchas gracias por acompañarnos!.&nbsp;</p><p><br data-cke-filler="true"></p><p><strong>AAAIMX Student Chapter México.</strong></p>`,
       editor: ClassicEditor,
       editorConfig: {
         // The configuration of the rich-text editor.
@@ -92,23 +107,21 @@ export default {
     },
     confirm () {
       this.isLoading = true
-      import('@/vendor/SMTP')
-        .Email.send({
-          SecureToken: '9bae29bc-1cbc-41c5-a289-6156d9190086',
-          To: this.tags,
-          From: 'contact@aaaimx.org',
-          Subject: this.event.title,
-          Body: this.body
+      Email.send({
+        SecureToken: '9bae29bc-1cbc-41c5-a289-6156d9190086',
+        To: this.tags,
+        From: 'contact@aaaimx.org',
+        Subject: this.event.title,
+        Body: this.body
+      }).then(message => {
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: 'Email sent to particpants!',
+          type: 'is-success',
+          queue: false
         })
-        .then(message => {
-          this.isLoading = false
-          this.$buefy.toast.open({
-            message: 'Email sent to particpants!',
-            type: 'is-success',
-            queue: false
-          })
-          this.$emit('confirm')
-        })
+        this.$emit('confirm')
+      })
     }
   },
   watch: {
