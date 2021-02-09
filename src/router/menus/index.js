@@ -138,7 +138,7 @@ export default [
       icon: 'format-list-bulleted'
     },
     {
-      href: 'https://shorturl.at/uHJY0',
+      href: 'https://www.aaaimx.org/community/forms/events/',
       label: 'Events Form',
       external: true,
       icon: 'calendar-star'

@@ -38,7 +38,7 @@ export function create (data) {
 export function update (id, data) {
   return request({
     url: `/participants/${id}/`,
-    method: 'PUT',
+    method: 'PATCH',
     data
   })
 }

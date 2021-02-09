@@ -218,7 +218,7 @@
         <template slot="detail" slot-scope="props">
           <EventPreview :event="props.row" />
           <hr />
-          <CertList ref="certlist" :event="props.row.title" />
+          <CertList ref="certlist" :event="props.row" />
         </template>
 
         <section class="section" slot="empty">

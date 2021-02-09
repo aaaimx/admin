@@ -42,7 +42,7 @@
         :narrowed="true"
         :checkable="true"
         :checked-rows.sync="checkedRows"
-        :detailed="false"
+        :detailed="true"
         :show-detail-icon="true"
         :detail-key="key"
         :opened-detailed="defaultOpenedDetails"
@@ -75,9 +75,24 @@
           v-slot="props"
         >
           <div class="buttons">
-            <button class="button is-small is-success" type="button">
-              <b-tooltip type="is-success" label="Validate hours">
+            <button
+              v-if="props.row.cc_hours === 0"
+              class="button is-small is-success"
+              @click="validateCC(props.row, event.hours)"
+              type="button"
+            >
+              <b-tooltip type="is-success" label="Validate CC">
                 <b-icon icon="check-circle" size="is-small"
+              /></b-tooltip>
+            </button>
+            <button
+              v-else
+              class="button is-small is-danger"
+              @click="validateCC(props.row, 0)"
+              type="button"
+            >
+              <b-tooltip type="is-danger" label="Revoke CC">
+                <b-icon icon="close-circle" size="is-small"
               /></b-tooltip>
             </button>
             <button
@@ -101,7 +116,69 @@
           </div>
         </b-table-column>
 
-        <template slot="detail"> </template>
+        <template slot="detail" slot-scope="props">
+          <article class="media">
+            <figure class="media-left">
+              <p class="image ">
+                <img
+                  :src="
+                    `https://avatars.dicebear.com/4.5/api/initials/${getInitials(
+                      props.row.fullname
+                    )}.svg?b=%23800000`
+                  "
+                  class="is-rounded is-64x64"
+                />
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <strong>{{ props.row.fullname }}</strong
+                >&nbsp; <small>@{{ props.row.email }}</small
+                >&nbsp;
+                <b-icon
+                  v-if="props.row.is_responsible"
+                  size="is-small"
+                  type="is-warning"
+                  icon="account-star"
+                ></b-icon>
+                &nbsp;
+                <b-icon
+                  v-if="props.row.cc_hours > 0"
+                  size="is-small"
+                  type="is-success"
+                  icon="check-circle"
+                ></b-icon>
+                <br />
+                <ul>
+                  <li v-if="props.row.phone">
+                    <b>Phone: </b>{{ props.row.phone }}
+                  </li>
+                  <li v-if="props.row.ocupation">
+                    <b>Ocupation: </b>{{ props.row.ocupation }}
+                  </li>
+                  <li v-if="props.row.gender">
+                    <b>Gender: </b>{{ props.row.gender }}
+                  </li>
+                  <li v-if="props.row.grade">
+                    <b>Grade: </b>{{ props.row.grade }}
+                  </li>
+                  <li v-if="props.row.adscription">
+                    <b>Adscription: </b>{{ props.row.adscription }}
+                  </li>
+                  <li v-if="props.row.department">
+                    <b>Department: </b>{{ props.row.department }}
+                  </li>
+                  <li v-if="props.row.career">
+                    <b>Career: </b>{{ props.row.career }}
+                  </li>
+                  <li v-if="props.row.enrollment">
+                    <b>Enrollment: </b>{{ props.row.enrollment }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </template>
 
         <section class="section" slot="empty">
           <EmptyData :isLoading="isLoading" />
@@ -123,8 +200,8 @@
                 <b-dropdown-item aria-role="listitem">
                   <div class="media">
                     <b-icon
-                      class="has-text-success media-left"
-                      icon="check-circle"
+                      class="has-text-link media-left"
+                      icon="account-star"
                     />
                     <div class="media-content">
                       <h3>Mark as responsible</h3>
@@ -169,7 +246,7 @@
 </template>
 
 <script>
-import { fetchList, remove } from '@/api/participants'
+import { fetchList, update, remove } from '@/api/participants'
 import ModalBox from '@/components/ConfirmDelete'
 import EmailModal from './EmailForm'
 import CreateModal from './Modal'
@@ -203,15 +280,10 @@ export default {
           sortable: true
         },
         {
-          label: 'Career',
-          field: 'career',
+          label: 'Ocupation',
+          field: 'ocupation',
           sortable: true
         },
-        // {
-        //   label: 'Department',
-        //   field: 'department',
-        //   sortable: true
-        // },
         {
           label: 'Enroll',
           field: 'enrollment',
@@ -244,6 +316,17 @@ export default {
         this.isLoading = false
       })
     },
+    getInitials (name) {
+      const rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu')
+
+      let initials = [...name.matchAll(rgx)] || []
+
+      initials = (
+        (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
+      ).toUpperCase()
+
+      return initials
+    },
     async trashConfirm () {
       this.isModalActive = false
       try {
@@ -271,6 +354,14 @@ export default {
       })
       this.$router.push('/certificates/new')
     },
+    async validateCC (row, hours) {
+      try {
+        await update(row.id, { cc_hours: hours })
+        this.getData()
+      } catch (error) {
+        console.log(error)
+      }
+    },
     handleClick (type) {
       console.log(type)
       this.listQuery.type = type
@@ -280,7 +371,8 @@ export default {
       import('@/vendor/Export2Excel').then(excel => {
         const header = ['Participantes', 'Email', 'Carrera']
         const filterVal = ['fullname', 'email', 'career']
-        const data = this.checkedRows.map(v => filterVal.map(j => v[j]))
+        const rows = new Set(...this.checkedRows)
+        const data = rows.map(v => filterVal.map(j => v[j]))
         excel.export_json_to_excel({
           header,
           data,

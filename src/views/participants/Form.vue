@@ -7,11 +7,11 @@
     ></b-loading>
 
     <form @submit.prevent="submit">
-      <b-field label="Nombre completo" message="Nombre(s) y apellidos">
+      <b-field label="Nombre" message="Nombre(s) y apellidos">
         <b-input
           icon="account"
           v-model="form.fullname"
-          placeholder="Tu nombre completo"
+          placeholder="Nombre completo"
           name="name"
           required
         />
@@ -25,7 +25,7 @@
           icon="email"
           type="email"
           v-model="form.email"
-          placeholder="Tu direcciòn de correo electrónico"
+          placeholder="Dirección de correo electrónico"
           name="email"
           required
         />

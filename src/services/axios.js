@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
-console.log(process.env.VUE_APP_API_URL, process.env.NODE_ENV)
+
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_API_URL, // url = base url + request url
