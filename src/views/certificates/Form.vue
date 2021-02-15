@@ -58,7 +58,6 @@
             </b-field>
             <b-field label="Event" horizontal>
               <b-autocomplete
-                required
                 v-model="search"
                 :data="events"
                 placeholder="e.g. SINABIA 2019"

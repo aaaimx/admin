@@ -2,6 +2,7 @@
   <form @submit.prevent="submit">
     <b-field label="Title" message="Event name">
       <b-input
+        type="textarea"
         placeholder="e.g. SINABIA 2019"
         name="title"
         v-model="form.title"

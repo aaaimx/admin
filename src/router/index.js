@@ -78,6 +78,17 @@ const routes = [
       },
       {
         meta: {
+          title: 'New email'
+        },
+        path: '/emails/new',
+        name: 'email.new',
+        component: () =>
+          import(
+            /* webpackChunkName: "email-form" */ '../views/emails/NewEmail.vue'
+          )
+      },
+      {
+        meta: {
           title: 'Edit Event'
         },
         path: '/events/:id',

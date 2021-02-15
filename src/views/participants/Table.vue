@@ -369,9 +369,29 @@ export default {
     export2Excel () {
       this.isLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const header = ['Participantes', 'Email', 'Carrera']
-        const filterVal = ['fullname', 'email', 'career']
-        const rows = new Set(...this.checkedRows)
+        const header = [
+          'Nombre completo',
+          'Email',
+          'Telefono',
+          'Ocupación',
+          'Genero',
+          'Matricula',
+          'Departmento',
+          'Carrera',
+          'Adscripción'
+        ]
+        const filterVal = [
+          'fullname',
+          'email',
+          'phone',
+          'ocupation',
+          'gender',
+          'enrollment',
+          'department',
+          'career',
+          'adscription'
+        ]
+        const rows = [...new Set(this.checkedRows)]
         const data = rows.map(v => filterVal.map(j => v[j]))
         excel.export_json_to_excel({
           header,

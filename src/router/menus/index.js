@@ -17,6 +17,11 @@ export default [
       to: '/events',
       icon: 'calendar',
       label: 'Events'
+    },
+    {
+      to: '/emails/new',
+      icon: 'email',
+      label: 'Email'
     }
   ],
   //   'Examples',
