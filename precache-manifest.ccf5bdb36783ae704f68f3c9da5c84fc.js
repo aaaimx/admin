@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "38696d355659a6e81ba9",
+    "revision": "df394045f6860d5fc442",
     "url": "/admin/css/app.cf86db68.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/email-form.06359208.css"
   },
   {
-    "revision": "facc7664302cd40f14cf",
+    "revision": "1db58d66ddcfd50cab9e",
     "url": "/admin/css/event-form~events.24ec03a4.css"
   },
   {
@@ -48,12 +48,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "b65032e3c8f13176a8ac729123b708ad",
+    "revision": "edcd35a12638373abed0ea9030224922",
     "url": "/admin/index.html"
   },
   {
-    "revision": "38696d355659a6e81ba9",
-    "url": "/admin/js/app.dda0fca9.js"
+    "revision": "df394045f6860d5fc442",
+    "url": "/admin/js/app.a799d2d8.js"
   },
   {
     "revision": "867c521a78368cd8c138",
@@ -88,12 +88,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/event-form.761038f4.js"
   },
   {
-    "revision": "facc7664302cd40f14cf",
-    "url": "/admin/js/event-form~events.56d71da9.js"
+    "revision": "1db58d66ddcfd50cab9e",
+    "url": "/admin/js/event-form~events.74b39310.js"
   },
   {
-    "revision": "ca7ef2fd68bd52d26df6",
-    "url": "/admin/js/events.b64a2bb0.js"
+    "revision": "6cedbbf037a62b0510ed",
+    "url": "/admin/js/events.2cc38289.js"
   },
   {
     "revision": "0670c3df764590458d09",
