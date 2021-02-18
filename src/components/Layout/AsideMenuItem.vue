@@ -3,22 +3,25 @@
     <component
       :is="componentIs"
       :to="itemTo"
-      :target="{ '_blank': item.external }"
+      :target="{ _blank: item.external }"
       :href="itemHref"
       @click="menuClick"
       :title="componentTitle"
       :exact-active-class="componentActiveClass"
       :class="componentClass"
     >
-      <b-icon
-        v-if="item.icon"
-        :icon="item.icon"
-        :class="{ 'has-update-mark': item.updateMark }"
-        custom-size="default"
-      />
-      <span v-if="item.label" :class="{ 'menu-item-label': !!item.icon }">{{
-        item.label
-      }}</span>
+      <div>
+        <b-icon
+          v-if="item.icon"
+          :icon="item.icon"
+          :class="{ 'has-update-mark': item.updateMark }"
+          custom-size="default"
+        />
+        <span v-if="item.label" :class="{ 'menu-item-label': !!item.icon }">{{
+          item.label
+        }}</span>
+      </div>
+      <b-tag v-if="item.beta" class="mx-4" rounded type="is-link">beta</b-tag>
       <div v-if="hasSubmenuIcon" class="submenu-icon">
         <b-icon :icon="submenuIcon" custom-size="default" />
       </div>
@@ -95,7 +98,9 @@ export default {
     componentClass () {
       const c = {
         'has-icon': !!this.item.icon,
-        'has-submenu-icon': this.hasSubmenuIcon
+        'has-submenu-icon': this.hasSubmenuIcon,
+        'is-flex': true,
+        'is-justify-content-space-between': true
       }
 
       if (this.item.state) {

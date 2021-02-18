@@ -19,9 +19,18 @@ export default [
       label: 'Events'
     },
     {
+      to: '/credits',
+      icon: 'calendar-star',
+      label: 'Credits (CC)',
+      beta: true,
+      updateMark: true
+    },
+    {
       to: '/emails/new',
       icon: 'email',
-      label: 'Email'
+      label: 'Email ',
+      beta: true,
+      updateMark: true
     }
   ],
   //   'Examples',

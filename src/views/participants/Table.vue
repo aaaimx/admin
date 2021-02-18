@@ -24,12 +24,14 @@
         @cancel="trashCancel"
       />
       <EmailModal
+        v-if="event"
         :event="event"
         :is-active="isEmailModalActive"
         :checked-rows="checkedRows"
         @cancel="isEmailModalActive = false"
       />
       <CreateModal
+        v-if="event"
         :event="event"
         :is-active="isParticipantModalActive"
         @cancel=";(isParticipantModalActive = false), getData()"
@@ -96,6 +98,7 @@
               /></b-tooltip>
             </button>
             <button
+              v-if="event"
               @click.prevent="createCert(props.row)"
               class="button is-small is-info"
               type="button"
@@ -105,6 +108,7 @@
               /></b-tooltip>
             </button>
             <button
+              v-if="event"
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
@@ -251,6 +255,7 @@ import ModalBox from '@/components/ConfirmDelete'
 import EmailModal from './EmailForm'
 import CreateModal from './Modal'
 import tableMixin from '@/mixins/table'
+import { ccHeaders, participantHeaders } from './headers'
 
 export default {
   name: 'ParticipantsTable',
@@ -263,35 +268,9 @@ export default {
   },
   data () {
     return {
-      headers: [
-        {
-          label: 'Email',
-          field: 'email',
-          sortable: true
-        },
-        {
-          label: 'Name',
-          field: 'fullname',
-          sortable: true
-        },
-        {
-          label: 'Adscription',
-          field: 'adscription',
-          sortable: true
-        },
-        {
-          label: 'Ocupation',
-          field: 'ocupation',
-          sortable: true
-        },
-        {
-          label: 'Enroll',
-          field: 'enrollment',
-          sortable: true
-        }
-      ],
       listQuery: {
-        event: this.event.id,
+        event: this.event ? this.event.id : null,
+        isCC: !this.event,
         ordering: null,
         page: 1,
         limit: 10,
@@ -301,6 +280,11 @@ export default {
       sortField: 'name',
       isEmailModalActive: false,
       isParticipantModalActive: false
+    }
+  },
+  computed: {
+    headers () {
+      return this.event ? participantHeaders : ccHeaders
     }
   },
   methods: {
@@ -393,10 +377,13 @@ export default {
         ]
         const rows = [...new Set(this.checkedRows)]
         const data = rows.map(v => filterVal.map(j => v[j]))
+        const filename = this.event
+          ? this.event.title.replace(' ', '_')
+          : 'CreditosComplementarios'
         excel.export_json_to_excel({
           header,
           data,
-          filename: this.event.title.replace(' ', '_'),
+          filename,
           autoWidth: true,
           bookType: 'xlsx'
         })

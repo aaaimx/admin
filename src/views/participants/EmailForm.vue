@@ -28,7 +28,7 @@
         <b-field label="Message">
           <ckeditor
             :editor="editor"
-            :value="body"
+            v-model="body"
             :config="editorConfig"
           ></ckeditor>
         </b-field>

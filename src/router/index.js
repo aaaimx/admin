@@ -55,6 +55,15 @@ const routes = [
       },
       {
         meta: {
+          title: 'Creditos Complementarios'
+        },
+        path: '/credits',
+        name: 'credits',
+        component: () =>
+          import(/* webpackChunkName: "events" */ '../views/Credits.vue')
+      },
+      {
+        meta: {
           title: 'New Certificate'
         },
         path: '/certificates/new',
