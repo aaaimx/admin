@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "42bfb869c1b45cc35d57",
+    "revision": "23d64ee2659daf3246ff",
     "url": "/admin/css/app.cf86db68.css"
   },
   {
@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/certificate-form~email-form~event-form~events.006daab7.css"
   },
   {
-    "revision": "ed45732ead85b08036ca",
+    "revision": "b4afa9932dd223c5aa60",
     "url": "/admin/css/certificates.a6fd186d.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/email-form.06359208.css"
   },
   {
-    "revision": "985b7c4f0d7482cdd257",
+    "revision": "8aa047c806093857f471",
     "url": "/admin/css/event-form~events.24ec03a4.css"
   },
   {
@@ -48,12 +48,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "e33bfd658ee93d1ca20e92d5f606521c",
+    "revision": "975011752192c657fcb71bb84433ca02",
     "url": "/admin/index.html"
   },
   {
-    "revision": "42bfb869c1b45cc35d57",
-    "url": "/admin/js/app.78715811.js"
+    "revision": "23d64ee2659daf3246ff",
+    "url": "/admin/js/app.4e4cfc08.js"
   },
   {
     "revision": "867c521a78368cd8c138",
@@ -64,8 +64,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/certificate-form~email-form~event-form~events.fcf839f4.js"
   },
   {
-    "revision": "ed45732ead85b08036ca",
-    "url": "/admin/js/certificates.4b4a9839.js"
+    "revision": "b4afa9932dd223c5aa60",
+    "url": "/admin/js/certificates.bff10cf4.js"
   },
   {
     "revision": "831a16616a8a56ce96d1",
@@ -84,12 +84,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/email-form.576a2242.js"
   },
   {
-    "revision": "687ca7937ad12efdf2ff",
-    "url": "/admin/js/event-form.561bdbab.js"
+    "revision": "f2a1773f6296a2780ec4",
+    "url": "/admin/js/event-form.c31a7b08.js"
   },
   {
-    "revision": "985b7c4f0d7482cdd257",
-    "url": "/admin/js/event-form~events.46a99261.js"
+    "revision": "8aa047c806093857f471",
+    "url": "/admin/js/event-form~events.f68ed7fd.js"
   },
   {
     "revision": "6cedbbf037a62b0510ed",
