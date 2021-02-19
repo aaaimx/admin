@@ -15,6 +15,19 @@
       <form slot="left">
         <SearchInput :listQuery="listQuery" />
       </form>
+      <div slot="right" class="columns">
+        <b-field class="ml-2">
+          <b-datepicker
+            type="month"
+            icon="calendar-today"
+            size="is-small"
+            placeholder="Click to select..."
+            v-model="listQuery.range"
+            range
+          >
+          </b-datepicker>
+        </b-field>
+      </div>
     </card-toolbar>
     <div>
       <modal-box
@@ -68,7 +81,25 @@
           :sortable="item.sortable"
           v-slot="props"
         >
-          {{ props.row[item.field] }}
+          <template v-if="item.field !== 'event'">{{
+            props.row[item.field]
+          }}</template>
+          <template v-else>
+            <small v-if="!props.row.event" class="has-text-grey is-abbr-like"
+              >No event</small
+            >
+            <small v-else
+              ><router-link
+                tag="a"
+                :to="{
+                  name: 'event.edit',
+                  params: { id: props.row.event.id }
+                }"
+              >
+                {{ props.row.event.title }}
+              </router-link></small
+            >
+          </template>
         </b-table-column>
         <b-table-column
           custom-key="actions"

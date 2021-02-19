@@ -106,7 +106,7 @@
         <b-table-column label="Type" sortable field="type" v-slot="props">
           <small>{{ props.row.type }}</small>
         </b-table-column>
-        <b-table-column label="Event" field="event" v-slot="props">
+         <b-table-column label="Event" field="event" v-slot="props">
           <small v-if="!props.row.event" class="has-text-grey is-abbr-like"
             >No event</small
           >

@@ -38,6 +38,11 @@ export const ccHeaders = [
     sortable: true
   },
   {
+    label: 'Evento',
+    field: 'event',
+    sortable: true
+  },
+  {
     label: 'Adscription',
     field: 'adscription',
     sortable: true

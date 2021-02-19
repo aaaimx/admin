@@ -60,7 +60,7 @@ export default {
           action: 'logout',
           icon: 'logout',
           label: 'Log out',
-          state: 'info'
+          state: 'danger'
         }
       ]
     },
