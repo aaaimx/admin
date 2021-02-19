@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fcda569aff95ca1884c9",
+    "revision": "4898fb947ff1c12740a1",
     "url": "/admin/css/app.cf86db68.css"
   },
   {
@@ -20,8 +20,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/email-form.06359208.css"
   },
   {
-    "revision": "0e13e358d52a64820300",
+    "revision": "a33c5cc073ae21f17e8d",
     "url": "/admin/css/event-form~events.24ec03a4.css"
+  },
+  {
+    "revision": "9a321f45633602ff149d",
+    "url": "/admin/css/full-page.6271c76e.css"
   },
   {
     "revision": "4a3e0d3f9c76f09823ff",
@@ -32,12 +36,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/fonts/CooperHewitt.c673f1bd.otf"
   },
   {
-    "revision": "27c0c587fb8553fdaa62ae7d5c71694e",
+    "revision": "79a5925407066e8792e90cd33bddad44",
+    "url": "/admin/img/logo-square.79a59254.png"
+  },
+  {
+    "revision": "9b9f797aa4475463def18b75e8048f64",
     "url": "/admin/index.html"
   },
   {
-    "revision": "fcda569aff95ca1884c9",
-    "url": "/admin/js/app-legacy.5be7408c.js"
+    "revision": "4898fb947ff1c12740a1",
+    "url": "/admin/js/app-legacy.6193d946.js"
   },
   {
     "revision": "5aac51f1072650deff5a",
@@ -60,8 +68,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/chunk-vendors-legacy.d496642b.js"
   },
   {
-    "revision": "3b339e3b8d02f7875726",
-    "url": "/admin/js/default-legacy.1beae430.js"
+    "revision": "0624adee8dae637eaee0",
+    "url": "/admin/js/default-legacy.7b0f5208.js"
   },
   {
     "revision": "48352d346ebe61d155e5",
@@ -72,16 +80,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/event-form-legacy.a96cd922.js"
   },
   {
-    "revision": "0e13e358d52a64820300",
-    "url": "/admin/js/event-form~events-legacy.b7b1d4be.js"
+    "revision": "a33c5cc073ae21f17e8d",
+    "url": "/admin/js/event-form~events-legacy.8e99d710.js"
   },
   {
     "revision": "0347a8ec3d25b6c0562e",
     "url": "/admin/js/events-legacy.412f17ae.js"
   },
   {
-    "revision": "2d743418c89050a3ba78",
-    "url": "/admin/js/full-page-legacy.cbb969ad.js"
+    "revision": "9a321f45633602ff149d",
+    "url": "/admin/js/full-page-legacy.cf1841dd.js"
   },
   {
     "revision": "4a3e0d3f9c76f09823ff",
