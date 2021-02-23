@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4898fb947ff1c12740a1",
+    "revision": "82f1cd7fa81a50b6ddd7",
     "url": "/admin/css/app.cf86db68.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/email-form.06359208.css"
   },
   {
-    "revision": "a33c5cc073ae21f17e8d",
+    "revision": "4143283f1c4949b5452b",
     "url": "/admin/css/event-form~events.24ec03a4.css"
   },
   {
@@ -40,12 +40,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/img/logo-square.79a59254.png"
   },
   {
-    "revision": "9b9f797aa4475463def18b75e8048f64",
+    "revision": "774e362d7be2b099d71ae883bc0ad569",
     "url": "/admin/index.html"
   },
   {
-    "revision": "4898fb947ff1c12740a1",
-    "url": "/admin/js/app-legacy.6193d946.js"
+    "revision": "82f1cd7fa81a50b6ddd7",
+    "url": "/admin/js/app-legacy.07e761af.js"
   },
   {
     "revision": "5aac51f1072650deff5a",
@@ -80,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/event-form-legacy.a96cd922.js"
   },
   {
-    "revision": "a33c5cc073ae21f17e8d",
-    "url": "/admin/js/event-form~events-legacy.8e99d710.js"
+    "revision": "4143283f1c4949b5452b",
+    "url": "/admin/js/event-form~events-legacy.06284cf6.js"
   },
   {
     "revision": "0347a8ec3d25b6c0562e",
