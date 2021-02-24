@@ -2,7 +2,7 @@
   <b-modal
     :active.sync="isModalActive"
     has-modal-card
-    :width="700"
+    full-screen
     scroll="keep"
   >
     <div class="modal-card">

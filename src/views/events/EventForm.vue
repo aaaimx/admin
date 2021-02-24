@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <b-field label="Title" message="Event name">
+    <b-field horizontal label="Title" message="Event name">
       <b-input
         type="textarea"
         placeholder="e.g. SINABIA 2019"

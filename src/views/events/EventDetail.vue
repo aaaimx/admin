@@ -22,19 +22,19 @@
       </notification> -->
       <tiles>
         <card-component
-          :title="formCardTitle"
-          icon="calendar-edit"
-          class="tile is-child"
-        >
-          <EventForm v-if="event.id" :event="event" />
-        </card-component>
-        <card-component
-          v-if="event.title"
           title="Event details"
           icon="calendar"
           class="tile is-child"
+          has-button-slot
         >
-          <EventPreview :event="event" />
+          <action-button
+            slot="button"
+            icon="calendar-edit"
+            :label="isEdit ? 'Detail' : 'Edit'"
+            @button-click="isEdit = !isEdit"
+          />
+          <EventForm v-if="event.id && isEdit" :event="event" />
+          <EventPreview v-else-if="event.title" :event="event" />
         </card-component>
       </tiles>
       <ParticipantsTable v-if="event.id" :event="event" />
@@ -70,6 +70,7 @@ export default {
   },
   data () {
     return {
+      isEdit: false,
       isLoading: false,
       isModalActive: false,
       event: this.getClearFormObject(),
@@ -78,10 +79,10 @@ export default {
   },
   computed: {
     titleStack () {
-      let lastCrumb
+      let lastCrumb = ''
 
-      if (this.id) {
-        lastCrumb = this.event.title
+      if (this.event) {
+        lastCrumb = '#' + this.event.id
       } else {
         lastCrumb = 'New event'
       }

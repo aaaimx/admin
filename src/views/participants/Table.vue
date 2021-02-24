@@ -58,6 +58,7 @@
         :checkable="true"
         :checked-rows.sync="checkedRows"
         :detailed="true"
+        :mobile-cards="false"
         :show-detail-icon="true"
         :detail-key="key"
         :opened-detailed="defaultOpenedDetails"
@@ -301,7 +302,6 @@ export default {
     return {
       listQuery: {
         event: this.event ? this.event.id : null,
-        isCC: !this.event,
         ordering: null,
         page: 1,
         limit: 10,
@@ -311,6 +311,11 @@ export default {
       sortField: 'name',
       isEmailModalActive: false,
       isParticipantModalActive: false
+    }
+  },
+  created () {
+    if (!this.event) {
+      this.listQuery.isCC = true
     }
   },
   computed: {
