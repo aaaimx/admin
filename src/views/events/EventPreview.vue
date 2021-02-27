@@ -6,7 +6,7 @@
       "
     >
       <p class="subtitle is-6">
-        {{ event.date_start | longDate }} - {{ event.date_end | longDate }} ({{
+        {{ event.date_start | shortDatetime }} - {{ event.date_end | shortDatetime }} ({{
           event.hours || 0
         }}
         horas para CC)

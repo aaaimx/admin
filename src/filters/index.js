@@ -121,6 +121,10 @@ export function longDate (date, options) {
   })
 }
 
+export function shortDatetime (date) {
+  return new Date(date).toLocaleString()
+}
+
 export function formatAMPM (date) {
   date = new Date(date)
   var hours = date.getHours()

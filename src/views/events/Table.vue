@@ -115,16 +115,15 @@
         <b-table-column label="Event" field="title" sortable v-slot="props">
           <template>
             <router-link tag="a" :to="'/events/' + props.row.id">
+              <small>{{ props.row.type }}: </small>
               <small>{{ props.row.title.slice(0, 50) }}</small>
             </router-link>
           </template>
         </b-table-column>
-        <b-table-column label="Type" field="type" sortable v-slot="props">
-          <small>{{ props.row.type }}</small>
-        </b-table-column>
         <b-table-column
           label="Division"
           field="division"
+          centered
           sortable
           v-slot="props"
         >
@@ -132,23 +131,18 @@
             props.row.division ? props.row.division.name : 'AAAIMX'
           }}</small>
         </b-table-column>
-        <b-table-column label="Place" field="place" sortable v-slot="props">
-          <small>{{ props.row.place }}</small>
-        </b-table-column>
-        <b-table-column label="Date start" sortable v-slot="props">
+        <b-table-column label="Date start" centered sortable v-slot="props">
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.date_start"
-            >{{ new Date(props.row.date_start).toLocaleDateString() }}</small
+            >{{ props.row.date_end | shortDatetime }}</small
           >
         </b-table-column>
-        <b-table-column label="Date end" sortable v-slot="props">
-          <small
-            class="has-text-grey is-abbr-like"
-            :title="props.row.date_end"
-            >{{ new Date(props.row.date_end).toLocaleDateString() }}</small
-          >
-        </b-table-column>
+        <!-- <b-table-column label="Date end" centered sortable v-slot="props">
+          <small class="has-text-grey is-abbr-like" :title="props.row.date_end"
+            >{{ props.row.date_start | shortDatetime }}
+          </small>
+        </b-table-column> -->
         <b-table-column
           label="Hours"
           field="hours"
@@ -157,6 +151,15 @@
           v-slot="props"
         >
           <small>{{ props.row.hours }}</small>
+        </b-table-column>
+        <b-table-column
+          label="Participants"
+          field="participants"
+          centered
+          sortable
+          v-slot="props"
+        >
+          <small>{{ props.row.participants.length }}</small>
         </b-table-column>
         <b-table-column
           field="is_draft"
@@ -207,11 +210,11 @@
                 <b-icon icon="discord" size="is-small"
               /></b-tooltip>
             </button>
-            <button class="button is-small is-info" type="button">
+            <!-- <button class="button is-small is-info" type="button">
               <b-tooltip type="is-info" label="Participants">
                 <b-icon icon="download" size="is-small"
               /></b-tooltip>
-            </button>
+            </button> -->
           </div>
         </b-table-column>
 
