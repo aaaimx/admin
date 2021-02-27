@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "184fadc14404b7a20f1f",
+    "revision": "0b051a6db6d09fd61d04",
     "url": "/admin/css/app.cf86db68.css"
   },
   {
@@ -56,12 +56,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/img/logo-square.79a59254.png"
   },
   {
-    "revision": "da91dfdcfe3166ab6c14136962c4fb00",
+    "revision": "174a4471956bc18daf4244cf7b2da5c3",
     "url": "/admin/index.html"
   },
   {
-    "revision": "184fadc14404b7a20f1f",
-    "url": "/admin/js/app.71ae5f97.js"
+    "revision": "0b051a6db6d09fd61d04",
+    "url": "/admin/js/app.f5058496.js"
   },
   {
     "revision": "867c521a78368cd8c138",
@@ -100,8 +100,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/event-form~events.a3fbfde2.js"
   },
   {
-    "revision": "6cedbbf037a62b0510ed",
-    "url": "/admin/js/events.2cc38289.js"
+    "revision": "bebcb02c452a2c6ba4ac",
+    "url": "/admin/js/events.150c1c6a.js"
   },
   {
     "revision": "ffc3a91ae9d8d8741797",
