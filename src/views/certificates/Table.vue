@@ -16,12 +16,22 @@
         <SearchInput :listQuery="listQuery" />
       </form>
       <div slot="right" class="columns">
-        <b-field class="ml-2">
+        <b-field class="ml-2" grouped>
+          <b-datepicker
+            icon="calendar-today"
+            size="is-small"
+            :mobile-native="false"
+            placeholder="By date range"
+            v-model="listQuery.range"
+            range
+          >
+          </b-datepicker>
           <b-datepicker
             type="month"
             icon="calendar-today"
             size="is-small"
-            placeholder="Select date range..."
+            :mobile-native="false"
+            placeholder="By month range"
             v-model="listQuery.range"
             range
           >
@@ -106,7 +116,7 @@
         <b-table-column label="Type" sortable field="type" v-slot="props">
           <small>{{ props.row.type }}</small>
         </b-table-column>
-         <b-table-column label="Event" field="event" v-slot="props">
+        <b-table-column label="Event" field="event" v-slot="props">
           <small v-if="!props.row.event" class="has-text-grey is-abbr-like"
             >No event</small
           >

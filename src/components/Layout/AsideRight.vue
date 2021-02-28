@@ -1,7 +1,7 @@
 <template>
-  <aside  class="aside is-placed-right">
+  <aside class="aside is-placed-right">
     <div ref="container" class="aside-container" @mouseenter="psUpdate">
-      <aside-updates @data-updated="psInit"/>
+      <aside-updates @data-updated="psInit" />
     </div>
   </aside>
 </template>
@@ -15,9 +15,7 @@ export default {
   name: 'AsideRight',
   components: { AsideUpdates },
   computed: {
-    ...mapState([
-      'isAsideRightVisible'
-    ])
+    ...mapState(['isAsideRightVisible'])
   },
   methods: {
     psInit () {

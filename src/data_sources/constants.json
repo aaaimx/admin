@@ -1,0 +1,78 @@
+{
+  "places": [
+    {
+      "value": "Online",
+      "label": "Virtual"
+    },
+    {
+      "value": "Google Meet",
+      "label": "Google Meet"
+    },
+    {
+      "value": "Discord",
+      "label": "Discord"
+    },
+    {
+      "value": "Zoom",
+      "label": "Zoom"
+    },
+    {
+      "value": "Microsoft Teams",
+      "label": "Microsoft Teams"
+    },
+    {
+      "value": "Campus Poniente",
+      "label": "Campus Poniente"
+    },
+    {
+      "value": "Campus Norte",
+      "label": "Campus Norte"
+    },
+    {
+      "value": "ITM",
+      "label": "ITM"
+    },
+    {
+      "value": "G4",
+      "label": "G4"
+    },
+    {
+      "value": "",
+      "label": "Otro"
+    }
+  ],
+  "event_types": [
+    {
+      "value": "Workshop",
+      "label": "Taller"
+    },
+    {
+      "value": "Course",
+      "label": "Curso"
+    },
+    {
+      "value": "Webinar",
+      "label": "Webinar"
+    },
+    {
+      "value": "Simposium",
+      "label": "Simposium"
+    },
+    {
+      "value": "Seminary",
+      "label": "Seminario"
+    },
+    {
+      "value": "Conversatorio",
+      "label": "Conversatorio"
+    },
+    {
+      "value": "Competition",
+      "label": "Compentencia"
+    },
+    {
+      "value": "",
+      "label": "Otro"
+    }
+  ]
+}

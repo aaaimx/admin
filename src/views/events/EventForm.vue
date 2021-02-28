@@ -11,21 +11,16 @@
     </b-field>
     <b-field horizontal label="Place" message="Event location">
       <b-select v-model="form.place" placeholder="Select location" expanded>
-        <option value="Online">Online</option>
-        <option value="ITM">ITM</option>
-        <option value="G4">G4</option>
-        <option value="Norte">Norte</option>
-        <option value="Poniente">Poniente</option>
-        <option value="">Other</option>
+        <option v-for="type in places" :key="type.value" :value="type.value">{{
+          type.label
+        }}</option>
       </b-select>
     </b-field>
     <b-field horizontal label="Type" message="Event type">
       <b-select v-model="form.type" placeholder="Select a type" expanded>
-        <option value="Workshop">Workshop</option>
-        <option value="Course">Course</option>
-        <option value="Webinar">Webinar</option>
-        <option value="Simposium">Simposium</option>
-        <option value="">Other</option>
+        <option v-for="type in types" :key="type.value" :value="type.value">{{
+          type.label
+        }}</option>
       </b-select>
     </b-field>
 
@@ -106,6 +101,8 @@
 
 <script>
 import { create, update } from '@/api/events'
+import constants from '@/data_sources/constants.json'
+
 const defaultForm = {
   title: '',
   corum: 0,
@@ -126,6 +123,8 @@ export default {
   data () {
     return {
       form: {},
+      types: constants.event_types,
+      places: constants.places,
       isLoading: false,
       hourFormat: undefined, // Browser locale
       locale: undefined, // Browser locale

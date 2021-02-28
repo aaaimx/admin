@@ -7,10 +7,10 @@
   >
     <action-button slot="button" @button-click="getData" />
     <card-toolbar slot="toolbar" class="is-upper">
-      <form slot="left">
+      <div slot="left">
         <SearchInput :listQuery="listQuery" />
-      </form>
-      <form slot="right">
+      </div>
+      <div slot="right">
         <b-dropdown
           v-model="listQuery.role"
           :max-height="500"
@@ -37,7 +37,7 @@
             </div>
           </b-dropdown-item>
         </b-dropdown>
-      </form>
+      </div>
     </card-toolbar>
     <div>
       <modal-box

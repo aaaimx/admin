@@ -16,12 +16,22 @@
         <SearchInput :listQuery="listQuery" />
       </form>
       <div slot="right" class="columns">
-        <b-field class="ml-2">
+        <b-field class="ml-2" grouped>
+          <b-datepicker
+            icon="calendar-today"
+            size="is-small"
+            :mobile-native="false"
+            placeholder="By date range"
+            v-model="listQuery.range"
+            range
+          >
+          </b-datepicker>
           <b-datepicker
             type="month"
             icon="calendar-today"
             size="is-small"
-            placeholder="Click to select..."
+            :mobile-native="false"
+            placeholder="By month range"
             v-model="listQuery.range"
             range
           >
@@ -34,10 +44,12 @@
             size="is-small"
             expanded
           >
-            <option value="Workshop">Workshop</option>
-            <option value="Course">Course</option>
-            <option value="Webinar">Webinar</option>
-            <option value="Simposium">Simposium</option>
+            <option
+              v-for="type in types"
+              :key="type.value"
+              :value="type.value"
+              >{{ type.label }}</option
+            >
             <option value="">All</option>
           </b-select>
         </b-field>
@@ -48,12 +60,12 @@
             size="is-small"
             expanded
           >
-            <option value="Online">Online</option>
-            <option value="ITM">ITM</option>
-            <option value="G4">G4</option>
-            <option value="Norte">Norte</option>
-            <option value="Poniente">Poniente</option>
-            <option value="">All</option>
+            <option
+              v-for="type in types"
+              :key="type.value"
+              :value="type.value"
+              >{{ type.label }}</option
+            >
           </b-select>
         </b-field>
         <b-field class="ml-2">
@@ -156,7 +168,6 @@
           label="Participants"
           field="participants"
           centered
-          sortable
           v-slot="props"
         >
           <small>{{ props.row.participants.length }}</small>
@@ -269,6 +280,7 @@ import ModalBox from '@/components/ConfirmDelete'
 import CertList from './CertList'
 import EventPreview from './EventPreview'
 import tableMixin from '@/mixins/table'
+import constants from '@/data_sources/constants.json'
 
 export default {
   name: 'EventsTable',
@@ -283,6 +295,8 @@ export default {
         limit: 10,
         offset: 0
       },
+      types: constants.event_types,
+      places: constants.places,
       key: 'id',
       sortField: 'date_start',
       defaultSortOrder: 'desc',

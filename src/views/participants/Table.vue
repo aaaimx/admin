@@ -16,17 +16,35 @@
         <SearchInput :listQuery="listQuery" />
       </form>
       <div slot="right" class="columns">
-        <b-field class="ml-2">
+        <b-field class="mr-2" grouped>
+          <b-datepicker
+            icon="calendar-today"
+            size="is-small"
+            :mobile-native="false"
+            placeholder="By date range"
+            v-model="listQuery.range"
+            range
+          >
+          </b-datepicker>
           <b-datepicker
             type="month"
             icon="calendar-today"
             size="is-small"
-            placeholder="Click to select..."
+            :mobile-native="false"
+            placeholder="By month range"
             v-model="listQuery.range"
             range
           >
           </b-datepicker>
         </b-field>
+
+        <action-button
+          class="mr-2"
+          slot="button"
+          icon="autorenew"
+          label="Clear filters"
+          @button-click="clearFilters"
+        />
       </div>
     </card-toolbar>
     <div>
@@ -335,6 +353,20 @@ export default {
         this.total = res.count
         this.isLoading = false
       })
+    },
+    clearFilters () {
+      this.listQuery = {
+        event: this.event ? this.event.id : null,
+        ordering: null,
+        page: 1,
+        limit: 10,
+        offset: 0
+      }
+      if (!this.event) {
+        this.listQuery.isCC = true
+      }
+      this.sortField = 'name'
+      this.defaultSortOrder = 'asc'
     },
     getInitials (name) {
       const rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu')
