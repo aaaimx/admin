@@ -15,6 +15,7 @@ import './registerServiceWorker'
 
 /* Global filters */
 import * as filters from './filters'
+import './utils/vee-validate'
 
 /* Vue. Main component */
 import App from './App.vue'

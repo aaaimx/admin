@@ -37,6 +37,45 @@
           >
           </b-datepicker>
         </b-field>
+        <b-field class="mr-2">
+          <b-select
+            v-model="listQuery.adscription"
+            placeholder="Adscription"
+            size="is-small"
+            expanded
+          >
+            <option>ITM</option>
+            <option :value="null">Todos</option>
+          </b-select>
+        </b-field>
+        <b-field class="mr-2">
+          <b-select
+            v-model="listQuery.department"
+            placeholder="Departamento"
+            size="is-small"
+            expanded
+          >
+            <option value="Departamento de Sistemas y Computación (DSC)"
+              >DSC</option
+            >
+            <option value="Departamento de Ing. Eléctrica y Electrónica (DIEE)"
+              >DIEE</option
+            >
+            <option :value="null">Todos</option>
+          </b-select>
+        </b-field>
+        <b-field class="mr-2">
+          <b-select
+            v-model="listQuery.ocupation"
+            placeholder="Ocupación"
+            size="is-small"
+            expanded
+          >
+            <option>Estudiante</option>
+            <option>Docente</option>
+            <option :value="null">Todos</option>
+          </b-select>
+        </b-field>
 
         <action-button
           class="mr-2"
@@ -421,28 +460,8 @@ export default {
     export2Excel () {
       this.isLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const header = [
-          'Nombre completo',
-          'Email',
-          'Telefono',
-          'Ocupación',
-          'Genero',
-          'Matricula',
-          'Departmento',
-          'Carrera',
-          'Adscripción'
-        ]
-        const filterVal = [
-          'fullname',
-          'email',
-          'phone',
-          'ocupation',
-          'gender',
-          'enrollment',
-          'department',
-          'career',
-          'adscription'
-        ]
+        const header = this.headers.map(el => el.label)
+        const filterVal = this.headers.map(el => el.field)
         const rows = [...new Set(this.checkedRows)]
         const data = rows.map(v => filterVal.map(j => v[j]))
         const filename = this.event

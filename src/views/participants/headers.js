@@ -28,12 +28,12 @@ export const participantHeaders = [
 
 export const ccHeaders = [
   {
-    label: 'Enroll',
+    label: 'Matricula',
     field: 'enrollment',
     sortable: true
   },
   {
-    label: 'Name',
+    label: 'Nombre',
     field: 'fullname',
     sortable: true
   },
@@ -43,12 +43,12 @@ export const ccHeaders = [
     sortable: true
   },
   {
-    label: 'Adscription',
+    label: 'Adscripción',
     field: 'adscription',
     sortable: true
   },
   {
-    label: 'Hours',
+    label: 'Horas',
     field: 'cc_hours',
     sortable: true
   }

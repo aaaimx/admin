@@ -117,18 +117,6 @@ const routes = [
     children: [
       {
         meta: {
-          title: 'Login',
-          isPublic: true
-        },
-        path: '/login',
-        name: 'login',
-        component: () =>
-          import(
-            /* webpackChunkName: "full-page" */ '../views/full-page/Login.vue'
-          )
-      },
-      {
-        meta: {
           title: 'Error 404',
           isPublic: true
         },
@@ -149,6 +137,25 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "full-page" */ '../views/full-page/LockScreen.vue'
+          )
+      }
+    ]
+  },
+  {
+    path: '/full-page',
+    component: () =>
+      import(/* webpackChunkName: "full-page" */ '../layouts/auth.vue'),
+    children: [
+      {
+        meta: {
+          title: 'Login',
+          isPublic: true
+        },
+        path: '/login',
+        name: 'login',
+        component: () =>
+          import(
+            /* webpackChunkName: "full-page" */ '../views/auth/Login.vue'
           )
       }
     ]

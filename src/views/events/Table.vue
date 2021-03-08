@@ -50,7 +50,7 @@
               :value="type.value"
               >{{ type.label }}</option
             >
-            <option value="">All</option>
+            <option :value="null">Todos</option>
           </b-select>
         </b-field>
         <b-field class="ml-2">
@@ -61,11 +61,12 @@
             expanded
           >
             <option
-              v-for="type in types"
-              :key="type.value"
-              :value="type.value"
-              >{{ type.label }}</option
+              v-for="place in places"
+              :key="place.value"
+              :value="place.value"
+              >{{ place.label }}</option
             >
+            <option :value="null">Todos</option>
           </b-select>
         </b-field>
         <b-field class="ml-2">
@@ -81,6 +82,19 @@
               :label="item.name"
               :value="item.id"
             ></option>
+            <option :value="null">Todos</option>
+          </b-select>
+        </b-field>
+        <b-field class="ml-2">
+          <b-select
+            v-model="listQuery.is_draft"
+            placeholder="Status"
+            size="is-small"
+            expanded
+          >
+            <option :value="false">Publicado</option>
+            <option :value="true">Borrador</option>
+            <option :value="null">Todos</option>
           </b-select>
         </b-field>
       </div>
