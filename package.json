@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --mode development",
     "stage": "vue-cli-service serve --mode staging",
     "preview": "vue-cli-service serve --mode preview",
-    "build": "vue-cli-service build --modern --mode otherenv",
+    "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint",
     "build:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES npm run build",
     "deploy:gh-pages": "cross-env NODE_DEBUG=gh-pages gh-pages -d dist -t",
