@@ -5,7 +5,7 @@
     class="has-table"
     :has-button-slot="true"
   >
-    <action-button slot="button" @button-click="getData" />
+    <action-button slot="button" @button-click="getData(), (listQuery = {})" />
     <card-toolbar slot="toolbar" class="is-upper">
       <div slot="left">
         <SearchInput :listQuery="listQuery" />
@@ -15,11 +15,16 @@
           v-model="listQuery.role"
           :max-height="500"
           scrollable
+          multiple
           append-to-body
           position="is-bottom-left"
           aria-role="list"
         >
-          <button class="button is-link is-small" slot="trigger" slot-scope="{ active }">
+          <button
+            class="button is-link is-small"
+            slot="trigger"
+            slot-scope="{ active }"
+          >
             <span>{{ listQuery.role || 'Select role' }}</span>
             <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
           </button>
@@ -46,6 +51,7 @@
         @confirm="trashConfirm"
         @cancel="trashCancel"
       />
+      <!-- START Members Table -->
       <b-table
         :checked-rows.sync="checkedRows"
         :checkable="true"
@@ -175,6 +181,7 @@
           </div>
         </div>
       </b-table>
+      <!-- END Members Table -->
     </div>
   </card-component>
 </template>
@@ -204,6 +211,7 @@ export default {
         search: null
       },
       total: 0,
+      stric_mode: false,
       members: [],
       list: [],
       roles: [],
@@ -250,12 +258,30 @@ export default {
         }
       }
     },
+    /**
+     * Returns TRUE if the first specified array contains all elements
+     * from the second one. FALSE otherwise.
+     *
+     * @param {array} superset
+     * @param {array} subset
+     *
+     * @returns {boolean}
+     */
+    arrayContainsArray (superset, subset) {
+      if (subset.length === 0) {
+        return false
+      }
+      return subset.every(function (value) {
+        return superset.indexOf(value) >= 0
+      })
+    },
     handleFilters () {
       this.list = this.members
       if (this.listQuery.role) {
-        this.list = this.list.filter(
-          m => m.roles.indexOf(this.listQuery.role) !== -1
-        )
+        this.list = this.list.filter(m => {
+          // return this.listQuery.role.some(role => m.roles.includes(role))
+          return this.arrayContainsArray(m.roles, this.listQuery.role)
+        })
       }
       if (this.listQuery.search) {
         this.list = this.list.filter(
@@ -270,6 +296,7 @@ export default {
               -1
         )
       }
+      this.total = this.list.length
     },
     trashModal (trashObject) {
       this.trashObject = trashObject

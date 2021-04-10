@@ -197,7 +197,6 @@
               /></b-tooltip>
             </button>
             <button
-              v-if="event"
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
@@ -360,6 +359,7 @@ export default {
       listQuery: {
         event: this.event ? this.event.id : null,
         ordering: null,
+        asdscription: 'ITM',
         page: 1,
         limit: 10,
         offset: 0
@@ -372,7 +372,7 @@ export default {
   },
   created () {
     if (!this.event) {
-      this.listQuery.isCC = true
+      // this.listQuery.isCC = true
     }
   },
   computed: {

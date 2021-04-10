@@ -14,6 +14,9 @@
         <b-dropdown-item aria-role="listitem" :value="10">10</b-dropdown-item>
         <b-dropdown-item aria-role="listitem" :value="25">25</b-dropdown-item>
         <b-dropdown-item aria-role="listitem" :value="50">50</b-dropdown-item>
+        <b-dropdown-item aria-role="listitem" :value="100">100</b-dropdown-item>
+        <b-dropdown-item aria-role="listitem" :value="200">200</b-dropdown-item>
+        <b-dropdown-item aria-role="listitem" :value="500">500</b-dropdown-item>
       </b-dropdown>
     </div>
     <div class="column is-flex is-justify-content-flex-end">
