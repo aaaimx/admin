@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b665c0507e0ad2ff125e",
+    "revision": "ad6e09557feb79b6aef8",
     "url": "/admin/css/app.8dfcfae5.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/email-form.06359208.css"
   },
   {
-    "revision": "b95b80a1f970fefb47c1",
+    "revision": "89312fd9d3aa7f14250f",
     "url": "/admin/css/event-form~events.24ec03a4.css"
   },
   {
@@ -28,7 +28,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/css/full-page.2c362818.css"
   },
   {
-    "revision": "b6db48e0e44753d7ef00",
+    "revision": "061b687ca15579d8d286",
     "url": "/admin/css/profile.006daab7.css"
   },
   {
@@ -40,12 +40,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/img/logo-square.79a59254.png"
   },
   {
-    "revision": "b2e04ac8b001cffb79229b224738c86d",
+    "revision": "733b77564308ff96b17157caa31d6551",
     "url": "/admin/index.html"
   },
   {
-    "revision": "b665c0507e0ad2ff125e",
-    "url": "/admin/js/app-legacy.7dab6a21.js"
+    "revision": "ad6e09557feb79b6aef8",
+    "url": "/admin/js/app-legacy.9d7a53c3.js"
   },
   {
     "revision": "63c859d8f03e77a98f51",
@@ -80,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/event-form-legacy.3b508409.js"
   },
   {
-    "revision": "b95b80a1f970fefb47c1",
-    "url": "/admin/js/event-form~events-legacy.1d0c7db0.js"
+    "revision": "89312fd9d3aa7f14250f",
+    "url": "/admin/js/event-form~events-legacy.1a204049.js"
   },
   {
     "revision": "8130762f9bb62fbcd7f2",
@@ -92,8 +92,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin/js/full-page-legacy.de1b5b0b.js"
   },
   {
-    "revision": "b6db48e0e44753d7ef00",
-    "url": "/admin/js/profile-legacy.8da4846b.js"
+    "revision": "061b687ca15579d8d286",
+    "url": "/admin/js/profile-legacy.3574bbf7.js"
   },
   {
     "revision": "a039c05e2257c6641d70aca5a7c85769",
