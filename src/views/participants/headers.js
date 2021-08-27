@@ -48,6 +48,11 @@ export const ccHeaders = [
     sortable: true
   },
   {
+    label: 'Departamento',
+    field: 'department',
+    sortable: true
+  },
+  {
     label: 'Horas',
     field: 'cc_hours',
     sortable: true

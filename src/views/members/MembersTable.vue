@@ -85,16 +85,16 @@
             />
           </template> -->
           <template v-slot="props">
-            {{ props.row.name }}
+            {{ props.row.name }} (<small>@{{ props.row.username }}</small>)
           </template>
         </b-table-column>
         <b-table-column
-          label="Username"
-          field="username"
+          label="Roles"
+          field="roles"
           sortable
           v-slot="props"
         >
-          <small>@{{ props.row.username }}</small>
+          <small><b>{{ props.row.roles.join(', ') }}</b></small>
         </b-table-column>
         <b-table-column label="ID" field="id" sortable v-slot="props">
           {{ props.row.id.slice(0, 10) }}
@@ -217,7 +217,7 @@ export default {
       roles: [],
       isLoading: false,
       paginated: true,
-      perPage: 10,
+      perPage: 30,
       checkedRows: []
     }
   },

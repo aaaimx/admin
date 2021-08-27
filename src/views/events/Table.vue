@@ -141,8 +141,8 @@
         <b-table-column label="Event" field="title" sortable v-slot="props">
           <template>
             <router-link tag="a" :to="'/events/' + props.row.id">
-              <small>{{ props.row.type }}: </small>
-              <small>{{ props.row.title.slice(0, 50) }}</small>
+              <small>{{ props.row.title.slice(0, 50) }}</small>&nbsp;
+              <b-tag type="is-link" v-if="props.row.type">{{ props.row.type }} </b-tag>
             </router-link>
           </template>
         </b-table-column>

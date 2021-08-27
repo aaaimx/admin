@@ -359,7 +359,7 @@ export default {
       listQuery: {
         event: this.event ? this.event.id : null,
         ordering: null,
-        asdscription: 'ITM',
+        adscription: 'ITM',
         page: 1,
         limit: 10,
         offset: 0
